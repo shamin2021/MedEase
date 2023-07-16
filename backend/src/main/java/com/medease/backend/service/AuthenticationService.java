@@ -1,5 +1,6 @@
 package com.medease.backend.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medease.backend.dto.AuthenticationRequest;
 import com.medease.backend.dto.AuthenticationResponse;
 import com.medease.backend.dto.RegisterRequest;
@@ -9,11 +10,19 @@ import com.medease.backend.entity.TokenType;
 import com.medease.backend.entity.User;
 import com.medease.backend.repository.TokenRepository;
 import com.medease.backend.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -39,10 +48,13 @@ public class AuthenticationService {
         var savedUser = userRepository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+
         saveUserToken(savedUser, jwtToken);
 
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -59,10 +71,13 @@ public class AuthenticationService {
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -88,5 +103,34 @@ public class AuthenticationService {
                 .expired(false)
                 .build();
         tokenRepository.save(token);
+    }
+
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+
+        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return;
+        }
+        refreshToken = authHeader.substring(7);
+        //from jwt extract data
+        userEmail = jwtService.extractUsername(refreshToken);
+        if(userEmail != null ) {
+            // get user details from database
+            var userDetails = this.userRepository.findByEmail(userEmail)
+                    .orElseThrow();
+
+            if(jwtService.isTokenValid(refreshToken, userDetails)) {
+              var accessToken = jwtService.generateToken(userDetails);
+                revokeAllUserTokens(userDetails);
+                saveUserToken(userDetails, accessToken);
+              var authResponse = AuthenticationResponse.builder()
+                      .accessToken(accessToken)
+                      .refreshToken(refreshToken)
+                      .build();
+              new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+            }
+        }
     }
 }
