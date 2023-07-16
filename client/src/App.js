@@ -1,10 +1,11 @@
-import Register from './components/Register';
 import './App.css';
+
+// use this to build the landing page (build Components and import here)
 
 function App() {
   return (
     <div className="App">
-      <Register />
+      <h1> Welcome To MedEase Landing! </h1>
     </div>
   );
 }

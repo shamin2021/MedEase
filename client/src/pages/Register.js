@@ -3,6 +3,8 @@ import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RegisterUser } from '../services/AuthService';
 
+import '../styles/Register.css';
+
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -65,7 +67,7 @@ const Register = () => {
     }
 
     return (
-        <>
+        <div className='Register'>
             {success ? (
                 <section>
                     <h1>Success!</h1>
@@ -160,8 +162,8 @@ const Register = () => {
                     </p>
                 </section>
             )}
-        </>
+        </div>
     )
 }
 
-export default Register
+export default Register;
