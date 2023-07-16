@@ -1,30 +1,30 @@
-import axios from "../constants/axios";
+import axios from '../constants/axios';
 
+const REGISTER_URL = '/auth/register';
 
-export async function RegisterUser(username, password, setErrMsg, setSuccess, setUser, setPwd, setMatchPwd, errRef) { 
-    try {
-            const response = await axios.post('/auth/register',
-                JSON.stringify({ username: username, password: password }),
-                {
-                    withCredentials: true
-                }
-            );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
-            setSuccess(true);
-            setUser('');
-            setPwd('');
-            setMatchPwd('');
-        
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
-            }
-            errRef.current.focus();
-        }
+export async function RegisterUser(username, password) {
+  try {
+    const response = await axios.post(
+      REGISTER_URL,
+      JSON.stringify({ username, password }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*', // Required for CORS support to work
+        },
+      }
+    );
+    console.log(response?.data);
+    console.log(response?.accessToken);
+    console.log(JSON.stringify(response));
+    return true;
+  } catch (err) {
+    if (!err?.response) {
+      throw new Error('No Server Response');
+    } else if (err.response?.status === 409) {
+      throw new Error('Username Taken');
+    } else {
+      throw new Error('Registration Failed');
+    }
+  }
 }

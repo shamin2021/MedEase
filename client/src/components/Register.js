@@ -1,11 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from '../constants/axios';
+import { RegisterUser } from '../services/AuthService';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/auth/register';
 
 const Register = () => {
     const userRef = useRef();
@@ -52,33 +51,15 @@ const Register = () => {
             setErrMsg("Invalid Entry");
             return;
         }
+
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-                    }
-                }
-            );
-            console.log(response?.data);
-            console.log(response?.accessToken);
-            console.log(JSON.stringify(response))
+            await RegisterUser(user, pwd);
             setSuccess(true);
-            //clear state and controlled inputs
-            //need value attrib on inputs for this
             setUser('');
             setPwd('');
             setMatchPwd('');
         } catch (err) {
-            if (!err?.response) {
-                setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken');
-            } else {
-                setErrMsg('Registration Failed')
-            }
+            setErrMsg(err.message);
             errRef.current.focus();
         }
     }
