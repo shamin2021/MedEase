@@ -1,12 +1,28 @@
-import './App.css';
-
-// use this to build the landing page (build Components and import here)
+import React from 'react';
+import {
+  ChakraProvider,
+  Box,
+  Text,
+  Link,
+  VStack,
+  Code,
+  Grid,
+  theme,
+} from '@chakra-ui/react';
+import { ColorModeSwitcher } from './ColorModeSwitcher';
+import { Logo } from './Logo';
 
 function App() {
   return (
-    <div className="App">
-      <h1> Welcome To MedEase Landing! </h1>
-    </div>
+    <ChakraProvider theme={theme}>
+      <Box textAlign="center" fontSize="xl">
+        <Grid minH="100vh" p={3}>
+          <ColorModeSwitcher justifySelf="flex-end" />
+          "WE DONT USE THIS"
+
+        </Grid>
+      </Box>
+    </ChakraProvider>
   );
 }
 
