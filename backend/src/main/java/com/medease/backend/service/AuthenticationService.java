@@ -36,7 +36,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-    //Always given a static role here (need to change that)
+    // Only patients can register to the system. other ROLES like DOCTOR, HLC are added by Admin
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
