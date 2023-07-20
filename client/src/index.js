@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TestComponent from './pages/TestComponent';
+import AddDoctor from "./pages/AddDoctor";
 import Register from './pages/Register';
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -11,7 +12,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  // added chakra provider here 
+  // added chakra provider here
   <ChakraProvider>
     <Router>
       <Routes>
@@ -19,8 +20,8 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/register" element={<Register />} />
         <Route path="/test-components" element={<TestComponent />} />
+        <Route path="/AddDoctor" element={<AddDoctor />} />
       </Routes>
     </Router>
   </ChakraProvider>
-
 );
