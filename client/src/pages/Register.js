@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RegisterUser } from '../services/AuthService';
+import { Link } from 'react-router-dom';
 
 import '../styles/Register.css';
 
@@ -44,6 +45,8 @@ const Register = () => {
         setErrMsg('');
     }, [user, pwd, matchPwd])
 
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -53,6 +56,7 @@ const Register = () => {
             setErrMsg("Invalid Entry");
             return;
         }
+
 
         try {
             await RegisterUser(user, pwd);
@@ -72,7 +76,7 @@ const Register = () => {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                        <Link to="/login">Sign In</Link>
                     </p>
                 </section>
             ) : (
@@ -156,8 +160,8 @@ const Register = () => {
                     <p>
                         Already registered?<br />
                         <span className="line">
-                            {/*put router link here*/}
-                            <a href="#">Sign In</a>
+        
+                                <Link to="/login">Sign In</Link>
                         </span>
                     </p>
                 </section>

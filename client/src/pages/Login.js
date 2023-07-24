@@ -1,27 +1,33 @@
 import React from 'react'
-import { useRef, useState, useEffect, useContext } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useRef, useState, useEffect } from 'react';
+import useAuth from '../hooks/useAuth';
 import { LoginUser } from '../services/AuthService';
-import AuthContext from '../jwtAuthServices/AuthContext';
+import '../styles/Register.css';
+
 
 const Login = () => {
 
+    const { setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.form?.pathname || '/patientdash';
+
     const userRef = useRef();
     const errRef = useRef();
-    const {login}= useContext(AuthContext)
 
     const [user, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
-    }, [])
+    }, []);
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd])
-
+    }, [user, pwd]);
 
 
     const handleSubmit = async (e) => {
@@ -29,28 +35,22 @@ const Login = () => {
 
         try {
             await LoginUser(user, pwd);
-            setSuccess(true);
+            setAuth({ user, pwd, roles });
             setUser('');
             setPwd('');
+            navigate(from, { replace: true });
         } catch (err) {
             setErrMsg(err.message);
             errRef.current.focus();
         }
     }
 
-  return (
-        <>
-            {success ? (
+    return (
+        <div className='login'>
+            
                 <section>
-                    <h1>You are logged in!</h1>
-                    <br />
-                    <p>
-                        <a href="#">Go to Home</a>
-                    </p>
-                </section>
-            ) : (
-                <section>
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}
+                        aria-live="assertive">{errMsg}</p>
                     <h1>Sign In</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="username">Username:</label>
@@ -77,14 +77,13 @@ const Login = () => {
                     <p>
                         Need an Account?<br />
                         <span className="line">
-                            {/*put router link here*/}
-                            <a href="#">Sign Up</a>
+                            <Link to="/register">Sign Up</Link>
                         </span>
                     </p>
                 </section>
-            )}
-        </>
-  )
+
+        </div>
+    )
 }
 
 export default Login
