@@ -28,9 +28,9 @@ const fonts = {
 
 const colors = {
     brand: {
-      purple: '#6C63FF',
-      green: '#00BFA6',
-      blue: '#132450',
+      navblue : '#d0e1fb',
+      defaultblue : '#645BEE',
+      lightblue: '#dcecf8',
       textBlack: '#1E1E1E',
     },
   }
