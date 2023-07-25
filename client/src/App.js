@@ -10,7 +10,13 @@ import Unauthorized from './pages/Unauthorized';
 
 function App() {
 
-  const ROLES = { 1: "VISITOR", 2:"PATIENT", 3:"HLC", 4:"DOCTOR", 5:"ADMIN"};
+  const ROLES = {
+    1: "VISITOR",
+    2: "PATIENT",
+    3: "HLC",
+    4: "DOCTOR",
+    5: "ADMIN"
+  };
 
   return (
     <Router>
@@ -21,7 +27,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
-        <Route element={<RequireAuth  allowedRoles={ROLES[2]}/>}>
+        <Route element={<RequireAuth allowedRoles={ [ROLES[2]] } />}>
           <Route path="/patientdash" element={<PatientDash />} />
           <Route path="/test-components" element={<TestComponent />} />
         </Route>

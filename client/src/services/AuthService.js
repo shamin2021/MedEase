@@ -38,6 +38,7 @@ export async function LoginUser(username, password) {
     console.log(JSON.stringify(response?.data));
     // const accessToken = response?.data?.accessToken;
     const roles = response?.data?.role;
+    return roles;
   } catch (err) {
     if (!err?.response) {
       throw new Error('No Server Response');

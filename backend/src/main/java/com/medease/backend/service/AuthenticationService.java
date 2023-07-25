@@ -43,7 +43,7 @@ public class AuthenticationService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.VISITOR)
+                .role(Role.PATIENT)
                 .build();
         var savedUser = userRepository.save(user);
 
@@ -72,12 +72,14 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
+        var userRole = user.getRole();
 
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .role(userRole)
                 .build();
     }
 

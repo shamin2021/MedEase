@@ -12,7 +12,7 @@ const Login = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.form?.pathname || '/patientdash';
+    const from = location.state?.from?.pathname || '/patientdash';
 
     const userRef = useRef();
     const errRef = useRef();
@@ -34,7 +34,8 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            await LoginUser(user, pwd);
+            const roles = await LoginUser(user, pwd);
+            console.log(roles);
             setAuth({ user, pwd, roles });
             setUser('');
             setPwd('');

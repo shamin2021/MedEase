@@ -46,7 +46,7 @@ public class JwtService {
 
 
     // can create a jwt token with new claims
-    public String generateToken (Map<String, Objects> extraClaims, UserDetails userDetails) {
+    public String generateToken (Map<String, Object> extraClaims, UserDetails userDetails) {
         return  buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
@@ -54,7 +54,7 @@ public class JwtService {
         return  buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
 
-    private String buildToken(Map<String, Objects> extraClaims, UserDetails userDetails, long expiration) {
+    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
