@@ -120,16 +120,15 @@ public class AuthenticationService {
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-//        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;
 
         refreshToken = getRefreshTokenFromCookie(request);
 
-//        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            return;
-//        }
-//        refreshToken = authHeader.substring(7);
+        if(refreshToken == null) {
+            return;
+        }
+
         //from jwt extract data
         userEmail = jwtService.extractUsername(refreshToken);
         if(userEmail != null ) {
@@ -143,7 +142,6 @@ public class AuthenticationService {
                 saveUserToken(userDetails, accessToken);
               var authResponse = AuthenticationResponse.builder()
                       .accessToken(accessToken)
-                      .refreshToken(refreshToken)
                       .build();
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
