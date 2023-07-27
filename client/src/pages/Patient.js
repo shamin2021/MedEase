@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PatientDash = () => {
+const Patient = () => {
   return (
     <div>
       <h1>Patient Dashboard</h1>
@@ -8,4 +8,4 @@ const PatientDash = () => {
   )
 }
 
-export default PatientDash
+export default Patient

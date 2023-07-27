@@ -12,7 +12,7 @@ const Login = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -40,7 +40,7 @@ const Login = () => {
             setEmail('');
             setPassword('');
 
-            const from = location.state?.from || { pathname: '/patientdash'};
+            const from = location.state?.from || { pathname: '/' + response?.data?.role?.toLowerCase()};
             navigate(from, { replace: true });
 
         } catch (err) {

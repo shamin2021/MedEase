@@ -4,7 +4,7 @@ import TestComponent from './pages/TestComponent';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Landing from './pages/Landing';
-import PatientDash from './pages/PatientDash';
+import Patient from './pages/Patient';
 import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 
@@ -28,7 +28,7 @@ function App() {
         <Route path="/unauthorized" element={<Unauthorized />} />
 
         <Route element={<RequireAuth allowedRoles={ [ROLES[2]] } />}>
-          <Route path="/patientdash" element={<PatientDash />} />
+          <Route path="/patient" element={<Patient />} />
           <Route path="/test-components" element={<TestComponent />} />
         </Route>
 

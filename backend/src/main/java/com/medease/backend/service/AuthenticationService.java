@@ -10,9 +10,11 @@ import com.medease.backend.entity.TokenType;
 import com.medease.backend.entity.User;
 import com.medease.backend.repository.TokenRepository;
 import com.medease.backend.repository.UserRepository;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,6 +37,8 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    @Value("${refresh-token.expiration}")
+    private int refreshExpiration;
 
     // Only patients can register to the system. other ROLES like DOCTOR, HLC are added by Admin
     public AuthenticationResponse register(RegisterRequest request) {
@@ -59,7 +63,7 @@ public class AuthenticationService {
     }
 
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -72,15 +76,23 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
+        createCookie(response ,refreshToken, refreshExpiration/1000);
         var userRole = user.getRole();
 
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
-                .refreshToken(refreshToken)
                 .role(userRole)
                 .build();
+    }
+
+    private void createCookie(HttpServletResponse response ,String refreshToken, int refreshExpiration) {
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setMaxAge(refreshExpiration);
+        refreshCookie.setPath("/");   //can be accessed from anywhere (global)
+        refreshCookie.setHttpOnly(true);
+        response.addCookie(refreshCookie);
     }
 
 
@@ -108,14 +120,16 @@ public class AuthenticationService {
     }
 
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;
 
-        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return;
-        }
-        refreshToken = authHeader.substring(7);
+        refreshToken = getRefreshTokenFromCookie(request);
+
+//        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+//            return;
+//        }
+//        refreshToken = authHeader.substring(7);
         //from jwt extract data
         userEmail = jwtService.extractUsername(refreshToken);
         if(userEmail != null ) {
@@ -134,5 +148,17 @@ public class AuthenticationService {
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    private String getRefreshTokenFromCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refreshToke".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
 }
