@@ -8,7 +8,7 @@ const StepperControl = () => {
         hover:bg-slate-700 hover:text-white transition duration-200 ease-in-out font-poppins text-sm'>
             Back
         </button>
-        <button className='bg-green-500 text-white py--2 px-4 rounded-xl 
+        <button className='bg-secondary text-white py--2 px-4 rounded-xl 
         font-light cursor-pointer
         hover:bg-slate-700 hover:text-white transition duration-200 ease-in-out font-poppins text-sm'>
             Next

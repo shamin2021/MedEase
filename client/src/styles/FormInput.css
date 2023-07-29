@@ -1,0 +1,55 @@
+.formInput{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+}
+
+input{
+    padding: 15px;
+    margin: 0px 0px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+
+label{
+    font-size: 18px;
+    color: gray;
+
+    
+}
+
+span{
+    font-size: 12px;
+    padding: 3px;
+    color: red;
+    display: none;
+}
+
+input:invalid[focused="true"]{
+    border: 1px solid red;
+}
+
+input:invalid[focused="true"] ~ span{
+    display: block;
+}
+input[type="text"], input[type="password"], button, textarea {
+    padding: 0.25rem;
+    
+}
+.form-input{
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    border-radius: 0.3rem;
+    border: 1px solid #d9cece;
+}
+.form-label{
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    color: #353434;
+    margin-top: 15px;
+}
+.formInput#right{
+    margin-right : 20px;
+}

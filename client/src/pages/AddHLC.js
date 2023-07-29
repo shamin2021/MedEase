@@ -28,6 +28,7 @@ import {
   Stepper,
   useSteps,
 } from "@chakra-ui/react";
+import "../styles/TestComponent.css";
 
 import { useToast } from "@chakra-ui/react";
 

@@ -5,6 +5,8 @@ import App from './App';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TestComponent from './pages/TestComponent';
 import AddDoctor from "./pages/AddDoctor";
+import AddHLC from "./pages/AddHLC";
+import AddDoc from "./pages/AddDoc";
 import Register from './pages/Register';
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -21,6 +23,8 @@ root.render(
         <Route path="/register" element={<Register />} />
         <Route path="/test-components" element={<TestComponent />} />
         <Route path="/AddDoctor" element={<AddDoctor />} />
+        <Route path="/AddHLC" element={<AddHLC />} />
+        <Route path="/AddDoc" element={<AddDoc />} />
       </Routes>
     </Router>
   </ChakraProvider>
