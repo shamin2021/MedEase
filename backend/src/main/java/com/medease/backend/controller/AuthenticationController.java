@@ -1,9 +1,9 @@
 package com.medease.backend.controller;
 
 
-import com.medease.backend.dto.AuthenticationRequest;
-import com.medease.backend.dto.AuthenticationResponse;
-import com.medease.backend.dto.RegisterRequest;
+import com.medease.backend.dto.AuthenticationRequestDTO;
+import com.medease.backend.dto.AuthenticationResponseDTO;
+import com.medease.backend.dto.RegisterRequestDTO;
 import com.medease.backend.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,16 +22,16 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+    public ResponseEntity<AuthenticationResponseDTO> register(
+            @RequestBody RegisterRequestDTO request
 
     ){
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request,
+    public ResponseEntity<AuthenticationResponseDTO> authenticate(
+            @RequestBody AuthenticationRequestDTO request,
             HttpServletResponse response
 
     ){
