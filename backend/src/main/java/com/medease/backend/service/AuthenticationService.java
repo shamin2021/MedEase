@@ -52,7 +52,7 @@ public class AuthenticationService {
         saveUserToken(savedUser, jwtToken);
 
         return AuthenticationResponseDTO.builder()
-                .accessToken(jwtToken)
+                .message("Registered Successfully")
                 .build();
     }
 
@@ -72,12 +72,15 @@ public class AuthenticationService {
         var refreshToken = jwtService.generateRefreshToken(user);
         createCookie(response ,refreshToken, refreshExpiration/1000);
         var userRole = user.getRole();
+        var userID = user.getId();
 
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return AuthenticationResponseDTO.builder()
+                .message("Logged In Successfully")
                 .accessToken(jwtToken)
                 .role(userRole)
+                .id(userID)
                 .build();
     }
 
@@ -116,7 +119,7 @@ public class AuthenticationService {
     // can use AuthenticationResponseDTO as return type , but as refreshToken method is not invoked in the backend code it will give a warning
     // That's why objectMapper needed to serialize the response to JSON format
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        final String refreshToken;
+        String refreshToken = null;
         final String userEmail;
 
         refreshToken = getRefreshTokenFromCookie(request);
@@ -136,8 +139,13 @@ public class AuthenticationService {
               var accessToken = jwtService.generateToken(userDetails);
                 revokeAllUserTokens(userDetails);
                 saveUserToken(userDetails, accessToken);
+                var userRole = userDetails.getRole();
+                var userID = userDetails.getId();
+
               var authResponse = AuthenticationResponseDTO.builder()
                       .accessToken(accessToken)
+                      .role(userRole)
+                      .id(userID)
                       .build();
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
@@ -148,7 +156,7 @@ public class AuthenticationService {
         Cookie[] cookies = request.getCookies();
         if(cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("refreshToken".equals(cookie.getName())) {
+                if (cookie.getName().equals("refreshToken")) {
                     return cookie.getValue();
                 }
             }

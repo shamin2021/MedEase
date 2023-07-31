@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RegisterUser } from '../services/AuthService';
 import { Link } from 'react-router-dom';
 
+import axios from '../constants/axios';
 import '../styles/Register.css';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -13,11 +13,11 @@ const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
+    const [email, setUser] = useState('');
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
-    const [pwd, setPwd] = useState('');
+    const [password, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
     const [pwdFocus, setPwdFocus] = useState(false);
 
@@ -33,25 +33,25 @@ const Register = () => {
     }, [])
 
     useEffect(() => {
-        setValidName(USER_REGEX.test(user));
-    }, [user])
+        setValidName(USER_REGEX.test(email));
+    }, [email])
 
     useEffect(() => {
-        setValidPwd(PWD_REGEX.test(pwd));
-        setValidMatch(pwd === matchPwd);
-    }, [pwd, matchPwd])
+        setValidPwd(PWD_REGEX.test(password));
+        setValidMatch(password === matchPwd);
+    }, [password, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd, matchPwd])
+    }, [email, password, matchPwd])
 
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        const v1 = USER_REGEX.test(user);
-        const v2 = PWD_REGEX.test(pwd);
+
+        const v1 = USER_REGEX.test(email);
+        const v2 = PWD_REGEX.test(password);
         if (!v1 || !v2) {
             setErrMsg("Invalid Entry");
             return;
@@ -59,13 +59,26 @@ const Register = () => {
 
 
         try {
-            await RegisterUser(user, pwd);
+            const response = await axios.post('/auth/register',
+                JSON.stringify({ email, password }),
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            console.log(response?.data);
             setSuccess(true);
             setUser('');
             setPwd('');
             setMatchPwd('');
         } catch (err) {
-            setErrMsg(err.message);
+            if (!err?.response) {
+                setErrMsg('No Server Response');
+            } else if (err.response?.status === 409) {
+                setErrMsg('Username Taken');
+            } else {
+                setErrMsg('Registration Failed');
+            }
             errRef.current.focus();
         }
     }
@@ -87,7 +100,7 @@ const Register = () => {
                         <label htmlFor="username">
                             Username:
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
+                            <FontAwesomeIcon icon={faTimes} className={validName || !email ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="text"
@@ -95,14 +108,14 @@ const Register = () => {
                             ref={userRef}
                             autoComplete="off"
                             onChange={(e) => setUser(e.target.value)}
-                            value={user}
+                            value={email}
                             required
                             aria-invalid={validName ? "false" : "true"}
                             aria-describedby="uidnote"
                             onFocus={() => setUserFocus(true)}
                             onBlur={() => setUserFocus(false)}
                         />
-                        <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
+                        <p id="uidnote" className={userFocus && email && !validName ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             4 to 24 characters.<br />
                             Must begin with a letter.<br />
@@ -113,13 +126,13 @@ const Register = () => {
                         <label htmlFor="password">
                             Password:
                             <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
+                            <FontAwesomeIcon icon={faTimes} className={validPwd || !password ? "hide" : "invalid"} />
                         </label>
                         <input
                             type="password"
                             id="password"
                             onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
+                            value={password}
                             required
                             aria-invalid={validPwd ? "false" : "true"}
                             aria-describedby="pwdnote"
@@ -160,8 +173,8 @@ const Register = () => {
                     <p>
                         Already registered?<br />
                         <span className="line">
-        
-                                <Link to="/login">Sign In</Link>
+
+                            <Link to="/login">Sign In</Link>
                         </span>
                     </p>
                 </section>

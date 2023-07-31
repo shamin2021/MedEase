@@ -11,4 +11,13 @@ public class HomeController {
     public ResponseEntity<String > welcomeUser() {
         return ResponseEntity.ok("Welcome To MedEase");
     }
+
+    @GetMapping("/users")
+    public ResponseEntity<String > users() {
+        return ResponseEntity.ok("Welcome To MedEase");
+    }
+
+
 }
+
+

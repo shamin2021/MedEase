@@ -13,8 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationResponseDTO {
 
+    @JsonProperty("message")
+    private String message;
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("role")
     private Role role;
+    @JsonProperty("user_id")
+    private Integer id;
 }

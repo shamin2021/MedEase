@@ -35,8 +35,8 @@ const Login = () => {
                     withCredentials: true
                 }
             );
-            const roles = response?.data?.role;
-            setAuth({ email, password, roles });
+            console.log(response.data);
+            setAuth(response?.data);
             setEmail('');
             setPassword('');
 

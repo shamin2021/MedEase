@@ -21,6 +21,11 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
+    @PostMapping("/users")
+    public ResponseEntity<String > users() {
+        return ResponseEntity.ok("Welcome To MedEase");
+    }
+
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponseDTO> register(
             @RequestBody RegisterRequestDTO request
@@ -38,7 +43,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.authenticate(request, response));
     }
 
-    @PostMapping("/refresh-token")
+    @GetMapping("/refreshToken")
     public void refreshToken(
             HttpServletRequest request,
             HttpServletResponse response

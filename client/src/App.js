@@ -9,6 +9,7 @@ import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
 import Layout from './components/Layout';
+import Users from './pages/Users';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           {/* protected routes  */}
           <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
             <Route path="/patient" element={<Patient />} />
+            <Route path="/users" element={<Users />} />
           </Route>
 
           {/* 404 routes */}
