@@ -7,6 +7,8 @@ import Landing from './pages/Landing';
 import Patient from './pages/Patient';
 import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
+import Missing from './pages/Missing';
+import Layout from './components/Layout';
 
 function App() {
 
@@ -21,17 +23,22 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/landing" element={<Landing />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
-
-        <Route element={<RequireAuth allowedRoles={ [ROLES[2]] } />}>
-          <Route path="/patient" element={<Patient />} />
+        <Route path="/" element={<Layout />} >
+          <Route path="/" element={<Landing />} />
+          <Route path="/landing" element={<Landing />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
-        </Route>
 
+          {/* protected routes  */}
+          <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
+            <Route path="/patient" element={<Patient />} />
+          </Route>
+
+          {/* 404 routes */}
+          <Route path="*" element={<Missing />} />
+        </Route>
       </Routes>
     </Router>
   );
