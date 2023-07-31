@@ -1,9 +1,9 @@
 package com.medease.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.medease.backend.dto.AuthenticationRequest;
-import com.medease.backend.dto.AuthenticationResponse;
-import com.medease.backend.dto.RegisterRequest;
+import com.medease.backend.dto.AuthenticationRequestDTO;
+import com.medease.backend.dto.AuthenticationResponseDTO;
+import com.medease.backend.dto.RegisterRequestDTO;
 import com.medease.backend.entity.Role;
 import com.medease.backend.entity.Token;
 import com.medease.backend.entity.TokenType;
@@ -37,7 +37,7 @@ public class AuthenticationService {
     private int refreshExpiration;
 
     // Only patients can register to the system. other ROLES like DOCTOR, HLC are added by Admin
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponseDTO register(RegisterRequestDTO request) {
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
@@ -51,13 +51,13 @@ public class AuthenticationService {
 
         saveUserToken(savedUser, jwtToken);
 
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDTO.builder()
                 .accessToken(jwtToken)
                 .build();
     }
 
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
+    public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request, HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -75,7 +75,7 @@ public class AuthenticationService {
 
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDTO.builder()
                 .accessToken(jwtToken)
                 .role(userRole)
                 .build();
@@ -113,6 +113,8 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
+    // can use AuthenticationResponseDTO as return type , but as refreshToken method is not invoked in the backend code it will give a warning
+    // That's why objectMapper needed to serialize the response to JSON format
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final String refreshToken;
         final String userEmail;
@@ -134,7 +136,7 @@ public class AuthenticationService {
               var accessToken = jwtService.generateToken(userDetails);
                 revokeAllUserTokens(userDetails);
                 saveUserToken(userDetails, accessToken);
-              var authResponse = AuthenticationResponse.builder()
+              var authResponse = AuthenticationResponseDTO.builder()
                       .accessToken(accessToken)
                       .build();
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
