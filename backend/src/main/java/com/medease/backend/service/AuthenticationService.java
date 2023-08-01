@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -84,14 +85,6 @@ public class AuthenticationService {
                 .build();
     }
 
-    private void createCookie(HttpServletResponse response ,String refreshToken, int refreshExpiration) {
-        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
-        refreshCookie.setMaxAge(refreshExpiration);
-        refreshCookie.setPath("/");   //can be accessed from anywhere (global)
-        refreshCookie.setHttpOnly(true);
-        response.addCookie(refreshCookie);
-    }
-
 
     // revoke when more than 1 valid tokens are saved
     private void revokeAllUserTokens(User user) {
@@ -150,6 +143,39 @@ public class AuthenticationService {
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+
+    public AuthenticationResponseDTO logout(HttpServletRequest request, HttpServletResponse response) {
+
+        SecurityContextHolder.clearContext();
+
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+
+        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return AuthenticationResponseDTO.builder()
+                    .message("Logout Authentication Error")
+                    .build();
+        }
+
+        jwt = authHeader.substring(7);
+        var email = jwtService.extractUsername(jwt);
+        var user = this.userRepository.findByEmail(email).orElseThrow();
+
+        revokeAllUserTokens(user);
+        createCookie(response, "", 0);
+        return AuthenticationResponseDTO.builder()
+                .message("Logout Successful")
+                .build();
+    }
+
+    private void createCookie(HttpServletResponse response ,String refreshToken, int refreshExpiration) {
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setMaxAge(refreshExpiration);
+        refreshCookie.setPath("/");   //can be accessed from anywhere (global)
+        refreshCookie.setHttpOnly(true);
+        response.addCookie(refreshCookie);
     }
 
     private String getRefreshTokenFromCookie(HttpServletRequest request) {

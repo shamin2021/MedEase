@@ -38,6 +38,15 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.authenticate(request, response));
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<AuthenticationResponseDTO> logout(
+            HttpServletRequest request,
+            HttpServletResponse response
+
+    ){
+        return ResponseEntity.ok(authenticationService.logout(request, response));
+    }
+
     @GetMapping("/refreshToken")
     public void refreshToken(
             HttpServletRequest request,
