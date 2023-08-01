@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Landing = () => {
+const Home = () => {
   return (
     <div>
       <h1>Welcome To MedEase</h1>
@@ -8,4 +8,4 @@ const Landing = () => {
   )
 }
 
-export default Landing
+export default Home

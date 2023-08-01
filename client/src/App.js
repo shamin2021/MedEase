@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TestComponent from './pages/TestComponent';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import Landing from './pages/Landing';
-import Patient from './pages/Patient';
+import Home from './pages/Home';
+import Patient from './pages/Patient/Patient';
+import Admin from './pages/Admin/Admin';
 import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
@@ -27,8 +28,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />} >
 
-          <Route path="/" element={<Landing />} />
-          <Route path="/landing" element={<Landing />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
@@ -56,6 +57,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
               {/* routes only for ADMIN */}
+              <Route path="/admin" element={<Admin />} />
             </Route>
           </Route>
           {/* 404 routes */}

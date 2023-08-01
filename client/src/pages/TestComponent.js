@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from '../components/NavBar'
+import Header from '../components/Header'
 
-import { Button} from '@chakra-ui/react'
 
 const TestComponent = () => {
 
@@ -10,9 +10,9 @@ const TestComponent = () => {
   return (
     <div>
 
-      {/* <Button colorScheme='blue'>Button</Button> */}
+      <Header />
       <NavBar />
-
+      
     </div>
   )
 }
