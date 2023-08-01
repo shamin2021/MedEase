@@ -54,7 +54,10 @@ input[type="text"], input[type="password"], button, textarea {
 .formInput#right{
     margin-right : 20px;
 }
-
+.css-7m7djy {
+height: 10px;
+width:10px;
+}
 
 .image-upload-container {
     padding: 2rem;

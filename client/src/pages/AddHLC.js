@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "../styles/FormInput.css";
+import ButtonImage from "../components/Button";
 import {
   Progress,
   Box,
@@ -27,61 +29,60 @@ import {
   StepTitle,
   Stepper,
   useSteps,
+  border,
+  Center,
 } from "@chakra-ui/react";
-import "../styles/TestComponent.css";
-
 import { useToast } from "@chakra-ui/react";
+const steps = [
+  { title: "General", description: "Contact Info" },
+  { title: "PHI Area", description: "Date & Time" },
+  { title: "Incharge", description: "Select Rooms" },
+];
 
 const Form1 = () => {
-  const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
   return (
     <>
-      <div className="text-center font-bold font-poppins">User Registration</div>
-      <Flex>
-        <FormControl mr="5%">
-          <FormLabel
-            className="text-xs text-red"
-            htmlFor="first-name"
-            fontWeight={"normal"}
-          >
-            First name
-          </FormLabel>
-          <Input id="first-name" placeholder="First name" />
-        </FormControl>
-
-        <FormControl>
-          <FormLabel htmlFor="last-name" fontWeight={"normal"}>
-            Last name
-          </FormLabel>
-          <Input id="last-name" placeholder="First name" />
-        </FormControl>
-      </Flex>
-      <FormControl mt="2%">
-        <FormLabel htmlFor="email" fontWeight={"normal"}>
-          Email address
-        </FormLabel>
-        <Input id="email" type="email" />
-        <FormHelperText>We'll never share your email.</FormHelperText>
-      </FormControl>
-
-      <FormControl>
-        <FormLabel htmlFor="password" fontWeight={"normal"} mt="2%">
-          Password
-        </FormLabel>
-        <InputGroup size="md">
-          <Input
-            pr="4.5rem"
-            type={show ? "text" : "password"}
-            placeholder="Enter password"
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
+      <form className="mt-0">
+        <div className="container flex">
+          <div className="container">
+            <div className="formInput">
+              <label className="form-label">
+                Name <text className="text-[#ff2727]">*</text>
+              </label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+            <div className="formInput">
+              <label className="form-label">
+                Mobile Number <text className="text-[#ff2727]">*</text>
+              </label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+          </div>
+          <div className="container ml-3 pt-5 justify-right">
+            <ButtonImage />
+          </div>
+        </div>
+        <div className="container flex">
+          <div className="container justify-right">
+            <div className="formInput" id="right">
+              <label className="form-label">
+                Email <text className="text-[#ff2727]">*</text>
+              </label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div className="formInput">
+          <label className="form-label">
+            MOH Area <text className="text-[#ff2727]">*</text>
+          </label>
+          <input type="text" id="username" className="form-input" />
+          <span></span>
+        </div>
+      </form>
     </>
   );
 };
@@ -89,141 +90,49 @@ const Form1 = () => {
 const Form2 = () => {
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
-        User Details
-      </Heading>
-      <FormControl as={GridItem} colSpan={[6, 3]}>
-        <FormLabel
-          htmlFor="country"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: "gray.50",
-          }}
-        >
-          Country / Region
-        </FormLabel>
-        <Select
-          id="country"
-          name="country"
-          autoComplete="country"
-          placeholder="Select option"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        >
-          <option>United States</option>
-          <option>Canada</option>
-          <option>Mexico</option>
-        </Select>
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={6}>
-        <FormLabel
-          htmlFor="street_address"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: "gray.50",
-          }}
-          mt="2%"
-        >
-          Street address
-        </FormLabel>
-        <Input
-          type="text"
-          name="street_address"
-          id="street_address"
-          autoComplete="street-address"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-        <FormLabel
-          htmlFor="city"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: "gray.50",
-          }}
-          mt="2%"
-        >
-          City
-        </FormLabel>
-        <Input
-          type="text"
-          name="city"
-          id="city"
-          autoComplete="city"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-        <FormLabel
-          htmlFor="state"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: "gray.50",
-          }}
-          mt="2%"
-        >
-          State / Province
-        </FormLabel>
-        <Input
-          type="text"
-          name="state"
-          id="state"
-          autoComplete="state"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
-
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-        <FormLabel
-          htmlFor="postal_code"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: "gray.50",
-          }}
-          mt="2%"
-        >
-          ZIP / Postal
-        </FormLabel>
-        <Input
-          type="text"
-          name="postal_code"
-          id="postal_code"
-          autoComplete="postal-code"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
+      <form className="mt-0">
+        <div className="container flex">
+          <div className="container">
+            <div className="formInput">
+              <label className="form-label">
+                PHM Area <text className="text-[#ff2727]">*</text>
+              </label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+          </div>
+          <div className="container ml-3 justify-right">
+            <div className="formInput" id="right">
+              <label className="form-label">
+                PHI Area <text className="text-[#ff2727]">*</text>
+              </label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div className="formInput">
+          <label className="form-label">
+            GN Division <text className="text-[#ff2727]">*</text>
+          </label>
+          <input type="text" id="username" className="form-input" />
+          <span></span>
+        </div>
+        <div className="formInput" id="right">
+          <label className="form-label">
+            DS Division <text className="text-[#ff2727]">*</text>
+          </label>
+          <input type="text" id="username" className="form-input" />
+          <span></span>
+        </div>
+        <div className="formInput">
+          <label className="form-label">
+            GN Number <text className="text-[#ff2727]">*</text>
+          </label>
+          <input type="text" id="username" className="form-input" />
+          <span></span>
+        </div>
+      </form>
     </>
   );
 };
@@ -231,225 +140,191 @@ const Form2 = () => {
 const Form3 = () => {
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal">
-        Social Handles
-      </Heading>
-      <SimpleGrid columns={1} spacing={6}>
-        <FormControl as={GridItem} colSpan={[3, 2]}>
-          <FormLabel
-            fontSize="sm"
-            fontWeight="md"
-            color="gray.700"
-            _dark={{
-              color: "gray.50",
-            }}
-          >
-            Website
-          </FormLabel>
-          <InputGroup size="sm">
-            <InputLeftAddon
-              bg="gray.50"
-              _dark={{
-                bg: "gray.800",
-              }}
-              color="gray.500"
-              rounded="md"
-            >
-              http://
-            </InputLeftAddon>
-            <Input
-              type="tel"
-              placeholder="www.example.com"
-              focusBorderColor="brand.400"
-              rounded="md"
-            />
-          </InputGroup>
-        </FormControl>
-
-        <FormControl id="email" mt={1}>
-          <FormLabel
-            fontSize="sm"
-            fontWeight="md"
-            color="gray.700"
-            _dark={{
-              color: "gray.50",
-            }}
-          >
-            About
-          </FormLabel>
-          <Textarea
-            placeholder="you@example.com"
-            rows={3}
-            shadow="sm"
-            focusBorderColor="brand.400"
-            fontSize={{
-              sm: "sm",
-            }}
-          />
-          <FormHelperText>
-            Brief description for your profile. URLs are hyperlinked.
-          </FormHelperText>
-        </FormControl>
-      </SimpleGrid>
+      <form className="mt-0">
+        <div className="container flex">
+          <div className="container">
+            <div className="formInput">
+              <label className="form-label">
+                Name of Incharge <text className="text-[#ff2727]">*</text>
+              </label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+            <div className="formInput">
+              <label className="form-label">
+                Designation <text className="text-[#ff2727]">*</text>
+              </label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div className="container flex">
+          <div className="container justify-right">
+            <div className="formInput" id="right">
+              <label className="form-label">
+                Email <text className="text-[#ff2727]">*</text>
+              </label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div className="formInput">
+          <label className="form-label">
+            Mobile Number <text className="text-[#ff2727]">*</text>
+          </label>
+          <input type="text" id="username" className="form-input" />
+          <span></span>
+        </div>
+      </form>
     </>
   );
 };
 
-const Form4 = () => {
-  return (
-    <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal">
-        Social Handles
-      </Heading>
-      <SimpleGrid columns={1} spacing={6}>
-        <FormControl as={GridItem} colSpan={[3, 2]}>
-          <FormLabel
-            fontSize="sm"
-            fontWeight="md"
-            color="gray.700"
-            _dark={{
-              color: "gray.50",
-            }}
-          >
-            Website
-          </FormLabel>
-          <InputGroup size="sm">
-            <InputLeftAddon
-              bg="gray.50"
-              _dark={{
-                bg: "gray.800",
-              }}
-              color="gray.500"
-              rounded="md"
-            >
-              http://
-            </InputLeftAddon>
-            <Input
-              type="tel"
-              placeholder="www.example.com"
-              focusBorderColor="brand.400"
-              rounded="md"
-            />
-          </InputGroup>
-        </FormControl>
+const AddHLC = (props) => {
 
-        <FormControl id="email" mt={1}>
-          <FormLabel
-            fontSize="sm"
-            fontWeight="md"
-            color="gray.700"
-            _dark={{
-              color: "gray.50",
-            }}
-          >
-            About
-          </FormLabel>
-          <Textarea
-            placeholder="you@example.com"
-            rows={3}
-            shadow="sm"
-            focusBorderColor="brand.400"
-            fontSize={{
-              sm: "sm",
-            }}
-          />
-          <FormHelperText>
-            Brief description for your profile. URLs are hyperlinked.
-          </FormHelperText>
-        </FormControl>
-      </SimpleGrid>
-    </>
-  );
-};
+    const toast = useToast();
+    const [step, setStep] = useState(0);
+    const [progress, setProgress] = useState(33.33);
 
-const steps = [
-  { title: "First", description: "Contact Info" },
-  { title: "Second", description: "Date & Time" },
-  { title: "Third", description: "Select Rooms" },
-];
+    const { activeStep } = useSteps({
+      index: 0,
+      count: step,
+    });
 
-export default function AddHLC() {
-  const toast = useToast();
-  const [step, setStep] = useState(0);
-  const [progress, setProgress] = useState(33.33);
-
-  const { activeStep } = useSteps({
-    index: 0,
-    count: step,
-  });
-  
   return (
     <div className="h-screen py-1 bg-primary">
-      <Box className="md:w-1/2 mx-auto shadow-xl rounded-2xl pb-5 py-5 bg-white mt-6 p-10 text-xs">
-        <Stepper index={step}>
-          {steps.map((step, index) => (
-            <Step key={index}>
-              <StepIndicator
-                className="bg-primary border-none"
-                fontSize="0.5rem"
-              >
-                <StepStatus
-                  complete={<StepIcon />}
-                  incomplete={<StepNumber />}
-                  active={<StepNumber />}
-                />
-              </StepIndicator>
-
-              <StepSeparator />
-            </Step>
-          ))}
-        </Stepper>
-        <hr className="w-3/4 mx-auto mt-5 mb-5" />
-        {step === 0 ? <Form1 /> : step === 1 ? <Form2 /> : <Form3 />}
-        <ButtonGroup mt="5%" w="100%">
-          <Flex w="100%" justifyContent="space-between">
-            <Flex>
-              <Button
-                onClick={() => {
-                  setStep(step - 1);
-                  setProgress(progress - 33.33);
-                }}
-                isDisabled={step === 0}
-                colorScheme="teal"
-                variant="solid"
-                w="7rem"
-                mr="5%"
-              >
-                Back
-              </Button>
-              <Button
-                w="7rem"
-                isDisabled={step === 3}
-                onClick={() => {
-                  setStep(step + 1);
-                  if (step === 3) {
-                    setProgress(100);
-                  } else {
-                    setProgress(progress + 33.33);
-                  }
-                }}
-                colorScheme="teal"
-                variant="outline"
-              >
-                Next
-              </Button>
+      <div className="md:w-1/2 h-[26rem] mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 ">
+        <div className="container horizontal justify-center text-xs py-1">
+          <div className="flex justify-center text-lg font-medium m-3 mb-0">
+            HLC Registration
+          </div>
+          <div className="flex justify-center font-light text-stone-800- text-[14px] text-[#797878]">
+            Register the HLC here with the relevant details
+          </div>
+          <hr className="w-2/3 mx-auto mt-3 mb-0" />
+        </div>
+        <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
+          <Stepper index={step} className="w-3/4 mx-auto mt-3">
+            {steps.map((step, index) => (
+              <Step key={index}>
+                <div>
+                  <StepStatus
+                    complete={
+                      <>
+                        <StepIndicator className="bg-[#c9c9c9] w-10 border-none">
+                          <StepIcon
+                            fontSize={16}
+                            className="text-white text-sm"
+                          />
+                        </StepIndicator>
+                      </>
+                    }
+                    incomplete={
+                      <StepIndicator className="bg-[#c9c9c9] w-10 border-none">
+                        <StepNumber
+                          fontSize={18}
+                          className="text-white text-sm"
+                        />
+                      </StepIndicator>
+                    }
+                    active={
+                      <StepIndicator className="w-10 border-red-200">
+                        <StepNumber
+                          fontSize={18}
+                          className="text-white text-sm"
+                          color={"#645bee"}
+                        />
+                      </StepIndicator>
+                    }
+                  />
+                  <div className="mx-auto">
+                    <StepTitle
+                      className="mx-auto"
+                      fontSize={12}
+                      fontFamily={"Nunito"}
+                      color={"#b3b3b3"}
+                    >
+                      {step.title}
+                    </StepTitle>
+                  </div>
+                </div>
+                <StepSeparator className="mb-3" />
+              </Step>
+            ))}
+          </Stepper>
+          {step === 0 ? <Form1 /> : step === 1 ? <Form2 /> : <Form3 />}
+          <ButtonGroup w="100%" mb="5%">
+            <Flex w="100%" justifyContent="space-between">
+              <Flex className="mx-auto">
+                <Button
+                  onClick={() => {
+                    setStep(step - 1);
+                    setProgress(progress - 33.33);
+                  }}
+                  isDisabled={step === 0}
+                  variant="solid"
+                  w="4rem"
+                  mr="5%"
+                  mt="0%"
+                  backgroundColor="#645bee"
+                  color={"white"}
+                  h="1.5rem"
+                  borderRadius={20}
+                  fontSize={16}
+                >
+                  Back
+                </Button>
+                {step === 2 ? (
+                  <div className="w-40 text-center">
+                    <Button
+                      w="6rem"
+                      h="1.5rem"
+                      float={"center"}
+                      mt="0%"
+                      fontSize={16}
+                      colorScheme="red"
+                      borderRadius={20}
+                      onClick={() => {
+                        setStep(step + 1);
+                        setProgress(progress - 33.33);
+                      }}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="w-40"></div>
+                )}
+                <Button
+                  w="4rem"
+                  h="1.5rem"
+                  borderRadius={20}
+                  backgroundColor="#645bee"
+                  isDisabled={step === 3}
+                  fontSize={16}
+                  mt="0%"
+                  color={"white"}
+                  _hover={"red"}
+                  onClick={() => {
+                    setStep(step + 1);
+                    if (step === 3) {
+                      setProgress(100);
+                    } else {
+                      setProgress(progress + 33.33);
+                    }
+                  }}
+                >
+                  Next
+                </Button>
+              </Flex>
             </Flex>
-            {step === 2 ? (
-              <Button
-                w="7rem"
-                colorScheme="red"
-                variant="solid"
-                onClick={() => {
-                  setStep(step + 1);
-                  setProgress(progress - 33.33);
-                }}
-              >
-                Submit
-              </Button>
-            ) : null}
-          </Flex>
-        </ButtonGroup>
-      </Box>
+          </ButtonGroup>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default AddHLC;
