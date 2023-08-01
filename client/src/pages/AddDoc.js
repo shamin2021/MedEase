@@ -77,7 +77,7 @@ const AddDoc = props => {
               <input type="text" id="username" className="form-input" />
               <span></span>
             </div>
-            <button className="bg-secondary w-1/4 mx-auto rounded-md p-1 text-[#ffffff] font-semibold ">
+            <button className="bg-secondary w-1/4 mx-auto rounded-2xl p-1 text-[#ffffff] font-semibold ">
               Submit
             </button>
           </form>

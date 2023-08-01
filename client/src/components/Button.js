@@ -30,7 +30,7 @@ const FileInput = () => {
               alt={selectedImage.name}
             />
             <div
-              className="text-[15px] text-[#797878] text-center p-1"
+              className="text-[16px] text-[#353434] text-center p-1"
               variant="contained"
               color="primary"
               component="span"
@@ -44,7 +44,7 @@ const FileInput = () => {
               <img htmlFor="select-image" src={logo} className="mx-auto p-3 " />
             </div>
             <div
-              className="text-[15px] text-[#797878] text-center p-1"
+              className="text-[16px] text-[#353434] text-center p-1"
               variant="contained"
               color="primary"
               component="span"
