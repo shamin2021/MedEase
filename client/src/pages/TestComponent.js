@@ -1,17 +1,17 @@
 import React from 'react'
+import NavBar from '../components/NavBar'
 
 import { Button} from '@chakra-ui/react'
-
-import '../styles/TestComponent.css'
 
 const TestComponent = () => {
 
   // const addColor = '#32a852'
 
   return (
-    <div className='TestComponent'>
+    <div>
 
-      <Button colorScheme='blue'>Button</Button>
+      {/* <Button colorScheme='blue'>Button</Button> */}
+      <NavBar />
 
     </div>
   )

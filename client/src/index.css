@@ -17,7 +17,7 @@ body {
   min-height: 100vh;
 }
 
-.App {
+/* .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,7 +25,7 @@ body {
   min-height: 100vh;
   padding: 1rem 0.5rem;
   background-color: dodgerblue;
-}
+} */
 
 .persistCheck {
   font-size: 0.75rem;

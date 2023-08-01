@@ -10,25 +10,17 @@ module.exports = {
       'xl': '1280px',
       '2xl': '1536px',
     },
-    colors: {
-      primary: "#dcecf8",
-      secondary: "#645bee",
-      tertiary: "#d0fbff",
-      quaternary: "#e8def7",
-    },
     fontFamily: {
       poppins: ["Poppins", "sans-serif"],
     },
 
     extend: {
-
-      // spacing: {
-      //   '128': '32rem',
-      //   '144': '36rem',
-      // },
-      // borderRadius: {
-      //   '4xl': '2rem',
-      // }
+      colors: {
+        primary: "#dcecf8",
+        secondary: "#645bee",
+        tertiary: "#d0fbff",
+        quaternary: "#e8def7",
+      },
 
     }
   },
