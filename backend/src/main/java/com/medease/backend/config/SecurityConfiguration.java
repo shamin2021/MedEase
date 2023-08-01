@@ -54,20 +54,4 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-
-    // cors configuration is applied to all the origins
-    @Bean
-    public WebMvcConfigurer CorsConfig() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings( @NonNull CorsRegistry registry ) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
-                        .allowedHeaders("*")
-                        .allowedMethods("*")
-                        .allowCredentials(true);
-            }
-        };
-    }
-
 }

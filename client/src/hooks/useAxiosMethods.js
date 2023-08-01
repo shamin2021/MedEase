@@ -16,11 +16,11 @@ const useAxiosMethods = () => {
                 });
                 isMounted && setResponse(response.data);
             } catch (err) {
-                throw err;
+                console.error(err);
             }
         }
 
-        getData();
+        getData().then();
 
         return () => {
             isMounted = false;
@@ -43,7 +43,7 @@ const useAxiosMethods = () => {
             }
         }
 
-        postData();
+        postData().then();
 
         return () => {
             isMounted = false;
@@ -66,7 +66,7 @@ const useAxiosMethods = () => {
             }
         }
 
-        putData();
+        putData().then();
 
         return () => {
             isMounted = false;
@@ -89,7 +89,7 @@ const useAxiosMethods = () => {
             }
         }
 
-        deleteData();
+        deleteData().then();
 
         return () => {
             isMounted = false;

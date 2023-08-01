@@ -21,11 +21,6 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/users")
-    public ResponseEntity<String > users() {
-        return ResponseEntity.ok("Welcome To MedEase");
-    }
-
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponseDTO> register(
             @RequestBody RegisterRequestDTO request

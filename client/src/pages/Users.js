@@ -1,22 +1,47 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import useAxiosMethods from "../hooks/useAxiosMethods";
+// import useAxiosMethods from "../hooks/useAxiosMethods";
+import useAxiosPrivate from "../hooks/useAxiosPrivate"
+
 
 const Users = () => {
     const [users, setUsers] = useState();
      
-    const { get } = useAxiosMethods();
+    // const { get } = useAxiosMethods();
+    const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
 
-        try {
-            get('/Home/users', setUsers);
-        } catch (err) {
-            console.error(err);
-            navigate('/login', { state: { from: location }, replace: true });
+        let isMounted = true;
+        const controller = new AbortController();
+
+        const getData = async () => {
+            try {
+                const response = await axiosPrivate.get('/Home/users', {
+                    signal: controller.signal
+                });
+                isMounted && setUsers(response.data);
+            } catch (err) {
+                console.error(err);
+                navigate('/login', { state: { from: location }, replace: true });
+            }
         }
+
+        getData();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+
+        // try {
+        //     get('/Home/users', setUsers);
+        // } catch (err) {
+        //     console.error(err);
+        //     navigate('/login', { state: { from: location }, replace: true });
+        // }
 
     }, [])
 

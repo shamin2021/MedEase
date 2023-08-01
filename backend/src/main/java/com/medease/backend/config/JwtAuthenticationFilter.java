@@ -1,5 +1,7 @@
 package com.medease.backend.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.medease.backend.dto.AuthenticationResponseDTO;
 import com.medease.backend.repository.TokenRepository;
 import com.medease.backend.service.JwtService;
 import jakarta.servlet.FilterChain;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Component
 //create a constructor using private final
@@ -46,6 +49,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         //from jwt extract data
         userEmail = jwtService.extractUsername(jwt);
+        System.out.println(userEmail);
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
         // if user not authenticated
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
             // get user details from database
@@ -64,6 +69,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
+        else {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+
+            String errorMessage = "Invalid or expired token";
+                     System.out.println(errorMessage);  // this return name
+
+            var authResponse = AuthenticationResponseDTO.builder()
+                    .message("Token Expired")
+                    .build();
+            new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+        }
+
         filterChain.doFilter(request, response);
     }
 }
