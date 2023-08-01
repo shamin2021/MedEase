@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import "../styles/FormInput.css";
+import ButtonImage from "../components/Button";
 
-const AddDoc = () => {
+const AddDoc = props => {
+  const hiddenFileInput = React.useRef(null);
 
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  };
+  const handleChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    props.handleFile(fileUploaded);
+  };
   return (
     <div className="h-screen py-1 bg-primary">
-      <div className="md:w-1/2 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-12 ">
+      <div className="md:w-1/2 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 ">
         <div className="container horizontal justify-center text-xs py-1">
           <div className="flex justify-center text-lg font-medium m-3 mb-0">
             Doctor Registration
@@ -26,13 +35,14 @@ const AddDoc = () => {
                   <input type="text" id="username" className="form-input" />
                   <span></span>
                 </div>
-              </div>
-              <div className="container ml-3 justify-right">
                 <div className="formInput" id="right">
                   <label className="form-label">Last Name</label>
                   <input type="text" id="username" className="form-input" />
                   <span></span>
                 </div>
+              </div>
+              <div className="container ml-3 pt-5 justify-right">
+                <ButtonImage />
               </div>
             </div>
             <div className="container flex">
@@ -67,7 +77,6 @@ const AddDoc = () => {
               <input type="text" id="username" className="form-input" />
               <span></span>
             </div>
-
             <button className="bg-secondary w-1/4 mx-auto rounded-md p-1 text-[#ffffff] font-semibold ">
               Submit
             </button>
