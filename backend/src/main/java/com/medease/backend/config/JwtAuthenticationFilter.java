@@ -69,6 +69,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
+//        handle token expiration
         else {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");

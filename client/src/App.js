@@ -14,17 +14,17 @@ import Users from './pages/Users';
 function App() {
 
   const ROLES = {
-    1: "VISITOR",
-    2: "PATIENT",
-    3: "HLC",
-    4: "DOCTOR",
-    5: "ADMIN"
+    1: "PATIENT",
+    2: "HLC",
+    3: "DOCTOR",
+    4: "ADMIN"
   };
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />} >
+          
           <Route path="/" element={<Landing />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/register" element={<Register />} />
@@ -33,13 +33,31 @@ function App() {
           <Route path="/test-components" element={<TestComponent />} />
 
           {/* protected routes  */}
-          <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />}>
+          {/* routes allowed for all authenticated users */}
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
+            {/* routes only for PATIENT */}
             <Route path="/patient" element={<Patient />} />
             <Route path="/users" element={<Users />} />
           </Route>
 
+          <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
+            {/* routes only for HLC */}
+          </Route>
+          
+          <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
+            {/* routes only for DOCTOR */}
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
+            {/* routes only for ADMIN */}
+          </Route>
+
           {/* 404 routes */}
           <Route path="*" element={<Missing />} />
+
         </Route>
       </Routes>
     </Router>
