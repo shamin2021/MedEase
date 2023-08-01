@@ -8,12 +8,6 @@
     background-color: dodgerblue;
 }
 
-
-label,
-button {
-    margin-top: 1rem;
-}
-
 section {
     width: 100%;
     max-width: 420px;
@@ -31,11 +25,6 @@ form {
     justify-content: space-evenly;
     flex-grow: 1;
     padding-bottom: 1rem;
-}
-
-a,
-a:visited {
-    color: #fff;
 }
 
 input[type="text"],
