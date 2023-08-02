@@ -10,7 +10,6 @@ import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
 import Layout from './components/Layout';
-import Users from './pages/Users';
 
 import PersistLogin from './components/PersistLogin';
 
@@ -44,7 +43,6 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
-              <Route path="/users" element={<Users />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>

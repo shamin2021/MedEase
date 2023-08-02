@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 @Component
 //create a constructor using private final
@@ -47,10 +47,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authHeader.substring(7);
+        System.out.println(jwt);
         //from jwt extract data
         userEmail = jwtService.extractUsername(jwt);
-        System.out.println(userEmail);
-        System.out.println(SecurityContextHolder.getContext().getAuthentication());
 
         // if user not authenticated
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
@@ -61,6 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .orElse(false);
             // if user and object is valid
             if(jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+                System.out.println("token valid");
+                System.out.println(userDetails.getAuthorities());
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );
@@ -70,17 +71,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
-//        handle token expiration
+//        handle token expiration or invalidation
         else {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
             response.setHeader("Access-Control-Allow-Credentials", "true");
 
             String errorMessage = "Invalid or expired token";
-                     System.out.println(errorMessage);  // this return name
+                     System.out.println(errorMessage);
 
             var authResponse = AuthenticationResponseDTO.builder()
-                    .message("Token Expired")
+                    .message(errorMessage)
                     .build();
             new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
         }
