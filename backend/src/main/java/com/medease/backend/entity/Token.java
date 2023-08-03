@@ -1,5 +1,6 @@
 package com.medease.backend.entity;
 
+import com.medease.backend.enumeration.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

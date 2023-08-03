@@ -1,7 +1,7 @@
 package com.medease.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.medease.backend.entity.Role;
+import com.medease.backend.enumeration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

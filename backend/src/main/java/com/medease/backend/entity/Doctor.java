@@ -22,8 +22,9 @@ public class Doctor {
     @JoinColumn(name = "doctor_user_id", referencedColumnName = "id")
     private User doctor_user;
 
-    private String name;
-    private String speciality;  // need to think about adding a speciality entity with (speciality_ID, speciality_Name)  and referencing here
+    private String first_name;
+    private String last_name;
+    private String speciality;
 
     @Column(unique = true)
     private String license_number;
