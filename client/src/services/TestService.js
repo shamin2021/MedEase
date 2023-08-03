@@ -7,6 +7,7 @@ const TestService = () => {
 
     const TestService = async (url, data) => {
         try {
+            // used the open (unautheticated) axios instance
             const response = await axios.get(
                 url,
                 data, {
