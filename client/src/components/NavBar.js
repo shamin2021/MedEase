@@ -15,7 +15,7 @@ const NavBar = () => {
     const handleLogout = async () => {
 
         try {
-            await post('/auth/logout', null, setAuth);
+            post('/auth/logout', null, setAuth);
             navigate('/login');
 
         } catch (err) {
