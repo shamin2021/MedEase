@@ -6,7 +6,6 @@ const TestUsers = () => {
     const [users, setUsers] = useState({users: []}); // have to convert to array to use map function
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
-    const [state, setState] = useState(''); // to show the request status
     const [res, setRes] = useState(''); // to show the response from the server 
     const [updateId, setUpdateId] = useState(null); // to identify the specific user first
 
@@ -29,10 +28,14 @@ const TestUsers = () => {
     };
 
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
 
         try {
             post('/Home/addUser', { firstname, lastname }, setRes);
+            setFirstname('');
+            setLastname('');
         } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true });
@@ -43,7 +46,6 @@ const TestUsers = () => {
 
         try {
             del(`/Home/deleteUser/${userId}`, setRes);
-            fetchUsers().then();
         } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true });
@@ -61,10 +63,14 @@ const TestUsers = () => {
         setLastname(userToUpdate.lastname);
     };
 
-    const handleUpdate = async () => {
+    const handleUpdate = async (e) => {
+        e.preventDefault();
         try {
             const updatedData = { firstname, lastname };
-            put(`/Home/updateUser/${updateId}`, updatedData, setRes);;
+            put(`/Home/updateUser/${updateId}`, updatedData, setRes);
+            setUpdateId(null);
+            setFirstname('');
+            setLastname('');
 
 
         } catch (err) {
@@ -80,7 +86,7 @@ const TestUsers = () => {
         };
 
         fetchData();
-    }, []);
+    }, [res]);
 
 
     useEffect(() => {
@@ -98,19 +104,25 @@ const TestUsers = () => {
                     <div key={user.id}>
                         {user.firstname} {user.lastname}
                         <button onClick={() => handleEdit(user.id)}>Edit</button>
-                        <button onClick={() => handleDelete(user.id)}>Delete</button>
+                        <button onClick={() => {
+                            handleDelete(user.id).then(
+                                fetchUsers()
+                            );
+                        }
+                        }>Delete</button>
                     </div>)
             ) : (<p>No users</p>)}
             <br />
+
             <h2>ADD User</h2>
             <br />
 
             <form onSubmit={handleSubmit}>
-                {state ? <p>{state}</p> : null}
                 <label htmlFor="firstname">Firstname:</label>
                 <input
                     type="text"
                     id="firstname"
+                    className="m-5 bg-indigo-50"
                     autoComplete="off"
                     onChange={(e) => setFirstname(e.target.value)}
                     value={firstname}
@@ -120,6 +132,7 @@ const TestUsers = () => {
                 <input
                     type="text"
                     id="lastname"
+                    className="m-5 bg-indigo-50"
                     onChange={(e) => setLastname(e.target.value)}
                     value={lastname}
                     required
@@ -130,12 +143,13 @@ const TestUsers = () => {
             {updateId && (
                 <>
                     <h2>Edit User</h2>
+                    <br />
                     <form onSubmit={handleUpdate}>
-                        {state ? <p>{state}</p> : null}
                         <label htmlFor="editFirstname">Firstname:</label>
                         <input
                             type="text"
                             id="editFirstname"
+                            className="m-5 bg-indigo-50"
                             autoComplete="off"
                             onChange={(e) => setFirstname(e.target.value)}
                             value={firstname}
@@ -144,12 +158,13 @@ const TestUsers = () => {
                         <label htmlFor="editLastname">Lastname:</label>
                         <input
                             type="text"
+                            className="m-5 bg-indigo-50"
                             id="editLastname"
                             onChange={(e) => setLastname(e.target.value)}
                             value={lastname}
                             required
                         />
-                        <button>Update</button>
+                        <button className="mx-auto px-5 py-1 bg-indigo-100">Update</button>
                     </form>
                 </>
             )}
