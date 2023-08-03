@@ -36,7 +36,7 @@ public class TestUserService {
 
         testUserRepository.save(test);
         return GlobalResponseDTO.builder()
-                .status("success")
+                .status(200)
                 .message("Saved")
                 .build();
     }
@@ -50,7 +50,7 @@ public class TestUserService {
         testUserRepository.save(currentUser);
 
         return GlobalResponseDTO.builder()
-                .status("success")
+                .status(200)
                 .message("Updated")
                 .build();
     }
@@ -62,7 +62,7 @@ public class TestUserService {
         testUserRepository.delete(currentUser);
 
         return GlobalResponseDTO.builder()
-                .status("success")
+                .status(200)
                 .message("Deleted")
                 .build();
     }

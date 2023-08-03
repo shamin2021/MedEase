@@ -13,7 +13,7 @@ public class GlobalResponseDTO {
 
 //    use this to send success, error responses to front end
 
-    private String status;
+    private Integer status;
     private String message;
 
 }
