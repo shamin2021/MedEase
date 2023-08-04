@@ -40,7 +40,7 @@ const Login = () => {
             setEmail('');
             setPassword('');
 
-            const from = location.state?.from || { pathname: '/' + response?.data?.role?.toLowerCase()};
+            const from = location.state?.from || { pathname: '/' + response?.data?.role?.toLowerCase() };
             navigate(from, { replace: true });
 
         } catch (err) {
@@ -99,6 +99,9 @@ const Login = () => {
                             checked={persist}
                         />
                         <label htmlFor="persist">Remember Me</label>
+                    </div>
+                    <div className="reset">
+                        <Link to={"/forgot-password"}>Forgot Password?</Link>
                     </div>
                 </form>
                 <p>
