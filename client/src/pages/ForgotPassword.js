@@ -43,7 +43,7 @@ const ForgotPassword = () => {
           withCredentials: true
         }
       );
-
+      
       console.log(response.data);
       setState(response?.data?.message);
       setEmail('')
@@ -53,7 +53,7 @@ const ForgotPassword = () => {
       if (!err?.response) {
         setState('No Server Response');
       } else {
-        setState('No Regitered Account With The Email Provided');
+        setState('Error Occurred. Please Try Again');
       }
     }
   }

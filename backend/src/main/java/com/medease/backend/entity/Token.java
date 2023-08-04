@@ -28,7 +28,7 @@ public class Token {
     private boolean revoked;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
 }

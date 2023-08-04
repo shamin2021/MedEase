@@ -1,9 +1,8 @@
 package com.medease.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.medease.backend.dto.AuthenticationRequestDTO;
-import com.medease.backend.dto.AuthenticationResponseDTO;
-import com.medease.backend.dto.RegisterRequestDTO;
+import com.medease.backend.Exception.CustomException;
+import com.medease.backend.dto.*;
 import com.medease.backend.enumeration.Role;
 import com.medease.backend.entity.Token;
 import com.medease.backend.enumeration.TokenType;
@@ -32,6 +31,8 @@ public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final EmailService emailService;
+    private final SmsService smsService;
     private final AuthenticationManager authenticationManager;
 
     @Value("${refresh-token.expiration}")
@@ -50,7 +51,7 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(user);
 
-        saveUserToken(savedUser, jwtToken);
+        saveUserToken(savedUser, jwtToken, true);
 
         return AuthenticationResponseDTO.builder()
                 .message("Registered Successfully")
@@ -75,8 +76,8 @@ public class AuthenticationService {
         var userRole = user.getRole();
         var userID = user.getId();
 
-        revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
+        revokeAllBearerTokens(user);
+        saveUserToken(user, jwtToken, true);
         return AuthenticationResponseDTO.builder()
                 .message("Logged In Successfully")
                 .accessToken(jwtToken)
@@ -86,27 +87,52 @@ public class AuthenticationService {
     }
 
 
-    // revoke when more than 1 valid tokens are saved
-    private void revokeAllUserTokens(User user) {
-        var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
-        if(validUserTokens.isEmpty())
+    // revoke when more than 1 valid Bearer tokens are saved
+    private void revokeAllBearerTokens(User user) {
+        var validBearerTokens = tokenRepository.findAllValidBearerTokensByUser(user.getId());
+        if(validBearerTokens.isEmpty())
             return;
-        validUserTokens.forEach(token -> {
+        validBearerTokens.forEach(token -> {
             token.setExpired(true);
             token.setRevoked(true);
         });
-        tokenRepository.saveAll(validUserTokens);
+        tokenRepository.saveAll(validBearerTokens);
     }
 
-    private void saveUserToken(User user, String jwtToken) {
-        var token = Token.builder()
-                .user(user)
-                .token(jwtToken)
-                .tokenType(TokenType.BEARER)
-                .revoked(false)
-                .expired(false)
-                .build();
+    // revoke Reset tokens
+    private void  revokeResetTokens(User user) {
+        var validResetTokens = tokenRepository.findAllValidResetTokensByUser(user.getId());
+        if(validResetTokens.isEmpty())
+            return;
+        validResetTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validResetTokens);
+    }
+
+    private void saveUserToken(User user, String jwtToken, Boolean Bearer) {
+
+        Token token;
+        if(Bearer){
+            token = Token.builder()
+                    .user(user)
+                    .token(jwtToken)
+                    .tokenType(TokenType.BEARER)
+                    .revoked(false)
+                    .expired(false)
+                    .build();
+        } else{
+            token = Token.builder()
+                    .user(user)
+                    .token(jwtToken)
+                    .tokenType(TokenType.RESET)
+                    .revoked(false)
+                    .expired(false)
+                    .build();
+        }
         tokenRepository.save(token);
+
     }
 
     // can use AuthenticationResponseDTO as return type , but as refreshToken method is not invoked in the backend code it will give a warning
@@ -130,8 +156,8 @@ public class AuthenticationService {
 
             if(jwtService.isTokenValid(refreshToken, userDetails)) {
               var accessToken = jwtService.generateToken(userDetails);
-                revokeAllUserTokens(userDetails);
-                saveUserToken(userDetails, accessToken);
+                revokeAllBearerTokens(userDetails);
+                saveUserToken(userDetails, accessToken, true);
                 var userRole = userDetails.getRole();
                 var userID = userDetails.getId();
 
@@ -163,7 +189,7 @@ public class AuthenticationService {
         var email = jwtService.extractUsername(jwt);
         var user = this.userRepository.findByEmail(email).orElseThrow();
 
-        revokeAllUserTokens(user);
+        revokeAllBearerTokens(user);
         createCookie(response, "", 0);
         return AuthenticationResponseDTO.builder()
                 .message("Logout Successful")
@@ -188,5 +214,39 @@ public class AuthenticationService {
             }
         }
         return null;
+    }
+
+    public GlobalResponseDTO forgotPassword(PasswordResetRequestDTO request) {
+
+        var user = this.userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new CustomException("User Not Found"));
+
+
+        var resetToken = jwtService.generateResetToken(user, 300000);
+        String subject = "Here's the link to reset your password";
+//        try{
+//
+//        } catch () {
+//
+//        }
+        // before saving generated reset token, revoke other reset tokens of exist
+        revokeResetTokens(user);
+        saveUserToken(user, resetToken, false);
+
+        return GlobalResponseDTO.builder()
+                .status(200)
+                .message("We have Successfully send a Password Reset Link to Registered Email and Mobile Number")
+                .build();
+    }
+
+    public GlobalResponseDTO resetPassword(PasswordResetRequestDTO request) {
+
+        // check the reset token valid
+        // if valid check not expired
+        //then process with the service and after success revoke it
+        return GlobalResponseDTO.builder()
+                .status(200)
+                .message("Reset Password Successful")
+                .build();
     }
 }

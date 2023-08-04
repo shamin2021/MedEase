@@ -43,6 +43,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.forgotPassword(request));
     }
 
+    @PostMapping("/reset-password")
+    public ResponseEntity<GlobalResponseDTO> resetPassword (
+            @RequestBody PasswordResetRequestDTO request
+    ){
+        return ResponseEntity.ok(authenticationService.resetPassword(request));
+    }
 
     @PostMapping("/logout")
     public ResponseEntity<AuthenticationResponseDTO> logout(
