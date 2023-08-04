@@ -1,4 +1,4 @@
-.Register, .login{
+.Register, .login, .forgotpw{
     display: flex;
     flex-direction: column;
     justify-content: center;

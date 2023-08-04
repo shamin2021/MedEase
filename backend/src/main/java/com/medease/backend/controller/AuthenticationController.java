@@ -1,9 +1,7 @@
 package com.medease.backend.controller;
 
 
-import com.medease.backend.dto.AuthenticationRequestDTO;
-import com.medease.backend.dto.AuthenticationResponseDTO;
-import com.medease.backend.dto.RegisterRequestDTO;
+import com.medease.backend.dto.*;
 import com.medease.backend.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,6 +35,14 @@ public class AuthenticationController {
     ){
         return ResponseEntity.ok(authenticationService.authenticate(request, response));
     }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<GlobalResponseDTO> forgotPassword (
+            @RequestBody PasswordResetRequestDTO request
+    ){
+        return ResponseEntity.ok(authenticationService.forgotPassword(request));
+    }
+
 
     @PostMapping("/logout")
     public ResponseEntity<AuthenticationResponseDTO> logout(
