@@ -2,13 +2,18 @@ package com.medease.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medease.backend.Exception.CustomException;
+import com.medease.backend.assets.ResetPasswordEmailTemplate;
+import com.medease.backend.assets.ResetPasswordSmsTemplate;
 import com.medease.backend.dto.*;
+import com.medease.backend.entity.ResetToken;
 import com.medease.backend.enumeration.Role;
 import com.medease.backend.entity.Token;
 import com.medease.backend.enumeration.TokenType;
 import com.medease.backend.entity.User;
+import com.medease.backend.repository.ResetTokenRepository;
 import com.medease.backend.repository.TokenRepository;
 import com.medease.backend.repository.UserRepository;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @Service
 @RequiredArgsConstructor
@@ -28,11 +34,13 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final ResetTokenRepository resetTokenRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final EmailService emailService;
     private final SmsService smsService;
+
     private final AuthenticationManager authenticationManager;
 
     @Value("${refresh-token.expiration}")
@@ -51,7 +59,7 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(user);
 
-        saveUserToken(savedUser, jwtToken, true);
+        saveUserToken(savedUser, jwtToken);
 
         return AuthenticationResponseDTO.builder()
                 .message("Registered Successfully")
@@ -77,7 +85,7 @@ public class AuthenticationService {
         var userID = user.getId();
 
         revokeAllBearerTokens(user);
-        saveUserToken(user, jwtToken, true);
+        saveUserToken(user, jwtToken);
         return AuthenticationResponseDTO.builder()
                 .message("Logged In Successfully")
                 .accessToken(jwtToken)
@@ -101,38 +109,38 @@ public class AuthenticationService {
 
     // revoke Reset tokens
     private void  revokeResetTokens(User user) {
-        var validResetTokens = tokenRepository.findAllValidResetTokensByUser(user.getId());
+        var validResetTokens = resetTokenRepository.findAllValidResetTokensByUser(user.getId());
         if(validResetTokens.isEmpty())
             return;
         validResetTokens.forEach(token -> {
             token.setExpired(true);
             token.setRevoked(true);
         });
-        tokenRepository.saveAll(validResetTokens);
+        resetTokenRepository.saveAll(validResetTokens);
     }
 
-    private void saveUserToken(User user, String jwtToken, Boolean Bearer) {
+    private void saveUserToken(User user, String jwtToken) {
 
-        Token token;
-        if(Bearer){
-            token = Token.builder()
+        Token token = Token.builder()
                     .user(user)
                     .token(jwtToken)
                     .tokenType(TokenType.BEARER)
                     .revoked(false)
                     .expired(false)
                     .build();
-        } else{
-            token = Token.builder()
-                    .user(user)
-                    .token(jwtToken)
-                    .tokenType(TokenType.RESET)
-                    .revoked(false)
-                    .expired(false)
-                    .build();
-        }
         tokenRepository.save(token);
+    }
 
+    private void saveResetToken(User user, String jwtToken) {
+
+        ResetToken token = ResetToken.builder()
+                .user(user)
+                .token(jwtToken)
+                .tokenType(TokenType.RESET)
+                .revoked(false)
+                .expired(false)
+                .build();
+        resetTokenRepository.save(token);
     }
 
     // can use AuthenticationResponseDTO as return type , but as refreshToken method is not invoked in the backend code it will give a warning
@@ -157,7 +165,7 @@ public class AuthenticationService {
             if(jwtService.isTokenValid(refreshToken, userDetails)) {
               var accessToken = jwtService.generateToken(userDetails);
                 revokeAllBearerTokens(userDetails);
-                saveUserToken(userDetails, accessToken, true);
+                saveUserToken(userDetails, accessToken);
                 var userRole = userDetails.getRole();
                 var userID = userDetails.getId();
 
@@ -216,22 +224,23 @@ public class AuthenticationService {
         return null;
     }
 
-    public GlobalResponseDTO forgotPassword(PasswordResetRequestDTO request) {
+    public GlobalResponseDTO forgotPassword(PasswordResetRequestDTO request) throws MessagingException, UnsupportedEncodingException {
 
         var user = this.userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new CustomException("User Not Found"));
 
+//        System.out.println(user);
 
         var resetToken = jwtService.generateResetToken(user, 300000);
-        String subject = "Here's the link to reset your password";
-//        try{
-//
-//        } catch () {
-//
-//        }
-        // before saving generated reset token, revoke other reset tokens of exist
-        revokeResetTokens(user);
-        saveUserToken(user, resetToken, false);
+        var resetURL = "http://localhost:3000/reset-password/" + resetToken;
+
+        try{
+            emailService.sendEmail(request.getEmail(), "Follow The Link To Reset Your Password", ResetPasswordEmailTemplate.PasswordResetEmailTemplate(resetURL));
+            revokeResetTokens(user);
+            saveResetToken(user, resetToken);
+        } catch (UnsupportedEncodingException | MessagingException e) {
+            throw new CustomException("Error while sending password reset link.");
+        }
 
         return GlobalResponseDTO.builder()
                 .status(200)
@@ -243,7 +252,7 @@ public class AuthenticationService {
 
         // check the reset token valid
         // if valid check not expired
-        //then process with the service and after success revoke it
+        //then process hash and save with the service and after success revoke it
         return GlobalResponseDTO.builder()
                 .status(200)
                 .message("Reset Password Successful")

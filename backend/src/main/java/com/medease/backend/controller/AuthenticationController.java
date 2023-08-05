@@ -3,6 +3,7 @@ package com.medease.backend.controller;
 
 import com.medease.backend.dto.*;
 import com.medease.backend.service.AuthenticationService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -39,7 +41,7 @@ public class AuthenticationController {
     @PostMapping("/forgot-password")
     public ResponseEntity<GlobalResponseDTO> forgotPassword (
             @RequestBody PasswordResetRequestDTO request
-    ){
+    ) throws MessagingException, UnsupportedEncodingException {
         return ResponseEntity.ok(authenticationService.forgotPassword(request));
     }
 
