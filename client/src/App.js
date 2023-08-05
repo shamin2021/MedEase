@@ -57,6 +57,11 @@ function App() {
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
             </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3], ROLES[4]]} />}>
+              {/* routes only for PATIENT,HLC, DOCTOR*/}
+              <Route path="components/Chat" element={<DirectChatPage />} />
+            </Route>
           </Route>
           {/* 404 routes */}
           <Route path="*" element={<Missing />} />
