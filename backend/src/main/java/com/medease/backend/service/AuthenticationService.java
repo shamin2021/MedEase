@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,7 @@ public class AuthenticationService {
     private final SmsService smsService;
 
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
 
     @Value("${refresh-token.expiration}")
     private int refreshExpiration;
@@ -229,13 +232,14 @@ public class AuthenticationService {
         var user = this.userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new CustomException("User Not Found"));
 
-//        System.out.println(user);
 
         var resetToken = jwtService.generateResetToken(user, 300000);
+        // change the url when hosting
         var resetURL = "http://localhost:3000/reset-password/" + resetToken;
 
         try{
             emailService.sendEmail(request.getEmail(), "Follow The Link To Reset Your Password", ResetPasswordEmailTemplate.PasswordResetEmailTemplate(resetURL));
+//            smsService.sendSMS("+94767256838",ResetPasswordSmsTemplate.PasswordResetSMSTemplate(resetURL));
             revokeResetTokens(user);
             saveResetToken(user, resetToken);
         } catch (UnsupportedEncodingException | MessagingException e) {
@@ -248,14 +252,44 @@ public class AuthenticationService {
                 .build();
     }
 
-    public GlobalResponseDTO resetPassword(PasswordResetRequestDTO request) {
+    public GlobalResponseDTO resetPassword(PasswordResetRequestDTO request, String resetToken) {
 
-        // check the reset token valid
-        // if valid check not expired
-        //then process hash and save with the service and after success revoke it
-        return GlobalResponseDTO.builder()
-                .status(200)
-                .message("Reset Password Successful")
-                .build();
+        // extracted the email associated with resetToken
+        String email = jwtService.extractUsername(resetToken);
+
+        if(email != null) {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+
+            var isResetTokenValid = resetTokenRepository.findByToken(resetToken)
+                    .map(t -> !t.isExpired() && !t.isRevoked())
+                    .orElse(false);
+            // if user and object is valid
+            if(jwtService.isTokenValid(resetToken, userDetails) && isResetTokenValid) {
+                var user = userRepository.findByEmail(email)
+                        .orElseThrow(() -> new CustomException("User Not Found"));
+                // save new password as hashed
+                user.setPassword(passwordEncoder.encode(request.getPassword()));
+                userRepository.save(user);
+                // after success revoke reset token
+                revokeResetTokens(user);
+                return GlobalResponseDTO.builder()
+                        .status(200)
+                        .message("Password Reset Successful")
+                        .build();
+            }
+            else{
+                return GlobalResponseDTO.builder()
+                        .status(403)
+                        .message("Invalid Reset Link")
+                        .build();
+            }
+        }
+        else {
+            return GlobalResponseDTO.builder()
+                    .status(403)
+                    .message("Reset Password Link has Expired")
+                    .build();
+        }
     }
+
 }

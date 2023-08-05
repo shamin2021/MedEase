@@ -4,8 +4,6 @@ public class ResetPasswordEmailTemplate {
 
     public static String PasswordResetEmailTemplate( String resetLink ) {
 
-        String logoUrl = "https://imageupload.io/ib/sMW6PGyr7rrBLxa_1690297021.png";
-
         return "<html>"
                 + "<head>"
                 + "<style>"
@@ -23,9 +21,8 @@ public class ResetPasswordEmailTemplate {
                 + "<p>Hello,</p>"
                 + "<p>You have requested to reset your password.</p>"
                 + "<p>Click the link below to change your password:</p>"
-                + "<p><a href=\"" + resetLink + "\">Change my password</a></p>"
+                + "<p><a href=\"" + resetLink + "\">Change Password</a></p>"
                 + "<p>If you didn't request this change, you can safely ignore this email.</p>"
-                + "<p><img src=\"" + logoUrl + "\" alt=\"Professional Logo\"></p>"
                 + "</div>"
                 + "</div>"
                 + "</body>"

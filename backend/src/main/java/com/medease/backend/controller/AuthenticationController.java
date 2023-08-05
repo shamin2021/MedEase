@@ -45,11 +45,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.forgotPassword(request));
     }
 
-    @PostMapping("/reset-password")
+    @PostMapping("/reset-password/{resetToken}")
     public ResponseEntity<GlobalResponseDTO> resetPassword (
-            @RequestBody PasswordResetRequestDTO request
+            @RequestBody PasswordResetRequestDTO request,
+            @PathVariable String resetToken
     ){
-        return ResponseEntity.ok(authenticationService.resetPassword(request));
+        return ResponseEntity.ok(authenticationService.resetPassword(request, resetToken));
     }
 
     @PostMapping("/logout")
