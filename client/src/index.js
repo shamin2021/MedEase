@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TestComponent from './pages/TestComponent';
-import AddDoctor from "./pages/AddDoctor";
 import AddHLC from "./pages/AddHLC";
 import AddDoc from "./pages/AddDoc";
 import SearchDoc from "./pages/SearchDoc";
@@ -23,7 +22,6 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/register" element={<Register />} />
         <Route path="/test-components" element={<TestComponent />} />
-        <Route path="/AddDoctor" element={<AddDoctor />} />
         <Route path="/AddHLC" element={<AddHLC />} />
         <Route path="/AddDoc" element={<AddDoc />} />
         <Route path="/SearchDoc" element={<SearchDoc />} />
