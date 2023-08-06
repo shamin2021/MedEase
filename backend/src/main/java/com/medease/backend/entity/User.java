@@ -26,12 +26,15 @@ public class User implements UserDetails {
     private  Integer id;
 
     private String firstname;
-
     private String lastname;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
+
+//    @Column(unique = true)
+    private String mobileNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;

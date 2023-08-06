@@ -27,10 +27,12 @@ const AddDoc = props => {
   const [validMobile, setValidMobile] = useState(false);
 
   const [speciality, setSpeciality] = useState("");
+  const [specialities, setSpecialities] = useState([]);
+
   const [licenseNumber, setLicenseNumber] = useState("");
 
   // to get the response from the server
-  const [response, setResponse] = useState("");
+  const [state, setState] = useState(null)
 
   const handleClick = (event) => {
     hiddenFileInput.current.click();
@@ -42,10 +44,9 @@ const AddDoc = props => {
 
 
   // to populate select field
-
   const fetchSpecialities = async () => {
     try {
-      get('/Home/getSpecialities', setResponse);
+      get('/register-user/get-specialities', setSpecialities);
 
     } catch (err) {
       console.error(err);
@@ -53,6 +54,11 @@ const AddDoc = props => {
     }
   };
 
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
+  // to make sure it will run when the page is loaded
   useEffect(() => {
     fetchSpecialities();
   }, []);
@@ -65,10 +71,37 @@ const AddDoc = props => {
     setValidMobile(MOBILE_REGEX.test(mobileNumber));
   }, [mobileNumber]);
 
+
+  // submit form
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (!validEmail && !validMobile) { }
+    if (!validEmail) {
+      setState({ message: "Please enter valid email address" });
+    }
+    else if (!validMobile) {
+      setState({ message: "Please enter valid mobile number" });
+    }
+    else { 
+
+      try {
+        post('/register-user/register-doctor',
+          { firstname: firstName, lastname: lastName, email: email, mobileNumber: mobileNumber, speciality: speciality, licenseNumber: licenseNumber },
+          setState);
+        
+        setEmail('');
+        setFirstName('');
+        setLastName('');
+        setLicenseNumber('');
+        setMobileNumber('');
+        setSpeciality('');
+        
+      } catch (err) {
+        console.error(err);
+        navigate('/login', { state: { from: location }, replace: true });
+      }
+
+    }
 
     console.log(email, firstName, lastName, mobileNumber, speciality, licenseNumber);
   }
@@ -88,6 +121,8 @@ const AddDoc = props => {
           <hr className="w-2/3 mx-auto mt-3 mb-0" />
         </div>
         <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
+          {/* just to display state after form submit */}
+          <p display={state ? "block" : "none"} aria-live="assertive">{state && state.message}</p>
           <form className="mt-0" onSubmit={handleFormSubmit}>
             <div className="container flex">
               <div className="container">
@@ -103,7 +138,7 @@ const AddDoc = props => {
                     value={firstName}
                     maxLength={150}
                     minLength={2}
-                    // required
+                    required
                   />
                   <span></span>
                 </div>
@@ -139,8 +174,7 @@ const AddDoc = props => {
                     value={mobileNumber}
                     maxLength={12}
                     minLength={10}
-                    // pattern={MOBILE_REGEX}
-                    // required
+                    required
                   />
                   <span></span>
                 </div>
@@ -156,8 +190,7 @@ const AddDoc = props => {
                     className="form-input"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
-                    // required
-                    // pattern={EMAIL_REGEX}
+                    required
                   />
                   <span></span>
                 </div>
@@ -172,10 +205,12 @@ const AddDoc = props => {
                 id="speciality"
                 onChange={(e) => setSpeciality(e.target.value)}
               >
-                <option value="one">One</option>
-                <option value="Two">Two</option>
-                <option value="Three">Three</option>
-                <option value="Four">Four</option>
+                <option value="">Select a speciality</option>
+                {specialities.map(speciality => (
+                  <option key={speciality.speciality_id} value={speciality.speciality_id}>
+                    {speciality.speciality_name}
+                  </option>
+                ))}
               </select>
               <span></span>
             </div>
@@ -189,7 +224,7 @@ const AddDoc = props => {
                 className="form-input"
                 onChange={(e) => setLicenseNumber(e.target.value)}
                 value={licenseNumber}
-                // required
+                required
                 maxLength={50}
               />
               <span></span>

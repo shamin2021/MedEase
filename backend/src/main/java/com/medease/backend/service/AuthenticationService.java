@@ -129,7 +129,7 @@ public class AuthenticationService {
         resetTokenRepository.saveAll(validResetTokens);
     }
 
-    private void saveUserToken(User user, String jwtToken) {
+    void saveUserToken(User user, String jwtToken) {
 
         Token token = Token.builder()
                     .user(user)
@@ -141,7 +141,7 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    private void saveResetToken(User user, String jwtToken) {
+    void saveResetToken(User user, String jwtToken) {
 
         ResetToken token = ResetToken.builder()
                 .user(user)
