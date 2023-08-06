@@ -14,6 +14,9 @@ import Layout from './components/Layout';
 import PersistLogin from './components/PersistLogin';
 import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
+import AddDoctor from './pages/HLC/AddDoctor';
+import AddHLC from './pages/Admin/AddHLC';
+import SearchDoctor from './pages/SearchDoctor';
 
 function App() {
 
@@ -42,6 +45,7 @@ function App() {
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />}>
               {/* routes allowed for all authenticated users */}
+              <Route path="/SearchDoctor" element={<SearchDoctor />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
@@ -51,6 +55,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
               {/* routes only for HLC */}
+              <Route path="/AddDoctor" element={<AddDoctor />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
@@ -60,6 +65,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
+              <Route path="/AddHLC" element={<AddHLC />} />
             </Route>
           </Route>
           {/* 404 routes */}
