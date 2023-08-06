@@ -33,6 +33,12 @@ public class UserRegistrationController {
     }
 
     // register HLC
-
+    @PostMapping("/register-hlc")
+    public ResponseEntity<GlobalResponseDTO> addHlc(
+            @RequestBody RegisterRequestDTO registerRequestDTO
+    ) {
+        System.out.println(registerRequestDTO);
+        return ResponseEntity.ok(userRegistrationService.addHlc(registerRequestDTO));
+    }
 
 }
