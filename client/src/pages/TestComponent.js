@@ -1,18 +1,16 @@
 import React from 'react'
+import Header from '../components/Header'
 
-import { Button} from '@chakra-ui/react'
-
-import '../styles/TestComponent.css'
 
 const TestComponent = () => {
 
   // const addColor = '#32a852'
 
   return (
-    <div className='TestComponent'>
+    <div>
 
-      <Button colorScheme='blue'>Button</Button>
-
+      <Header />
+      
     </div>
   )
 }
