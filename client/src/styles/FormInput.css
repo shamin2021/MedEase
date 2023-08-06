@@ -20,7 +20,7 @@ span {
     font-size: 12px;
     padding: 3px;
     color: red;
-    display: none;
+    /* display: none; */
 }
 
 input:invalid[focused="true"] {
