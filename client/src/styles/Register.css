@@ -1,4 +1,4 @@
-.Register{
+.Register, .login, .forgotpw, .resetpw{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,12 +6,6 @@
     min-height: 100vh;
     padding: 1rem 0.5rem;
     background-color: dodgerblue;
-}
-
-
-label,
-button {
-    margin-top: 1rem;
 }
 
 section {
@@ -39,10 +33,10 @@ a:visited {
 }
 
 /*input[type="text"],
+input[type="text"],
 input[type="password"],
 button,
 textarea {
-    font-family: 'Nunito', sans-serif;
     font-size: 22px;
     padding: 0.25rem;
     border-radius: 0.5rem;
@@ -85,7 +79,7 @@ button {
     margin-left: 0.25rem;
 }
 
-.errmsg {
+.errmsg, .state {
     background-color: lightpink;
     color: firebrick;
     font-weight: bold;
