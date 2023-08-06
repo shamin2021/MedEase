@@ -1,27 +1,37 @@
 import "../styles/Table.css";
+import Doc from "../assets/Doc.jpg";
 
 const Table = ({ data }) => {
   return (
-    <div class="tableFixHead">
-      <table>
-        <tbody>
-          <div>
-              <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-              </tr>
+    <>
+      <div className=" h-72 m-1 ml-9 mt-3">
+        <div className=" flex font-nunito mt-4 text-[18px] font-medium sticky top-3">
+          <div className="w-1/3 m-1  ">Name</div>
+          <div className="w-1/3 m-1 ">Surname</div>
+          <div className="w-1/3 m-1">Email</div>
+        </div>
+        <hr className="w-7/8 mx-auto mt-3 mb-0" />
+        <div>
+          <div className=" h-56 overflow-y-scroll mb-2">
             {data.map((item) => (
-              <tr key={item.id}>
-                <td>{item.first_name}</td>
-                <td>{item.last_name}</td>
-                <td>{item.email}</td>
-              </tr>
+              <>
+                <div className=" flex font-nunito mt-4 text-[18px] font-medium">
+                  <div className="w-1/3 m-1 flex ">
+                    <img
+                      className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
+                      src={Doc}
+                    />
+                    <div className="w-3/4 ml-6">{item.first_name}</div>
+                  </div>
+                  <div className="w-1/3 m-1 ">{item.last_name}</div>
+                  <div className="w-1/3 m-1 ">{item.email}</div>
+                </div>
+              </>
             ))}
           </div>
-        </tbody>
-      </table>
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 
