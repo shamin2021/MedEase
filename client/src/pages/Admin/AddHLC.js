@@ -77,7 +77,7 @@ const Form2 = () => {
     <>
       <form className="mt-0">
         <div className="container flex">
-          <div className="container">
+          <div className="container w-[49%]">
             <div className="formInput">
               <label className="form-label">
                 PHM Area <text className="text-[#ff2727]">*</text>
@@ -86,7 +86,7 @@ const Form2 = () => {
               <span></span>
             </div>
           </div>
-          <div className="container ml-3 justify-right">
+          <div className="container ml-[2%] justify-right w-[49%]">
             <div className="formInput" id="right">
               <label className="form-label">
                 PHI Area <text className="text-[#ff2727]">*</text>
