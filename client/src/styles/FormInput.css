@@ -1,0 +1,123 @@
+.formInput{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+}
+
+input{
+    padding: 15px;
+    margin: 0px 0px;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+
+label{
+    font-size: 18px;
+    color: gray;
+
+    
+}
+
+span{
+    font-size: 12px;
+    padding: 3px;
+    color: red;
+    display: none;
+}
+
+input:invalid[focused="true"]{
+    border: 1px solid red;
+}
+
+input:invalid[focused="true"] ~ span{
+    display: block;
+}
+input[type="text"], input[type="password"], button, textarea ,select{
+    padding: 0.25rem;
+    
+}
+.form-input{
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    border-radius: 0.8rem;
+    border: none;
+    background-color: #f5f5f5;
+}
+.form-label{
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    color: #353434;
+    margin-top: 15px;
+}
+.formInput#right{
+    margin-right : 20px;
+}
+.css-7m7djy {
+height: 10px;
+width:10px;
+}
+
+.image-upload-container {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.box-decoration {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 130px 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-upload-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.image-upload-input {
+    display: none;
+}
+
+.image-upload-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.image-upload-button:hover {
+    background-color: #3e8e41;
+}
+
+.img-display-before {
+    height: 200px;
+    width: 200px;
+    margin-left: 35px;
+}
+
+.img-display-after {
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+}
+
+.image-box{
+    border-radius: 100%;
+    background-color: #858585;
+    height: 90px;
+    width: 90px;
+    margin: auto;
+}
