@@ -69,7 +69,12 @@ const AddDoc = props => {
               <label className="form-label">
                 Speciality <text className="text-[#ff2727]">*</text>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <select className="form-input">
+                <option value="one">One</option>
+                <option value="Two">Two</option>
+                <option value="Three">Three</option>
+                <option value="Four">Four</option>
+              </select>
               <span></span>
             </div>
             <div className="formInput">

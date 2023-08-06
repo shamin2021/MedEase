@@ -7,6 +7,7 @@ import TestComponent from './pages/TestComponent';
 import AddDoctor from "./pages/AddDoctor";
 import AddHLC from "./pages/AddHLC";
 import AddDoc from "./pages/AddDoc";
+import SearchDoc from "./pages/SearchDoc";
 import Register from './pages/Register';
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -25,6 +26,7 @@ root.render(
         <Route path="/AddDoctor" element={<AddDoctor />} />
         <Route path="/AddHLC" element={<AddHLC />} />
         <Route path="/AddDoc" element={<AddDoc />} />
+        <Route path="/SearchDoc" element={<SearchDoc />} />
       </Routes>
     </Router>
   </ChakraProvider>
