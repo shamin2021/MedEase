@@ -1,19 +1,25 @@
-.tableFixHead{
-    width:98%;
-    margin:2rem;
+.tableFixHead {
+    width: 98%;
+    margin: 2rem;
     overflow-y: auto;
-    height: 200px; 
+    height: 200px;
 }
-.tableFixHead  th {
-    position: sticky; /* make the table heads sticky */
-    top: 0px; /* table head will be placed from the top of the table and sticks to it */
+
+.tableFixHead th {
+    position: sticky;
+    /* make the table heads sticky */
+    top: 0px;
+    /* table head will be placed from the top of the table and sticks to it */
 }
+
 table {
-    border-collapse: collapse; /* make the table borders collapse to each other */
+    border-collapse: collapse;
+    /* make the table borders collapse to each other */
     width: 100%;
-    }
+}
+
 th,
 td {
     padding: 8px 16px;
-    width:33%;
-    }
+    width: 33%;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../styles/FormInput.css";
-import ButtonImage from "../components/Button";
+import "../../styles/FormInput.css";
+import ButtonImage from "../../components/Button";
 
 const AddDoc = props => {
   const hiddenFileInput = React.useRef(null);
