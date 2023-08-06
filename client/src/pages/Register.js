@@ -25,7 +25,7 @@ const Register = () => {
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
 
-    const [errMsg, setErrMsg] = useState('');
+    const [errMsg, setErrMsg] = useState(null)
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
@@ -68,6 +68,7 @@ const Register = () => {
             );
             console.log(response?.data);
             setSuccess(true);
+            setErrMsg(response?.data?.message) //these needs to be chnaged later
             setUser('');
             setPwd('');
             setMatchPwd('');
@@ -94,7 +95,7 @@ const Register = () => {
                 </section>
             ) : (
                 <section>
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg !== null && errMsg}</p>
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="username">

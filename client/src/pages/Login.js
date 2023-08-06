@@ -69,7 +69,7 @@ const Login = () => {
         <div className='login'>
 
             <section>
-                <p className={errorMsg ? "errorMsg" : "offscreen"} aria-live="assertive">{errorMsg}</p>
+                <p className={errorMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errorMsg}</p>
                 <h1>Sign In</h1>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="email">Username:</label>

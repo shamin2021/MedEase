@@ -232,7 +232,6 @@ public class AuthenticationService {
         var user = this.userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new CustomException("User Not Found"));
 
-
         var resetToken = jwtService.generateResetToken(user, 300000);
         // change the url when hosting
         var resetURL = "http://localhost:3000/reset-password/" + resetToken;
@@ -248,7 +247,7 @@ public class AuthenticationService {
 
         return GlobalResponseDTO.builder()
                 .status(200)
-                .message("We have Successfully send a Password Reset Link to Registered Email and Mobile Number")
+                .message("Reset Link Sent To Email and Mobile Number Associated With this Account")
                 .build();
     }
 

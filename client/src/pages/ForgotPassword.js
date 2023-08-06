@@ -13,7 +13,7 @@ const ForgotPassword = () => {
 
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false)
-  const [state, setState] = useState('');
+  const [state, setState] = useState(null);
 
 
   const backPage = () => navigate(-1);
@@ -21,7 +21,6 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
-    setState('');
   }, [email])
 
 
@@ -43,26 +42,28 @@ const ForgotPassword = () => {
           withCredentials: true
         }
       );
-      
-      console.log(response.data);
-      setState(response?.data?.message);
+
+      console.log(response.data.message);
+      setState(response.data.message);
       setEmail('')
       setValidEmail(false);
 
     } catch (err) {
       if (!err?.response) {
         setState('No Server Response');
-      } else {
-        setState('Error Occurred. Please Try Again');
+      } else if (err.response?.status === 403) {
+        setState("User Not Found");
+      }
+      else {
+        setState(err.response?.data?.message);
       }
     }
   }
 
   return (
     <div className='forgotpw'>
-
       <section>
-        <p className={state ? "state" : "offscreen"} aria-live="assertive">{state}</p>
+        <p className={state ? "state" : "offscreen"} aria-live="assertive">{state !== null && state}</p>
         <h1>Forgot Password</h1>
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">Email:</label>
