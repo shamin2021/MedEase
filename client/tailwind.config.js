@@ -9,6 +9,7 @@ module.exports = {
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        nunito:['Nunito', 'sans-serif'],
       },
     },
   },
