@@ -1,4 +1,7 @@
-.Register, .login, .forgotpw, .resetpw{
+.Register,
+.login,
+.forgotpw,
+.resetpw {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,12 +30,7 @@ form {
     padding-bottom: 1rem;
 }
 
-a,
-a:visited {
-    color: #fff;
-}
-
-/*input[type="text"],
+input[type="text"],
 input[type="text"],
 input[type="password"],
 button,
@@ -40,7 +38,7 @@ textarea {
     font-size: 22px;
     padding: 0.25rem;
     border-radius: 0.5rem;
-}*/
+}
 
 button {
     padding: 0.5rem;
@@ -79,7 +77,8 @@ button {
     margin-left: 0.25rem;
 }
 
-.errmsg, .state {
+.errmsg,
+.state {
     background-color: lightpink;
     color: firebrick;
     font-weight: bold;

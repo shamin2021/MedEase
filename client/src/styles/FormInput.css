@@ -1,23 +1,19 @@
-.formInput{
+.formInput {
     display: flex;
     flex-direction: column;
     width: 100%;
-    font-family: 'Nunito', sans-serif;
 }
 
-input{
+input {
     padding: 15px;
     margin: 0px 0px;
     border-radius: 5px;
     border: 1px solid gray;
 }
 
-
-label{
+label {
     font-size: 18px;
     color: gray;
-
-    
 }
 
 span.AddHLC{
@@ -27,36 +23,44 @@ span.AddHLC{
     display: none;
 }
 
-input:invalid[focused="true"]{
+input:invalid[focused="true"] {
     border: 1px solid red;
 }
 
-input:invalid[focused="true"] ~ span{
+input:invalid[focused="true"]~span {
     display: block;
 }
-input[type="text"], input[type="password"], button, textarea ,select{
+
+input[type="text"],
+input[type="password"],
+button,
+textarea,
+select {
     padding: 0.25rem;
-    
 }
-.form-input{
+
+.form-input {
     font-family: 'Nunito', sans-serif;
     font-size: 15px;
     border-radius: 0.8rem;
     border: none;
     background-color: #f5f5f5;
 }
-.form-label{
+
+.form-label {
     font-family: 'Nunito', sans-serif;
     font-size: 16px;
     color: #353434;
     margin-top: 15px;
 }
-.formInput#right{
-    margin-right : 20px;
+
+.formInput#right {
+    margin-right: 20px;
 }
+
 .css-7m7djy {
-height: 10px;
-width:10px;
+    height: 10px;
+    width: 10px;
 }
 
 .image-upload-container {
@@ -114,7 +118,7 @@ width:10px;
     border-radius: 100%;
 }
 
-.image-box{
+.image-box {
     border-radius: 100%;
     background-color: #858585;
     height: 90px;

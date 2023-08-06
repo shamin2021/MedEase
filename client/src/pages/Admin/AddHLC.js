@@ -1,26 +1,12 @@
 import React, { useState } from "react";
-import "../styles/FormInput.css";
-import ButtonImage from "../components/Button";
+import "../../styles/FormInput.css";
+import ButtonImage from "../../components/Button";
 import {
-  Progress,
-  Box,
+
   ButtonGroup,
   Button,
-  Heading,
   Flex,
-  FormControl,
-  GridItem,
-  FormLabel,
-  Input,
-  Select,
-  SimpleGrid,
-  InputLeftAddon,
-  InputGroup,
-  Textarea,
-  FormHelperText,
-  InputRightElement,
   Step,
-  StepDescription,
   StepIcon,
   StepIndicator,
   StepNumber,
@@ -29,10 +15,9 @@ import {
   StepTitle,
   Stepper,
   useSteps,
-  border,
-  Center,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+
 const steps = [
   { title: "General", description: "Contact Info" },
   { title: "PHI Area", description: "Date & Time" },
@@ -184,14 +169,14 @@ const Form3 = () => {
 
 const AddHLC = (props) => {
 
-    const toast = useToast();
-    const [step, setStep] = useState(0);
-    const [progress, setProgress] = useState(33.33);
+  const toast = useToast();
+  const [step, setStep] = useState(0);
+  const [progress, setProgress] = useState(33.33);
 
-    const { activeStep } = useSteps({
-      index: 0,
-      count: step,
-    });
+  const { activeStep } = useSteps({
+    index: 0,
+    count: step,
+  });
 
   return (
     <div className="h-94 py-1 bg-primary">

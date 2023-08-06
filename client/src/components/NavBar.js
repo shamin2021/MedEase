@@ -12,6 +12,7 @@ const NavBar = () => {
     const navigate = useNavigate();
     const { post } = useAxiosMethods();
 
+    console.log(auth.user_id);
     const handleLogout = async () => {
 
         try {
