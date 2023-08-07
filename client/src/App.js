@@ -34,15 +34,16 @@ function App() {
     <Router>
       <Routes>
 
-        <Route path="/admin" element={<Admin />} />
+        {/* <Route path="/admin" element={<Admin />} />
         <Route path="/Doctor" element={<Doctor />} />
-        <Route path="/HLC" element={<HLC />} />
+        <Route path="/HLC" element={<HLC />} /> */}
 
         <Route path="/" element={<Layout />}>
+{/*           
           <Route path="SearchDoctor" element={<SearchDoctor />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} />
-          <Route path="PatientProfile/:id" element={<PatientProfile />} />
+          <Route path="PatientProfile/:id" element={<PatientProfile />} /> */}
 
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -52,15 +53,11 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
+          
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]}
-                />
-              }
-            >
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />}>
               {/* routes allowed for all authenticated users */}
               <Route path="/SearchDoctor" element={<SearchDoctor />} />
             </Route>
@@ -72,12 +69,13 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
               {/* routes only for HLC */}
+              <Route path="/hlc" element={<HLC />} />
               <Route path="/AddDoctor" element={<AddDoctor />} />
-
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
               {/* routes only for DOCTOR */}
+              <Route path="/doctor" element={<Doctor />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
@@ -85,7 +83,9 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
             </Route>
+            
           </Route>
+
           {/* 404 routes */}
           <Route path="*" element={<Missing />} />
         </Route>
