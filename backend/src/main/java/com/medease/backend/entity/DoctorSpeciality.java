@@ -16,7 +16,8 @@ public class DoctorSpeciality {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long speciality_id;
+
+    private Integer speciality_id;
 
     @Column(unique = true)
     private String speciality_name;

@@ -22,22 +22,27 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private  Integer id;
 
     private String firstname;
-
     private String lastname;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
+
+//    @Column(unique = true)
+    private String mobileNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    private Boolean activated;
 
     // to get role
     @Override

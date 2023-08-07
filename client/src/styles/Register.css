@@ -1,4 +1,8 @@
-.Register, .login{
+
+.Register,
+.login,
+.forgotpw,
+.resetpw {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,6 +31,7 @@ form {
     padding-bottom: 1rem;
 }
 
+input[type="text"],
 input[type="text"],
 input[type="password"],
 button,
@@ -73,7 +78,8 @@ button {
     margin-left: 0.25rem;
 }
 
-.errmsg {
+.errmsg,
+.state {
     background-color: lightpink;
     color: firebrick;
     font-weight: bold;

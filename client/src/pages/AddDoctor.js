@@ -1,239 +1,95 @@
-import React,{useState} from 'react'
-import Stepper from '../components/Stepper';
-import StepperControl from '../components/StepperControl';
-import { Button } from "@chakra-ui/react";
-import '../styles/TestComponent.css'
+import React, { useState } from "react";
+import "../styles/FormInput.css";
+import ButtonImage from "../components/Button";
 
-const AddDoctor = () => {
+const AddDoc = props => {
+  const hiddenFileInput = React.useRef(null);
 
-  const Form4 = () => {
-    return (
-      <>
-        <Heading w="100%" textAlign={"center"} fontWeight="normal">
-          Social Handles
-        </Heading>
-        <SimpleGrid columns={1} spacing={6}>
-          <FormControl as={GridItem} colSpan={[3, 2]}>
-            <FormLabel
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              _dark={{
-                color: "gray.50",
-              }}
-            >
-              Website
-            </FormLabel>
-            <InputGroup size="sm">
-              <InputLeftAddon
-                bg="gray.50"
-                _dark={{
-                  bg: "gray.800",
-                }}
-                color="gray.500"
-                rounded="md"
-              >
-                http://
-              </InputLeftAddon>
-              <Input
-                type="tel"
-                placeholder="www.example.com"
-                focusBorderColor="brand.400"
-                rounded="md"
-              />
-            </InputGroup>
-          </FormControl>
-
-          <FormControl id="email" mt={1}>
-            <FormLabel
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              _dark={{
-                color: "gray.50",
-              }}
-            >
-              About
-            </FormLabel>
-            <Textarea
-              placeholder="you@example.com"
-              rows={3}
-              shadow="sm"
-              focusBorderColor="brand.400"
-              fontSize={{
-                sm: "sm",
-              }}
-            />
-            <FormHelperText>
-              Brief description for your profile. URLs are hyperlinked.
-            </FormHelperText>
-          </FormControl>
-        </SimpleGrid>
-      </>
-    );
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
   };
-  const Form3 = () => {
-    return (
-      <>
-        <Heading w="100%" textAlign={"center"} fontWeight="normal">
-          Social Handles
-        </Heading>
-        <SimpleGrid columns={1} spacing={6}>
-          <FormControl as={GridItem} colSpan={[3, 2]}>
-            <FormLabel
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              _dark={{
-                color: "gray.50",
-              }}
-            >
-              Website
-            </FormLabel>
-            <InputGroup size="sm">
-              <InputLeftAddon
-                bg="gray.50"
-                _dark={{
-                  bg: "gray.800",
-                }}
-                color="gray.500"
-                rounded="md"
-              >
-                http://
-              </InputLeftAddon>
-              <Input
-                type="tel"
-                placeholder="www.example.com"
-                focusBorderColor="brand.400"
-                rounded="md"
-              />
-            </InputGroup>
-          </FormControl>
-
-          <FormControl id="email" mt={1}>
-            <FormLabel
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              _dark={{
-                color: "gray.50",
-              }}
-            >
-              About
-            </FormLabel>
-            <Textarea
-              placeholder="you@example.com"
-              rows={3}
-              shadow="sm"
-              focusBorderColor="brand.400"
-              fontSize={{
-                sm: "sm",
-              }}
-            />
-            <FormHelperText>
-              Brief description for your profile. URLs are hyperlinked.
-            </FormHelperText>
-          </FormControl>
-        </SimpleGrid>
-      </>
-    );
+  const handleChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    props.handleFile(fileUploaded);
   };
-  const Form2 = () => {
-    return (
-      <>
-        <Heading w="100%" textAlign={"center"} fontWeight="normal">
-          Social Handles
-        </Heading>
-        <SimpleGrid columns={1} spacing={6}>
-          <FormControl as={GridItem} colSpan={[3, 2]}>
-            <FormLabel
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              _dark={{
-                color: "gray.50",
-              }}
-            >
-              Website
-            </FormLabel>
-            <InputGroup size="sm">
-              <InputLeftAddon
-                bg="gray.50"
-                _dark={{
-                  bg: "gray.800",
-                }}
-                color="gray.500"
-                rounded="md"
-              >
-                http://
-              </InputLeftAddon>
-              <Input
-                type="tel"
-                placeholder="www.example.com"
-                focusBorderColor="brand.400"
-                rounded="md"
-              />
-            </InputGroup>
-          </FormControl>
-
-          <FormControl id="email" mt={1}>
-            <FormLabel
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              _dark={{
-                color: "gray.50",
-              }}
-            >
-              About
-            </FormLabel>
-            <Textarea
-              placeholder="you@example.com"
-              rows={3}
-              shadow="sm"
-              focusBorderColor="brand.400"
-              fontSize={{
-                sm: "sm",
-              }}
-            />
-            <FormHelperText>
-              Brief description for your profile. URLs are hyperlinked.
-            </FormHelperText>
-          </FormControl>
-        </SimpleGrid>
-      </>
-    );
-  };
-  // const addColor = '#32a852'
-  const [currentStep , setCurrentStep] = useState(1);
-  const steps = [
-    "1",
-    "2",
-    "3",
-  ];
-  const displayStep = (step) =>{
-    switch (step) {
-      case 1:
-        <Form3 />
-      case 2:
-        <Form4 />
-      case 3:
-        <Form2 />
-      default:
-    }
-  }
   return (
-    <div className="h-screen py-1 bg-primary">
-      <div className="md:w-1/2 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-6">
-        <div className="container horizontal flex justify-center font-poppins text-xs">
-          <Stepper 
-          steps = {steps}
-          currentStep = {currentStep}/>
+    <div className="h-94 py-1 bg-primary">
+      <div className="md:w-1/2 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-1 ">
+        <div className="container horizontal justify-center text-xs py-1">
+          <div className="flex justify-center text-lg font-medium m-3 mb-0">
+            Doctor Registration
+          </div>
+          <div className="flex justify-center font-light text-stone-800- text-[14px] text-[#797878]">
+            Register the doctor here with the relevant details
+          </div>
+          <hr className="w-2/3 mx-auto mt-3 mb-0" />
         </div>
-        <StepperControl />
+        <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
+          <form className="mt-0">
+            <div className="container flex">
+              <div className="container w-3/4">
+                <div className="formInput">
+                  <label className="form-label">
+                    First Name <text className="text-[#ff2727]">*</text>
+                  </label>
+                  <input type="text" id="username" className="form-input" />
+                  <span></span>
+                </div>
+                <div className="formInput" id="right">
+                  <label className="form-label">Last Name</label>
+                  <input type="text" id="username" className="form-input" />
+                  <span></span>
+                </div>
+              </div>
+              <div className="container ml-3 pt-5 justify-right w-1/4">
+                <ButtonImage />
+              </div>
+            </div>
+            <div className="container flex">
+              <div className="container">
+                <div className="formInput">
+                  <label className="form-label">
+                    Mobile Number <text className="text-[#ff2727]">*</text>
+                  </label>
+                  <input type="text" id="username" className="form-input" />
+                  <span></span>
+                </div>
+              </div>
+              <div className="container ml-3 justify-right">
+                <div className="formInput" id="right">
+                  <label className="form-label">
+                    Email <text className="text-[#ff2727]">*</text>
+                  </label>
+                  <input type="text" id="username" className="form-input" />
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <div className="formInput">
+              <label className="form-label">
+                Speciality <text className="text-[#ff2727]">*</text>
+              </label>
+              <select className="form-input">
+                <option value="one">One</option>
+                <option value="Two">Two</option>
+                <option value="Three">Three</option>
+                <option value="Four">Four</option>
+              </select>
+              <span></span>
+            </div>
+            <div className="formInput">
+              <label className="form-label">License Number</label>
+              <input type="text" id="username" className="form-input" />
+              <span></span>
+            </div>
+            <button className="bg-secondary w-1/4 mx-auto rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 ">
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default AddDoctor;
+export default AddDoc;

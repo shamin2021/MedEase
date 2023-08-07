@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Flex, Avatar, HStack, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Stack, Image } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
+
 import { Link, useNavigate } from 'react-router-dom'
 
 import useAuth from "../hooks/useAuth";
@@ -11,6 +12,8 @@ const NavBar = () => {
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const { post } = useAxiosMethods();
+
+    console.log(auth.user_id);
 
     const handleLogout = async () => {
 
@@ -30,6 +33,7 @@ const NavBar = () => {
                     <IconButton
                         size={'md'}
                         icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+
                         aria-label={'Open Menu'}
                         display={{ md: 'none' }}
                         onClick={isOpen ? onClose : onOpen}
