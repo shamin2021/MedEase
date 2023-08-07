@@ -100,12 +100,8 @@ const AddDoc = props => {
         console.error(err);
         navigate('/login', { state: { from: location }, replace: true });
       }
-
     }
-
-    console.log(email, firstName, lastName, mobileNumber, speciality, licenseNumber);
   }
-
 
   // change text tag to span for * displaying fields (react wont supprt text tag)
   return (

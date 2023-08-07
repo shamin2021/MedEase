@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import "../../styles/FormInput.css";
 import ButtonImage from "../../components/Button";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+
 import {
 
   ButtonGroup,
@@ -16,6 +20,7 @@ import {
   Stepper,
   useSteps,
 } from "@chakra-ui/react";
+
 import { useToast } from "@chakra-ui/react";
 
 const steps = [
@@ -24,24 +29,49 @@ const steps = [
   { title: "Incharge", description: "Select Rooms" },
 ];
 
-const Form1 = () => {
+const EMAIL_REGEX = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/;
+const MOBILE_REGEX = /^(?:\+94|0)?[0-9]{9,10}$/;
+
+const form1Data = [];
+const form2Data = [];
+const form3Data = [];
+
+// better to remove the functions from this page and make components and import them here
+const Form1 = ({ formData, setFormData }) => {
+
+  const { name, mobileNumber, email, mohArea } = formData;
+
   return (
     <>
       <form className="mt-0">
         <div className="container flex">
           <div className="container">
             <div className="formInput">
-              <label className="form-label">
-                Name <text className="text-[#ff2727]">*</text>
+              <label className="form-label" htmlFor="username">
+                HLC Name <span className="text-[#ff2727]">*</span>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <input
+                type="text"
+                id="username"
+                className="form-input"
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                value={name}
+                required
+              />
               <span></span>
             </div>
             <div className="formInput">
-              <label className="form-label">
-                Mobile Number <text className="text-[#ff2727]">*</text>
+              <label className="form-label" htmlFor="mobileNumber">
+                Mobile Number <span className="text-[#ff2727]">*</span>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <input
+                type="text"
+                id="mobileNumber"
+                className="form-input"
+                onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
+                value={mobileNumber}
+                required
+              />
               <span></span>
             </div>
           </div>
@@ -52,19 +82,33 @@ const Form1 = () => {
         <div className="container flex">
           <div className="container justify-right">
             <div className="formInput" id="right">
-              <label className="form-label">
-                Email <text className="text-[#ff2727]">*</text>
+              <label className="form-label" htmlFor="email">
+                Email <span className="text-[#ff2727]">*</span>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <input
+                type="email"
+                id="email"
+                className="form-input"
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                value={email}
+                required
+              />
               <span></span>
             </div>
           </div>
         </div>
         <div className="formInput">
-          <label className="form-label">
-            MOH Area <text className="text-[#ff2727]">*</text>
+          <label className="form-label" htmlFor="mohArea">
+            MOH Area <span className="text-[#ff2727]">*</span>
           </label>
-          <input type="text" id="username" className="form-input" />
+          <input
+            type="text"
+            id="mohArea"
+            className="form-input"
+            onChange={(e) => setFormData({ ...formData, mohArea: e.target.value })}
+            value={mohArea}
+            required
+          />
           <span></span>
         </div>
       </form>
@@ -72,49 +116,87 @@ const Form1 = () => {
   );
 };
 
-const Form2 = () => {
+const Form2 = ({ formData, setFormData }) => {
+
+  const { phmArea, phiArea, gnDivision, dsDivision, gnNumber } = formData;
+
   return (
     <>
       <form className="mt-0">
         <div className="container flex">
           <div className="container">
             <div className="formInput">
-              <label className="form-label">
-                PHM Area <text className="text-[#ff2727]">*</text>
+              <label className="form-label" htmlFor="phmArea">
+                PHM Area <span className="text-[#ff2727]">*</span>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <input
+                type="text"
+                id="phmArea"
+                className="form-input"
+                onChange={(e) => setFormData({ ...formData, phmArea: e.target.value })}
+                value={phmArea}
+                required
+              />
               <span></span>
             </div>
           </div>
           <div className="container ml-3 justify-right">
             <div className="formInput" id="right">
-              <label className="form-label">
-                PHI Area <text className="text-[#ff2727]">*</text>
+              <label className="form-label" htmlFor="phiArea">
+                PHI Area <span className="text-[#ff2727]">*</span>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <input
+                type="text"
+                id="phiArea"
+                className="form-input"
+                onChange={(e) => setFormData({ ...formData, phiArea: e.target.value })}
+                value={phiArea}
+                required
+              />
               <span></span>
             </div>
           </div>
         </div>
         <div className="formInput">
-          <label className="form-label">
-            GN Division <text className="text-[#ff2727]">*</text>
+          <label className="form-label" htmlFor="gnDivision">
+            GN Division <span className="text-[#ff2727]">*</span>
           </label>
-          <input type="text" id="username" className="form-input" />
+          <input
+            type="text"
+            id="gnDivision"
+            className="form-input"
+            onChange={(e) => setFormData({ ...formData, gnDivision: e.target.value })}
+            value={gnDivision}
+            required
+          />
           <span></span>
         </div>
         <div className="formInput" id="right">
-          <label className="form-label">
-            DS Division <text className="text-[#ff2727]">*</text>
+          <label className="form-label" htmlFor="dsDivision">
+            DS Division <span className="text-[#ff2727]">*</span>
           </label>
-          <input type="text" id="username" className="form-input" />
+          <input
+            type="text"
+            id="dsDivision"
+            className="form-input"
+            onChange={(e) => setFormData({ ...formData, dsDivision: e.target.value })}
+            value={dsDivision}
+            required
+          />
           <span></span>
         </div>
         <div className="formInput">
-          <label className="form-label">
-            GN Number <text className="text-[#ff2727]">*</text>
+          <label className="form-label" htmlFor="gnNumber">
+            GN Number <span className="text-[#ff2727]">*</span>
           </label>
-          <input type="text" id="username" className="form-input" />
+          <input
+            type="text"
+            id="gnNumber"
+            className="form-input"
+            onChange={(e) => setFormData({ ...formData, gnNumber: e.target.value })}
+            value={gnNumber}
+            required
+          />
           <span></span>
         </div>
       </form>
@@ -122,24 +204,41 @@ const Form2 = () => {
   );
 };
 
-const Form3 = () => {
+const Form3 = ({ formData, setFormData }) => {
+
+  const { incharge, designation, inchargeEmail, inchargeMobile } = formData;
+
   return (
     <>
       <form className="mt-0">
         <div className="container flex">
           <div className="container">
             <div className="formInput">
-              <label className="form-label">
-                Name of Incharge <text className="text-[#ff2727]">*</text>
+              <label className="form-label" htmlFor="incharge">
+                Name of Incharge <span className="text-[#ff2727]">*</span>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <input
+                type="text"
+                id="incharge"
+                className="form-input"
+                required
+                onChange={(e) => setFormData({ ...formData, incharge: e.target.value })}
+                value={incharge}
+              />
               <span></span>
             </div>
             <div className="formInput">
-              <label className="form-label">
-                Designation <text className="text-[#ff2727]">*</text>
+              <label className="form-label" htmlFor="designation">
+                Designation <span className="text-[#ff2727]">*</span>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <input
+                type="text"
+                id="designation"
+                className="form-input"
+                onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
+                value={designation}
+                required
+              />
               <span></span>
             </div>
           </div>
@@ -147,19 +246,33 @@ const Form3 = () => {
         <div className="container flex">
           <div className="container justify-right">
             <div className="formInput" id="right">
-              <label className="form-label">
-                Email <text className="text-[#ff2727]">*</text>
+              <label className="form-label" htmlFor="inchargeEmail">
+                Email <span className="text-[#ff2727]">*</span>
               </label>
-              <input type="text" id="username" className="form-input" />
+              <input
+                type="email"
+                id="inchargeEmail"
+                className="form-input"
+                onChange={(e) => setFormData({ ...formData, inchargeEmail: e.target.value })}
+                value={inchargeEmail}
+                required
+              />
               <span></span>
             </div>
           </div>
         </div>
         <div className="formInput">
-          <label className="form-label">
-            Mobile Number <text className="text-[#ff2727]">*</text>
+          <label className="form-label" htmlFor="inchargeMobile">
+            Mobile Number <span className="text-[#ff2727]">*</span>
           </label>
-          <input type="text" id="username" className="form-input" />
+          <input
+            type="text"
+            id="inchargeMobile"
+            className="form-input"
+            onChange={(e) => setFormData({ ...formData, inchargeMobile: e.target.value })}
+            value={inchargeMobile}
+            required
+          />
           <span></span>
         </div>
       </form>
@@ -167,16 +280,155 @@ const Form3 = () => {
   );
 };
 
+
 const AddHLC = (props) => {
+
 
   const toast = useToast();
   const [step, setStep] = useState(0);
   const [progress, setProgress] = useState(33.33);
 
+  const { post } = useAxiosMethods();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [form1State, setForm1State] = useState({
+    name: "",
+    mobileNumber: "",
+    email: "",
+    mohArea: "",
+  });
+
+  const [form2State, setForm2State] = useState({
+    phmArea: "",
+    phiArea: "",
+    gnDivision: "",
+    dsDivision: "",
+    gnNumber: "",
+  });
+
+  const [form3State, setForm3State] = useState({
+    incharge: "",
+    designation: "",
+    inchargeEmail: "",
+    inchargeMobile: "",
+  });
+
+  const [state, setState] = useState(null)
+
   const { activeStep } = useSteps({
     index: 0,
     count: step,
   });
+
+
+  const handleSubmit = (formData) => {
+    console.log(formData);
+    console.log(MOBILE_REGEX.test(formData.mobileNumber), EMAIL_REGEX.test(formData.email), MOBILE_REGEX.test(formData.inchargeMobile), EMAIL_REGEX.test(formData.inchargeEmail));
+
+    if (!MOBILE_REGEX.test(formData.mobileNumber)) {
+      setState({ message: "Invalid HLC Mobile Number" });
+      return;
+    }
+
+    if (!EMAIL_REGEX.test(formData.email)) {
+      setState({ message: "Invalid HLC Email" });
+      return;
+    }
+
+    if (!MOBILE_REGEX.test(formData.in_charge_mobile)) {
+      setState({ message: "Invalid Incharge Mobile Number" });
+      return;
+    }
+
+    if (!EMAIL_REGEX.test(formData.in_charge_email)) {
+      setState({ message: "Invalid Incharge Email" });
+      return;
+    }
+
+    try {
+      post('/register-user/register-hlc', formData, setState);
+
+      setForm1State({
+        name: "",
+        mobileNumber: "",
+        email: "",
+        mohArea: "",
+      });
+      setForm2State({
+        phmArea: "",
+        phiArea: "",
+        gnDivision: "",
+        dsDivision: "",
+        gnNumber: "",
+      });
+      setForm3State({
+        incharge: "",
+        designation: "",
+        inchargeEmail: "",
+        inchargeMobile: "",
+      });
+
+    } catch (err) {
+      console.error(err);
+      navigate('/login', { state: { from: location }, replace: true });
+    }
+
+  };
+
+  // added form data to global arrays to ease ease of accessing
+  const AddFormData = (formStep) => {
+
+    if (formStep === 0) {
+      form1Data.push(
+        form1State.name,
+        form1State.mobileNumber,
+        form1State.email,
+        form1State.mohArea
+      );
+    } else if (formStep === 1) {
+      form2Data.push(
+        form2State.phmArea,
+        form2State.phiArea,
+        form2State.gnDivision,
+        form2State.dsDivision,
+        form2State.gnNumber
+      );
+    } else {
+      form3Data.push(
+        form3State.incharge,
+        form3State.designation,
+        form3State.inchargeEmail,
+        form3State.inchargeMobile
+      );
+    }
+
+    if (formStep === 2) {
+
+      const formData = {
+        hlc_name: form1Data[0],
+        mobileNumber: form1Data[1],
+        email: form1Data[2],
+        moh_area: form1Data[3],
+        phm_area: form2Data[0],
+        phi_area: form2Data[1],
+        gn_division: form2Data[2],
+        ds_division: form2Data[3],
+        gn_number: form2Data[4],
+        in_charge: form3Data[0],
+        in_charge_designation: form3Data[1],
+        in_charge_email: form3Data[2],
+        in_charge_mobile: form3Data[3],
+      };
+
+      console.log("Submitted Form Data:", formData);
+
+      handleSubmit(formData);
+    }
+  }
+
+
 
   return (
     <div className="h-screen py-1 bg-primary">
@@ -191,6 +443,8 @@ const AddHLC = (props) => {
           <hr className="w-2/3 mx-auto mt-3 mb-0" />
         </div>
         <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
+          {/* just to display state after form submit */}
+          <p display={state ? "block" : "none"} aria-live="assertive">{state && state.message}</p>
           <Stepper index={step} className="w-3/4 mx-auto mt-3">
             {steps.map((step, index) => (
               <Step key={index}>
@@ -239,10 +493,19 @@ const AddHLC = (props) => {
               </Step>
             ))}
           </Stepper>
-          {step === 0 ? <Form1 /> : step === 1 ? <Form2 /> : <Form3 />}
+
+          {step === 0 ? (
+            <Form1 formData={form1State} setFormData={setForm1State} />
+          ) : step === 1 ? (
+            <Form2 formData={form2State} setFormData={setForm2State} />
+          ) : (
+            <Form3 formData={form3State} setFormData={setForm3State} />
+          )}
+
           <ButtonGroup w="100%" mb="5%">
             <Flex w="100%" justifyContent="space-between">
               <Flex className="mx-auto">
+
                 <Button
                   onClick={() => {
                     setStep(step - 1);
@@ -261,48 +524,55 @@ const AddHLC = (props) => {
                 >
                   Back
                 </Button>
+
                 {step === 2 ? (
                   <div className="w-40 text-center">
                     <Button
                       w="6rem"
                       h="1.5rem"
+                      type="submit"
                       float={"center"}
                       mt="0%"
                       fontSize={16}
                       colorScheme="red"
                       borderRadius={20}
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
                         setStep(step + 1);
                         setProgress(progress - 33.33);
+                        AddFormData(step);
                       }}
                     >
                       Submit
                     </Button>
                   </div>
                 ) : (
-                  <div className="w-40"></div>
+                  // change the btn layout to not show next in last page
+                  <Button
+                    w="4rem"
+                    h="1.5rem"
+                    type="submit"
+                    borderRadius={20}
+                    backgroundColor="#645bee"
+                    isDisabled={step === 3}
+                    fontSize={16}
+                    mt="0%"
+                    color={"white"}
+                    _hover={"red"}
+                    onClick={() => {
+                      setStep(step + 1);
+                      if (step === 3) {
+                        setProgress(100);
+                      } else {
+                        setProgress(progress + 33.33);
+                      }
+                      AddFormData(step);
+                    }}
+                  >
+                    Next
+                  </Button>
                 )}
-                <Button
-                  w="4rem"
-                  h="1.5rem"
-                  borderRadius={20}
-                  backgroundColor="#645bee"
-                  isDisabled={step === 3}
-                  fontSize={16}
-                  mt="0%"
-                  color={"white"}
-                  _hover={"red"}
-                  onClick={() => {
-                    setStep(step + 1);
-                    if (step === 3) {
-                      setProgress(100);
-                    } else {
-                      setProgress(progress + 33.33);
-                    }
-                  }}
-                >
-                  Next
-                </Button>
+
               </Flex>
             </Flex>
           </ButtonGroup>
