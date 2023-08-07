@@ -1,4 +1,4 @@
-.Register, .login{
+.Register, .login, .forgotpw, .resetpw{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -73,7 +73,7 @@ button {
     margin-left: 0.25rem;
 }
 
-.errmsg {
+.errmsg, .state {
     background-color: lightpink;
     color: firebrick;
     font-weight: bold;

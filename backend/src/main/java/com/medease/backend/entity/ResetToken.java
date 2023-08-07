@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Token {
+public class ResetToken {
 
     @Id
     @GeneratedValue
@@ -21,7 +21,7 @@ public class Token {
     private String token;
 
     @Enumerated(EnumType.STRING)
-    private TokenType tokenType;
+    private TokenType tokenType = TokenType.RESET;
 
     private boolean expired;
 
@@ -30,5 +30,4 @@ public class Token {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
 }
