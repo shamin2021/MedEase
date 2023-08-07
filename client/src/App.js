@@ -10,13 +10,13 @@ import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
 import Layout from './components/Layout';
-
 import PersistLogin from './components/PersistLogin';
 import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 import AddDoctor from './pages/HLC/AddDoctor';
 import AddHLC from './pages/Admin/AddHLC';
 import SearchDoctor from './pages/SearchDoctor';
+import PatientProfile from "./pages/PatientProfile";
 
 function App() {
 
@@ -30,8 +30,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />} >
-
+        <Route path="/" element={<Layout />}>
+          <Route path="SearchDoctor" element={<SearchDoctor />} />
+          <Route path="AddDoctor" element={<AddDoctor />} />
+          <Route path="AddHLC" element={<AddHLC />} />
+          <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
@@ -40,10 +43,15 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
-
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />}>
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]}
+                />
+              }
+            >
               {/* routes allowed for all authenticated users */}
               <Route path="/SearchDoctor" element={<SearchDoctor />} />
             </Route>
@@ -70,7 +78,6 @@ function App() {
           </Route>
           {/* 404 routes */}
           <Route path="*" element={<Missing />} />
-
         </Route>
       </Routes>
     </Router>

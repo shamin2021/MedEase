@@ -16,7 +16,7 @@ label {
     color: gray;
 }
 
-span {
+span.AddHLC{
     font-size: 12px;
     padding: 3px;
     color: red;
@@ -42,7 +42,6 @@ select {
 .form-input {
     font-family: 'Nunito', sans-serif;
     font-size: 15px;
-    border-radius: 0.8rem;
     border: none;
     background-color: #f5f5f5;
 }
@@ -58,10 +57,6 @@ select {
     margin-right: 20px;
 }
 
-.css-7m7djy {
-    height: 10px;
-    width: 10px;
-}
 
 .image-upload-container {
     padding: 2rem;
