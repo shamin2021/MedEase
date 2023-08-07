@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { IoPawOutline } from 'react-icons/io5'
-import AdminNavItem from './AdminNavItem';
+import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiUser, FiSettings } from "react-icons/fi";
 
-const AdminSidebar = () => {
+const Sidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
 
     React.useEffect(() => {
@@ -45,11 +45,11 @@ const AdminSidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <AdminNavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
-                <AdminNavItem navSize={navSize} icon={FiHome} title="HCI" />
-                <AdminNavItem navSize={navSize} icon={FiUser} title="Doctor" />
-                <AdminNavItem navSize={navSize} icon={FiHome} title="Patients" />
-                <AdminNavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
+                <NavItem navSize={navSize} icon={FiHome} title="HLC" />
+                <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" />
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>
@@ -61,7 +61,7 @@ const AdminSidebar = () => {
                         <Heading as="h3" size="sm">
                             Asith Amarasekara
                         </Heading>
-                        <Text color="gray">Admin</Text>
+                        <Text color="gray"></Text>
                     </Flex>
                 </Flex>
             </Flex>
@@ -69,4 +69,4 @@ const AdminSidebar = () => {
     );
 };
 
-export default AdminSidebar;
+export default Sidebar;

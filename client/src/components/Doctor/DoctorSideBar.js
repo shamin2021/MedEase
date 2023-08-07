@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IoPawOutline } from 'react-icons/io5'
-import DoctorNavItem from './DoctorNavItem';
+import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiUser, FiSettings } from "react-icons/fi";
 
@@ -45,11 +45,11 @@ const DoctorSideBar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <DoctorNavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
-                <DoctorNavItem navSize={navSize} icon={FiHome} title="HCI" />
-                <DoctorNavItem navSize={navSize} icon={FiUser} title="Doctor" />
-                <DoctorNavItem navSize={navSize} icon={FiHome} title="Patients" />
-                <DoctorNavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
+                <NavItem navSize={navSize} icon={FiHome} title="HCI" />
+                <NavItem navSize={navSize} icon={FiUser} title="hello" />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" />
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>
@@ -61,7 +61,7 @@ const DoctorSideBar = () => {
                         <Heading as="h3" size="sm">
                             Asith Amarasekara
                         </Heading>
-                        <Text color="gray">Doctor</Text>
+                        <Text color="gray"></Text>
                     </Flex>
                 </Flex>
             </Flex>

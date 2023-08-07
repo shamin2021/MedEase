@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { IoPawOutline } from 'react-icons/io5'
-import HCINavItem from './HCINavItem';
+import HLCNavItem from './HLCNavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiUser, FiSettings } from "react-icons/fi";
 
-const HCISidebar = () => {
+const HLCSidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
 
     React.useEffect(() => {
@@ -45,11 +45,11 @@ const HCISidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <HCINavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
-                <HCINavItem navSize={navSize} icon={FiHome} title="HCI" />
-                <HCINavItem navSize={navSize} icon={FiUser} title="Doctor" />
-                <HCINavItem navSize={navSize} icon={FiHome} title="Patients" />
-                <HCINavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <HLCNavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
+                <HLCNavItem navSize={navSize} icon={FiHome} title="HLC" />
+                <HLCNavItem navSize={navSize} icon={FiUser} title="Doctor" />
+                <HLCNavItem navSize={navSize} icon={FiHome} title="Patients" />
+                <HLCNavItem navSize={navSize} icon={FiSettings} title="Settings" />
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>
@@ -61,7 +61,7 @@ const HCISidebar = () => {
                         <Heading as="h3" size="sm">
                             Asith Amarasekara
                         </Heading>
-                        <Text color="gray">HCI</Text>
+                        <Text color="gray">HLC</Text>
                     </Flex>
                 </Flex>
             </Flex>
@@ -69,4 +69,4 @@ const HCISidebar = () => {
     );
 };
 
-export default HCISidebar;
+export default HLCSidebar;

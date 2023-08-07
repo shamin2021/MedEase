@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import Patient from './pages/Patient/Patient';
 import Admin from './pages/Admin/Admin';
 import Doctor from './pages/Doctor/Doctor';
-import HCI from './pages/HCI/HCI';
+import HLC from './pages/HLC/HLC';
 import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
@@ -30,7 +30,7 @@ function App() {
 
         <Route path="/admin" element={<Admin />} />
         <Route path="/Doctor" element={<Doctor />} />
-        <Route path="/HCI" element={<HCI />} />
+        <Route path="/HLC" element={<HLC />} />
 
         <Route path="/" element={<Layout />} >
 

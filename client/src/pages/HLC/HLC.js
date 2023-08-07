@@ -1,5 +1,5 @@
 import { Box, Flex, Grid, GridItem, SimpleGrid } from '@chakra-ui/react'
-import HCISidebar from '../../components/HCI/HCISidebar'
+import HLCSidebar from '../../components/HLC/HLCSidebar'
 // import CommonCard from '../../components/CommonCard'
 // import ButtonCard from '../../components/ButtonCard'
 // import BarChart from '../../components/BarChart'
@@ -9,7 +9,7 @@ import HCISidebar from '../../components/HCI/HCISidebar'
 import React from 'react'
 
 
-const HCI = () => {
+const HLC = () => {
 
   return (
     <Grid
@@ -23,7 +23,7 @@ const HCI = () => {
     >
       <GridItem rowSpan={4} colSpan={1} >
         <SimpleGrid >
-          <HCISidebar />
+          <HLCSidebar />
         </SimpleGrid>
       </GridItem>
 
@@ -33,5 +33,5 @@ const HCI = () => {
   )
 }
 
-export default HCI
+export default HLC
 

@@ -6,6 +6,7 @@ import BarChart from '../../components/BarChart'
 import DoughnutChart from '../../components/DoughnutChart'
 import LineChart from '../../components/LineChart'
 import PieChart from '../../components/PieChart'
+import CommonForm from '../../components/Form/CommonForm'
 import React from 'react'
 
 
@@ -26,6 +27,8 @@ const Doctor = () => {
                     <DoctorSideBar />
                 </SimpleGrid>
             </GridItem>
+
+            <CommonForm />
 
         </Grid>
 

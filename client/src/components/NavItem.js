@@ -1,7 +1,7 @@
 import { Flex, Icon, Link, Menu, MenuButton, Text } from "@chakra-ui/react";
 import React from "react";
 
-const AdminNavItem = ({ navSize, icon, title, active }) => {
+const NavItem = ({ navSize, icon, title, active }) => {
 
     return (
         <Flex
@@ -34,4 +34,4 @@ const AdminNavItem = ({ navSize, icon, title, active }) => {
     )
 }
 
-export default AdminNavItem
+export default NavItem
