@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale } from 'chart.js';
 import { Doughnut, Chart } from 'react-chartjs-2';
 import { Flex } from '@chakra-ui/react';
