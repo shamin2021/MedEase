@@ -1,6 +1,7 @@
 package com.medease.backend.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.medease.backend.Exception.CustomException;
 import com.medease.backend.assets.ResetPasswordEmailTemplate;
 import com.medease.backend.assets.ResetPasswordSmsTemplate;
@@ -95,6 +96,7 @@ public class AuthenticationService {
         var userID = user.getId();
 
         revokeAllBearerTokens(user);
+
         saveUserToken(user, jwtToken);
         return AuthenticationResponseDTO.builder()
                 .message("Logged In Successfully")

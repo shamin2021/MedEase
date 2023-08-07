@@ -6,6 +6,9 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Patient from './pages/Patient/Patient';
 import Admin from './pages/Admin/Admin';
+import Doctor from './pages/Doctor/Doctor';
+import HLC from './pages/HLC/HLC';
+
 import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
@@ -30,11 +33,17 @@ function App() {
   return (
     <Router>
       <Routes>
+
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/Doctor" element={<Doctor />} />
+        <Route path="/HLC" element={<HLC />} />
+
         <Route path="/" element={<Layout />}>
           <Route path="SearchDoctor" element={<SearchDoctor />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
+
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
@@ -64,6 +73,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
               {/* routes only for HLC */}
               <Route path="/AddDoctor" element={<AddDoctor />} />
+
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>

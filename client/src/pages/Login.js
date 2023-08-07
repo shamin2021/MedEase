@@ -37,7 +37,7 @@ const Login = () => {
             );
             console.log(response.data);
 
-            if (response.data.message === "Activate Your Account By Setting Up a Password") { 
+            if (response.data.message === "Activate Your Account By Setting Up a Password") {
                 setErrorMsg(response.data.message);
             }
             else {

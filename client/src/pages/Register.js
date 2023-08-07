@@ -69,6 +69,7 @@ const Register = () => {
             console.log(response?.data);
             setSuccess(true);
             setErrMsg(response?.data?.message) //these needs to be chnaged later
+
             setUser('');
             setPwd('');
             setMatchPwd('');
