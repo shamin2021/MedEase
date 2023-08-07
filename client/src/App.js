@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Patient from './pages/Patient/Patient';
 import Admin from './pages/Admin/Admin';
+import Doctor from './pages/Doctor/Doctor';
+import HCI from './pages/HCI/HCI';
 import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
@@ -25,6 +27,11 @@ function App() {
   return (
     <Router>
       <Routes>
+
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/Doctor" element={<Doctor />} />
+        <Route path="/HCI" element={<HCI />} />
+
         <Route path="/" element={<Layout />} >
 
           <Route path="/" element={<Home />} />
@@ -33,6 +40,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
+
 
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
@@ -55,7 +63,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
               {/* routes only for ADMIN */}
-              <Route path="/admin" element={<Admin />} />
+              {/* <Route path="/admin" element={<Admin />} /> */}
             </Route>
           </Route>
           {/* 404 routes */}
