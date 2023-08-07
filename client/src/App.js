@@ -16,6 +16,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import AddDoctor from './pages/HLC/AddDoctor';
 import AddHLC from './pages/Admin/AddHLC';
 import SearchDoctor from './pages/SearchDoctor';
+import PatientProfile from "./pages/PatientProfile";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="SearchDoctor" element={<SearchDoctor />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} />
+          <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
