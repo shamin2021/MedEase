@@ -57,6 +57,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.PATIENT)
+                .activated(Boolean.TRUE)
                 .build();
         var savedUser = userRepository.save(user);
 
@@ -80,6 +81,12 @@ public class AuthenticationService {
         // if username and email are correct
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
+
+        if(!user.getActivated()){
+            return AuthenticationResponseDTO.builder()
+                    .message("Activate Your Account By Setting Up a Password")
+                    .build();
+        }
 
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -122,7 +129,7 @@ public class AuthenticationService {
         resetTokenRepository.saveAll(validResetTokens);
     }
 
-    private void saveUserToken(User user, String jwtToken) {
+    void saveUserToken(User user, String jwtToken) {
 
         Token token = Token.builder()
                     .user(user)
@@ -134,7 +141,7 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    private void saveResetToken(User user, String jwtToken) {
+    void saveResetToken(User user, String jwtToken) {
 
         ResetToken token = ResetToken.builder()
                 .user(user)
