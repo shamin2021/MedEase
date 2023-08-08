@@ -20,6 +20,9 @@ import AddDoctor from './pages/HLC/AddDoctor';
 import AddHLC from './pages/Admin/AddHLC';
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
+import PatientMeetings from './pages/Patient/PatientMeetings';
+import Conference from './components/Conference';
+import MeetingExpired from './pages/MeetingExpired';
 
 function App() {
 
@@ -65,6 +68,8 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
+              <Route path="/meetings" element={<PatientMeetings />} />
+              <Route path='/link-expired' element={<MeetingExpired />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>

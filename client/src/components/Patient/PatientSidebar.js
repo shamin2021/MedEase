@@ -1,11 +1,10 @@
-import React from 'react';
+import React from 'react'
 
-import { IoPawOutline } from 'react-icons/io5'
-import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiSettings } from "react-icons/fi";
+import { FiMenu, FiHome, FiUser, FiSettings, FiVideo } from "react-icons/fi";
+import NavItem from '../NavItem';
 
-const HLCSidebar = () => {
+const PatientSidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
 
     React.useEffect(() => {
@@ -45,10 +44,10 @@ const HLCSidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/patient"} active />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" />
-                <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" />
+                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctor"}/>
+                <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/meetings"}/>
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
             </Flex>
 
@@ -67,6 +66,6 @@ const HLCSidebar = () => {
             </Flex>
         </Flex>
     );
-};
+}
 
-export default HLCSidebar;
+export default PatientSidebar

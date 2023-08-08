@@ -22,11 +22,6 @@ const Doctor = () => {
             mt={1}
 
         >
-            <GridItem rowSpan={4} colSpan={1} >
-                <SimpleGrid >
-                    <DoctorSideBar />
-                </SimpleGrid>
-            </GridItem>
 
             <CommonForm />
 

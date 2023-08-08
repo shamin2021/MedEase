@@ -1,7 +1,7 @@
 import { Flex, Icon, Link, Menu, MenuButton, Text } from "@chakra-ui/react";
 import React from "react";
 
-const NavItem = ({ navSize, icon, title, active }) => {
+const NavItem = ({ navSize, icon, title, href, active }) => {
 
     return (
         <Flex
@@ -18,6 +18,7 @@ const NavItem = ({ navSize, icon, title, active }) => {
                     borderRadius={12}
                     _hover={ {textDecor: "none", backgroundColor: "#C5DCFB"}}
                     w={navSize == "large" && "100%"}
+                    href={href ? href : "#"}
                 >
                     <MenuButton>
                         <Flex>

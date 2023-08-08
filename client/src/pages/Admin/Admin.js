@@ -21,11 +21,6 @@ const Admin = () => {
       mt={1}
 
     >
-      <GridItem rowSpan={4} colSpan={1} >
-        <SimpleGrid >
-          <AdminSidebar />
-        </SimpleGrid>
-      </GridItem>
 
       <GridItem colSpan={6} bg='tomato' h="5rem" />
 
