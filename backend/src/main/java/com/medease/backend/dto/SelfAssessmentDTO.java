@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TestUserResponseDTO {
+public class SelfAssessmentDTO {
 
     // sends a user list
     private  List<Test> users;

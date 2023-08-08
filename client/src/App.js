@@ -15,6 +15,12 @@ import PersistLogin from './components/PersistLogin';
 import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 
+import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
+import CreateSelfAssessmentComponent from './components/patient/CreateSelfAssessmentComponent';
+import ViewSelfAssessmentComponent from './components/patient/ViewSelfAssessmentComponent';
+import ListSelfAssessmentComponenttest from './components/patient/ListSelfAssessmentComponenttest';
+
+
 function App() {
 
   const ROLES = {
@@ -37,6 +43,11 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
+
+          <Route path = "/list-SelfAssessment" element = {<ListSelfAssessmentComponent/>}></Route>
+          <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponenttest />}></Route>
+          <Route path = "/add-SelfAssessment/:id" element = {<CreateSelfAssessmentComponent/>}></Route>
+          <Route path = "/view-SelfAssessment/:id" element = {<ViewSelfAssessmentComponent/>}></Route>
 
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
