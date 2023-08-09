@@ -22,7 +22,7 @@ const Conference = ({ id, user, time }) => {
         console.log("meeting time: ", meetingTime);
 
         // after 30 mins of meeting time, link will expire
-        if (currentTime - meetingTime >= 4 * 60 * 1000) {
+        if (currentTime - meetingTime >= 30 * 60 * 1000) {
             console.log("Link has expired."); // need to route or display meeting expired page or component
             window.location.href = window.location.origin + '/link-expired';
             return;
@@ -129,8 +129,8 @@ const Conference = ({ id, user, time }) => {
 
         if (doctorJoined || patientJoined) {
 
-            const expiration = ((5 * 60 * 1000) + meetingTime) - currentTime;
-            const reminderDelay = ((2 * 60 * 1000) + meetingTime) - currentTime;
+            const expiration = ((30 * 60 * 1000) + meetingTime) - currentTime;
+            const reminderDelay = ((15 * 60 * 1000) + meetingTime) - currentTime;
 
             if (reminderDelay > 0) {
                 reminderTimer = setTimeout(() => {
@@ -148,7 +148,7 @@ const Conference = ({ id, user, time }) => {
             // after 30 mins automaticaly page will be refreshed and participant wont be able to use that link again
             const refreshAfterTimeSlot = setTimeout(() => {
                 window.location.reload();
-            }, 30*60*1000);
+            }, expiration);
 
             return () => {
                 clearTimeout(reminderTimer);

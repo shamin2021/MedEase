@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Button, Grid, GridItem } from '@chakra-ui/react'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import Conference from '../../components/Conference'
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 
 const PatientMeetings = () => {
 
@@ -32,10 +31,8 @@ const PatientMeetings = () => {
             h="93vh"
             templateRows='repeat(7, 1fr)'
             templateColumns='repeat(7, 1fr)'
-            // templateColumns={`repeat(${sidebarWidth == "75px" ? '1, 75px' : '1, 300px'} 6fr)`}
             gap={4}
             mt={1}
-
         >
 
             <GridItem colSpan={7} h="15rem">
@@ -58,17 +55,12 @@ const PatientMeetings = () => {
                     </>
 
                 ) : (
-
-                    <Card>
-                        <CardBody>
-                            <Conference id={1} user={"doctor"} time={new Date().toISOString()} />
-                        </CardBody>
-                    </Card>
+                        // make it go to a new page
+                    <Conference id={1} user={"doctor"} time={new Date().toISOString()} />
                 )}
 
 
             </GridItem>
-
 
         </Grid>
     )

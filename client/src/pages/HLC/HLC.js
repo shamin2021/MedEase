@@ -12,15 +12,7 @@ import React from 'react'
 const HLC = () => {
 
   return (
-    <Grid
-      h="93vh"
-      templateRows='repeat(7, 1fr)'
-      templateColumns='repeat(7, 1fr)'
-      gap={4}
-      mt={1}
-    >
-
-    </Grid>
+    <GridItem colSpan={2} bg='tomato' h="5rem" />
   )
 }
 

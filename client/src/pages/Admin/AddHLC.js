@@ -10,6 +10,7 @@ import {
   ButtonGroup,
   Button,
   Flex,
+  GridItem,
   Step,
   StepIcon,
   StepIndicator,
@@ -433,167 +434,169 @@ const AddHLC = (props) => {
 
 
   return (
-    <div className="h-94 py-1 bg-primary">
-      <div className="md:w-1/2 h-[26rem] mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-1 ">
-        <div className="container horizontal justify-center text-xs py-1">
-          <div className="flex justify-center text-lg font-medium m-3 mb-0">
-            HLC Registration
+    <GridItem colSpan={6} bg='tomato'>
+      <div className="h-94 py-1 bg-primary">
+        <div className="md:w-1/2 h-[26rem] mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-1 ">
+          <div className="container horizontal justify-center text-xs py-1">
+            <div className="flex justify-center text-lg font-medium m-3 mb-0">
+              HLC Registration
+            </div>
+            <div className="flex justify-center font-light text-stone-800- text-[14px] text-[#797878]">
+              Register the HLC here with the relevant details
+            </div>
+            <hr className="w-2/3 mx-auto mt-1 mb-0" />
           </div>
-          <div className="flex justify-center font-light text-stone-800- text-[14px] text-[#797878]">
-            Register the HLC here with the relevant details
-          </div>
-          <hr className="w-2/3 mx-auto mt-1 mb-0" />
-        </div>
-        <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
+          <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
 
-          {/* just to display state after form submit */}
-          <p display={state ? "block" : "none"} aria-live="assertive">{state && state.message}</p>
-          <Stepper index={step} className="w-3/4 mx-auto mt-3">
+            {/* just to display state after form submit */}
+            <p display={state ? "block" : "none"} aria-live="assertive">{state && state.message}</p>
+            <Stepper index={step} className="w-3/4 mx-auto mt-3">
 
-            {steps.map((step, index) => (
-              <Step key={index}>
-                <div>
-                  <StepStatus
-                    complete={
-                      <>
+              {steps.map((step, index) => (
+                <Step key={index}>
+                  <div>
+                    <StepStatus
+                      complete={
+                        <>
+                          <StepIndicator
+                            className="bg-[#c9c9c9] border-none"
+                            height={6}
+                            width={6}
+                          >
+                            <StepIcon
+                              fontSize={15}
+                              className="text-white text-sm"
+                            />
+                          </StepIndicator>
+                        </>
+                      }
+                      incomplete={
                         <StepIndicator
-                          className="bg-[#c9c9c9] border-none"
+                          className="bg-[#c9c9c9] w-10 border-none"
                           height={6}
                           width={6}
                         >
-                          <StepIcon
+                          <StepNumber
                             fontSize={15}
                             className="text-white text-sm"
                           />
                         </StepIndicator>
-                      </>
-                    }
-                    incomplete={
-                      <StepIndicator
-                        className="bg-[#c9c9c9] w-10 border-none"
-                        height={6}
-                        width={6}
+                      }
+                      active={
+                        <StepIndicator
+                          className="w-10 border-red-200"
+                          height={6}
+                          width={6}
+                        >
+                          <StepNumber
+                            fontSize={15}
+                            className="text-white text-sm"
+                            color={"#645bee"}
+                          />
+                        </StepIndicator>
+                      }
+                    />
+                    <div className="mx-auto">
+                      <StepTitle
+                        className="mx-auto"
+                        fontSize={12}
+                        color={"#b3b3b3"}
                       >
-                        <StepNumber
-                          fontSize={15}
-                          className="text-white text-sm"
-                        />
-                      </StepIndicator>
-                    }
-                    active={
-                      <StepIndicator
-                        className="w-10 border-red-200"
-                        height={6}
-                        width={6}
-                      >
-                        <StepNumber
-                          fontSize={15}
-                          className="text-white text-sm"
-                          color={"#645bee"}
-                        />
-                      </StepIndicator>
-                    }
-                  />
-                  <div className="mx-auto">
-                    <StepTitle
-                      className="mx-auto"
-                      fontSize={12}
-                      color={"#b3b3b3"}
-                    >
-                      {step.title}
-                    </StepTitle>
+                        {step.title}
+                      </StepTitle>
+                    </div>
                   </div>
-                </div>
-                <StepSeparator className="mb-3" />
-              </Step>
-            ))}
-          </Stepper>
+                  <StepSeparator className="mb-3" />
+                </Step>
+              ))}
+            </Stepper>
 
-          {step === 0 ? (
-            <Form1 formData={form1State} setFormData={setForm1State} />
-          ) : step === 1 ? (
-            <Form2 formData={form2State} setFormData={setForm2State} />
-          ) : (
-            <Form3 formData={form3State} setFormData={setForm3State} />
-          )}
+            {step === 0 ? (
+              <Form1 formData={form1State} setFormData={setForm1State} />
+            ) : step === 1 ? (
+              <Form2 formData={form2State} setFormData={setForm2State} />
+            ) : (
+              <Form3 formData={form3State} setFormData={setForm3State} />
+            )}
 
-          <ButtonGroup w="100%" mb="5%">
-            <Flex w="100%" justifyContent="space-between">
-              <Flex className="mx-auto">
+            <ButtonGroup w="100%" mb="5%">
+              <Flex w="100%" justifyContent="space-between">
+                <Flex className="mx-auto">
 
-                <Button
-                  onClick={() => {
-                    setStep(step - 1);
-                    setProgress(progress - 33.33);
-                  }}
-                  isDisabled={step === 0}
-                  variant="solid"
-                  w="4rem"
-                  mr="5%"
-                  mt="0%"
-                  backgroundColor="#645bee"
-                  color={"white"}
-                  h="1.5rem"
-                  borderRadius={20}
-                  fontSize={16}
-                >
-                  Back
-                </Button>
+                  <Button
+                    onClick={() => {
+                      setStep(step - 1);
+                      setProgress(progress - 33.33);
+                    }}
+                    isDisabled={step === 0}
+                    variant="solid"
+                    w="4rem"
+                    mr="5%"
+                    mt="0%"
+                    backgroundColor="#645bee"
+                    color={"white"}
+                    h="1.5rem"
+                    borderRadius={20}
+                    fontSize={16}
+                  >
+                    Back
+                  </Button>
 
-                {step === 2 ? (
-                  <div className="w-40 text-center">
+                  {step === 2 ? (
+                    <div className="w-40 text-center">
+                      <Button
+                        w="6rem"
+                        h="1.5rem"
+                        type="submit"
+                        float={"center"}
+                        mt="0%"
+                        fontSize={16}
+                        colorScheme="red"
+                        borderRadius={20}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setStep(step + 1);
+                          setProgress(progress - 33.33);
+                          AddFormData(step);
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  ) : (
+                    // change the btn layout to not show next in last page
                     <Button
-                      w="6rem"
+                      w="4rem"
                       h="1.5rem"
                       type="submit"
-                      float={"center"}
-                      mt="0%"
-                      fontSize={16}
-                      colorScheme="red"
                       borderRadius={20}
-                      onClick={(e) => {
-                        e.preventDefault();
+                      backgroundColor="#645bee"
+                      isDisabled={step === 3}
+                      fontSize={16}
+                      mt="0%"
+                      color={"white"}
+                      _hover={"red"}
+                      onClick={() => {
                         setStep(step + 1);
-                        setProgress(progress - 33.33);
+                        if (step === 3) {
+                          setProgress(100);
+                        } else {
+                          setProgress(progress + 33.33);
+                        }
                         AddFormData(step);
                       }}
                     >
-                      Submit
+                      Next
                     </Button>
-                  </div>
-                ) : (
-                  // change the btn layout to not show next in last page
-                  <Button
-                    w="4rem"
-                    h="1.5rem"
-                    type="submit"
-                    borderRadius={20}
-                    backgroundColor="#645bee"
-                    isDisabled={step === 3}
-                    fontSize={16}
-                    mt="0%"
-                    color={"white"}
-                    _hover={"red"}
-                    onClick={() => {
-                      setStep(step + 1);
-                      if (step === 3) {
-                        setProgress(100);
-                      } else {
-                        setProgress(progress + 33.33);
-                      }
-                      AddFormData(step);
-                    }}
-                  >
-                    Next
-                  </Button>
-                )}
+                  )}
 
+                </Flex>
               </Flex>
-            </Flex>
-          </ButtonGroup>
+            </ButtonGroup>
+          </div>
         </div>
       </div>
-    </div>
+    </GridItem>
   );
 };
 

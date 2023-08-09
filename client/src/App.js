@@ -21,7 +21,6 @@ import AddHLC from './pages/Admin/AddHLC';
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
 import PatientMeetings from './pages/Patient/PatientMeetings';
-import Conference from './components/Conference';
 import MeetingExpired from './pages/MeetingExpired';
 
 function App() {
