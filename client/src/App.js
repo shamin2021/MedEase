@@ -11,6 +11,8 @@ import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
 import Layout from './components/Layout';
 
+import DirectChatPage from './components/Chat';
+
 import PersistLogin from './components/PersistLogin';
 
 function App() {
@@ -33,6 +35,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
+            <Route path="/message" element={<DirectChatPage />} />
+          
 
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
@@ -60,7 +64,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3], ROLES[4]]} />}>
               {/* routes only for PATIENT,HLC, DOCTOR*/}
-              <Route path="components/Chat" element={<DirectChatPage />} />
+              {/* <Route path="components/Chat" element={<DirectChatPage />} /> */}
             </Route>
           </Route>
           {/* 404 routes */}

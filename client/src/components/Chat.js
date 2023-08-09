@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 
 import LoginForm  from '../pages/Login'
 
+import DoctorSideBar from './Doctor/DoctorSideBar'
+
+
 
 import '../styles/Chat.css';
 
@@ -21,14 +24,14 @@ const DirectChatPage = () => {
 	function createDirectChat(creds) {
 		getOrCreateChat(
 			creds,
-			{ is_direct_chat: true, usernames: [username] },
+			{ is_direct_chat: true, usernames: [username.toLowerCase()] },
 			() => setUsername('')
 		)
 	}
 
 	function renderNewChatForm(creds) {
 		return (
-			<div className='divnewchat'>
+			<div className='divnewchat' >
 				<input className="inputnewchat"
 					placeholder='Username' 
 					value={username} 
@@ -45,7 +48,7 @@ const DirectChatPage = () => {
 		<>
       {isLoggedIn ? (
 		<ChatEngine 
-			height='100vh'   //change window height
+			height='61vh'   //change window height
 			width='300px'
 			// userName='oshani'
 			// userSecret='oshani'
