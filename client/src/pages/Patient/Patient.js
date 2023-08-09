@@ -1,12 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import TestUsers from '../../components/TestUsers'
 
 const Patient = () => {
   return (
     <div>
       <h1>Patient Dashboard</h1>
       <br />
-      <Link to={"/users"}>Users</Link>
+      {/* test purposes */}
+      < TestUsers />
       <br />
     </div>
   )

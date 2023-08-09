@@ -15,8 +15,9 @@ const useAxiosMethods = () => {
                     signal: controller.signal
                 });
                 isMounted && setResponse(response.data);
+                console.log(response);
             } catch (err) {
-                throw err;
+                console.error(err);
             }
         }
 
@@ -38,12 +39,13 @@ const useAxiosMethods = () => {
                     signal: controller.signal
                 });
                 isMounted && setResponse(response.data);
+                console.log(response);
             } catch (err) {
                 console.error(err);
             }
         }
 
-        postData();
+        postData().then();
 
         return () => {
             isMounted = false;
@@ -61,6 +63,7 @@ const useAxiosMethods = () => {
                     signal: controller.signal
                 });
                 isMounted && setResponse(response.data);
+                console.log(response);
             } catch (err) {
                 console.error(err);
             }
@@ -84,6 +87,7 @@ const useAxiosMethods = () => {
                     signal: controller.signal
                 });
                 isMounted && setResponse(response.data);
+                console.log(response);
             } catch (err) {
                 console.error(err);
             }

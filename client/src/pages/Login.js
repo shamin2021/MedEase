@@ -8,7 +8,7 @@ import axios from '../constants/axios';
 
 const Login = () => {
 
-    const { setAuth } = useAuth();
+    const { setAuth, persist, setPersist } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -36,12 +36,18 @@ const Login = () => {
                 }
             );
             console.log(response.data);
-            setAuth(response?.data);
-            setEmail('');
-            setPassword('');
 
-            const from = location.state?.from || { pathname: '/' + response?.data?.role?.toLowerCase()};
-            navigate(from, { replace: true });
+            if (response.data.message === "Activate Your Account By Setting Up a Password") {
+                setErrorMsg(response.data.message);
+            }
+            else {
+                setAuth(response?.data);
+                setEmail('');
+                setPassword('');
+
+                const from = location.state?.from || { pathname: '/' + response?.data?.role?.toLowerCase() };
+                navigate(from, { replace: true });
+            }
 
         } catch (err) {
             if (!err?.response) {
@@ -56,12 +62,20 @@ const Login = () => {
         }
     }
 
+    const togglePersist = () => {
+        setPersist(prev => !prev);
+    }
+
+    useEffect(() => {
+        localStorage.setItem("persist", persist);
+    }, [persist])
+
     return (
 
         <div className='login'>
 
             <section>
-                <p className={errorMsg ? "errorMsg" : "offscreen"} aria-live="assertive">{errorMsg}</p>
+                <p className={errorMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errorMsg}</p>
                 <h1>Sign In</h1>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="email">Username:</label>
@@ -83,6 +97,18 @@ const Login = () => {
                         required
                     />
                     <button>Sign In</button>
+                    <div className="persistCheck">
+                        <input
+                            type="checkbox"
+                            id="persist"
+                            onChange={togglePersist}
+                            checked={persist}
+                        />
+                        <label htmlFor="persist">Remember Me</label>
+                    </div>
+                    <div className="reset">
+                        <Link to={"/forgot-password"}>Forgot Password?</Link>
+                    </div>
                 </form>
                 <p>
                     Need an Account?<br />
@@ -93,9 +119,7 @@ const Login = () => {
             </section>
 
         </div>
-
     )
-
 }
 
 export default Login

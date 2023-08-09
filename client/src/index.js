@@ -8,9 +8,11 @@ import { AuthProvider } from './jwtAuthServices/AuthProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
+
   <AuthProvider>
     <ChakraProvider>
       <App />
     </ChakraProvider>    
   </AuthProvider>
+
 );

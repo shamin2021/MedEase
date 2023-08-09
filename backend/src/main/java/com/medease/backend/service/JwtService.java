@@ -1,8 +1,6 @@
 package com.medease.backend.service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +48,10 @@ public class JwtService {
         return  buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
+    public String generateResetToken (UserDetails userDetails, long expiration) {
+        return  buildToken(new HashMap<>(), userDetails, expiration);
+    }
+
     public String generateRefreshToken (UserDetails userDetails) {
         return  buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
@@ -81,12 +83,18 @@ public class JwtService {
 
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+
+        try {
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            return Jwts.claims();
+        }
+
     }
 
     // to ensure the jwt sender is the one who claims that
