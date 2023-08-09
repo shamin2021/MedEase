@@ -10,6 +10,8 @@ import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
 import Layout from './components/Layout';
 import Users from './pages/Users';
+import ViewWeeklyTasks from './pages/LifestyleMonitor/Patient/ViewWeeklyTasks';
+import AddWeeklyTasks from './pages/LifestyleMonitor/Staff/AddWeeklyTasks/AddWeeklyTasks';
 
 function App() {
 
@@ -40,6 +42,9 @@ function App() {
 
           {/* 404 routes */}
           <Route path="*" element={<Missing />} />
+
+          <Route path="/lifestyle" element={<ViewWeeklyTasks />} />
+          <Route path="/lifestyle/staff/addWeeklyTasks" element={<AddWeeklyTasks />} />
         </Route>
       </Routes>
     </Router>
