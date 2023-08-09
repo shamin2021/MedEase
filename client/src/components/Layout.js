@@ -15,7 +15,7 @@ const Layout = () => {
     const { auth } = useAuth();
     const location = useLocation();
 
-    const unauthorizedPaths = [
+    const sideBarHiddenPaths = [
         '/',
         '/home',
         '/register',
@@ -24,12 +24,18 @@ const Layout = () => {
         '/reset-password/:token',
         '/unauthorized',
         '/test-components',
+        '/loading',
+        '/meeting/:id/:role/:time'
     ];
+
+    const layoutHiddenPaths = [
+        '/meeting/:id/:role/:time'
+    ]
 
 
     const renderSidebar = () => {
 
-        if (auth.role && !unauthorizedPaths.includes(location.pathname)) {
+        if (auth.role && !sideBarHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/')) {
 
             if (auth?.role === "PATIENT") {
                 return <PatientSidebar />;
@@ -46,8 +52,13 @@ const Layout = () => {
 
     return (
         <main className='App font-poppins'>
-            <NavBar />
-            {auth.role && !unauthorizedPaths.includes(location.pathname) ? (
+
+            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') ? (
+                <NavBar />
+            ) : null }
+
+
+            {auth.role && !sideBarHiddenPaths.includes(location.pathname) ? (
                 <Grid
                     h="93vh"
                     templateRows='repeat(7, 1fr)'
@@ -63,15 +74,16 @@ const Layout = () => {
                     </GridItem >
 
                     <Outlet />
-                    
+
                 </Grid>
             ) : (
                 <Outlet />
             )}
 
-            {/* </div>
-            </div> */}
-            <Footer />
+            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') ? (
+                <Footer />
+            ) : null}
+
         </main>
     )
 }

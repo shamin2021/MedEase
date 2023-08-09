@@ -1,5 +1,4 @@
-import { Box, Flex, Grid, GridItem, SimpleGrid } from '@chakra-ui/react'
-import AdminSidebar from '../../components/Admin/AdminSidebar'
+import { Box, Flex, GridItem } from '@chakra-ui/react'
 import CommonCard from '../../components/CommonCard'
 import ButtonCard from '../../components/ButtonCard'
 import BarChart from '../../components/BarChart'

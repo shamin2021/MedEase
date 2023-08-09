@@ -22,6 +22,7 @@ import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import MeetingExpired from './pages/MeetingExpired';
+import Conference from './components/Conference/Conference';
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
               <Route path="/meetings" element={<PatientMeetings />} />
+              <Route path="/meeting/:id/:role/:time" element={<Conference />} />
               <Route path='/link-expired' element={<MeetingExpired />} />
             </Route>
 
@@ -80,6 +82,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
               {/* routes only for DOCTOR */}
               <Route path="/doctor" element={<Doctor />} />
+              {/* <Route path="/meetings" element={<DoctorMeetings />} /> */}
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>

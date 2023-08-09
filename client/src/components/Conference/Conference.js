@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { VideoSDKMeeting } from "@videosdk.live/rtc-js-prebuilt";
-import { Skeleton } from '@chakra-ui/react'
+import { useParams } from "react-router-dom";
 
-import "../styles/Conference.css"
+import "../../styles/Conference.css"
 
-const Conference = ({ id, user, time }) => {
+const Conference = () => {
+
+    const { id, user, time } = useParams();
 
     const [doctorJoined, setDoctorJoined] = useState(false);
     const [patientJoined, setPatientJoined] = useState(false);
+
 
     // when checking user doctor or patient as any one can change the url and join, implemenet a way to confirm users identity( can use the auth state as it has the role)
     // need to check if the meeting is sceduled or not, should maintain a flag when scheduling, before passing to use effect, if that a invalid url this should be denied
@@ -136,10 +139,8 @@ const Conference = ({ id, user, time }) => {
                 reminderTimer = setTimeout(() => {
                     if (doctorJoined && !patientJoined) {
                         console.log("Patient ID:01, please join the meeting, Docotr is waiting"); // need to send sms to patient
-                        alert("Sent A Reminder msg to Patient");
                     } else if (!doctorJoined && patientJoined) {
                         console.log("Doctor ID:01, please join the meeting, Patient is waiting"); // need to send sms to doctor
-                        alert("Sent A Reminder msg to Doctor");
                     }
                 }, reminderDelay);
             }
@@ -159,11 +160,23 @@ const Conference = ({ id, user, time }) => {
 
     }, [id, user, time, doctorJoined, patientJoined]);
 
+
+    useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            event.preventDefault();
+            // this shouldn't be empty, but browser will show a default message
+            event.returnValue = "Are You Sure You Want To Leave?";
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
+
     return (
         <div>
-            <Skeleton>
-                <div className="link-waiting-container"></div>
-            </Skeleton>
         </div>
     )
 }
