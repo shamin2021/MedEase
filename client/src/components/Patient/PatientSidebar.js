@@ -47,7 +47,7 @@ const PatientSidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/patient"} active />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctor"}/>
-                <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/meetings"}/>
+                <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/PatientMeetings"}/>
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
             </Flex>
 

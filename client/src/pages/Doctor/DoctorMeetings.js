@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Tabs, TabList, Tab, TabPanel, TabPanels, Box, Text, Button, GridItem, Flex, Heading } from '@chakra-ui/react';
-import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
+import { CheckIcon, SmallCloseIcon, PlusSquareIcon } from '@chakra-ui/icons';
 
 const meetingsData = [
     {
@@ -33,8 +33,8 @@ const meetingsData = [
     },
 ];
 
-const PatientMeetings = () => {
 
+const DoctorMeetings = () => {
     const [currentTab, setCurrentTab] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [showMeeting, setShowMeeting] = useState(false);
@@ -96,7 +96,20 @@ const PatientMeetings = () => {
     const renderCardAction = (meeting) => {
 
         if (meeting.status === 'past') {
-            return null;
+            return (
+                <div>
+                    <Button
+                        colorScheme="blue"
+                        rightIcon={<PlusSquareIcon />}
+                        variant="outline"
+                        size="sm"
+                        onClick={() => console.log('Pescription clicked')}
+                    >
+                        Add Prescription
+                    </Button>
+                </div>
+
+            );
 
         } else if (meeting.status === 'current') {
             return (
@@ -114,13 +127,13 @@ const PatientMeetings = () => {
                             Join
                         </Button>
                     ) : (
-                            <Button
-                                colorScheme="teal"
-                                variant="outline"
-                                size="sm"
-                                isLoading={showMeeting}
-                                loadingText="In Progress"
-                            />
+                        <Button
+                            colorScheme="teal"
+                            variant="outline"
+                            size="sm"
+                            isLoading={showMeeting}
+                            loadingText="In Progress"
+                        />
                     )}
                 </div>
             );
@@ -186,7 +199,7 @@ const PatientMeetings = () => {
                                                 <Text>
                                                     {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
                                                 </Text>
-                                                <Text fontWeight='bold' fontSize="lg">Meeting with Dr.{meeting.doctor}</Text>
+                                                <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
                                                 {renderCardAction(meeting)}
                                             </Flex>
 
@@ -209,7 +222,7 @@ const PatientMeetings = () => {
                                                 <Text>
                                                     {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
                                                 </Text>
-                                                <Text fontWeight='bold' fontSize="lg">Meeting with Dr.{meeting.doctor}</Text>
+                                                <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
                                                 {renderCardAction(meeting)}
                                             </Flex>
 
@@ -231,7 +244,7 @@ const PatientMeetings = () => {
                                                 <Text>
                                                     {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
                                                 </Text>
-                                                <Text fontWeight='bold' fontSize="lg">Meeting with Dr.{meeting.doctor}</Text>
+                                                <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
                                                 {renderCardAction(meeting)}
                                             </Flex>
 
@@ -245,6 +258,6 @@ const PatientMeetings = () => {
             </Box>
         </GridItem>
     );
-};
+}
 
-export default PatientMeetings;
+export default DoctorMeetings

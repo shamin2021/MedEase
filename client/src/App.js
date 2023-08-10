@@ -23,6 +23,8 @@ import PatientProfile from "./pages/PatientProfile";
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import MeetingExpired from './pages/MeetingExpired';
 import Conference from './components/Conference/Conference';
+import DoctorMeetings from './pages/Doctor/DoctorMeetings';
+import Availability from './pages/Availability';
 
 function App() {
 
@@ -68,9 +70,18 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
-              <Route path="/meetings" element={<PatientMeetings />} />
-              <Route path="/meeting/:id/:role/:time" element={<Conference />} />
+              <Route path="/PatientMeetings" element={<PatientMeetings />} />
               <Route path='/link-expired' element={<MeetingExpired />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3]]} />}>
+              {/* routes only for HLC and DOCTOR */}
+              <Route path="/DoctorAvailability" element={<Availability />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[3]]} />}>
+              {/* routes only for PATIENT and DOCTOR */}
+              <Route path="/meeting/:id/:role/:time" element={<Conference />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
@@ -82,7 +93,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
               {/* routes only for DOCTOR */}
               <Route path="/doctor" element={<Doctor />} />
-              {/* <Route path="/meetings" element={<DoctorMeetings />} /> */}
+              <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
