@@ -19,15 +19,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SelfAssessmentService {
 
-    @Autowired
-    private SelfAssessmentRepository selfAssessmentRepository;
+    private  final SelfAssessmentRepository selfAssessmentRepository;
 
-    // @Override
     public List<SelfAssessment> getAllSelfAssessments() {
         return selfAssessmentRepository.findAll();
     }
 
-    // @Override
     public SelfAssessment createSelfAssessment(SelfAssessmentDTO selfAssessmentDTO) {
         SelfAssessment selfAssessment = new SelfAssessment(
             0, selfAssessmentDTO.getFirstName(),
@@ -38,8 +35,7 @@ public class SelfAssessmentService {
         return selfAssessmentRepository.save(selfAssessment);
     }
 
-    // @Override
-    public SelfAssessment updateSelfAssessment(Long id, SelfAssessmentDTO selfAssessmentDTO) {
+    public SelfAssessment updateSelfAssessment(Integer id, SelfAssessmentDTO selfAssessmentDTO) {
         SelfAssessment existingSelfAssessment = selfAssessmentRepository.findById(id)
                 .orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
         
@@ -72,16 +68,14 @@ public class SelfAssessmentService {
         return selfAssessmentRepository.save(existingSelfAssessment);
     }
 
-    // @Override
-    public void deleteSelfAssessment(Long id) {
+    public void deleteSelfAssessment(Integer id) {
         SelfAssessment selfAssessment = selfAssessmentRepository.findById(id)
                 .orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
         
         selfAssessmentRepository.delete(selfAssessment);
     }
 
-    // @Override
-    public SelfAssessment getSelfAssessmentById(Long id) {
+    public SelfAssessment getSelfAssessmentById(Integer id) {
         return selfAssessmentRepository.findById(id)
                 .orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
     }
