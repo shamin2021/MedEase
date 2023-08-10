@@ -26,7 +26,7 @@ const AddTasksForm = () => {
             px='20px'
             overflowX={{ sm: "scroll", lg: "hidden" }}>
             <FormControl>
-                <Flex mb={'20px'}>
+                {/* <Flex mb={'20px'}>
                     <Flex flexWrap={1} align={'center'}>
                         <FormLabel
                             display='flex'
@@ -50,7 +50,7 @@ const AddTasksForm = () => {
                             size='lg'
                         />
                     </Flex>
-                </Flex>
+                </Flex> */}
                 <FormLabel
                     display='flex'
                     ms='4px'

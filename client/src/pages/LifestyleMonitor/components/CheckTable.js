@@ -9,6 +9,7 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  Link,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -20,6 +21,7 @@ import {
 
 // Custom components
 import Card from "../../../components/card/Card";
+import TaskTabs from "./TaskTabs";
 export default function CheckTable(props) {
   const { columnsData, tableData } = props;
 
@@ -54,17 +56,21 @@ export default function CheckTable(props) {
       w='100%'
       px='0px'
       overflowX={{ sm: "scroll", lg: "hidden" }}>
-      <Flex px='25px' justify='space-between' align='center'>
-        <Text
-          color={textColor}
-          fontSize='22px'
-          fontWeight='700'
-          lineHeight='100%'>
+
+      <Flex
+        mb='20px'
+        ms='24px'
+        justifyContent={{ base: "space-between" }}
+        direction={{ base: "column" }}>
+        <Text fontSize='lg' fontWeight='700'>
           Weekly Tasks
         </Text>
+        <TaskTabs />
       </Flex>
-      <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
-        <Thead>
+
+      <Card bg={'white'} p={1} ms={'24px'} mb={'24px'} borderRadius={'10px'}>
+        <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
+          {/* <Thead>
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => (
@@ -84,71 +90,47 @@ export default function CheckTable(props) {
               ))}
             </Tr>
           ))}
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
-            prepareRow(row);
-            return (
-              <Tr {...row.getRowProps()} key={index}>
-                {row.cells.map((cell, index) => {
-                  let data = "";
-                  if (cell.column.Header === "INSTRUCTION") {
-                    data = (
-                      <Flex align='center'>
-                        <Checkbox
-                          defaultChecked={cell.value[1]}
-                          // colorScheme='brandScheme'
-                          disabled={cell.value[1]}
-                          me='10px'
-                        />
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
-                          {cell.value[0]}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "DATE") {
-                    data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
-                        {cell.value}
-                      </Text>
-                    );
-                  }
-                  // else if (cell.column.Header === "PROGRESS") {
-                  //   data = (
-                  //     <Flex align='center'>
-                  //       <Text
-                  //         me='10px'
-                  //         color={textColor}
-                  //         fontSize='sm'
-                  //         fontWeight='700'>
-                  //         {cell.value}%
-                  //       </Text>
-                  //     </Flex>
-                  //   );
-                  // } else if (cell.column.Header === "QUANTITY") {
-                  //   data = (
-                  //     <Text color={textColor} fontSize='sm' fontWeight='700'>
-                  //       {cell.value}
-                  //     </Text>
-                  //   );
-                  // }
+        </Thead> */}
+          <Tbody {...getTableBodyProps()}>
+            {page.map((row, index) => {
+              prepareRow(row);
+              return (
+                <Tr {...row.getRowProps()} key={index}>
+                  {row.cells.map((cell, index) => {
+                    let data = "";
+                    if (cell.column.Header === "INSTRUCTION") {
+                      data = (
+                        <Flex align='center'>
+                          <Checkbox
+                            defaultChecked={cell.value[1]}
+                            // colorScheme='brandScheme'
+                            disabled={cell.value[1]}
+                            me='10px'
+                          />
+                          <Text color={textColor} fontSize='sm' fontWeight='700'>
+                            {cell.value[0]}
+                          </Text>
+                        </Flex>
+                      );
+                    }
 
-                  return (
-                    <Td
-                      {...cell.getCellProps()}
-                      key={index}
-                      fontSize={{ sm: "14px" }}
-                      minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor='transparent'>
-                      {data}
-                    </Td>
-                  );
-                })}
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
+                    return (
+                      <Td
+                        {...cell.getCellProps()}
+                        key={index}
+                        fontSize={{ sm: "14px" }}
+                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                        borderColor='transparent'>
+                        {data}
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </Card>
     </Card>
   );
 }

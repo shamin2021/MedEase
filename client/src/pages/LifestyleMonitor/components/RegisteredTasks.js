@@ -9,7 +9,7 @@ import {
     Tr,
     useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     useGlobalFilter,
     usePagination,
@@ -26,7 +26,20 @@ import useAxiosMethods from "../../../hooks/useAxiosMethods";
 const RegisteredTasks = () => {
     const columns = availableInstructionsColumns;
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([
+        {
+            "instruction_id": 1,
+            "instruction": "Test instruction 1"
+        },
+        {
+            "instruction_id": 2,
+            "instruction": "Test instruction 2"
+        },
+        {
+            "instruction_id": 3,
+            "instruction": "Test instruction 3"
+        }
+    ]);
 
     const { get } = useAxiosMethods();
 
