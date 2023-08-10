@@ -25,6 +25,7 @@ import MeetingExpired from './pages/MeetingExpired';
 import Conference from './components/Conference/Conference';
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
 import Availability from './pages/Availability';
+import MeetingSchedule from './pages/Patient/MeetingSchedule';
 
 function App() {
 
@@ -72,6 +73,7 @@ function App() {
               <Route path="/patient" element={<Patient />} />
               <Route path="/PatientMeetings" element={<PatientMeetings />} />
               <Route path='/link-expired' element={<MeetingExpired />} />
+              <Route path='/ScheduleMeeting' element={<MeetingSchedule />} /> 
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3]]} />}>

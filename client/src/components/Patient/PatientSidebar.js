@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiSettings, FiVideo } from "react-icons/fi";
+import { FiMenu, FiHome, FiUser, FiSettings, FiVideo, FiCalendar } from "react-icons/fi";
 import NavItem from '../NavItem';
 
 const PatientSidebar = () => {
@@ -47,7 +47,8 @@ const PatientSidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/patient"} active />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctor"}/>
-                <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/PatientMeetings"}/>
+                <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/PatientMeetings"} />
+                <NavItem navSize={navSize} icon={FiCalendar} title="Schedule" href={"/ScheduleMeeting"} />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
             </Flex>
 
