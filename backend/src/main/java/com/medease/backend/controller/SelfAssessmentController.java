@@ -1,21 +1,17 @@
 package com.medease.backend.controller;
 
-import com.medease.backend.dto.GlobalResponseDTO;
-import com.medease.backend.dto.RegisterRequestDTO;
-import com.medease.backend.dto.TestUserResponseDTO;
-import com.medease.backend.entity.Test;
-import com.medease.backend.entity.User;
-import com.medease.backend.service.TestUserService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+
+import com.medease.backend.entity.SelfAssessment;
+
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.medease.backend.exception.ResourceNotFoundException;
-import com.medease.backend.model.SelfAssessment;
+import com.medease.backend.Exception.CustomException;
 import com.medease.backend.repository.SelfAssessmentRepository;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -54,7 +49,7 @@ public class SelfAssessmentController {
 	@GetMapping("/SelfAssessments/{id}")
 	public ResponseEntity<SelfAssessment> getSelfAssessmentById(@PathVariable Long id) {
 		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("SelfAssessment not exist with id :" + id));
+				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
 		return ResponseEntity.ok(SelfAssessment);
 	}
 	
@@ -63,7 +58,7 @@ public class SelfAssessmentController {
 	@PutMapping("/SelfAssessments/{id}")
 	public ResponseEntity<SelfAssessment> updateSelfAssessment(@PathVariable Long id, @RequestBody SelfAssessment SelfAssessmentDetails){
 		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("SelfAssessment not exist with id :" + id));
+				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
 		
 		SelfAssessment.setFirstName(SelfAssessmentDetails.getFirstName());
 		SelfAssessment.setLastName(SelfAssessmentDetails.getLastName());
@@ -96,7 +91,7 @@ public class SelfAssessmentController {
 	@DeleteMapping("/SelfAssessments/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteSelfAssessment(@PathVariable Long id){
 		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("SelfAssessment not exist with id :" + id));
+				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
 		
 		SelfAssessmentRepository.delete(SelfAssessment);
 		Map<String, Boolean> response = new HashMap<>();
