@@ -45,3 +45,26 @@ body {
   width: 20px;
   margin: 0 5px 2px 2px;
 }
+
+.fc .fc-button-primary {
+  background-color: rgb(208, 210, 245);
+  border-color: white;
+  color: var(--fc-button-text-color);
+}
+
+.fc .fc-button-primary:focus,
+.fc .fc-button-primary:hover {
+  background-color: rgb(152, 152, 230);
+  color: white;
+  border-color: white;
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: rgb(169, 152, 243);
+  border-color: white;
+  color: var(--fc-button-text-color);
+}
+
+.fc .fc-daygrid-day.fc-day-today{
+  background-color: rgb(208, 210, 245);
+}
