@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface SelfAssessmentRepository extends JpaRepository<SelfAssessment, Long>{
+public interface SelfAssessmentRepository extends JpaRepository<SelfAssessment, Integer>{
 
 }

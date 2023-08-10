@@ -19,7 +19,7 @@ public class SelfAssessment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Integer id;
 	
 	@Column(name = "first_name")
 	private String firstName;
@@ -39,40 +39,40 @@ public class SelfAssessment {
 	@Column(name = "tobacco_smoking")
     private boolean tobaccoSmoking;
 
-	@Column(name = "beetle_chewing ")
+	@Column(name = "beetle_chewing")
     private boolean beetlechewing ;
 
-	@Column(name = "alcohol_consumption ")
+	@Column(name = "alcohol_consumption")
     private boolean alcoholConsumption ;
 
-	@Column(name = "other_substance ")
+	@Column(name = "other_substance")
     private boolean otherSubstance ;
 
 	@Column(name = "snack_intake")
 	private String snackIntake;
 
-	@Column(name = "heart_disease  ")
+	@Column(name = "heart_disease")
     private boolean heartDisease  ;
 
-	@Column(name = "high_blood_pressure  ")
+	@Column(name = "high_blood_pressure")
     private boolean HighBloodPressure  ;
 
-	@Column(name = "stroke ")
+	@Column(name = "stroke")
     private boolean Stroke  ;
 
-	@Column(name = "diabetes  ")
+	@Column(name = "diabetes")
     private boolean Diabetes  ;
 
-	@Column(name = "cancer  ")
+	@Column(name = "cancer")
     private boolean Cancer  ;
 
-	@Column(name = "copd  ")
+	@Column(name = "copd")
     private boolean COPD  ;
 
-	@Column(name = "asthma   ")
+	@Column(name = "asthma")
     private boolean Asthma  ;
 
-	@Column(name = "kidney_diseases  ")
+	@Column(name = "kidney_diseases")
     private boolean kidneyDiseases  ;
 
 	@Column(name = "sudden_death ")
@@ -84,19 +84,19 @@ public class SelfAssessment {
 	// public SelfAssessment() {
 		
 	// }
-	
+
 	public SelfAssessment(
-		String firstName, 
-		String lastName, 
-		String emailId, 
-		boolean checkboxValue, 
-		boolean physicalActivity, 
-		boolean tobaccoSmoking, 
-		boolean beetlechewing, 
-		boolean alcoholConsumption, 
+		String firstName,
+		String lastName,
+		String emailId,
+		boolean checkboxValue,
+		boolean physicalActivity,
+		boolean tobaccoSmoking,
+		boolean beetlechewing,
+		boolean alcoholConsumption,
 		boolean otherSubstance,
 		String snackIntake,
-		boolean heartDisease ) 
+		boolean heartDisease )
 		{
 		super();
 		this.firstName = firstName;
@@ -115,7 +115,7 @@ public class SelfAssessment {
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getFirstName() {

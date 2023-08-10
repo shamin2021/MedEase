@@ -8,6 +8,7 @@ import java.util.Map;
 import com.medease.backend.entity.SelfAssessment;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
 
@@ -25,13 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.medease.backend.Exception.CustomException;
 import com.medease.backend.repository.SelfAssessmentRepository;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
+@RequiredArgsConstructor
 public class SelfAssessmentController {
 
-	@Autowired
-	private SelfAssessmentRepository SelfAssessmentRepository;
+	private final SelfAssessmentRepository SelfAssessmentRepository;
 	
 	// get all SelfAssessments
 	@GetMapping("/SelfAssessments")
@@ -47,7 +48,7 @@ public class SelfAssessmentController {
 	
 	// get SelfAssessment by id rest api
 	@GetMapping("/SelfAssessments/{id}")
-	public ResponseEntity<SelfAssessment> getSelfAssessmentById(@PathVariable Long id) {
+	public ResponseEntity<SelfAssessment> getSelfAssessmentById(@PathVariable Integer id) {
 		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
 				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
 		return ResponseEntity.ok(SelfAssessment);
@@ -56,7 +57,7 @@ public class SelfAssessmentController {
 	// update SelfAssessment rest api
 	
 	@PutMapping("/SelfAssessments/{id}")
-	public ResponseEntity<SelfAssessment> updateSelfAssessment(@PathVariable Long id, @RequestBody SelfAssessment SelfAssessmentDetails){
+	public ResponseEntity<SelfAssessment> updateSelfAssessment(@PathVariable Integer id, @RequestBody SelfAssessment SelfAssessmentDetails){
 		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
 				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
 		
@@ -89,7 +90,7 @@ public class SelfAssessmentController {
 	
 	// delete SelfAssessment rest api
 	@DeleteMapping("/SelfAssessments/{id}")
-	public ResponseEntity<Map<String, Boolean>> deleteSelfAssessment(@PathVariable Long id){
+	public ResponseEntity<Map<String, Boolean>> deleteSelfAssessment(@PathVariable Integer id){
 		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
 				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
 		
