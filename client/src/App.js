@@ -44,8 +44,8 @@ function App() {
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
 
-          <Route path = "/list-SelfAssessment" element = {<ListSelfAssessmentComponent/>}></Route>
-          <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponenttest />}></Route>
+          {/* <Route path = "/list-SelfAssessment" element = {<ListSelfAssessmentComponent/>}></Route> */}
+          <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponent />}></Route>
           <Route path = "/add-SelfAssessment/:id" element = {<CreateSelfAssessmentComponent/>}></Route>
           <Route path = "/view-SelfAssessment/:id" element = {<ViewSelfAssessmentComponent/>}></Route>
 

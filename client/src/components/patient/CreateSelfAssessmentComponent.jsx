@@ -368,7 +368,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">Heart Disease</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="heartDisease " className="form-check-input" 
@@ -378,7 +378,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">High Blood Pressure</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="HighBloodPressure " className="form-check-input" 
@@ -388,7 +388,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">Stroke</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="Stroke " className="form-check-input" 
@@ -398,7 +398,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">Diabetes</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="Diabetes " className="form-check-input" 
@@ -408,7 +408,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">Cancer</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="Cancer " className="form-check-input" 
@@ -418,7 +418,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">COPD</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="COPD " className="form-check-input" 
@@ -428,7 +428,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">Asthma</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="Asthma " className="form-check-input" 
@@ -438,7 +438,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">Kidney Diseases</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="kidneyDiseases " className="form-check-input" 
@@ -448,7 +448,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         </div>
 
                                         <div className = "form-group row">
-                                            <label className="col-sm-6 col-form-label">Non consumer</label>                                            
+                                            <label className="col-sm-6 col-form-label">Sudden Death</label>                                            
                                             <div className="col-sm-6">
                                                 <div className="form-check">                                            
                                                 <input type="checkbox" name="suddenDeath " className="form-check-input" 

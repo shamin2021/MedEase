@@ -48,7 +48,8 @@ class ListSelfAssessmentComponent extends Component {
 
                             <thead>
                                 <tr>
-                                    <th> First Name</th>
+                                    <th> Assessment ID</th>
+                                    {/* <th> First Name</th>
                                     <th> Last Name</th>
                                     <th> Email Id</th>
                                     <th> physicalActivity</th>
@@ -56,7 +57,7 @@ class ListSelfAssessmentComponent extends Component {
                                     <th> beetlechewing</th>
                                     <th> alcoholConsumption</th>
                                     <th> otherSubstance</th>
-                                    <th> snackIntake </th>
+                                    <th> snackIntake </th> */}
                                     
                                     <th> Actions</th>
                                     
@@ -67,19 +68,19 @@ class ListSelfAssessmentComponent extends Component {
                                     this.state.selfassessments.map(
                                         selfassessment => 
                                         <tr key = {selfassessment.id}>
-                                             <td> { selfassessment.firstName} </td>   
-                                             <td> {selfassessment.lastName}</td>
+                                             <td> { selfassessment.id} </td>   
+                                             {/* <td> {selfassessment.lastName}</td>
                                              <td> {selfassessment.emailId}</td>
                                              <td> {selfassessment.physicalActivity? 'yes' : 'no'}</td>
                                              <td> {selfassessment.tobaccoSmoking? 'yes' : 'no'}</td>
                                              <td> {selfassessment.beetlechewing ? 'yes' : 'no'}</td>
                                              <td> {selfassessment.alcoholConsumption? 'yes' : 'no'}</td>
                                              <td> {selfassessment.otherSubstance? 'yes' : 'no'}</td>
-                                             <td> {selfassessment.snackIntake }</td>
+                                             <td> {selfassessment.snackIntake }</td> */}
                                              
                                              <td>
-                                                 <button onClick={ () => this.editSelfAssessment(selfassessment.id)} className="btn btn-info">Update </button>
-                                                 <button style={{marginLeft: "10px"}} onClick={ () => this.deleteSelfAssessment(selfassessment.id)} className="btn btn-danger">Delete </button>
+                                                 {/* <button onClick={ () => this.editSelfAssessment(selfassessment.id)} className="btn btn-info">Update </button>
+                                                 <button style={{marginLeft: "10px"}} onClick={ () => this.deleteSelfAssessment(selfassessment.id)} className="btn btn-danger">Delete </button> */}
                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.viewSelfAssessment(selfassessment.id)} className="btn btn-info">View </button>
                                              </td>
                                         </tr>

@@ -16,6 +16,7 @@ const ViewSelfAssessmentComponent= () => {
     }, [id]);
 
         return (
+            <AccordionItem>
             <div>
                 <br></br>
                 <div className="card col-md-8 offset-md-2">
@@ -106,6 +107,7 @@ const ViewSelfAssessmentComponent= () => {
                         </div>
                 </div>
         </div>
+        </AccordionItem>
     );
 };
 
