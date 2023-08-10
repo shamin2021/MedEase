@@ -8,7 +8,7 @@ const NavItem = ({ navSize, icon, title, href, active }) => {
             mt={30}
             flexDir="column"
             w="100%"
-            alignItems={navSize == "small" ? "center" : "flex-start"}
+            alignItems={navSize === "small" ? "center" : "flex-start"}
         >
 
             <Menu placement="right">
@@ -17,13 +17,13 @@ const NavItem = ({ navSize, icon, title, href, active }) => {
                     p={3}
                     borderRadius={12}
                     _hover={ {textDecor: "none", backgroundColor: "#C5DCFB"}}
-                    w={navSize == "large" && "100%"}
+                    w={navSize === "large" && "100%"}
                     href={href ? href : "#"}
                 >
                     <MenuButton>
                         <Flex>
                             <Icon as={icon} fontSize="xl" color={active ? "Black" : "gray.400"} />
-                            <Text ml={5} display={navSize == "small" ? "none" : "flex"}> {title}</Text>
+                            <Text ml={5} display={navSize === "small" ? "none" : "flex"}> {title}</Text>
                         </Flex>
                     </MenuButton>
                 </Link>
