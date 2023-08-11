@@ -18,7 +18,6 @@ import ForgotPassword from './pages/ForgotPassword';
 import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
 import CreateSelfAssessmentComponent from './components/patient/CreateSelfAssessmentComponent';
 import ViewSelfAssessmentComponent from './components/patient/ViewSelfAssessmentComponent';
-import ListSelfAssessmentComponenttest from './components/patient/ListSelfAssessmentComponenttest';
 
 
 function App() {
@@ -56,9 +55,9 @@ function App() {
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
 
-              <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponent />}></Route>
-              <Route path = "/add-SelfAssessment/:id" element = {<CreateSelfAssessmentComponent/>}></Route>
-              <Route path = "/view-SelfAssessment/:id" element = {<ViewSelfAssessmentComponent/>}></Route>
+              <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponent />}/>
+              <Route path = "/CreateSelfAssessment" element = {<CreateSelfAssessmentComponent/>}/>
+              <Route path = "/view-SelfAssessment/:id" element = {<ViewSelfAssessmentComponent/>}/>
               
             </Route>
 

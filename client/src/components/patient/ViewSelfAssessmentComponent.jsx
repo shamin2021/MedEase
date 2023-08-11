@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import SelfAssessmentService from '../../services/SelfAssessmentService'
 import { useAccordionItemState } from '@chakra-ui/react';
 
 // class ViewSelfAssessmentComponent extends Component {
@@ -8,12 +7,6 @@ const ViewSelfAssessmentComponent= () => {
 
     const [selfAssessment, setSelfAssessment] = useAccordionItemState({});
     const id = 'your_id_here'; // Replace with the actual ID you want to view
-
-    useEffect(() => {
-        SelfAssessmentService.getSelfAssessmentById(id).then((res) => {
-            setSelfAssessment(res.data);
-        });
-    }, [id]);
 
         return (
             // <AccordionItem>

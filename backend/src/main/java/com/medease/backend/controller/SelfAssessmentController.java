@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.medease.backend.Exception.CustomException;
 import com.medease.backend.repository.SelfAssessmentRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
 public class SelfAssessmentController {
@@ -36,13 +36,13 @@ public class SelfAssessmentController {
 	private final SelfAssessmentRepository selfAssessmentRepository;
 	
 	// get all SelfAssessments
-	@GetMapping("/SelfAssessments")
+	@GetMapping("SelfAssessments")
 	public List<SelfAssessment> getAllSelfAssessments(){
 		return selfAssessmentRepository.findAll();
 	}		
 	
 	// create SelfAssessment rest api
-	@PostMapping("/SelfAssessments")
+	@PostMapping("CreateSelfAssessment")
 	public GlobalResponseDTO createSelfAssessment(@RequestBody SelfAssessment selfAssessment) {
 
 		var assessment = SelfAssessment.builder()
@@ -75,7 +75,7 @@ public class SelfAssessmentController {
 	}
 	
 	// get SelfAssessment by id rest api
-	@GetMapping("/SelfAssessments/{id}")
+	@GetMapping("SelfAssessments/{id}")
 	public SelfAssessment getSelfAssessmentById(@PathVariable Integer id) {
 		return selfAssessmentRepository.findById(id)
 				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));

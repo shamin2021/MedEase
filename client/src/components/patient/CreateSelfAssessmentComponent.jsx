@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import SelfAssessmentService from '../../services/SelfAssessmentService';
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 // class CreateSelfAssessmentComponent extends Component {
-const CreateSelfAssessmentComponent= (props) => {
+const CreateSelfAssessmentComponent= () => {
 
+        const [res,setRes] = useState('');
 
-        const { id } = props;
-        // const [id, setId] = useState('');
+        const { post } = useAxiosMethods();
+        const navigate = useNavigate();
+        const location = useLocation(); 
+
         const [firstName, setFirstName] = useState('');
         const [lastName, setLastName] = useState('');
         const [emailId, setemailId] = useState('');
@@ -27,85 +32,79 @@ const CreateSelfAssessmentComponent= (props) => {
         const [kidneyDiseases, setkidneyDiseases] = useState('');
         const [suddenDeath, setsuddenDeath] = useState('');
         const [otherDiseases, setotherDiseases] = useState('');
+        
 
-        // step 4
-
-        useEffect(() => {
-            // step 4
-            if (id === '_add') {
-                return;
-            } else {
-                SelfAssessmentService.getSelfAssessmentById(id).then((res) => {
-                    const selfAssessment = res.data;
-                    setFirstName(selfAssessment.firstName);
-                    setLastName(selfAssessment.lastName);
-
-                    setemailId(selfAssessment.emailId);
-                    setphysicalActivity(selfAssessment.physicalActivity);
-                    settobaccoSmoking(selfAssessment.tobaccoSmoking);
-                    setbeetlechewing(selfAssessment.beetlechewing);
-                    setalcoholConsumption(selfAssessment.alcoholConsumption);
-                    setotherSubstance(selfAssessment.otherSubstance);
-                    setsnackIntake(selfAssessment.snackIntake);
-                    setheartDisease(selfAssessment.heartDisease);
-                    setHighBloodPressure(selfAssessment.HighBloodPressure);
-                    setStroke(selfAssessment.Stroke);
-                    setDiabetes(selfAssessment.Diabetes);
-                    setCancer(selfAssessment.Cancer);
-                    setCOPD(selfAssessment.COPD);
-                    setAsthma(selfAssessment.Asthma);
-                    setkidneyDiseases(selfAssessment.kidneyDiseases);
-                    setsuddenDeath(selfAssessment.suddenDeath);
-                    setotherDiseases(selfAssessment.otherDiseases);
-
-                });
-            }
-        }, [id]);
-
-
-          
-
-    const saveOrUpdateSelfAssessment = (e) => {
+    const saveOrUpdateSelfAssessment = async (e) => {
         e.preventDefault();
-        const selfAssessment = {
-            firstName,
-            lastName,
-            emailId,
-            physicalActivity,
-            tobaccoSmoking,
-            beetlechewing,
-            alcoholConsumption,
-            otherSubstance,
-            snackIntake,
 
-            heartDisease,
-            HighBloodPressure,
-            Stroke,
-            Diabetes,
-            Cancer,
-            COPD,
-            Asthma,
-            kidneyDiseases,
-            suddenDeath,
-            otherDiseases
-        };
+        try{
+            post('CreateSelfAssessment',
+            {
+                firstName,
+                lastName,
+                emailId,
+                physicalActivity,
+                tobaccoSmoking,
+                beetlechewing,
+                alcoholConsumption,
+                otherSubstance,
+                snackIntake,
+                heartDisease,
+                HighBloodPressure,
+                Stroke,
+                Diabetes,
+                Cancer,
+                COPD,
+                Asthma,
+                kidneyDiseases,
+                suddenDeath,
+                otherDiseases
+            }
+            ,setRes);
+
+            setFirstName('');
+            setLastName('');
+            setemailId('');
+            setphysicalActivity('');
+            settobaccoSmoking('');
+            setbeetlechewing('');
+            setalcoholConsumption('');
+            setotherSubstance('');
+            setsnackIntake('');
+            setheartDisease('');
+            setHighBloodPressure('');
+            setStroke('');
+            setDiabetes('');
+            setCancer('');
+            setCOPD('');
+            setAsthma('');
+            setkidneyDiseases('');
+            setsuddenDeath('');
+            setotherDiseases('');
+        }
+        catch(err){
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+        
+            
+
     
-        console.log('SelfAssessment => ', JSON.stringify(selfAssessment));
+        // console.log('SelfAssessment => ', JSON.stringify(selfAssessment));
 
 
         // step 5
-        if (id === '_add') {
-            SelfAssessmentService.createSelfAssessment(selfAssessment).then((res) => {
-                // Navigate to the SelfAssessments list after saving
-                window.location.href = '/SelfAssessments';
-            });
-        } else {
-            SelfAssessmentService.updateSelfAssessment(selfAssessment, id).then((res) => {
-                // Navigate to the SelfAssessments list after updating
-                window.location.href = '/SelfAssessments';
-            });
-        }
+        // if (id === '_add') {
+        //     SelfAssessmentService.createSelfAssessment(selfAssessment).then((res) => {
+        //         // Navigate to the SelfAssessments list after saving
+        //         window.location.href = '/SelfAssessments';
+        //     });
+        // } 
     };
+
+    useEffect(() => {
+        console.log(res);
+               }, [res]);
     
     const changeFirstNameHandler = (event) => {
         setFirstName(event.target.value);
@@ -230,13 +229,7 @@ const CreateSelfAssessmentComponent= (props) => {
         // Navigate back to the SelfAssessments list
         window.location.href = '/SelfAssessments';
     };
-    const getTitle = () => {
-        if (id === '_add') {
-            return <h3 className="text-center">Add SelfAssessment</h3>;
-        } else {
-            return <h3 className="text-center">Update SelfAssessment</h3>;
-        }
-    };
+    
 
     return (
             <div>
@@ -245,7 +238,7 @@ const CreateSelfAssessmentComponent= (props) => {
                         <div className = "row">
                             <div className = "card col-md-8 offset-md-3 offset-md-2">
                                 {
-                                    getTitle()
+                                    <h3 className="text-center">Add SelfAssessment</h3>
                                 }
                                 <div className = "card-body">
                                     <form>
@@ -254,7 +247,7 @@ const CreateSelfAssessmentComponent= (props) => {
                                         <div className = "form-group col-md-6">
                                             <label> First Name: </label>
                                             <input placeholder="First Name" name="firstName" className="form-control" 
-                                                value={firstName} onChange={changeFirstNameHandler}/>
+                                                value={firstName} onChange={(event)=>{setFirstName(event.target.value);}}/>
                                         </div>
                                         <div className = "form-group col-md-6">
                                             <label> Last Name: </label>
