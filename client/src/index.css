@@ -18,32 +18,12 @@ body {
   background: #DCECF8;
 }
 
-/* .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1rem 0.5rem;
-  background-color: dodgerblue;
-} */
-
 .persistCheck {
   font-size: 0.75rem;
   margin-top: 10px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-}
-
-.persistCheck label {
-  margin: 0;
-}
-
-[type="checkbox"] {
-  height: 20px;
-  width: 20px;
-  margin: 0 5px 2px 2px;
 }
 
 .fc .fc-button-primary {
