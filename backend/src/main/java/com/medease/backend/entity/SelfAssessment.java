@@ -2,13 +2,12 @@ package com.medease.backend.entity;
 
 import com.medease.backend.enumeration.SnackIntake;
 import jakarta.persistence.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -21,6 +20,9 @@ public class SelfAssessment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+
+	@Column(name = "created_date")
+    private LocalDateTime date;
 	
 	@Column(name = "first_name")
 	private String firstName;
@@ -190,6 +192,5 @@ public class SelfAssessment {
 	public void setSuddenDeath(boolean suddenDeath) {
 		this.suddenDeath = suddenDeath;
 	}
-
 
 }

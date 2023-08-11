@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
 
-
-// class CreateSelfAssessmentComponent extends Component {
 const CreateSelfAssessmentComponent= () => {
 
         const [res,setRes] = useState('');
@@ -86,20 +84,7 @@ const CreateSelfAssessmentComponent= () => {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true });
         }
-        
-            
-
-    
-        // console.log('SelfAssessment => ', JSON.stringify(selfAssessment));
-
-
-        // step 5
-        // if (id === '_add') {
-        //     SelfAssessmentService.createSelfAssessment(selfAssessment).then((res) => {
-        //         // Navigate to the SelfAssessments list after saving
-        //         window.location.href = '/SelfAssessments';
-        //     });
-        // } 
+  
     };
 
     useEffect(() => {
@@ -151,7 +136,7 @@ const CreateSelfAssessmentComponent= () => {
           return;
         }
       
-        const snackIntake  = 'good';
+        const snackIntake  = 'NO_CONSUMPTION';
         setsnackIntake(snackIntake);
       }
 
@@ -160,7 +145,7 @@ const CreateSelfAssessmentComponent= () => {
           return;
         }
       
-        const snackIntake  = 'risky';
+        const snackIntake  = 'LESS_THAN_5';
         setsnackIntake(snackIntake);
       }
 
@@ -169,13 +154,10 @@ const CreateSelfAssessmentComponent= () => {
           return;
         }
       
-        const snackIntake  = 'lethal';
+        const snackIntake  = 'MORE_THAN_5';
         setsnackIntake(snackIntake);
       }
-    //snack intake
-
-
-    ///////////////////////////////
+    
     const changeheartDiseaseHandler = (event) => {
         const heartDisease = event.target.checked ? 'true' : 'false';
         setheartDisease(heartDisease);
@@ -224,7 +206,7 @@ const CreateSelfAssessmentComponent= () => {
     const changeotherDiseasesHandler = (event) => {
         setotherDiseases(event.target.value);
     }
-    ///////////////////////////////
+
     const cancel = () => {
         // Navigate back to the SelfAssessments list
         window.location.href = '/SelfAssessments';
@@ -455,11 +437,6 @@ const CreateSelfAssessmentComponent= () => {
                                             <input placeholder="Name any other diseases" name="otherDiseases" className="form-control" 
                                                 value={otherDiseases} onChange={changeotherDiseasesHandler}/>
                                         </div>
-
-
-
-                                        {/* diseases */}
-                                       
                                     
                                         <button className="btn btn-success" onClick={saveOrUpdateSelfAssessment}>Save</button>
                                         <button className="btn btn-danger" onClick={cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>

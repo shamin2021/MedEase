@@ -43,8 +43,6 @@ function App() {
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
 
-          
-
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />}>

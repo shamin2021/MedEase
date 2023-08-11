@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosMethods from "../../hooks/useAxiosMethods";
-
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 const ListSelfAssessmentComponent= () => {
 
+    const [res,setRes] = useState('');
+
+    const { get } = useAxiosMethods();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const [selfassessments, setSelfAssessments] = useState([]);
-    // const [res, setRes] = useState('');
 
-    // const { get, post, put, del } = useAxiosMethods(); 
+    useEffect(() => {
+        try {
+            get(`/SelfAssessments`, setSelfAssessments);
 
+        } catch (err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    }, []);
 
-    const viewSelfAssessment = (id) => {
-        this.props.history.push(`/view-SelfAssessment/${id}`);
-    };
+    useEffect(() => {
+        console.log(res);
+    }, [res]);
 
     const addSelfAssessment = () => {
-        this.props.history.push('/add-SelfAssessment/_add');}
+        navigate('/CreateSelfAssessment');}
 
     return (
         <div>
@@ -32,14 +44,8 @@ const ListSelfAssessmentComponent= () => {
                     <thead>
                         <tr>
                             <th> Assessment ID</th>
-                            {/* <th> Last Name</th>
-                            <th> Email Id</th>
-                            <th> physicalActivity</th>
-                            <th> tobaccoSmoking</th>
-                            <th> beetlechewing</th>
-                            <th> alcoholConsumption</th>
-                            <th> otherSubstance</th>
-                            <th> snackIntake </th> */}
+
+                            <th> Assessment Created</th>
                             
                             <th> Actions</th>
                         </tr>
@@ -47,20 +53,12 @@ const ListSelfAssessmentComponent= () => {
                     <tbody>
                         {selfassessments.map((selfassessment) => (
                             <tr key={selfassessment.id}>
-                                <td> { selfassessment.id} </td>   
-                                {/* <td> {selfassessment.lastName}</td>
-                                <td> {selfassessment.emailId}</td>
-                                <td> {selfassessment.physicalActivity? 'yes' : 'no'}</td>
-                                <td> {selfassessment.tobaccoSmoking? 'yes' : 'no'}</td>
-                                <td> {selfassessment.beetlechewing ? 'yes' : 'no'}</td>
-                                <td> {selfassessment.alcoholConsumption? 'yes' : 'no'}</td>
-                                <td> {selfassessment.otherSubstance? 'yes' : 'no'}</td>
-                                <td> {selfassessment.snackIntake }</td> */}
+                                <td> { selfassessment.id} </td>
+                                <td> { selfassessment.date} </td>   
                                 
                                 <td>
-                                    {/* <button onClick={ () => this.editSelfAssessment(selfassessment.id)} className="btn btn-info">Update </button>
-                                    <button style={{marginLeft: "10px"}} onClick={ () => this.deleteSelfAssessment(selfassessment.id)} className="btn btn-danger">Delete </button> */}
-                                    <button style={{marginLeft: "10px"}} onClick={ () => this.viewSelfAssessment(selfassessment.id)} className="btn btn-info">View </button>
+                                    
+                                    <button style={{marginLeft: "10px"}} onClick={()=>navigate(`/view-SelfAssessment/${selfassessment.id}`) } className="btn btn-info">View </button>
                                 </td>
                             </tr>
                         ))}
