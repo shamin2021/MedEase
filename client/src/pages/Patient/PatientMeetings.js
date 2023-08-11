@@ -51,7 +51,7 @@ const PatientMeetings = () => {
             setShowMeeting(true);
 
             const conferenceWindow = window.open(
-                '/meeting/01/doctor/' + new Date().toISOString(),
+                '/meeting/01/patient/' + new Date().toISOString(),
                 '_blank'
             );
             if (conferenceWindow) {

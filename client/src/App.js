@@ -83,7 +83,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[3]]} />}>
               {/* routes only for PATIENT and DOCTOR */}
-              <Route path="/meeting/:id/:role/:time" element={<Conference />} />
+              <Route path="/meeting/:id/:user/:time" element={<Conference />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
