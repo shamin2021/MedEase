@@ -25,12 +25,30 @@ public class SelfAssessmentService {
         return selfAssessmentRepository.findAll();
     }
 
-    public SelfAssessment createSelfAssessment(SelfAssessmentDTO selfAssessmentDTO) {
-        SelfAssessment selfAssessment = new SelfAssessment(
-            0, selfAssessmentDTO.getFirstName(),
-            selfAssessmentDTO.getLastName()
-            // ... set other properties from DTO
-, null, false, false, false, false, false, false, null, false, false, false, false, false, false, false, false, false, null
+    public SelfAssessment createSelfAssessment(SelfAssessment selfAssessment) {
+        var assessment = SelfAssessment.builder(
+            .first
+            .build();
+            // selfAssessmentDTO.getFirstName(),
+            // selfAssessmentDTO.getLastName(), 
+            // selfAssessmentDTO.getEmailId(), 
+            // selfAssessmentDTO.getphysicalActivity(), 
+            // selfAssessmentDTO.gettobaccoSmoking(), 
+            // selfAssessmentDTO.getbeetlechewing(), 
+            // selfAssessmentDTO.getalcoholConsumption(), 
+            // selfAssessmentDTO.getotherSubstance(), 
+            // selfAssessmentDTO.getsnackIntake(), 
+            // selfAssessmentDTO.getheartDisease(), 
+            // selfAssessmentDTO.getHighBloodPressure(), 
+            // selfAssessmentDTO.getStroke(), 
+            // selfAssessmentDTO.getCancer(), 
+            // selfAssessmentDTO.getCOPD(), 
+            // selfAssessmentDTO.getAsthma(), 
+            // selfAssessmentDTO.getkidneyDiseases(), 
+            // selfAssessmentDTO.getsuddenDeath(), 
+            // selfAssessmentDTO.getotherDiseases()
+
+            
         );
         return selfAssessmentRepository.save(selfAssessment);
     }

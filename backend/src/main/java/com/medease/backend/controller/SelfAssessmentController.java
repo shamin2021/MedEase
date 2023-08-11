@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medease.backend.Exception.CustomException;
 import com.medease.backend.repository.SelfAssessmentRepository;
+import com.medease.backend.service.SelfAssessmentService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -33,6 +34,7 @@ import com.medease.backend.repository.SelfAssessmentRepository;
 public class SelfAssessmentController {
 
 	private final SelfAssessmentRepository SelfAssessmentRepository;
+	private final SelfAssessmentService selfAssessmentService;
 	
 	// get all SelfAssessments
 	@GetMapping("/SelfAssessments")
@@ -43,7 +45,7 @@ public class SelfAssessmentController {
 	// create SelfAssessment rest api
 	@PostMapping("/SelfAssessments")
 	public SelfAssessment createSelfAssessment(@RequestBody SelfAssessment SelfAssessment) {
-		return SelfAssessmentRepository.save(SelfAssessment);
+		return SelfAssessmentRepository.save(selfAssessmentService.createSelfAssessment(SelfAssessment));
 	}
 	
 	// get SelfAssessment by id rest api
