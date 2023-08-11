@@ -105,6 +105,7 @@ const DesktopNav = () => {
   const popoverContentBgColor = useColorModeValue('white', 'gray.800');
 
   return (
+    <Flex justifyContent="center">
     <Stack direction={'row'} spacing={4}>
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
@@ -143,6 +144,7 @@ const DesktopNav = () => {
         </Box>
       ))}
     </Stack>
+    </Flex>
   );
 };
 
