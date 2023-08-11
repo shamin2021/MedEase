@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAuth from "../hooks/useAuth";
 
+import { Spinner, GridItem } from '@chakra-ui/react'
+import { Center } from '@chakra-ui/react'
+
 const PersistLogin = () => {
 
     const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +37,7 @@ const PersistLogin = () => {
             {!persist
                 ? <Outlet />
                 : isLoading
-                    ? <p>Loading...</p>  // can add a loading spinner here
+                    ? <GridItem colSpan={7} rowSpan={7}><Center> <Spinner size='lg' /> </Center></GridItem>
                     : <Outlet />
             }
         </>
