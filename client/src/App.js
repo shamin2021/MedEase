@@ -37,6 +37,8 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/Doctor" element={<Doctor />} />
         <Route path="/HLC" element={<HLC />} />
+        <Route path="/patient" element={<Patient />} />
+
 
         <Route path="/" element={<Layout />}>
           <Route path="SearchDoctor" element={<SearchDoctor />} />
@@ -67,7 +69,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
-              <Route path="/patient" element={<Patient />} />
+              {/* <Route path="/patient" element={<Patient />} /> */}
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
@@ -82,7 +84,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
               {/* routes only for ADMIN */}
-              <Route path="/admin" element={<Admin />} />
+              {/* <Route path="/admin" element={<Admin />} /> */}
               <Route path="/AddHLC" element={<AddHLC />} />
             </Route>
           </Route>

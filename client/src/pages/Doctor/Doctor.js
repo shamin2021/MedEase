@@ -7,6 +7,7 @@ import DoughnutChart from '../../components/DoughnutChart'
 import LineChart from '../../components/LineChart'
 import PieChart from '../../components/PieChart'
 import CommonForm from '../../components/Form/CommonForm'
+import SimpleTable from '../../components/Table/SimpleTable'
 import React from 'react'
 
 
@@ -28,7 +29,8 @@ const Doctor = () => {
                 </SimpleGrid>
             </GridItem>
 
-            <CommonForm />
+            {/* <CommonForm /> */}
+            <SimpleTable />
 
         </Grid>
 
