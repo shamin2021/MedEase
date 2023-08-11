@@ -6,7 +6,6 @@ import { FcGoogle } from 'react-icons/fc'
 import { GrApple } from 'react-icons/gr'
 
 import axios from '../constants/axios';
-import '../styles/Register.css';
 
 const EMAIL_REGEX = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
