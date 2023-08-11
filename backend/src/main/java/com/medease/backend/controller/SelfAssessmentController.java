@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 
+import com.medease.backend.dto.GlobalResponseDTO;
 import com.medease.backend.entity.SelfAssessment;
 
 
@@ -32,26 +33,52 @@ import com.medease.backend.repository.SelfAssessmentRepository;
 @RequiredArgsConstructor
 public class SelfAssessmentController {
 
-	private final SelfAssessmentRepository SelfAssessmentRepository;
+	private final SelfAssessmentRepository selfAssessmentRepository;
 	
 	// get all SelfAssessments
 	@GetMapping("/SelfAssessments")
 	public List<SelfAssessment> getAllSelfAssessments(){
-		return SelfAssessmentRepository.findAll();
+		return selfAssessmentRepository.findAll();
 	}		
 	
 	// create SelfAssessment rest api
 	@PostMapping("/SelfAssessments")
-	public SelfAssessment createSelfAssessment(@RequestBody SelfAssessment SelfAssessment) {
-		return SelfAssessmentRepository.save(SelfAssessment);
+	public GlobalResponseDTO createSelfAssessment(@RequestBody SelfAssessment selfAssessment) {
+
+		var assessment = SelfAssessment.builder()
+				.firstName(selfAssessment.getFirstName())
+				.lastName(selfAssessment.getLastName())
+				.emailId(selfAssessment.getEmailId())
+				.physicalActivity(selfAssessment.isPhysicalActivity())
+				.tobaccoSmoking(selfAssessment.isTobaccoSmoking())
+				.beetlechewing(selfAssessment.isBeetleChewing())
+				.alcoholConsumption(selfAssessment.isAlcoholConsumption())
+				.otherSubstance(selfAssessment.isOtherSubstance())
+				.snackIntake(selfAssessment.getSnackIntake())
+				.heartDisease(selfAssessment.isHeartDisease())
+				.HighBloodPressure(selfAssessment.isHighBloodPressure())
+				.Stroke(selfAssessment.isStroke())
+				.Diabetes(selfAssessment.isDiabetes())
+				.Cancer(selfAssessment.isCancer())
+				.COPD(selfAssessment.isCOPD())
+				.Asthma(selfAssessment.isAsthma())
+				.kidneyDiseases(selfAssessment.isKidneyDiseases())
+				.suddenDeath(selfAssessment.isSuddenDeath())
+				.otherDiseases(selfAssessment.getOtherDiseases())
+				.build();
+
+		selfAssessmentRepository.save(assessment);
+		return GlobalResponseDTO.builder()
+				.status(200)
+				.message("Self Assessment Saved Successfully")
+				.build();
 	}
 	
 	// get SelfAssessment by id rest api
 	@GetMapping("/SelfAssessments/{id}")
-	public ResponseEntity<SelfAssessment> getSelfAssessmentById(@PathVariable Integer id) {
-		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
+	public SelfAssessment getSelfAssessmentById(@PathVariable Integer id) {
+		return selfAssessmentRepository.findById(id)
 				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
-		return ResponseEntity.ok(SelfAssessment);
 	}
 	
 }

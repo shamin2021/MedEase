@@ -1,5 +1,6 @@
 package com.medease.backend.entity;
 
+import com.medease.backend.enumeration.SnackIntake;
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,7 +47,8 @@ public class SelfAssessment {
     private boolean otherSubstance ;
 
 	@Column(name = "snack_intake")
-	private String snackIntake;
+	@Enumerated(EnumType.STRING)
+	private SnackIntake snackIntake;
 
 	@Column(name = "heart_disease")
     private boolean heartDisease  ;
@@ -77,154 +79,117 @@ public class SelfAssessment {
 
 	@Column(name = "other_diseases")
 	private String otherDiseases;
-	
-	// public SelfAssessment() {
-		
-	// }
 
-	public SelfAssessment(
-		String firstName,
-		String lastName,
-		String emailId,
-		boolean physicalActivity,
-		boolean tobaccoSmoking,
-		boolean beetlechewing,
-		boolean alcoholConsumption,
-		boolean otherSubstance,
-		String snackIntake,
-		boolean heartDisease )
-		{
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.emailId = emailId;
-		this.physicalActivity = physicalActivity;
-		this.tobaccoSmoking = tobaccoSmoking;
-		this.beetlechewing = beetlechewing;
-		this.alcoholConsumption = alcoholConsumption;
-		this.otherSubstance = otherSubstance;
-		this.snackIntake = snackIntake;
-		this.heartDisease = heartDisease;
-	}
-
-	public long getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getEmailId() {
-		return emailId;
-	}
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-	public boolean getphysicalActivity() {
+	public boolean isPhysicalActivity() {
 		return physicalActivity;
 	}
-	public void setphysicalActivity(boolean physicalActivity) {
+
+	public void setPhysicalActivity(boolean physicalActivity) {
 		this.physicalActivity = physicalActivity;
 	}
-	public boolean gettobaccoSmoking() {
+
+	public boolean isTobaccoSmoking() {
 		return tobaccoSmoking;
 	}
-	public void settobaccoSmoking(boolean tobaccoSmoking) {
+
+	public void setTobaccoSmoking(boolean tobaccoSmoking) {
 		this.tobaccoSmoking = tobaccoSmoking;
 	}
-	public boolean getbeetlechewing() {
+
+	public boolean isBeetleChewing() {
 		return beetlechewing;
 	}
-	public void setbeetlechewing(boolean beetlechewing) {
+
+	public void setBeetleChewing(boolean beetlechewing) {
 		this.beetlechewing = beetlechewing;
 	}
-	public boolean getalcoholConsumption() {
+
+	public boolean isAlcoholConsumption() {
 		return alcoholConsumption;
 	}
-	public void setalcoholConsumption(boolean alcoholConsumption) {
+
+	public void setAlcoholConsumption(boolean alcoholConsumption) {
 		this.alcoholConsumption = alcoholConsumption;
 	}
-	public boolean getotherSubstance() {
+
+	public boolean isOtherSubstance() {
 		return otherSubstance;
 	}
-	public void setotherSubstance(boolean otherSubstance) {
+
+	public void setOtherSubstance(boolean otherSubstance) {
 		this.otherSubstance = otherSubstance;
 	}
-	public String getsnackIntake() {
-		return snackIntake;
-	}
-	public void setsnackIntake(String snackIntake) {
-		this.snackIntake = snackIntake;
-	}
-	public boolean getheartDisease() {
+	public boolean isHeartDisease() {
 		return heartDisease;
 	}
-	public void setheartDisease(boolean heartDisease) {
-		this.heartDisease = heartDisease;
-	}
-	public boolean getHighBloodPressure() {
-		return HighBloodPressure;
-	}
+
 	public void setHighBloodPressure(boolean HighBloodPressure) {
 		this.HighBloodPressure = HighBloodPressure;
 	}
-	public boolean getStroke() {
+
+	public boolean isHighBloodPressure() {
+		return HighBloodPressure;
+	}
+
+	public void setHeartDisease(boolean heartDisease) {
+		this.heartDisease = heartDisease;
+	}
+
+	public boolean isStroke() {
 		return Stroke;
 	}
+
 	public void setStroke(boolean Stroke) {
 		this.Stroke = Stroke;
 	}
-	public boolean getDiabetes() {
+
+	public boolean isDiabetes() {
 		return Diabetes;
 	}
+
 	public void setDiabetes(boolean Diabetes) {
 		this.Diabetes = Diabetes;
 	}
-	public boolean getCancer() {
+
+	public boolean isCancer() {
 		return Cancer;
 	}
+
 	public void setCancer(boolean Cancer) {
 		this.Cancer = Cancer;
 	}
-	public boolean getCOPD() {
+
+	public boolean isCOPD() {
 		return COPD;
 	}
+
 	public void setCOPD(boolean COPD) {
 		this.COPD = COPD;
 	}
-	public boolean getAsthma() {
+
+	public boolean isAsthma() {
 		return Asthma;
 	}
+
 	public void setAsthma(boolean Asthma) {
 		this.Asthma = Asthma;
 	}
-	public boolean getkidneyDiseases() {
+
+	public boolean isKidneyDiseases() {
 		return kidneyDiseases;
 	}
-	public void setkidneyDiseases(boolean kidneyDiseases) {
+
+	public void setKidneyDiseases(boolean kidneyDiseases) {
 		this.kidneyDiseases = kidneyDiseases;
 	}
-	public boolean getsuddenDeath() {
+
+	public boolean isSuddenDeath() {
 		return suddenDeath;
 	}
-	public void setsuddenDeath(boolean suddenDeath) {
+
+	public void setSuddenDeath(boolean suddenDeath) {
 		this.suddenDeath = suddenDeath;
 	}
-	public String getotherDiseases() {
-		return otherDiseases;
-	}
-	public void setotherDiseases(String otherDiseases) {
-		this.otherDiseases = otherDiseases;
-	}
+
+
 }
