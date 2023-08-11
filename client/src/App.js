@@ -20,6 +20,12 @@ import AddDoctor from './pages/HLC/AddDoctor';
 import AddHLC from './pages/Admin/AddHLC';
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
+import PatientMeetings from './pages/Patient/PatientMeetings';
+import MeetingExpired from './pages/MeetingExpired';
+import Conference from './components/Conference/Conference';
+import DoctorMeetings from './pages/Doctor/DoctorMeetings';
+import Availability from './pages/Availability';
+import MeetingSchedule from './pages/Patient/MeetingSchedule';
 
 function App() {
 
@@ -34,15 +40,16 @@ function App() {
     <Router>
       <Routes>
 
-        <Route path="/admin" element={<Admin />} />
+        {/* <Route path="/admin" element={<Admin />} />
         <Route path="/Doctor" element={<Doctor />} />
-        <Route path="/HLC" element={<HLC />} />
+        <Route path="/HLC" element={<HLC />} /> */}
 
         <Route path="/" element={<Layout />}>
+{/*           
           <Route path="SearchDoctor" element={<SearchDoctor />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} />
-          <Route path="PatientProfile/:id" element={<PatientProfile />} />
+          <Route path="PatientProfile/:id" element={<PatientProfile />} /> */}
 
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -52,15 +59,11 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
+          
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
-            <Route
-              element={
-                <RequireAuth
-                  allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]}
-                />
-              }
-            >
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />}>
               {/* routes allowed for all authenticated users */}
               <Route path="/SearchDoctor" element={<SearchDoctor />} />
             </Route>
@@ -68,16 +71,31 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
+              <Route path="/PatientMeetings" element={<PatientMeetings />} />
+              <Route path='/link-expired' element={<MeetingExpired />} />
+              <Route path='/ScheduleMeeting' element={<MeetingSchedule />} /> 
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3]]} />}>
+              {/* routes only for HLC and DOCTOR */}
+              <Route path="/DoctorAvailability" element={<Availability />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[3]]} />}>
+              {/* routes only for PATIENT and DOCTOR */}
+              <Route path="/meeting/:id/:user/:time" element={<Conference />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
               {/* routes only for HLC */}
+              <Route path="/hlc" element={<HLC />} />
               <Route path="/AddDoctor" element={<AddDoctor />} />
-
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
               {/* routes only for DOCTOR */}
+              <Route path="/doctor" element={<Doctor />} />
+              <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
@@ -85,7 +103,9 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
             </Route>
+            
           </Route>
+
           {/* 404 routes */}
           <Route path="*" element={<Missing />} />
         </Route>

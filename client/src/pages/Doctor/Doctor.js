@@ -13,25 +13,7 @@ import React from 'react'
 const Doctor = () => {
 
     return (
-        <Grid
-            h="93vh"
-            templateRows='repeat(7, 1fr)'
-            templateColumns='repeat(7, 1fr)'
-            // templateColumns={`repeat(${sidebarWidth == "75px" ? '1, 75px' : '1, 300px'} 6fr)`}
-            gap={4}
-            mt={1}
-
-        >
-            <GridItem rowSpan={4} colSpan={1} >
-                <SimpleGrid >
-                    <DoctorSideBar />
-                </SimpleGrid>
-            </GridItem>
-
-            <CommonForm />
-
-        </Grid>
-
+        <CommonForm />
     )
 }
 
