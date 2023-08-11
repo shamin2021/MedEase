@@ -14,8 +14,11 @@ import React from 'react'
 const Doctor = () => {
 
     return (
+        <Box>
+            Hello Dr. Hasala :)
+        </Box>
 
-        <CommonForm />
+        // <CommonForm />
     )
 }
 

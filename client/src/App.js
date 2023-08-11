@@ -23,9 +23,13 @@ import PatientProfile from "./pages/PatientProfile";
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import MeetingExpired from './pages/MeetingExpired';
 import Conference from './components/Conference/Conference';
-import DoctorMeetings from './pages/Doctor/DoctorMeetings';
 import Availability from './pages/Availability';
 import MeetingSchedule from './pages/Patient/MeetingSchedule';
+
+import DoctorHLC from './pages/Doctor/DoctorHLC';
+import DoctorMeetings from './pages/Doctor/DoctorMeetings';
+import DoctorPatient from './pages/Doctor/DoctorPatients';
+import DoctorSetting from './pages/Doctor/DoctorSetting';
 
 function App() {
 
@@ -98,11 +102,14 @@ function App() {
               {/* routes only for DOCTOR */}
               <Route path="/doctor" element={<Doctor />} />
               <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
+              <Route path="/DoctorHLC" element={<DoctorHLC />} />
+              <Route path="/DoctorPatient" element={<DoctorPatient />} />
+              <Route path="/DoctorSetting" element={<DoctorSetting />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
               {/* routes only for ADMIN */}
-              {/* <Route path="/admin" element={<Admin />} /> */}
+              <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
             </Route>
             
