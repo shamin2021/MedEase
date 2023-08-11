@@ -11,9 +11,9 @@ import {
 
 const PatientProfile = () => {
   return (
-    <div className="py-1 bg-primary">
-      <div className="mx-auto flex rounded-2xl py-1 p-5">
-        <div className="parent flex md:w-5/12 shadow-xl rounded-2xl pb-2 py-1 bg-white m-3 mt-9 p-5">
+    <div className=" py-1 bg-primary">
+      <div className="md:w-3/4 mx-auto flex rounded-2xl py-1 p-5">
+        <div className="parent flex md:w-7/12 shadow-xl rounded-2xl pb-2 py-1 bg-white m-3 mt-9 p-5">
           <div className="md:w-1/2 mt-4 mb-4">
             <div className=" mx-auto">
               <img
@@ -24,7 +24,7 @@ const PatientProfile = () => {
             </div>
             <div className="container horizontal justify-center py-1">
               <div className="flex justify-center text-[18px] font-semibold mb-0">
-                Shamin Fernando
+                Dr.Shamin Fernando
               </div>
               <div className="flex justify-center font-light text-stone-800- text-[13px] text-[#797878]">
                 #P890725
