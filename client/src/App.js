@@ -17,6 +17,10 @@ import AddDoctor from './pages/HLC/AddDoctor';
 import AddHLC from './pages/Admin/AddHLC';
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
+import DoctorProfile from "./pages/DoctorProfile";
+import FindHLC from "./pages/FindHLC";
+import AddPrescription from "./pages/AddPrescription";
+
 
 function App() {
 
@@ -32,9 +36,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="SearchDoctor" element={<SearchDoctor />} />
+          <Route path="FindHLC" element={<FindHLC />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} />
+          <Route path="AddPrescription" element={<AddPrescription />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
+          <Route path="DoctorProfile" element={<DoctorProfile />} />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />

@@ -40,7 +40,7 @@ const FileInput = () => {
           </div>
         ) : (
           <div>
-            <div className="rounded-[100px] mx-auto h-[80px] w-[80px] bg-[#afafaf]">
+            <div className="rounded-[2px] mx-auto h-[80px] w-[80px] bg-[#afafaf]">
               <img htmlFor="select-image" src={logo} className="mx-auto p-3 " />
             </div>
             <div
@@ -49,7 +49,7 @@ const FileInput = () => {
               color="primary"
               component="span"
             >
-              Add Image
+              Add Prescription
             </div>
           </div>
         )}
