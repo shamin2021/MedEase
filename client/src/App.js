@@ -44,10 +44,7 @@ function App() {
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
 
-          {/* <Route path = "/list-SelfAssessment" element = {<ListSelfAssessmentComponent/>}></Route> */}
-          <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponent />}></Route>
-          <Route path = "/add-SelfAssessment/:id" element = {<CreateSelfAssessmentComponent/>}></Route>
-          <Route path = "/view-SelfAssessment/:id" element = {<ViewSelfAssessmentComponent/>}></Route>
+          
 
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
@@ -58,6 +55,11 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
+
+              <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponent />}></Route>
+              <Route path = "/add-SelfAssessment/:id" element = {<CreateSelfAssessmentComponent/>}></Route>
+              <Route path = "/view-SelfAssessment/:id" element = {<ViewSelfAssessmentComponent/>}></Route>
+              
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>

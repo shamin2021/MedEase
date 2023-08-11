@@ -30,9 +30,6 @@ public class SelfAssessment {
 	@Column(name = "email_id")
 	private String emailId;
 
-	@Column(name = "checkbox_value")
-    private boolean checkboxValue;
-
 	@Column(name = "physical_activity")
     private boolean physicalActivity;
 
@@ -89,7 +86,6 @@ public class SelfAssessment {
 		String firstName,
 		String lastName,
 		String emailId,
-		boolean checkboxValue,
 		boolean physicalActivity,
 		boolean tobaccoSmoking,
 		boolean beetlechewing,
@@ -102,7 +98,6 @@ public class SelfAssessment {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailId = emailId;
-		this.checkboxValue = checkboxValue;
 		this.physicalActivity = physicalActivity;
 		this.tobaccoSmoking = tobaccoSmoking;
 		this.beetlechewing = beetlechewing;
@@ -135,12 +130,6 @@ public class SelfAssessment {
 	}
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
-	}
-	public boolean getcheckboxValue() {
-		return checkboxValue;
-	}
-	public void setcheckboxValue(boolean checkboxValue) {
-		this.checkboxValue = checkboxValue;
 	}
 	public boolean getphysicalActivity() {
 		return physicalActivity;

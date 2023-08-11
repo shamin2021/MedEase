@@ -64,12 +64,7 @@ public class SelfAssessmentDTO {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	public boolean getcheckboxValue() {
-		return checkboxValue;
-	}
-	public void setcheckboxValue(boolean checkboxValue) {
-		this.checkboxValue = checkboxValue;
-	}
+	
 	public boolean getphysicalActivity() {
 		return physicalActivity;
 	}

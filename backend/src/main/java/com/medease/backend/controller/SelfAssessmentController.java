@@ -54,49 +54,4 @@ public class SelfAssessmentController {
 		return ResponseEntity.ok(SelfAssessment);
 	}
 	
-	// update SelfAssessment rest api
-	
-	@PutMapping("/SelfAssessments/{id}")
-	public ResponseEntity<SelfAssessment> updateSelfAssessment(@PathVariable Integer id, @RequestBody SelfAssessment SelfAssessmentDetails){
-		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
-				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
-		
-		SelfAssessment.setFirstName(SelfAssessmentDetails.getFirstName());
-		SelfAssessment.setLastName(SelfAssessmentDetails.getLastName());
-		SelfAssessment.setEmailId(SelfAssessmentDetails.getEmailId());
-		SelfAssessment.setcheckboxValue(SelfAssessmentDetails.getcheckboxValue());
-		SelfAssessment.setphysicalActivity(SelfAssessmentDetails.getphysicalActivity());
-		SelfAssessment.settobaccoSmoking(SelfAssessmentDetails.gettobaccoSmoking());
-		SelfAssessment.setbeetlechewing(SelfAssessmentDetails.getbeetlechewing());
-		SelfAssessment.setalcoholConsumption(SelfAssessmentDetails.getalcoholConsumption());
-		SelfAssessment.setotherSubstance(SelfAssessmentDetails.getotherSubstance());
-		SelfAssessment.setsnackIntake(SelfAssessmentDetails.getsnackIntake());
-
-		SelfAssessment.setheartDisease(SelfAssessmentDetails.getheartDisease());
-		SelfAssessment.setHighBloodPressure(SelfAssessmentDetails.getHighBloodPressure());
-		SelfAssessment.setStroke(SelfAssessmentDetails.getStroke());
-		SelfAssessment.setDiabetes(SelfAssessmentDetails.getDiabetes());
-		SelfAssessment.setCancer(SelfAssessmentDetails.getCancer());
-		SelfAssessment.setCOPD(SelfAssessmentDetails.getCOPD());
-		SelfAssessment.setAsthma(SelfAssessmentDetails.getAsthma());
-		SelfAssessment.setkidneyDiseases(SelfAssessmentDetails.getkidneyDiseases());
-		SelfAssessment.setsuddenDeath(SelfAssessmentDetails.getsuddenDeath());
-		SelfAssessment.setotherDiseases(SelfAssessmentDetails.getotherDiseases());
-		// SelfAssessment.setotherSubstance(SelfAssessmentDetails.getotherSubstance());
-		
-		SelfAssessment updatedSelfAssessment = SelfAssessmentRepository.save(SelfAssessment);
-		return ResponseEntity.ok(updatedSelfAssessment);
-	}
-	
-	// delete SelfAssessment rest api
-	@DeleteMapping("/SelfAssessments/{id}")
-	public ResponseEntity<Map<String, Boolean>> deleteSelfAssessment(@PathVariable Integer id){
-		SelfAssessment SelfAssessment = SelfAssessmentRepository.findById(id)
-				.orElseThrow(() -> new CustomException("SelfAssessment not exist with id :" + id));
-		
-		SelfAssessmentRepository.delete(SelfAssessment);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return ResponseEntity.ok(response);
-	}
 }
