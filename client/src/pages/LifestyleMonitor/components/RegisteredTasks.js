@@ -29,16 +29,28 @@ const RegisteredTasks = () => {
     const [data, setData] = useState([
         {
             "instruction_id": 1,
-            "instruction": "Test instruction 1"
+            "instruction": "This is test instruction 01"
         },
         {
             "instruction_id": 2,
-            "instruction": "Test instruction 2"
+            "instruction": "This is test instruction 02"
         },
         {
             "instruction_id": 3,
-            "instruction": "Test instruction 3"
-        }
+            "instruction": "This is test instruction 03"
+        },
+        {
+            "instruction_id": 3,
+            "instruction": "This is test instruction 04"
+        },
+        {
+            "instruction_id": 3,
+            "instruction": "This is test instruction 05"
+        },
+        {
+            "instruction_id": 3,
+            "instruction": "This is test instruction 06"
+        },
     ]);
 
     const { get } = useAxiosMethods();
@@ -95,7 +107,7 @@ const RegisteredTasks = () => {
                 </Text>
             </Flex>
             <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
-                <Thead>
+                {/* <Thead>
                     {headerGroups.map((headerGroup, index) => (
                         <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
                             {headerGroup.headers.map((column, index) => (
@@ -115,7 +127,7 @@ const RegisteredTasks = () => {
                             ))}
                         </Tr>
                     ))}
-                </Thead>
+                </Thead> */}
                 <Tbody {...getTableBodyProps()}>
                     {page.map((row, index) => {
                         prepareRow(row);
@@ -133,6 +145,7 @@ const RegisteredTasks = () => {
                                         <Td
                                             {...cell.getCellProps()}
                                             key={index}
+                                            p={'12px'}
                                             fontSize={{ sm: "14px" }}
                                             minW={{ sm: "150px", md: "200px", lg: "auto" }}
                                             borderColor='transparent'>

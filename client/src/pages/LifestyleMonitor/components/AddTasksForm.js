@@ -64,14 +64,14 @@ const AddTasksForm = () => {
                     return (
                         <Flex mb={'8px'} key={i}>
                             <Input
-                                isRequired={true}
                                 variant='auth'
-                                fontSize='sm'
+                                fontSize={16}
                                 ms={{ base: "0px", md: "0px" }}
                                 type='text'
                                 placeholder={`Task ${i + 1}`}
                                 fontWeight='500'
-                                size='lg'
+                                // size='lg'
+                                h={'2rem'}
                             />
                         </Flex>
                     )
@@ -79,11 +79,15 @@ const AddTasksForm = () => {
 
                 <Flex justify={'center'}>
                     <Button
-                        // fontSize='sm'
-                        variant='brand'
-                        fontWeight='500'
+                        variant="solid"
+                        mr="5%"
+                        mt="0%"
+                        backgroundColor="#645bee"
+                        color={"white"}
+                        h="2rem"
+                        borderRadius={'10px'}
+                        fontSize={16}
                         w={{ base: '100%', sm: '80%', md: '50%', lg: '30%' }}
-                        h='50'
                         my='24px'>
                         Create Plan
                     </Button>
