@@ -1,5 +1,4 @@
-import { Box, Flex, Grid, GridItem, SimpleGrid } from '@chakra-ui/react'
-import AdminSidebar from '../../components/Admin/AdminSidebar'
+import { Box, Flex, GridItem } from '@chakra-ui/react'
 import CommonCard from '../../components/CommonCard'
 import ButtonCard from '../../components/ButtonCard'
 import BarChart from '../../components/BarChart'
@@ -12,23 +11,8 @@ import React from 'react'
 const Admin = () => {
 
   return (
-    <Grid
-      h="93vh"
-      templateRows='repeat(7, 1fr)'
-      templateColumns='repeat(7, 1fr)'
-      // templateColumns={`repeat(${sidebarWidth == "75px" ? '1, 75px' : '1, 300px'} 6fr)`}
-      gap={4}
-      mt={1}
-
-    >
-      <GridItem rowSpan={4} colSpan={1} >
-        <SimpleGrid >
-          <AdminSidebar />
-        </SimpleGrid>
-      </GridItem>
-
+    <>
       <GridItem colSpan={6} bg='tomato' h="5rem" />
-
 
       <GridItem colSpan={2} bg="yellow" h="15rem">
 
@@ -56,23 +40,22 @@ const Admin = () => {
       </GridItem>
 
       <GridItem colSpan={2} bg='' h="15rem" >
-        <DoughnutChart />  
+        <DoughnutChart />
       </GridItem>
 
       <GridItem colSpan={2} bg='' h="15rem" >
-        <LineChart />  
+        <LineChart />
       </GridItem>
 
       <GridItem colSpan={2} bg='' h="15rem" >
-        <PieChart />  
+        <PieChart />
       </GridItem>
-      
+
 
       <GridItem colSpan={2} bg='tomato' />
       <GridItem colSpan={2} bg='tomato' />
 
-    </Grid>
-    
+    </>
 
   )
 }

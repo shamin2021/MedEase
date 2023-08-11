@@ -49,6 +49,7 @@ const Sidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" />
+                <NavItem navSize={navSize} icon={FiHome} href={"/AddHLC"} title="ADD" />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
             </Flex>
 
