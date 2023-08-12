@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import lottie from 'lottie-web';
-import Reminder from './Reminder.json';
+import Reminder from '../../assests/lottie/Reminder.json';
 
 const Reminders = () => {
   const container = React.useRef(null);

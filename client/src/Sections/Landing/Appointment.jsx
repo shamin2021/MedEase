@@ -1,18 +1,18 @@
-import React from 'react';
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import React, { useEffect, useRef } from 'react';
 import lottie from 'lottie-web';
-import Risk from '../../assests/lottie/Risk.json';
+import schedulingAnimation from '../../assests/lottie/Schedulinganimation.json';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
-const RiskAnalysis = () => {
-  const container = React.useRef(null);
+const Appointment = () => {
+  const container = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     lottie.loadAnimation({
       container: container.current,
-      renderer: 'svg',
+      renderer: 'canvas',
       loop: true,
       autoplay: true,
-      animationData: Risk,
+      animationData: schedulingAnimation,
     });
   }, []);
 
@@ -20,10 +20,10 @@ const RiskAnalysis = () => {
     <Flex alignItems="center" justifyContent="space-between" h="100vh">
       <Box w="50%" pl="8" pr="4" borderLeft="80px solid transparent">
         <Heading as="h2" size="lg" mb="2" fontSize={{ base: '2xl', md: '3xl', lg: '6xl' }} color="#023276">
-          Risk Analysis
+          Scheduling Appointments
         </Heading>
         <Text mb="4" fontSize={{ base: '4xl' }}>
-          Our risk analysis tool provides personalized insights into your health risks.
+          Hassle-free Healthcare Management
         </Text>
       </Box>
       <Box w="50%" ref={container} />
@@ -31,4 +31,4 @@ const RiskAnalysis = () => {
   );
 };
 
-export default React.memo(RiskAnalysis);
+export default Appointment;

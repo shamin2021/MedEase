@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import lottie from 'lottie-web';
-import Tipsanimation from './Tipsanimation.json';
+import Tipsanimation from '../../assests/lottie/Tipsanimation.json';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 
 const Tips = () => {
