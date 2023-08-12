@@ -201,10 +201,6 @@ const Register = () => {
                                             <VisuallyHidden>Sign up with {'Google'}</VisuallyHidden>
                                             <FcGoogle />
                                         </Button>
-                                        <Button key={'Apple'} flexGrow={1}>
-                                            <VisuallyHidden>Sign up with {'Apple'}</VisuallyHidden>
-                                            <GrApple />
-                                        </Button>
                                     </ButtonGroup>
                                 </Stack>
                             </Stack>

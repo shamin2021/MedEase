@@ -141,10 +141,6 @@ const Login = () => {
                                             <VisuallyHidden>Sign in with {'Google'}</VisuallyHidden>
                                             <FcGoogle />
                                         </Button>
-                                        <Button key={'Apple'} flexGrow={1}>
-                                            <VisuallyHidden>Sign in with {'Apple'}</VisuallyHidden>
-                                            <GrApple />
-                                        </Button>
                                     </ButtonGroup>
                                 </Stack>
                             </Stack>
