@@ -41,7 +41,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final EmailService emailService;
-    private final SmsService smsService;
+    // private final SmsService smsService;
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;

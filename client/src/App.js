@@ -22,6 +22,11 @@ import FindHLC from "./pages/FindHLC";
 import AddPrescription from "./pages/AddPrescription";
 
 
+import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
+import CreateSelfAssessmentComponent from './components/patient/CreateSelfAssessmentComponent';
+import ViewSelfAssessmentComponent from './components/patient/ViewSelfAssessmentComponent';
+
+
 function App() {
 
   const ROLES = {
@@ -66,6 +71,11 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
+
+              <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponent />}/>
+              <Route path = "/CreateSelfAssessment" element = {<CreateSelfAssessmentComponent/>}/>
+              <Route path = "/view-SelfAssessment/:id" element = {<ViewSelfAssessmentComponent/>}/>
+              
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
