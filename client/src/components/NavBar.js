@@ -20,6 +20,7 @@ const NavBar = () => {
         try {
             post('/auth/logout', null, setAuth);
             navigate('/login');
+            localStorage.setItem('activeItem', 'Dashboard');
 
         } catch (err) {
             console.error(err);

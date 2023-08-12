@@ -50,6 +50,8 @@ const Login = () => {
                 setPassword('');
 
                 const from = location.state?.from || { pathname: '/' + response?.data?.role?.toLowerCase() };
+                // to sync with the sidebar
+                localStorage.setItem('activeItem', 'Dashboard');
                 navigate(from, { replace: true });
             }
 

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../NavItem';
+import DocActiveNavItem from './DocActiveNavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiVideo, FiSettings, FiCalendar } from "react-icons/fi";
 
@@ -45,12 +46,12 @@ const DoctorSideBar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
-                <NavItem navSize={navSize} icon={FiHome} title="HCI" />
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Doctor"}/>
+                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/DoctorHLC"} />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/DoctorPatient"} />
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/DoctorMeetings"} />
                 <NavItem navSize={navSize} icon={FiCalendar} title="Availability" href={"/DoctorAvailability"} />
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/DoctorSetting"} />
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>
