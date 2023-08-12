@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiVideo, FiSettings, FiCalendar } from "react-icons/fi";
+import { FiMenu, FiHome, FiVideo, FiSettings, FiCalendar, FiLogOut } from "react-icons/fi";
 
 const DoctorSideBar = () => {
     const [navSize, changeNavSize] = React.useState("large");
@@ -66,6 +66,7 @@ const DoctorSideBar = () => {
                         </Heading>
                     </Flex>
                 </Flex>
+                <NavItem navSize={navSize} icon={FiLogOut} title="Logout" />
             </Flex>
         </Flex>
     );

@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiSettings } from "react-icons/fi";
+import { FiMenu, FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 
 const Sidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
@@ -47,7 +47,7 @@ const Sidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard"/>
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" />
@@ -66,6 +66,7 @@ const Sidebar = () => {
                         </Heading>
                     </Flex>
                 </Flex>
+                <NavItem navSize={navSize} icon={FiLogOut} title="Logout" />
             </Flex>
         </Flex>
     );

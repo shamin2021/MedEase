@@ -1,10 +1,30 @@
 import { Flex, Icon, Link, Menu, MenuButton, Text } from "@chakra-ui/react";
 import React from "react";
+import { useNavigate } from 'react-router-dom'
+
+import useAuth from "../hooks/useAuth";
+import useAxiosMethods from "../hooks/useAxiosMethods";
 
 const NavItem = ({ navSize, icon, title, href }) => {
 
+    const { setAuth } = useAuth();
+    const navigate = useNavigate();
+    const { post } = useAxiosMethods();
+
     const handleNavItemClick = (title) => {
         localStorage.setItem('activeItem', title);
+
+        if (title === 'Logout') {
+
+            try {
+                post('/auth/logout', null, setAuth);
+                navigate('/login');
+                localStorage.setItem('activeItem', 'Dashboard');
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
     };
 
     const active = localStorage.getItem('activeItem');

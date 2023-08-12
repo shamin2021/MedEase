@@ -30,7 +30,7 @@ const NavBar = () => {
     return (
         <>
             <Box className='bg-indigo-100 dark:bg-indigo-200' px={4}>
-                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+                <Flex h={"8vh"} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
                         icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -129,7 +129,7 @@ const NavBar = () => {
                                     cursor={'pointer'}
                                     minW={0}>
                                     <Avatar
-                                        name='User'  // use response user name
+                                        name={auth.first_name}  // use response user name
                                         bg={'teal.500'}
                                         size={'sm'}
                                         src={
