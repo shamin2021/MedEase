@@ -2,7 +2,6 @@ import React from 'react';
 
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../NavItem';
-import DocActiveNavItem from './DocActiveNavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiVideo, FiSettings, FiCalendar } from "react-icons/fi";
 
