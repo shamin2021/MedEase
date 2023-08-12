@@ -8,7 +8,7 @@ import { GrApple } from 'react-icons/gr'
 import axios from '../constants/axios';
 
 const EMAIL_REGEX = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/;
-const USER_REGEX = /^[A-Za-z ]{3,23}$/;
+const USER_REGEX = /^[A-Za-z]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Register = () => {
@@ -17,9 +17,13 @@ const Register = () => {
     const [validEmail, setvalidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
 
-    const [username, setUsername] = useState('');
-    const [validUsername, setvalidUsername] = useState(false);
-    const [usernameFocus, setUsernameFocus] = useState(false);
+    const [firstName, setFirstName] = useState('');
+    const [validFirstName, setvalidFirstName] = useState(false);
+    const [firstNameFocus, setFirstNameFocus] = useState(false);
+
+    const [lastName, setLastName] = useState('');
+    const [validLastName, setvalidLastName] = useState(false);
+    const [lastNameFocus, setLastNameFocus] = useState(false);
 
     const [password, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -37,8 +41,12 @@ const Register = () => {
     }, [email])
 
     useEffect(() => {
-        setvalidUsername(USER_REGEX.test(username));
-    }, [username])
+        setvalidFirstName(USER_REGEX.test(firstName));
+    }, [firstName])
+
+    useEffect(() => {
+        setvalidLastName(USER_REGEX.test(lastName));
+    }, [lastName])
 
     useEffect(() => {
         setValidPwd(PWD_REGEX.test(password));
@@ -47,7 +55,7 @@ const Register = () => {
 
     useEffect(() => {
         setErrMsg('');
-    }, [email, password, username, matchPwd])
+    }, [email, password, firstName, lastName, matchPwd])
 
 
 
@@ -56,8 +64,9 @@ const Register = () => {
 
         const v1 = EMAIL_REGEX.test(email);
         const v2 = PWD_REGEX.test(password);
-        const v3 = USER_REGEX.test(username);
-        if (!v1 || !v2 || !v3) {
+        const v3 = USER_REGEX.test(firstName);
+        const v4 = USER_REGEX.test(lastName);
+        if (!v1 || !v2 || !v3 || !v4) {
             setErrMsg("Invalid Entry");
             return;
         }
@@ -65,7 +74,7 @@ const Register = () => {
 
         try {
             const response = await axios.post('/auth/register',
-                JSON.stringify({ email, password, username }),
+                JSON.stringify({ email, password, firstname: firstName, lastname: lastName }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -76,7 +85,8 @@ const Register = () => {
             setErrMsg(response?.data?.message) //these needs to be chnaged later
 
             setEmail('');
-            setUsername('');
+            setFirstName('');
+            setLastName('');
             setPwd('');
             setMatchPwd('');
         } catch (err) {
@@ -124,26 +134,52 @@ const Register = () => {
                                 <Stack spacing="5">
                                     <FormControl isRequired>
                                         <FormControl isRequired>
-                                            <FormLabel htmlFor="username">Username</FormLabel>
+                                            <FormLabel htmlFor="firstname">Firstname</FormLabel>
+                                            <Input
+                                                id="firstname"
+                                                type="text"
+                                                autoComplete='off'
+                                                onChange={(e) => setFirstName(e.target.value)}
+                                                value={firstName}
+                                                onFocus={() => setFirstNameFocus(true)}
+                                                onBlur={() => setFirstNameFocus(false)}
+                                                aria-invalid={validFirstName ? "false" : "true"}
+                                                aria-describedby="firstnamenote"
+                                            />
+                                        </FormControl>
+                                    </FormControl>
+
+                                    {firstNameFocus && !validFirstName && (
+                                        <Box bg="blue.100" p="2" mb="4" borderRadius="md">
+                                            <p id="firstnamenote">
+                                                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
+                                                Please enter a valid name.
+                                            </p>
+                                        </Box>
+                                    )}
+
+                                    <FormControl isRequired>
+                                        <FormControl isRequired>
+                                            <FormLabel htmlFor="username">Lastname</FormLabel>
                                             <Input
                                                 id="username"
                                                 type="text"
                                                 autoComplete='off'
-                                                onChange={(e) => setUsername(e.target.value)}
-                                                value={username}
-                                                onFocus={() => setUsernameFocus(true)}
-                                                onBlur={() => setUsernameFocus(false)}
-                                                aria-invalid={validUsername ? "false" : "true"}
+                                                onChange={(e) => setLastName(e.target.value)}
+                                                value={lastName}
+                                                onFocus={() => setLastNameFocus(true)}
+                                                onBlur={() => setLastNameFocus(false)}
+                                                aria-invalid={validLastName ? "false" : "true"}
                                                 aria-describedby="usernamenote"
                                             />
                                         </FormControl>
                                     </FormControl>
 
-                                    {usernameFocus && !validUsername && (
+                                    {lastNameFocus && !validLastName && (
                                         <Box bg="blue.100" p="2" mb="4" borderRadius="md">
                                             <p id="usernamenote">
                                                 <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
-                                                Please enter a valid username.
+                                                Please enter a valid name.
                                             </p>
                                         </Box>
                                     )}

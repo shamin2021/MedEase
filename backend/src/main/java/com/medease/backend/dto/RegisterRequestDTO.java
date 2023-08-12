@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequestDTO {
 
-    private String username;
     private String firstname;
     private String lastname;
     private String email;

@@ -47,7 +47,7 @@ const DoctorSideBar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Doctor"}/>
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Doctor"} />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/DoctorHLC"} />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/DoctorPatient"} />
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/DoctorMeetings"} />
@@ -62,7 +62,7 @@ const DoctorSideBar = () => {
                     <Avatar size="sm" src="" />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            {auth.user_name.toUpperCase()}
+                            {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}
                         </Heading>
                     </Flex>
                 </Flex>

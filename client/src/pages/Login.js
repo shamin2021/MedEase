@@ -125,7 +125,7 @@ const Login = () => {
                                 </Stack>
                                 <HStack justify="space-between">
                                     <Checkbox onChange={togglePersist} isChecked={persist} id='persist'>Remember me</Checkbox>
-                                    <Link color='blue.500' href="/register" size='sm' style={{ textDecoration: 'none' }}>Forgot password?</Link>
+                                    <Link color='blue.500' href="/forgot-password" size='sm' style={{ textDecoration: 'none' }}>Forgot password?</Link>
                                 </HStack>
                                 <Stack spacing="6">
                                     <Button colorScheme='blue' type='submit'>Sign in</Button>
