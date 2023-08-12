@@ -8,6 +8,7 @@ import { GrApple } from 'react-icons/gr'
 import axios from '../constants/axios';
 
 const EMAIL_REGEX = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/;
+const USER_REGEX = /^[A-Za-z ]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Register = () => {
@@ -15,6 +16,10 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [validEmail, setvalidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
+
+    const [username, setUsername] = useState('');
+    const [validUsername, setvalidUsername] = useState(false);
+    const [usernameFocus, setUsernameFocus] = useState(false);
 
     const [password, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -32,13 +37,17 @@ const Register = () => {
     }, [email])
 
     useEffect(() => {
+        setvalidUsername(USER_REGEX.test(username));
+    }, [username])
+
+    useEffect(() => {
         setValidPwd(PWD_REGEX.test(password));
         setValidMatch(password === matchPwd);
     }, [password, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [email, password, matchPwd])
+    }, [email, password, username, matchPwd])
 
 
 
@@ -47,7 +56,8 @@ const Register = () => {
 
         const v1 = EMAIL_REGEX.test(email);
         const v2 = PWD_REGEX.test(password);
-        if (!v1 || !v2) {
+        const v3 = USER_REGEX.test(username);
+        if (!v1 || !v2 || !v3) {
             setErrMsg("Invalid Entry");
             return;
         }
@@ -55,7 +65,7 @@ const Register = () => {
 
         try {
             const response = await axios.post('/auth/register',
-                JSON.stringify({ email, password }),
+                JSON.stringify({ email, password, username }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -66,6 +76,7 @@ const Register = () => {
             setErrMsg(response?.data?.message) //these needs to be chnaged later
 
             setEmail('');
+            setUsername('');
             setPwd('');
             setMatchPwd('');
         } catch (err) {
@@ -112,6 +123,32 @@ const Register = () => {
                                 )}
                                 <Stack spacing="5">
                                     <FormControl isRequired>
+                                        <FormControl isRequired>
+                                            <FormLabel htmlFor="username">Username</FormLabel>
+                                            <Input
+                                                id="username"
+                                                type="text"
+                                                autoComplete='off'
+                                                onChange={(e) => setUsername(e.target.value)}
+                                                value={username}
+                                                onFocus={() => setUsernameFocus(true)}
+                                                onBlur={() => setUsernameFocus(false)}
+                                                aria-invalid={validUsername ? "false" : "true"}
+                                                aria-describedby="usernamenote"
+                                            />
+                                        </FormControl>
+                                    </FormControl>
+
+                                    {usernameFocus && !validUsername && (
+                                        <Box bg="blue.100" p="2" mb="4" borderRadius="md">
+                                            <p id="usernamenote">
+                                                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
+                                                Please enter a valid username.
+                                            </p>
+                                        </Box>
+                                    )}
+
+                                    <FormControl isRequired>
                                         <FormLabel htmlFor="email">Email</FormLabel>
                                         <Input
                                             id="email"
@@ -152,7 +189,7 @@ const Register = () => {
                                     {pwdFocus && !validPwd && (
                                         <Box bg="blue.100" p="2" mb="4" borderRadius="md">
                                             <p id="pwdnote">
-                                                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }}  />
+                                                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
                                                 8 to 24 characters.<br />
                                                 Must include uppercase and lowercase letters, a number and a special character.<br />
                                                 Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>

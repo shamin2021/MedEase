@@ -1,4 +1,5 @@
 import React from 'react'
+import useAuth from "../../hooks/useAuth";
 
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiUser, FiSettings, FiVideo, FiCalendar } from "react-icons/fi";
@@ -6,6 +7,7 @@ import NavItem from '../NavItem';
 
 const PatientSidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
+    const { auth } = useAuth();
 
     React.useEffect(() => {
         function handleResize() {
@@ -59,9 +61,8 @@ const PatientSidebar = () => {
                     <Avatar size="sm" src="" />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            Asith Amarasekara
+                            {auth.user_name.toUpperCase()}
                         </Heading>
-                        <Text color="gray">HLC</Text>
                     </Flex>
                 </Flex>
             </Flex>

@@ -1,4 +1,5 @@
 import React from 'react';
+import useAuth from "../../hooks/useAuth";
 
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../NavItem';
@@ -7,6 +8,7 @@ import { FiMenu, FiHome, FiVideo, FiSettings, FiCalendar } from "react-icons/fi"
 
 const DoctorSideBar = () => {
     const [navSize, changeNavSize] = React.useState("large");
+    const { auth } = useAuth();
 
     React.useEffect(() => {
         function handleResize() {
@@ -60,9 +62,8 @@ const DoctorSideBar = () => {
                     <Avatar size="sm" src="" />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            Asith Amarasekara
+                            {auth.user_name.toUpperCase()}
                         </Heading>
-                        <Text color="gray"></Text>
                     </Flex>
                 </Flex>
             </Flex>

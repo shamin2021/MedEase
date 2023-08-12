@@ -53,6 +53,7 @@ public class AuthenticationService {
     // Only patients can register to the system. other ROLES like DOCTOR, HLC are added by Admin
     public AuthenticationResponseDTO register(RegisterRequestDTO request) {
         var user = User.builder()
+                .name(request.getUsername())
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
@@ -94,6 +95,7 @@ public class AuthenticationService {
         createCookie(response ,refreshToken, refreshExpiration/1000);
         var userRole = user.getRole();
         var userID = user.getId();
+        var name = user.getName();
 
         revokeAllBearerTokens(user);
 
@@ -103,6 +105,7 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .role(userRole)
                 .id(userID)
+                .name(name)
                 .build();
     }
 
@@ -180,11 +183,14 @@ public class AuthenticationService {
                 saveUserToken(userDetails, accessToken);
                 var userRole = userDetails.getRole();
                 var userID = userDetails.getId();
+                var name = userDetails.getName();
 
               var authResponse = AuthenticationResponseDTO.builder()
+                      .message("Refreshed Access Token")
                       .accessToken(accessToken)
                       .role(userRole)
                       .id(userID)
+                      .name(name)
                       .build();
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }

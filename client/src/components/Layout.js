@@ -53,7 +53,7 @@ const Layout = () => {
     return (
         <main className='App font-poppins'>
 
-            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') ? (
+            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && !(auth.role === "HLC") && !(auth.role === "DOCTOR") && !(auth.role === "ADMIN") ? (
                 <NavBar />
             ) : null }
 
