@@ -29,7 +29,7 @@ const PatientProfile = () => {
               <div className="flex justify-center font-light text-stone-800- text-[13px] text-[#797878]">
                 #P890725
               </div>
-              <div className="flex mt-3 justify-center font-light text-stone-800- text-[14px] font-semibold">
+              <div className="flex mt-3 justify-center text-stone-800- text-[14px] font-semibold">
                 Engagement
               </div>
               <div className="parent flex m-3">
@@ -47,7 +47,7 @@ const PatientProfile = () => {
                   </div>
                 </div>
               </div>
-              <div className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3  font-light text-stone-800- text-[14px] font-semibold bg-primary">
+              <div className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[14px] font-semibold bg-primary">
                 Message
               </div>
             </div>
