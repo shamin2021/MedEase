@@ -125,7 +125,7 @@ const Login = () => {
                                 </Stack>
                                 <HStack justify="space-between">
                                     <Checkbox onChange={togglePersist} isChecked={persist} id='persist'>Remember me</Checkbox>
-                                    <Link color='blue.500' href="/register" size='sm' style={{ textDecoration: 'none' }}>Forgot password?</Link>
+                                    <Link color='blue.500' href="/forgot-password" size='sm' style={{ textDecoration: 'none' }}>Forgot password?</Link>
                                 </HStack>
                                 <Stack spacing="6">
                                     <Button colorScheme='blue' type='submit'>Sign in</Button>
@@ -140,10 +140,6 @@ const Login = () => {
                                         <Button key={'Google'} flexGrow={1}>
                                             <VisuallyHidden>Sign in with {'Google'}</VisuallyHidden>
                                             <FcGoogle />
-                                        </Button>
-                                        <Button key={'Apple'} flexGrow={1}>
-                                            <VisuallyHidden>Sign in with {'Apple'}</VisuallyHidden>
-                                            <GrApple />
                                         </Button>
                                     </ButtonGroup>
                                 </Stack>

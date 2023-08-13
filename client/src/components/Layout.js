@@ -53,21 +53,21 @@ const Layout = () => {
     return (
         <main className='App font-poppins'>
 
-            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') ? (
+            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && !(auth.role === "HLC") && !(auth.role === "DOCTOR") && !(auth.role === "ADMIN") ? (
                 <NavBar />
             ) : null }
 
 
             {auth.role && !sideBarHiddenPaths.includes(location.pathname) ? (
                 <Grid
-                    h="93vh"
+                    h="calc(100vh - 120px)"
                     templateRows='repeat(7, 1fr)'
                     templateColumns='repeat(7, 1fr)'
                     gap={4}
                     mt={1}
 
                 >
-                    < GridItem rowSpan={4} colSpan={1} >
+                    < GridItem rowSpan={7} colSpan={1} >
                         <SimpleGrid >
                             {renderSidebar()}
                         </SimpleGrid>
@@ -80,8 +80,8 @@ const Layout = () => {
                 <Outlet />
             )}
 
-            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') ? (
-                <Footer />
+            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && sideBarHiddenPaths.includes(location.pathname) ? (
+                <Grid><Footer /></Grid>
             ) : null}
 
         </main>
