@@ -10,6 +10,9 @@ import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
 import Layout from './components/Layout';
+
+import DirectChatPage from './components/Chat';
+
 import PersistLogin from './components/PersistLogin';
 import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
@@ -69,6 +72,10 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/test-components" element={<TestComponent />} />
+
+            <Route path="/message" element={<DirectChatPage />} />
+          
+
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
             <Route
@@ -113,6 +120,11 @@ function App() {
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3], ROLES[4]]} />}>
+              {/* routes only for PATIENT,HLC, DOCTOR*/}
+              {/* <Route path="components/Chat" element={<DirectChatPage />} /> */}
             </Route>
           </Route>
           {/* 404 routes */}

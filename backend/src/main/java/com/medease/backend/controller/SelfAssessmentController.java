@@ -41,7 +41,6 @@ public class SelfAssessmentController {
 	public GlobalResponseDTO createSelfAssessment(@RequestBody SelfAssessment selfAssessment) {
 
 		var assessment = SelfAssessment.builder()
-				.date(selfAssessment.getDate())
 				.firstName(selfAssessment.getFirstName())
 				.lastName(selfAssessment.getLastName())
 				.emailId(selfAssessment.getEmailId())
