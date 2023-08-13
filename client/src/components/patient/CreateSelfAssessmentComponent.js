@@ -84,22 +84,37 @@ const CreateSelfAssessmentComponent = () => {
       console.error(err);
       navigate("/login", { state: { from: location }, replace: true });
     }
-    console.log('HighBloodPressure');
-    console.log(HighBloodPressure);
-    console.log('physicalActivity');
-    console.log(physicalActivity);
-    console.log('tobaccoSmoking');
-    console.log(tobaccoSmoking);
-    console.log('beetlechewing');
-    console.log(beetlechewing);
-    console.log('alcoholConsumption');
-    console.log(alcoholConsumption);
-    console.log('otherSubstance');
-    console.log(otherSubstance);
-    console.log("heartDisease");
-    console.log(heartDisease);
-    console.log(Stroke);
-    console.log(firstName);
+    // console.log('physicalActivity');
+    // console.log(physicalActivity);
+    // console.log('tobaccoSmoking');
+    // console.log(tobaccoSmoking);
+    // console.log('beetlechewing');
+    // console.log(beetlechewing);
+    // console.log('alcoholConsumption');
+    // console.log(alcoholConsumption);
+    // console.log('otherSubstance');
+    // console.log(otherSubstance);
+    // console.log('snackIntake');
+    // console.log(snackIntake);
+    // console.log("heartDisease");
+    // console.log(heartDisease);
+    // console.log('HighBloodPressure');
+    // console.log(HighBloodPressure);
+    // console.log('Stroke');
+    // console.log(Stroke);
+    // console.log('Diabetes');
+    // console.log(Diabetes);
+    // console.log('Cancer');
+    // console.log(Cancer);
+    // console.log('COPD');
+    // console.log(COPD);
+    // console.log('Asthma');
+    // console.log(Asthma);
+    // console.log('kidneyDiseases');
+    // console.log(kidneyDiseases);
+    // console.log("suddenDeath");
+    // console.log(suddenDeath);
+    // console.log(firstName);
   };
 
   useEffect(() => {
@@ -119,57 +134,56 @@ const CreateSelfAssessmentComponent = () => {
   };
 
   const changephysicalActivityHandler = (event) => {
-    const physicalActivity = event.target.checked ? "true" : "false";
-    setphysicalActivity(physicalActivity);
+    setphysicalActivity(event.target.value)
   };
 
   const changetobaccoSmokingHandler = (event) => {
-    const tobaccoSmoking = event.target.checked ? "true" : "false";
-    settobaccoSmoking(tobaccoSmoking);
+    settobaccoSmoking(event.target.value);
   };
 
   const changebeetlechewingHandler = (event) => {
-    const beetlechewing = event.target.checked ? "true" : "false";
-    setbeetlechewing(beetlechewing);
+    setbeetlechewing(event.target.value);
   };
 
   const changealcoholConsumptionHandler = (event) => {
-    const alcoholConsumption = event.target.checked ? "true" : "false";
-    setalcoholConsumption(alcoholConsumption);
+    setalcoholConsumption(event.target.value);
   };
 
   const changeotherSubstanceHandler = (event) => {
-    const otherSubstance = event.target.checked ? "true" : "false";
-    setotherSubstance(otherSubstance);
+    setotherSubstance(event.target.value);
   };
 
   //snack intake
-  const changeSnackNonConsumer = (event) => {
-    if (!event.target.checked) {
-      // Exit the function if the checkbox is not checked
-      return;
-    }
+  // const changeSnackNonConsumer = (event) => {
+  //   if (!event.target.checked) {
+  //     // Exit the function if the checkbox is not checked
+  //     return;
+  //   }
 
-    const snackIntake = "NO_CONSUMPTION";
-    setsnackIntake(snackIntake);
-  };
+  //   const snackIntake = "NO_CONSUMPTION";
+  //   setsnackIntake(snackIntake);
+  // };
 
-  const changeSnackLessThan5 = (event) => {
-    if (!event.target.checked) {
-      return;
-    }
+  // const changeSnackLessThan5 = (event) => {
+  //   if (!event.target.checked) {
+  //     return;
+  //   }
 
-    const snackIntake = "LESS_THAN_5";
-    setsnackIntake(snackIntake);
-  };
+  //   const snackIntake = "LESS_THAN_5";
+  //   setsnackIntake(snackIntake);
+  // };
 
-  const changeSnackMoreThan5 = (event) => {
-    if (!event.target.checked) {
-      return;
-    }
+  // const changeSnackMoreThan5 = (event) => {
+  //   if (!event.target.checked) {
+  //     return;
+  //   }
 
-    const snackIntake = "MORE_THAN_5";
-    setsnackIntake(snackIntake);
+  //   const snackIntake = "MORE_THAN_5";
+  //   setsnackIntake(snackIntake);
+  // };
+
+  const changeSnackHandler = (event) => {
+    setsnackIntake(event.target.value);
   };
 
   const changeheartDiseaseHandler = (event) => {
@@ -177,43 +191,35 @@ const CreateSelfAssessmentComponent = () => {
   };
 
   const changeHighBloodPressureHandler = (event) => {
-    const HighBloodPressure = event.target.checked ? "true" : "false";
-    setHighBloodPressure(HighBloodPressure);
+    setHighBloodPressure(event.target.value);
   };
 
   const changeStrokeHandler = (event) => {
-    const Stroke = event.target.checked ? "true" : "false";
-    setStroke(Stroke);
+    setStroke(event.target.value);
   };
 
   const changeDiabetesHandler = (event) => {
-    const Diabetes = event.target.checked ? "true" : "false";
-    setDiabetes(Diabetes);
+    setDiabetes(event.target.value);
   };
 
   const changeCancerHandler = (event) => {
-    const Cancer = event.target.checked ? "true" : "false";
-    setCancer(Cancer);
+    setCancer(event.target.value);
   };
 
   const changeCOPDHandler = (event) => {
-    const COPD = event.target.checked ? "true" : "false";
-    setCOPD(COPD);
+    setCOPD(event.target.value);
   };
 
   const changeAsthmaHandler = (event) => {
-    const Asthma = event.target.checked ? "true" : "false";
-    setAsthma(Asthma);
+    setAsthma(event.target.value);
   };
 
   const changekidneyDiseasesHandler = (event) => {
-    const kidneyDiseases = event.target.checked ? "true" : "false";
-    setkidneyDiseases(kidneyDiseases);
+    setkidneyDiseases(event.target.value);
   };
 
   const changesuddenDeathHandler = (event) => {
-    const suddenDeath = event.target.checked ? "true" : "false";
-    setsuddenDeath(suddenDeath);
+    setsuddenDeath(event.target.value);
   };
 
   const changeotherDiseasesHandler = (event) => {
@@ -224,11 +230,7 @@ const CreateSelfAssessmentComponent = () => {
     // Navigate back to the SelfAssessments list
     window.location.href = "/SelfAssessments";
   };
-
-  const setOption = (functionChange, value) => {
-    functionChange(value);
-  };
-
+  
   function InputRow(props) {
     return (
       <div className="mt-2">
@@ -240,7 +242,7 @@ const CreateSelfAssessmentComponent = () => {
               <input
                 type="radio"
                 name={props.nameOptions}
-                value={props.radioName}
+                value="true"
                 className="form-radio-btn"
                 id={props.nameOptions + "Y"}
                 onChange={props.handle}
@@ -253,7 +255,7 @@ const CreateSelfAssessmentComponent = () => {
                 type="radio"
                 name={props.nameOptions}
                 className="form-radio-btn"
-                value={props.radioName}
+                value="false"
                 checked={props.radioName == "false" ? true : false}
                 onChange={props.handle}
                 id={props.nameOptions + "N"}
@@ -365,9 +367,10 @@ const CreateSelfAssessmentComponent = () => {
                         <input
                           type="radio"
                           name="Snack"
+                          value="LESS_THAN_5"
                           className="form-radio-btn"
                           id="SnackLess"
-                          onChange={changeSnackLessThan5}
+                          onChange={changeSnackHandler}
                         />
                         <label for="SnackLess" className="form-radio-label">
                           &lt;5
@@ -375,9 +378,10 @@ const CreateSelfAssessmentComponent = () => {
                         <input
                           type="radio"
                           name="Snack"
+                          value="NO_CONSUMPTION"
                           className="form-radio-btn"
                           id="SnackNo"
-                          onChange={changeSnackNonConsumer}
+                          onChange={changeSnackHandler}
                         />
                         <label for="SnackNo" className="form-radio-label">
                           No
@@ -387,7 +391,8 @@ const CreateSelfAssessmentComponent = () => {
                           name="Snack"
                           className="form-radio-btn"
                           id="SnackMore"
-                          onChange={changeSnackNonConsumer}
+                          value="MORE_THAN_5"
+                          onChange={changeSnackHandler}
                         />
                         <label for="SnackMore" className="form-radio-label">
                           &gt;5
@@ -427,8 +432,8 @@ const CreateSelfAssessmentComponent = () => {
                 />
                 <InputRow
                   name="Diabetes"
-                  nameOptions={Diabetes}
-                  radioName="Diabetes"
+                  nameOptions="Diabetes"
+                  radioName={Diabetes}
                   handle={changeDiabetesHandler}
                 />
 
@@ -448,8 +453,8 @@ const CreateSelfAssessmentComponent = () => {
 
                 <InputRow
                   name="Asthma"
-                  radioName="Asthma"
-                  nameOptions={Asthma}
+                  nameOptions="Asthma"
+                  radioName={Asthma}
                   handle={changeAsthmaHandler}
                 />
 
