@@ -329,7 +329,7 @@ const ViewSelfAssessmentComponent= () => {
                 </div>
               </div>
               <br></br>
-              <div className="card col-md-8 offset-md-2">
+              {/* <div className="card col-md-8 offset-md-2">
                 <h3 className="text-center"> View SelfAssessment Details</h3>
                 <div className="card-body">
                   <div className="row">
@@ -414,7 +414,6 @@ const ViewSelfAssessmentComponent= () => {
                     </div>
                   </div>
 
-                  {/* diseases */}
                   <div className="row">
                     <div className="col-md-6">
                       <label>
@@ -517,9 +516,8 @@ const ViewSelfAssessmentComponent= () => {
                     </div>
                   </div>
 
-                  {/* diseases */}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         );
