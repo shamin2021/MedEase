@@ -1,8 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from 'react'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '../styles/Register.css';
-import { Link, useParams } from 'react-router-dom';
+import { Box, Button, Container, FormControl, FormLabel, Heading, Stack, Text, Input } from '@chakra-ui/react'
+
+import { useParams } from 'react-router-dom';
 import axios from '../constants/axios';
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -10,8 +11,6 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const ResetPassword = () => {
 
   const { token } = useParams();
-
-  const errRef = useRef();
 
   const [password, setPassword] = useState('');
   const [validPassword, setValidPassword] = useState(false)
@@ -64,63 +63,89 @@ const ResetPassword = () => {
 
   return (
     <div className='resetpw'>
+      <Container maxW="lg" py={{ base: '10', md: '14' }} px={{ base: '0', sm: '8' }}>
+        <Stack spacing="6">
+          <Stack spacing="6" align="center">
+            <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+              <Heading size={{ base: 'sm', md: 'lg' }}>Reset Password</Heading>
+            </Stack>
+          </Stack>
+          <Box
+            py={{ base: '0', sm: '8' }}
+            px={{ base: '4', sm: '10' }}
+            bg={{ base: 'transparent', sm: 'bg.surface' }}
+            boxShadow={{ base: 'none', sm: 'md' }}
+            borderRadius={{ base: 'none', sm: 'xl' }}
+          >
+            <form onSubmit={handleSubmit}>
+              <Stack spacing="6">
+                {errMsg && (
+                  <Box bg="blue.100" p="2" mb="4" borderRadius="md">
+                    <Text color="blue.600">{errMsg}</Text>
+                  </Box>
+                )}
+                <Stack spacing="5">
+                  <FormControl isRequired>
+                    <FormLabel htmlFor="password">New Password</FormLabel>
+                    <Input
+                      id="password"
+                      type="password"
+                      autoComplete='off'
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
+                      onFocus={() => setPwdFocus(true)}
+                      onBlur={() => setPwdFocus(false)}
+                      aria-invalid={validPassword ? "false" : "true"}
+                      aria-describedby="pwdnote"
+                    />
+                  </FormControl>
 
-      <section>
-        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg !== null && errMsg}</p>
-        <h1>Reset Password</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="password">New Password:
-            <FontAwesomeIcon icon={faCheck} className={validPassword ? "valid" : "hide"} />
-            <FontAwesomeIcon icon={faTimes} className={validPassword || !password ? "hide" : "invalid"} />
-          </label>
-          <input
-            type="password"
-            id="password"
-            autoComplete="off"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            required
-            aria-invalid={validPassword ? "false" : "true"}
-            aria-describedby="pwdnote"
-            onFocus={() => setPwdFocus(true)}
-            onBlur={() => setPwdFocus(false)}
-          />
+                  {pwdFocus && !validPassword && (
+                    <Box bg="blue.100" p="2" mb="4" borderRadius="md">
+                      <p id="pwdnote">
+                        <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
+                        8 to 24 characters.<br />
+                        Must include uppercase and lowercase letters, a number and a special character.<br />
+                        Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
+                      </p>
+                    </Box>
+                  )}
 
-          <p id="pwdnote" className={pwdFocus && !validPassword ? "instructions" : "offscreen"}>
-            <FontAwesomeIcon icon={faInfoCircle} />
-            8 to 24 characters.<br />
-            Must include uppercase and lowercase letters, a number and a special character.<br />
-            Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-          </p>
+                  <FormControl isRequired>
+                    <FormLabel htmlFor="confirm_pw">Confirm Password</FormLabel>
+                    <Input
+                      id="confirm_pw"
+                      type="password"
+                      autoComplete='off'
+                      onChange={(e) => setMatchPassword(e.target.value)}
+                      value={matchPassword}
+                      onFocus={() => setMatchFocus(true)}
+                      onBlur={() => setMatchFocus(false)}
+                      aria-invalid={validMatch ? "false" : "true"}
+                      aria-describedby="confirmnote"
+                    />
+                  </FormControl>
 
-          <label htmlFor="confirm_pw">Cofirm New Password:
-            <FontAwesomeIcon icon={faCheck} className={validMatch && matchPassword ? "valid" : "hide"} />
-            <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPassword ? "hide" : "invalid"} />
-          </label>
-          <input
-            type="password"
-            id="confirm_pw"
-            autoComplete="off"
-            onChange={(e) => setMatchPassword(e.target.value)}
-            value={matchPassword}
-            required
-            aria-invalid={validMatch ? "false" : "true"}
-            aria-describedby="confirmnote"
-            onFocus={() => setMatchFocus(true)}
-            onBlur={() => setMatchFocus(false)}
-          />
-          <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-            <FontAwesomeIcon icon={faInfoCircle} />
-            Must match the first password input field.
-          </p>
+                  {matchFocus && !validMatch && (
+                    <Box bg="blue.100" p="2" mb="4" borderRadius="md">
+                      <p id="confirmnote">
+                        <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
+                        Must match the first Password Given.
+                      </p>
+                    </Box>
 
+                  )}
 
-          <button disabled={!validPassword || !validMatch ? true : false}> Reset Password </button>
+                </Stack>
 
-        </form>
-        <br />
-        <Link to="/login">Sign In</Link>
-      </section>
+                <Stack spacing="6">
+                  <Button colorScheme='blue' type='submit' isDisabled={!validPassword || !validMatch ? true : false}>Reset Password</Button>
+                </Stack>
+              </Stack>
+            </form>
+          </Box>
+        </Stack>
+      </Container>
 
     </div>
   )

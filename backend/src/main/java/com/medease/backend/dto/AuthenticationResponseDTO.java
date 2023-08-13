@@ -21,4 +21,9 @@ public class AuthenticationResponseDTO {
     private Role role;
     @JsonProperty("user_id")
     private Integer id;
+    @JsonProperty("first_name")
+    private String firstname;
+
+    @JsonProperty("last_name")
+    private String lastname;
 }
