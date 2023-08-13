@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Avatar, HStack, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Stack, Image } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
-
+import logo from '../assets/logo.svg';
 import { Link, useNavigate } from 'react-router-dom'
 
 import useAuth from "../hooks/useAuth";
@@ -42,9 +42,9 @@ const NavBar = () => {
                     <HStack spacing={8} alignItems={'center'}>
                         <Link to='/'>
                             <Image
-                                src="https://imageupload.io/ib/sMW6PGyr7rrBLxa_1690297021.png"
+                                src={logo}
                                 alt="Logo"
-                                width={100}
+                                width={150}
                             />
                         </Link>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
