@@ -56,7 +56,7 @@ function App() {
             element={<CreateSelfAssessmentComponent />}
           />
           <Route
-            path="/view-SelfAssessment/:id"
+            path="/view-SelfAssessment"
             element={<ViewSelfAssessmentComponent />}
           />
           <Route path="/" element={<Home />} />
