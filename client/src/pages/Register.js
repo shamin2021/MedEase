@@ -3,7 +3,6 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, Box, ButtonGroup, VisuallyHidden, Button, Container, Divider, FormControl, FormLabel, Heading, HStack, Stack, Text, Input } from '@chakra-ui/react'
 import { FcGoogle } from 'react-icons/fc'
-import { GrApple } from 'react-icons/gr'
 
 import axios from '../constants/axios';
 

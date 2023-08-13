@@ -56,17 +56,19 @@ function App() {
           <Route path="AddHLC" element={<AddHLC />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} /> */}
 
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/test-components" element={<TestComponent />} />
           
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
+
+            {/* made these public routes persisting as well */}
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="/test-components" element={<TestComponent />} />
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />}>
               {/* routes allowed for all authenticated users */}
