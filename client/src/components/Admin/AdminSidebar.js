@@ -59,7 +59,7 @@ const Sidebar = () => {
                 <Divider display={navSize === "small" ? "none" : "flex"} />
 
                 <Flex mt={4} align="center">
-                    <Avatar size="sm" src="" />
+                    <Avatar size="sm" src="" name={auth.first_name} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
                             {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}
