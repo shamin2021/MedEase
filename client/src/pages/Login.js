@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { Link, Box, ButtonGroup, VisuallyHidden, Button, Checkbox, Container, Divider, FormControl, FormLabel, Heading, HStack, Stack, Text, Image, Input, InputRightElement, InputGroup } from '@chakra-ui/react'
+import { Link, Box, ButtonGroup, VisuallyHidden, Button, Checkbox, Container, Divider, FormControl, FormLabel, Heading, HStack, Stack, Text, Input, InputRightElement, InputGroup } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { FcGoogle } from 'react-icons/fc'
-import { GrApple } from 'react-icons/gr'
 
 import useAuth from "../hooks/useAuth";
 import axios from '../constants/axios';
