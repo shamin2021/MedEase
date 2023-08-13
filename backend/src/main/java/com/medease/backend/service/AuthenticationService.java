@@ -83,17 +83,13 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
-        if(!user.getActivated()){
-            return AuthenticationResponseDTO.builder()
-                    .message("Activate Your Account By Setting Up a Password")
-                    .build();
-        }
-
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         createCookie(response ,refreshToken, refreshExpiration/1000);
         var userRole = user.getRole();
         var userID = user.getId();
+        var firstname = user.getFirstname();
+        var lastname = user.getLastname();
 
         revokeAllBearerTokens(user);
 
@@ -103,6 +99,8 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .role(userRole)
                 .id(userID)
+                .firstname(firstname)
+                .lastname(lastname)
                 .build();
     }
 
@@ -180,11 +178,16 @@ public class AuthenticationService {
                 saveUserToken(userDetails, accessToken);
                 var userRole = userDetails.getRole();
                 var userID = userDetails.getId();
+                var firstname = userDetails.getFirstname();
+                var lastname = userDetails.getLastname();
 
               var authResponse = AuthenticationResponseDTO.builder()
+                      .message("Refreshed Access Token")
                       .accessToken(accessToken)
                       .role(userRole)
                       .id(userID)
+                      .firstname(firstname)
+                      .lastname(lastname)
                       .build();
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
@@ -277,6 +280,10 @@ public class AuthenticationService {
                         .orElseThrow(() -> new CustomException("User Not Found"));
                 // save new password as hashed
                 user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+                if(!user.isActivated()){
+                    user.setActivated(true);
+                }
                 userRepository.save(user);
                 // after success revoke reset token
                 revokeResetTokens(user);
