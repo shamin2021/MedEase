@@ -15,6 +15,7 @@ public class RegisterRequestDTO {
     private String lastname;
     private String email;
     private String password;
+
     private String licenseNumber;
     private Integer speciality;
     private String mobileNumber;
@@ -30,5 +31,6 @@ public class RegisterRequestDTO {
     private String in_charge_designation;
     private String in_charge_email;
     private String in_charge_mobile;
+
 
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Flex, Avatar, HStack, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Stack, Image } from '@chakra-ui/react'
-// import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
+import logo from '../assets/logo.svg';
 import { Link, useNavigate } from 'react-router-dom'
 
 import useAuth from "../hooks/useAuth";
@@ -13,11 +14,13 @@ const NavBar = () => {
     const { post } = useAxiosMethods();
 
     console.log(auth.user_id);
+
     const handleLogout = async () => {
 
         try {
             post('/auth/logout', null, setAuth);
             navigate('/login');
+            localStorage.setItem('activeItem', 'Dashboard');
 
         } catch (err) {
             console.error(err);
@@ -27,10 +30,11 @@ const NavBar = () => {
     return (
         <>
             <Box className='bg-indigo-100 dark:bg-indigo-200' px={4}>
-                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+                <Flex h={"8vh"} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
-                        // icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+
                         aria-label={'Open Menu'}
                         display={{ md: 'none' }}
                         onClick={isOpen ? onClose : onOpen}
@@ -38,9 +42,9 @@ const NavBar = () => {
                     <HStack spacing={8} alignItems={'center'}>
                         <Link to='/'>
                             <Image
-                                src="https://imageupload.io/ib/sMW6PGyr7rrBLxa_1690297021.png"
+                                src={logo}
                                 alt="Logo"
-                                width={100}
+                                width={150}
                             />
                         </Link>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
@@ -125,7 +129,7 @@ const NavBar = () => {
                                     cursor={'pointer'}
                                     minW={0}>
                                     <Avatar
-                                        name='User'  // use response user name
+                                        name={auth.first_name}  // use response user name
                                         bg={'teal.500'}
                                         size={'sm'}
                                         src={
