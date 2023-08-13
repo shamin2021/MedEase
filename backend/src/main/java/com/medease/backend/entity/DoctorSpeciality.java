@@ -16,6 +16,7 @@ public class DoctorSpeciality {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer speciality_id;
 
     @Column(unique = true)
