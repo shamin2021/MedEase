@@ -23,6 +23,11 @@ public class SelfAssessment {
 
 	@Column(name = "created_date")
     private LocalDateTime date;
+
+	@PrePersist
+	public void prePersist() {
+    this.date = LocalDateTime.now();
+}
 	
 	@Column(name = "first_name")
 	private String firstName;
