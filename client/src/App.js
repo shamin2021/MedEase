@@ -15,6 +15,7 @@ import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 import AddDoctor from './pages/HLC/AddDoctor';
 import AddHLC from './pages/Admin/AddHLC';
+import ManageUser from "./pages/Admin/ManageUser";
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
 import DoctorProfile from "./pages/DoctorProfile";
@@ -59,6 +60,7 @@ function App() {
             path="/view-SelfAssessment"
             element={<ViewSelfAssessmentComponent />}
           />
+          <Route path="/ManageUser" element={<ManageUser />} />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
