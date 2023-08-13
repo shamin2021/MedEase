@@ -174,7 +174,7 @@ const DoctorMeetings = () => {
         return `${formattedHours}:${minutes}`;
     }
     return (
-        <GridItem colSpan={6} >
+        <GridItem colSpan={6} rowSpan={7}>
             <Box p={4}>
                 <Tabs index={currentTab} onChange={handleTabChange} variant='enclosed'>
 

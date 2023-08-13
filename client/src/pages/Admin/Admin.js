@@ -35,19 +35,19 @@ const Admin = () => {
                 own content and styles." />
       </GridItem>
 
-      <GridItem colSpan={2} bg='' h="15rem" >
+      <GridItem colSpan={2} bg=''>
         <BarChart />
       </GridItem>
 
-      <GridItem colSpan={2} bg='' h="15rem" >
+      <GridItem colSpan={2} bg=''>
         <DoughnutChart />
       </GridItem>
 
-      <GridItem colSpan={2} bg='' h="15rem" >
+      <GridItem colSpan={2} bg='' >
         <LineChart />
       </GridItem>
 
-      <GridItem colSpan={2} bg='' h="15rem" >
+      <GridItem colSpan={2} bg=''  >
         <PieChart />
       </GridItem>
 
