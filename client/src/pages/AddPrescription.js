@@ -27,7 +27,7 @@ const AddDoc = props => {
         <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
           <form className="mt-0">
             <div className="container flex">
-              <div className="container w-2/4">
+              <div className="container w-3/4">
                 <div className="formInput">
                   <label className="form-label">
                     Patient Name <text className="text-[#ff2727]">*</text>
@@ -53,8 +53,8 @@ const AddDoc = props => {
                   <span></span>
                 </div>
               </div>
-              <div className="container ml-3 pt-5 justify-right w-2/4">
-                <ButtonImage />
+              <div className="container ml-3 pt-5 justify-right w-1/4">
+                <ButtonImage name="Add Prescription"/>
               </div>
             </div>
 

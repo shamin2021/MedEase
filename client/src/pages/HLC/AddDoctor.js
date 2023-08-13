@@ -118,7 +118,9 @@ const AddDoc = props => {
         </div>
         <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
           {/* just to display state after form submit */}
-          <p display={state ? "block" : "none"} aria-live="assertive">{state && state.message}</p>
+          <p display={state ? "block" : "none"} aria-live="assertive">
+            {state && state.message}
+          </p>
           <form className="mt-0" onSubmit={handleFormSubmit}>
             <div className="container flex">
               <div className="container w-3/4">
@@ -139,7 +141,9 @@ const AddDoc = props => {
                   <span></span>
                 </div>
                 <div className="formInput" id="right">
-                  <label className="form-label" htmlFor="lastName">Last Name</label>
+                  <label className="form-label" htmlFor="lastName">
+                    Last Name
+                  </label>
                   <input
                     type="text"
                     id="lastName"
@@ -153,7 +157,7 @@ const AddDoc = props => {
                 </div>
               </div>
               <div className="container ml-3 pt-5 justify-right w-1/4">
-                <ButtonImage />
+                <ButtonImage name ="Add Image"/>
               </div>
             </div>
             <div className="container flex">
@@ -203,12 +207,14 @@ const AddDoc = props => {
                 onChange={(e) => setSpeciality(e.target.value)}
               >
                 <option value="">Select a speciality</option>
-                {specialities.map(speciality => (
-                  <option key={speciality.speciality_id} value={speciality.speciality_id}>
+                {specialities.map((speciality) => (
+                  <option
+                    key={speciality.speciality_id}
+                    value={speciality.speciality_id}
+                  >
                     {speciality.speciality_name}
                   </option>
                 ))}
-
               </select>
               <span></span>
             </div>

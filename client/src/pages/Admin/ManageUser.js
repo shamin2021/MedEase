@@ -9,6 +9,8 @@ import {
   TabPanel,
   TabIndicator,
 } from "@chakra-ui/react";
+import { FaSearch } from "react-icons/fa";
+
 
 const SearchDoc = () => {
     const [query, setQuery] = useState("");
@@ -22,13 +24,18 @@ const SearchDoc = () => {
     <div className="h-screen py-1 bg-primary">
       <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 p-5">
         <div className="ml-6 flex w-full">
-          <div className="w-1/4 m-2 mt-4">User Management</div>
-          <div className=" w-3/4 m-2 mt-3">
-            <input
-              className="w-3/4 h-[40px] text-[15px] rounded-3xl bg-[#f5f5f5] p-3 text-right float-right mr-3"
-              placeholder="Search..."
-              onChange={(e) => setQuery(e.target.value.toLowerCase())}
-            />
+          <div className="w-2/4 m-2 mt-4">User Management</div>
+          <div className=" w-2/4 m-2 mt-3 float-right">
+            <div className="flex ">
+              <div className="w-1/12 h-[40px] mr-1 rounded-md bg-[#f5f5f5]">
+                <FaSearch className="h-[40px] mx-auto" />
+              </div>
+              <input
+                className="w-full h-[40px] text-[15px] rounded-md bg-[#f5f5f5] p-3 mr-3 border-none"
+                placeholder="Search..."
+                onChange={(e) => setQuery(e.target.value.toLowerCase())}
+              />
+            </div>
           </div>
         </div>
         <div className="ml-9 mx-auto">

@@ -42,7 +42,7 @@ const AddDoc = props => {
                 </div>
               </div>
               <div className="container ml-3 pt-5 justify-right w-1/4">
-                <ButtonImage />
+                <ButtonImage name="Add Image" />
               </div>
             </div>
             <div className="container flex">
