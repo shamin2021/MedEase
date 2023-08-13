@@ -5,7 +5,7 @@ import Footer from './Footer'
 import React from "react";
 import useAuth from '../hooks/useAuth';
 import HLCSidebar from './HLC/HLCSidebar';
-import PatientSidebar from './Patient/PatientSidebar';
+import PatientSidebar from './patient/PatientSidebar';
 import DoctorSideBar from './Doctor/DoctorSideBar';
 import AdminSidebar from './Admin/AdminSidebar';
 import { Grid, GridItem, SimpleGrid } from '@chakra-ui/react'

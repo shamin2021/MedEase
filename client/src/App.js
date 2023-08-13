@@ -13,13 +13,26 @@ import RequireAuth from './jwtAuthServices/RequireAuth';
 import Unauthorized from './pages/Unauthorized';
 import Missing from './pages/Missing';
 import Layout from './components/Layout';
+
+import DirectChatPage from './components/Chat';
+
 import PersistLogin from './components/PersistLogin';
 import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 import AddDoctor from './pages/HLC/AddDoctor';
 import AddHLC from './pages/Admin/AddHLC';
+import ManageUser from "./pages/Admin/ManageUser";
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
+import DoctorProfile from "./pages/DoctorProfile";
+import FindHLC from "./pages/FindHLC";
+import AddPrescription from "./pages/AddPrescription";
+
+
+import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
+import CreateSelfAssessmentComponent from './components/patient/CreateSelfAssessmentComponent';
+import ViewSelfAssessmentComponent from './components/patient/ViewSelfAssessmentComponent';
+
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import MeetingExpired from './pages/MeetingExpired';
 import Conference from './components/Conference/Conference';
@@ -50,17 +63,26 @@ function App() {
         <Route path="/HLC" element={<HLC />} /> */}
 
         <Route path="/" element={<Layout />}>
-{/*           
+          {/*           
           <Route path="SearchDoctor" element={<SearchDoctor />} />
+          <Route path="FindHLC" element={<FindHLC />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} /> */}
+
+          <Route path="AddPrescription" element={<AddPrescription />} />
+          <Route path="PatientProfile/:id" element={<PatientProfile />} />
+          <Route path="DoctorProfile" element={<DoctorProfile />} />
+          <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
+          <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
+          <Route path="/view-SelfAssessment" element={<ViewSelfAssessmentComponent />} />
+          <Route path="/ManageUser" element={<ManageUser />} />
 
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
-          
+
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
 
@@ -69,6 +91,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/test-components" element={<TestComponent />} />
+            <Route path="/message" element={<DirectChatPage />} />
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />}>
               {/* routes allowed for all authenticated users */}
@@ -77,11 +100,13 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
-
               <Route path="/patient" element={<Patient />} />
+              <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
+              <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
+              <Route path="/view-SelfAssessment/:id" element={<ViewSelfAssessmentComponent />}/>
               <Route path="/PatientMeetings" element={<PatientMeetings />} />
               <Route path='/link-expired' element={<MeetingExpired />} />
-              <Route path='/ScheduleMeeting' element={<MeetingSchedule />} /> 
+              <Route path='/ScheduleMeeting' element={<MeetingSchedule />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3]]} />}>
@@ -114,7 +139,12 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
             </Route>
-            
+
+            <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3], ROLES[4]]} />}>
+              {/* routes only for PATIENT,HLC, DOCTOR*/}
+              {/* <Route path="components/Chat" element={<DirectChatPage />} /> */}
+            </Route>
+
           </Route>
 
           {/* 404 routes */}
