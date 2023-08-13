@@ -77,8 +77,6 @@ function App() {
           <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
           <Route path="/view-SelfAssessment" element={<ViewSelfAssessmentComponent />} />
           <Route path="/ManageUser" element={<ManageUser />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
 
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
