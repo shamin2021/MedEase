@@ -47,6 +47,18 @@ function App() {
           <Route path="AddPrescription" element={<AddPrescription />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="DoctorProfile" element={<DoctorProfile />} />
+          <Route
+            path="/SelfAssessments"
+            element={<ListSelfAssessmentComponent />}
+          />
+          <Route
+            path="/CreateSelfAssessment"
+            element={<CreateSelfAssessmentComponent />}
+          />
+          <Route
+            path="/view-SelfAssessment/:id"
+            element={<ViewSelfAssessmentComponent />}
+          />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
@@ -72,10 +84,18 @@ function App() {
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
 
-              <Route path = "/SelfAssessments" element = {< ListSelfAssessmentComponent />}/>
-              <Route path = "/CreateSelfAssessment" element = {<CreateSelfAssessmentComponent/>}/>
-              <Route path = "/view-SelfAssessment/:id" element = {<ViewSelfAssessmentComponent/>}/>
-              
+              <Route
+                path="/SelfAssessments"
+                element={<ListSelfAssessmentComponent />}
+              />
+              <Route
+                path="/CreateSelfAssessment"
+                element={<CreateSelfAssessmentComponent />}
+              />
+              <Route
+                path="/view-SelfAssessment/:id"
+                element={<ViewSelfAssessmentComponent />}
+              />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
