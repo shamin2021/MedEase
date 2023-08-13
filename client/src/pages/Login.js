@@ -36,18 +36,12 @@ const Login = () => {
                 }
             );
             console.log(response.data);
+            setAuth(response?.data);
+            setEmail('');
+            setPassword('');
 
-            if (response.data.message === "Activate Your Account By Setting Up a Password") { 
-                setErrorMsg(response.data.message);
-            }
-            else {
-                setAuth(response?.data);
-                setEmail('');
-                setPassword('');
-
-                const from = location.state?.from || { pathname: '/' + response?.data?.role?.toLowerCase() };
-                navigate(from, { replace: true });
-            }
+            const from = location.state?.from || { pathname: '/' + response?.data?.role?.toLowerCase() };
+            navigate(from, { replace: true });
 
         } catch (err) {
             if (!err?.response) {

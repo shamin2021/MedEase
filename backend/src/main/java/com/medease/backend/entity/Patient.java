@@ -21,7 +21,7 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer patient_id;
+    private Long patient_id;
 
     @OneToOne
     @JoinColumn(name = "patient_user_id", referencedColumnName = "id")

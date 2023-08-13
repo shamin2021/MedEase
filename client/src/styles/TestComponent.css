@@ -1,13 +1,8 @@
-.TestComponent {
+.TestComponent{
     background-color: #FFFFFF !important;
     margin: 20px !important;
 }
 
-.btn-set {
+.btn-set{
     margin: 50px !important;
-}
-
-.css-4t6ey5[data-orientation=horizontal] {
-    height: 6px;
-    border-radius: 10px;
 }

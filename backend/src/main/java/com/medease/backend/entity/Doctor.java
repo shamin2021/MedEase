@@ -15,16 +15,16 @@ import lombok.NoArgsConstructor;
 public class Doctor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer doctor_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long doctor_id;
 
     @OneToOne
     @JoinColumn(name = "doctor_user_id", referencedColumnName = "id")
     private User doctor_user;
 
-    @ManyToOne
-    @JoinColumn(name = "doctor_speciality_id", referencedColumnName = "speciality_id")
-    private DoctorSpeciality speciality;
+    private String first_name;
+    private String last_name;
+    private String speciality;
 
     @Column(unique = true)
     private String license_number;

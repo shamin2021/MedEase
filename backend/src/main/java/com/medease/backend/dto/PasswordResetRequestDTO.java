@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 public class PasswordResetRequestDTO {
 
     private String email;
-    private String mobileNumber;
     private String password;
 }
