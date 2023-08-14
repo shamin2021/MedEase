@@ -526,7 +526,7 @@ const AddHLC = (props) => {
               <Form3 formData={form3State} setFormData={setForm3State} />
             )}
 
-            <ButtonGroup w="100%" mb="5%">
+            <ButtonGroup w="100%" mb="5%" mt="5%">
               <Flex w="100%" justifyContent="space-between">
                 <Flex className="mx-auto">
 

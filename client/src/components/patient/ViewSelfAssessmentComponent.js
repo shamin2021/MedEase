@@ -96,7 +96,7 @@ const ViewSelfAssessmentComponent= () => {
     }
         return (
           <div>
-            <div className="py-1 bg-primary">
+            <div className="py-1 h-screen bg-primary">
               <div className="mx-auto flex rounded-md py-1 p-5">
                 <div className="parent flex md:w-3/12 shadow-xl rounded-md pb-2 py-1 bg-white m-3 mt-9 p-5">
                   <div className="child mt-3 mb-3 md:w-[1px] bg-[#bebebe]"></div>

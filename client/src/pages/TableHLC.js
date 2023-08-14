@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 const Table = ({ data }) => {
   return (
     <>
-      <div className=" h-60 m-1 font-poppins">
+      <div className=" h-full m-1 font-poppins">
         <div className=" flex mt-2 text-[16px] font-medium sticky top-3 p-1 pb-0">
           <div className="w-1/2 m-1">Name</div>
           <div className="w-1/2 m-1">Area</div>
         </div>
         <hr className="w-7/8 mx-auto mt-1 mb-0" />
         <div>
-          <div className=" h-52 overflow-y-scroll mb-2 text-[16px] font-poppins">
+          <div className=" h-full overflow-y-scroll mb-2 text-[16px] font-poppins">
             <>
               <Link to={`/PatientProfile/2`}>
                 <div className=" flex mt-1 font-medium hover:bg-primary p-1 rounded-md hover:">

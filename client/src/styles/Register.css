@@ -30,7 +30,7 @@ form {
     padding-bottom: 1rem;
 }
 
-input[type="text"],
+/*input[type="text"],
 input[type="text"],
 input[type="password"],
 button,
@@ -41,7 +41,7 @@ textarea {
 button {
     padding: 0.5rem;
 }
-
+*/
 .instructions {
     font-size: 0.75rem;
     border-radius: 0.5rem;
