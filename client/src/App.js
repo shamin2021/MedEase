@@ -19,12 +19,13 @@ import ForgotPassword from './pages/ForgotPassword';
 import AddDoctor from './pages/HLC/AddDoctor';
 import AddHLC from './pages/Admin/AddHLC';
 import SearchDoctor from './pages/SearchDoctor';
-import PatientProfile from "./pages/PatientProfile";
+// import PatientProfile from "./pages/PatientProfile";
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import MeetingExpired from './pages/MeetingExpired';
 import Conference from './components/Conference/Conference';
 import Availability from './pages/Availability';
 import MeetingSchedule from './pages/Patient/MeetingSchedule';
+import AboutUs from './pages/AboutUs';
 
 import DoctorHLC from './pages/Doctor/DoctorHLC';
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
@@ -60,6 +61,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/about-us" element={<AboutUs />} />
           
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
