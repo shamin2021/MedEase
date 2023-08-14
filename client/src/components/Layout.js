@@ -25,7 +25,8 @@ const Layout = () => {
         '/unauthorized',
         '/test-components',
         '/loading',
-        '/meeting/:id/:role/:time'
+        '/meeting/:id/:role/:time',
+        '/findHLC',
     ];
 
     const layoutHiddenPaths = [

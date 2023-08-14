@@ -57,18 +57,7 @@ function App() {
     <Router>
       <Routes>
 
-        {/* <Route path="/admin" element={<Admin />} />
-        <Route path="/Doctor" element={<Doctor />} />
-
-        <Route path="/HLC" element={<HLC />} /> */}
-
         <Route path="/" element={<Layout />}>
-          {/*           
-          <Route path="SearchDoctor" element={<SearchDoctor />} />
-          <Route path="FindHLC" element={<FindHLC />} />
-          <Route path="AddDoctor" element={<AddDoctor />} />
-          <Route path="AddHLC" element={<AddHLC />} />
-          <Route path="PatientProfile/:id" element={<PatientProfile />} /> */}
 
           <Route path="AddPrescription" element={<AddPrescription />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
@@ -76,7 +65,6 @@ function App() {
           <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
           <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
           <Route path="/view-SelfAssessment" element={<ViewSelfAssessmentComponent />} />
-          <Route path="/ManageUser" element={<ManageUser />} />
 
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -89,6 +77,7 @@ function App() {
             {/* made these public routes persisting as well */}
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/findHLC" element={<FindHLC />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/test-components" element={<TestComponent />} />
             <Route path="/message" element={<DirectChatPage />} />
@@ -105,7 +94,6 @@ function App() {
               <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
               <Route path="/view-SelfAssessment/:id" element={<ViewSelfAssessmentComponent />}/>
               <Route path="/PatientMeetings" element={<PatientMeetings />} />
-              <Route path='/link-expired' element={<MeetingExpired />} />
               <Route path='/ScheduleMeeting' element={<MeetingSchedule />} />
             </Route>
 
@@ -117,6 +105,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[3]]} />}>
               {/* routes only for PATIENT and DOCTOR */}
               <Route path="/meeting/:id/:user/:time" element={<Conference />} />
+              <Route path='/link-expired' element={<MeetingExpired />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
@@ -138,6 +127,7 @@ function App() {
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
+              <Route path="/ManageUser" element={<ManageUser />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3], ROLES[4]]} />}>
