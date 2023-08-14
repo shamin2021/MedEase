@@ -3,6 +3,8 @@ import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../styles/FormInput.css";
 
+import { GridItem } from '@chakra-ui/react';
+
 const CreateSelfAssessmentComponent = () => {
   const [res, setRes] = useState("");
 
@@ -272,6 +274,7 @@ const CreateSelfAssessmentComponent = () => {
   }
 
   return (
+    <GridItem colSpan={6}>
     <div className=" bg-primary py-1">
       <div className="md:w-1/2 mx-auto mt-6 shadow-xl rounded-2xl pb-2 py-1 bg-white ">
         <div className="container horizontal justify-center text-xs py-1">
@@ -509,6 +512,7 @@ const CreateSelfAssessmentComponent = () => {
         </div>
       </div>
     </div>
+    </GridItem>
   );
 };
 

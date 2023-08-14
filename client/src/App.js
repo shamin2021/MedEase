@@ -73,9 +73,9 @@ function App() {
           <Route path="AddPrescription" element={<AddPrescription />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="DoctorProfile" element={<DoctorProfile />} />
-          <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
+          {/* <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
           <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
-          <Route path="/view-SelfAssessment" element={<ViewSelfAssessmentComponent />} />
+          <Route path="/view-SelfAssessment" element={<ViewSelfAssessmentComponent />} /> */}
           <Route path="/ManageUser" element={<ManageUser />} />
 
           <Route path="/register" element={<Register />} />

@@ -8,6 +8,7 @@ import DoctorSideBar from './Doctor/DoctorSideBar'
 
 
 import '../styles/Chat.css';
+import { GridItem } from '@chakra-ui/react';
 
 const DirectChatPage = () => {
 
@@ -17,9 +18,9 @@ const DirectChatPage = () => {
 	const [username, setUsername] = useState('')
 	//if(!localStorage.getItem('username')) return <LoginForm/>
 	// Check if the user credentials are available in local storage.
-	const storedUsername = localStorage.getItem('username');
-	const storedPassword = localStorage.getItem('password');
-	const isLoggedIn = storedUsername && storedPassword;
+	// const storedUsername = localStorage.getItem('username');
+	// const storedPassword = localStorage.getItem('password');
+	// const isLoggedIn = storedUsername && storedPassword;
 
 	function createDirectChat(creds) {
 		getOrCreateChat(
@@ -45,23 +46,26 @@ const DirectChatPage = () => {
 	}
 
 	return (
-		<>
-      {isLoggedIn ? (
+		<GridItem colSpan={6}>
+      {/* {isLoggedIn ? ( */}
 		<ChatEngine 
-			height='61vh'   //change window height
+			height='80vh'   //change window height
 			width='300px'
 			// userName='oshani'
 			// userSecret='oshani'
-			userName={localStorage.getItem('username')}
-            userSecret={localStorage.getItem('password')}
-			projectID='9d8045a0-a0b6-4bb5-a31e-dfc440dde62f'
+			// userName={localStorage.getItem('username')}
+            // userSecret={localStorage.getItem('password')}
+			userName="oshani"
+            userSecret="Oshani@123"
+			projectID='d9ef1868-1085-4ef0-bd6c-36276738e453'
 			renderNewChatForm={(creds) => renderNewChatForm(creds)}
 		/>
 
-		) : (
+		{/* ) : (
 			<LoginForm />
-		  )}
-		</>
+		  )} */}
+		</GridItem>
+		
 	)
 
 	
