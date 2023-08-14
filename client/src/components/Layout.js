@@ -68,7 +68,7 @@ const Layout = () => {
                     mt={1}
 
                 >
-                    < GridItem rowSpan={7} colSpan={1} >
+                    < GridItem rowSpan={7} colSpan={1}>
                         <SimpleGrid >
                             {renderSidebar()}
                         </SimpleGrid>
