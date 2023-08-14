@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Box, ButtonGroup, VisuallyHidden, Button, Container, Divider, FormControl, FormLabel, Heading, HStack, Stack, Text, Input } from '@chakra-ui/react'
+import { Link, Box, ButtonGroup, VisuallyHidden, Button, Container, Divider, FormControl, FormLabel, Heading, HStack, Stack, Text, Input, Select } from '@chakra-ui/react'
 import { FcGoogle } from 'react-icons/fc'
 
 import axios from '../constants/axios';
@@ -23,6 +23,9 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [validLastName, setvalidLastName] = useState(false);
     const [lastNameFocus, setLastNameFocus] = useState(false);
+
+    const [gender, setGender] = useState('');
+    const [dob, setDob] = useState('');
 
     const [password, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -54,7 +57,7 @@ const Register = () => {
 
     useEffect(() => {
         setErrMsg('');
-    }, [email, password, firstName, lastName, matchPwd])
+    }, [email, password, firstName, lastName, matchPwd, dob, gender])
 
 
 
@@ -66,14 +69,14 @@ const Register = () => {
         const v3 = USER_REGEX.test(firstName);
         const v4 = USER_REGEX.test(lastName);
         if (!v1 || !v2 || !v3 || !v4) {
-            setErrMsg("Invalid Entry");
+            setErrMsg("Invalid Input Given");
             return;
         }
 
-
+        console.log(gender, dob);
         try {
             const response = await axios.post('/auth/register',
-                JSON.stringify({ email, password, firstname: firstName, lastname: lastName }),
+                JSON.stringify({ email, password, firstname: firstName, lastname: lastName, dob, gender }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -132,20 +135,18 @@ const Register = () => {
                                 )}
                                 <Stack spacing="5">
                                     <FormControl isRequired>
-                                        <FormControl isRequired>
-                                            <FormLabel htmlFor="firstname">Firstname</FormLabel>
-                                            <Input
-                                                id="firstname"
-                                                type="text"
-                                                autoComplete='off'
-                                                onChange={(e) => setFirstName(e.target.value)}
-                                                value={firstName}
-                                                onFocus={() => setFirstNameFocus(true)}
-                                                onBlur={() => setFirstNameFocus(false)}
-                                                aria-invalid={validFirstName ? "false" : "true"}
-                                                aria-describedby="firstnamenote"
-                                            />
-                                        </FormControl>
+                                        <FormLabel htmlFor="firstname">Firstname</FormLabel>
+                                        <Input
+                                            id="firstname"
+                                            type="text"
+                                            autoComplete='off'
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                            value={firstName}
+                                            onFocus={() => setFirstNameFocus(true)}
+                                            onBlur={() => setFirstNameFocus(false)}
+                                            aria-invalid={validFirstName ? "false" : "true"}
+                                            aria-describedby="firstnamenote"
+                                        />
                                     </FormControl>
 
                                     {firstNameFocus && !validFirstName && (
@@ -158,20 +159,18 @@ const Register = () => {
                                     )}
 
                                     <FormControl isRequired>
-                                        <FormControl isRequired>
-                                            <FormLabel htmlFor="username">Lastname</FormLabel>
-                                            <Input
-                                                id="username"
-                                                type="text"
-                                                autoComplete='off'
-                                                onChange={(e) => setLastName(e.target.value)}
-                                                value={lastName}
-                                                onFocus={() => setLastNameFocus(true)}
-                                                onBlur={() => setLastNameFocus(false)}
-                                                aria-invalid={validLastName ? "false" : "true"}
-                                                aria-describedby="usernamenote"
-                                            />
-                                        </FormControl>
+                                        <FormLabel htmlFor="username">Lastname</FormLabel>
+                                        <Input
+                                            id="username"
+                                            type="text"
+                                            autoComplete='off'
+                                            onChange={(e) => setLastName(e.target.value)}
+                                            value={lastName}
+                                            onFocus={() => setLastNameFocus(true)}
+                                            onBlur={() => setLastNameFocus(false)}
+                                            aria-invalid={validLastName ? "false" : "true"}
+                                            aria-describedby="usernamenote"
+                                        />
                                     </FormControl>
 
                                     {lastNameFocus && !validLastName && (
@@ -182,6 +181,32 @@ const Register = () => {
                                             </p>
                                         </Box>
                                     )}
+
+                                    <FormControl isRequired>
+                                        <FormLabel htmlFor="gender">Gender</FormLabel>
+                                        <Select
+                                            id="gender"
+                                            autoComplete='off'
+                                            value={gender}
+                                            onChange={(e) => setGender(e.target.value)}
+                                        >
+                                            <option value="SELECT">Select</option>  
+                                            <option value="MALE">Male</option>
+                                            <option value="FEMALE">Female</option>
+                                        </Select>
+                                    </FormControl>
+
+                                    <FormControl isRequired>
+                                        <FormLabel htmlFor="dob">Date of Birth</FormLabel>
+                                        <Input
+                                            id="dob"
+                                            type="date"
+                                            autoComplete='off'
+                                            value={dob}
+                                            onChange={(e) => setDob(e.target.value)}
+                                            max={new Date().toISOString().split("T")[0]}
+                                        />
+                                    </FormControl>
 
                                     <FormControl isRequired>
                                         <FormLabel htmlFor="email">Email</FormLabel>
