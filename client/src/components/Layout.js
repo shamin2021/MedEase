@@ -27,6 +27,7 @@ const Layout = () => {
         '/loading',
         '/meeting/:id/:role/:time',
         '/findHLC',
+        //add about and contact us
     ];
 
     const layoutHiddenPaths = [
@@ -52,7 +53,7 @@ const Layout = () => {
     };
 
     return (
-        <main className='App font-poppins'>
+        <main className='App font-poppins bg-primary h-screen'>
 
             {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && !(auth.role === "HLC") && !(auth.role === "DOCTOR") && !(auth.role === "ADMIN") ? (
                 <NavBar />
@@ -66,7 +67,6 @@ const Layout = () => {
                     templateColumns='repeat(7, 1fr)'
                     gap={4}
                     mt={1}
-
                 >
                     < GridItem rowSpan={7} colSpan={1}>
                         <SimpleGrid >
