@@ -167,10 +167,7 @@ const CreateSelfAssessmentComponent = () => {
     setotherDiseases(event.target.value);
   };
 
-  const cancel = () => {
-    // Navigate back to the SelfAssessments list
-    window.location.href = "/SelfAssessments";
-  };
+  const backPage = () => navigate('/SelfAssessments');
 
   function InputRow(props) {
     return (
@@ -426,7 +423,7 @@ const CreateSelfAssessmentComponent = () => {
                 <div className="flex">
                   <button
                     className="bg-[#ff0000] w-1/4 mx-auto rounded-2xl p-1 text-[#ffffff] font-semibold mt-3"
-                    onClick={cancel.bind(this)}
+                    onClick={backPage}
                   >
                     Cancel
                   </button>
