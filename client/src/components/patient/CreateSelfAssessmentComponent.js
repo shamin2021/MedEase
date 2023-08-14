@@ -37,7 +37,7 @@ const CreateSelfAssessmentComponent = () => {
 
     try {
       post(
-        "CreateSelfAssessment",
+        "/CreateSelfAssessment",
         {
           firstName,
           lastName,
@@ -85,37 +85,6 @@ const CreateSelfAssessmentComponent = () => {
       console.error(err);
       navigate("/login", { state: { from: location }, replace: true });
     }
-    // console.log('physicalActivity');
-    // console.log(physicalActivity);
-    // console.log('tobaccoSmoking');
-    // console.log(tobaccoSmoking);
-    // console.log('beetlechewing');
-    // console.log(beetlechewing);
-    // console.log('alcoholConsumption');
-    // console.log(alcoholConsumption);
-    // console.log('otherSubstance');
-    // console.log(otherSubstance);
-    // console.log('snackIntake');
-    // console.log(snackIntake);
-    // console.log("heartDisease");
-    // console.log(heartDisease);
-    // console.log('HighBloodPressure');
-    // console.log(HighBloodPressure);
-    // console.log('Stroke');
-    // console.log(Stroke);
-    // console.log('Diabetes');
-    // console.log(Diabetes);
-    // console.log('Cancer');
-    // console.log(Cancer);
-    // console.log('COPD');
-    // console.log(COPD);
-    // console.log('Asthma');
-    // console.log(Asthma);
-    // console.log('kidneyDiseases');
-    // console.log(kidneyDiseases);
-    // console.log("suddenDeath");
-    // console.log(suddenDeath);
-    // console.log(firstName);
   };
 
   useEffect(() => {
@@ -153,35 +122,6 @@ const CreateSelfAssessmentComponent = () => {
   const changeotherSubstanceHandler = (event) => {
     setotherSubstance(event.target.value);
   };
-
-  //snack intake
-  // const changeSnackNonConsumer = (event) => {
-  //   if (!event.target.checked) {
-  //     // Exit the function if the checkbox is not checked
-  //     return;
-  //   }
-
-  //   const snackIntake = "NO_CONSUMPTION";
-  //   setsnackIntake(snackIntake);
-  // };
-
-  // const changeSnackLessThan5 = (event) => {
-  //   if (!event.target.checked) {
-  //     return;
-  //   }
-
-  //   const snackIntake = "LESS_THAN_5";
-  //   setsnackIntake(snackIntake);
-  // };
-
-  // const changeSnackMoreThan5 = (event) => {
-  //   if (!event.target.checked) {
-  //     return;
-  //   }
-
-  //   const snackIntake = "MORE_THAN_5";
-  //   setsnackIntake(snackIntake);
-  // };
 
   const changeSnackHandler = (event) => {
     setsnackIntake(event.target.value);
@@ -247,7 +187,7 @@ const CreateSelfAssessmentComponent = () => {
                 className="form-radio-btn"
                 id={props.nameOptions + "Y"}
                 onChange={props.handle}
-                checked={props.radioName == "true" ? true : false}
+                checked={props.radioName === "true" ? true : false}
               />
               <label for={props.nameOptions + "Y"} className="form-radio-label">
                 Yes
@@ -257,7 +197,7 @@ const CreateSelfAssessmentComponent = () => {
                 name={props.nameOptions}
                 className="form-radio-btn"
                 value="false"
-                checked={props.radioName == "false" ? true : false}
+                checked={props.radioName === "false" ? true : false}
                 onChange={props.handle}
                 id={props.nameOptions + "N"}
               />
@@ -295,9 +235,7 @@ const CreateSelfAssessmentComponent = () => {
                         name="firstName"
                         className="form-input"
                         value={firstName}
-                        onChange={(event) => {
-                          setFirstName(event.target.value);
-                        }}
+                        onChange={changeFirstNameHandler}
                       />
                     </div>
                     <div className=" flex flex-col ml-[4%] md:w-[48%]">

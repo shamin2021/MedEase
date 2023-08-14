@@ -37,7 +37,7 @@ public class SelfAssessmentController {
 	}		
 	
 	// create SelfAssessment rest api
-	@PostMapping("CreateSelfAssessment")
+		@PostMapping("CreateSelfAssessment")
 	public GlobalResponseDTO createSelfAssessment(@RequestBody SelfAssessment selfAssessment) {
 
 		var assessment = SelfAssessment.builder()

@@ -60,63 +60,37 @@ const ListSelfAssessmentComponent = () => {
                 </div>
                 <hr className=" md:w-4/5  ml-5" />
 
-                <div className=" flex text-[15px] font-medium sticky p-1 text-left ml-5  ">
-                  <div className="w-1/3 m-1"> #A1234</div>
-                  <div className="w-1/3 m-1">01st July</div>
-                  <div className="w-1/3 m-1">
-                    <div className="w-1/3 bg-primary pl-1 pr-1 rounded-lg">
-                      View
-                    </div>
-                  </div>
-                </div>
-                <hr className=" md:w-4/5 ml-5" />
-
-                <div className=" flex text-[15px] font-medium sticky p-1 text-left ml-5  ">
-                  <div className="w-1/3 m-1"> #A1234</div>
-                  <div className="w-1/3 m-1">01st July</div>
-                  <div className="w-1/3 m-1">
-                    <div className="w-1/3 bg-primary pl-1 pr-1 rounded-lg">
-                      View
-                    </div>
-                  </div>
-                </div>
-                <hr className=" md:w-4/5 ml-5" />
-
                 <table className="table-auto">
-                  {/* <thead className=" text-sm">
-                    <tr className=" text-sm">
-                      <th className=" text-sm"> Assessment ID</th>
-
-                      <th> Assessment Created</th>
-
-                      <th> Actions</th>
-                    </tr>
-                  </thead> */}
                   <tbody>
                     {selfassessments.map((selfassessment) => (
-                      <tr key={selfassessment.id}>
-                        <td> {selfassessment.id} </td>
-                        <td> {selfassessment.date} </td>
-
-                        <td>
-                          <button
-                            style={{ marginLeft: "10px" }}
-                            onClick={() =>
-                              navigate(
-                                `/view-SelfAssessment/${selfassessment.id}`
-                              )
-                            }
-                            className="btn btn-info"
-                          >
-                            View{" "}
-                          </button>
-                        </td>
-                      </tr>
+                      <>
+                        <tr key={selfassessment.id} className="flex text-[15px] font-medium sticky p-1 text-left ml-5">
+                          <div className="w-1/3 m-1"><td> {selfassessment.id} </td></div>
+                          <div className="w-1/3 m-1"><td> {selfassessment.date.substring(0, 10)} </td></div>
+                          <div className="w-1/3 m-1">
+                            <td>
+                              <button
+                                style={{ marginLeft: "10px" }}
+                                onClick={() =>
+                                  navigate(
+                                    `/view-SelfAssessment/${selfassessment.id}`
+                                  )
+                                }
+                                className="btn w-1/3 bg-primary pl-1 pr-1 rounded-lg"
+                              >
+                                View{" "}
+                              </button>
+                            </td>
+                          </div>
+                        </tr>
+                        <hr className=" md:w-4/5 ml-5" />
+                      </>
                     ))}
                   </tbody>
                 </table>
               </div>
             </div>
+
             <div className="md:w-1/4 shadow-xl h-60 m-3 mb-1 rounded-md">
               <div className="mt-3">
                 <div className="w-3/4 mx-auto mt-3 rounded-md text-[15px] bg-[#fdc9c9] p-2 font-semibold">
