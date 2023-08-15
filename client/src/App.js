@@ -43,6 +43,8 @@ import MeetingExpired from './pages/MeetingExpired';
 import Conference from './components/Conference/Conference';
 import Availability from './pages/Availability';
 import MeetingSchedule from './pages/Patient/MeetingSchedule';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 
 import DoctorHLC from './pages/Doctor/DoctorHLC';
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
@@ -96,6 +98,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          
+
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
             {/* made these public routes persisting as well */}
