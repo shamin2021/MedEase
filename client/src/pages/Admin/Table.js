@@ -1,11 +1,11 @@
 import "../../styles/Table.css";
 import Doc from "../../assets/Doc.jpg";
 import { Link } from "react-router-dom";
-const Table = ({ data , status }) => {
+const Table = ({ data, status }) => {
   return (
     <>
       <div className="">
-        <div className=" flex text-[15px] font-medium sticky top-3 p-1">
+        <div className=" flex text-[17px] font-medium sticky top-3 p-1">
           <div className="w-1/4 m-1">Username</div>
           <div className="w-1/4 m-1">Email</div>
           <div className="w-1/4 m-1">User Role</div>
@@ -13,10 +13,10 @@ const Table = ({ data , status }) => {
         </div>
         <hr className="w-7/8 mx-auto mt-1 mb-0" />
         <div>
-          <div className="h-52 overflow-y-scroll mb-2">
+          <div className="h-96 overflow-y-scroll mb-2">
             {data.map((item) => (
               <>
-                <div className=" flex mt-1 text-[15px] font-medium p-1 rounded-lg hover:">
+                <div className=" flex mt-1 text-[17px] font-medium p-1 rounded-lg hover:">
                   <div className="w-1/4 m-1 flex ">
                     <img
                       className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"

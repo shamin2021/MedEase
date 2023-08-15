@@ -69,19 +69,19 @@ const DirectChatPage = () => {
 
 	return (
 		<GridItem colSpan={6}>
+			<div className="ml-[30px] h-screen bg-primary mt-[4%]">
+				<ChatEngine
+					height='80vh'
+					width={navSize === "small" ? "calc(100% - 500px)" : "calc(100% - 300px)"}
+					userName={auth.first_name}
+					userSecret={auth.first_name}
+					projectID='d9ef1868-1085-4ef0-bd6c-36276738e453'
+					renderNewChatForm={(creds) => renderNewChatForm(creds)}
+					renderIceBreaker={renderIceBreaker}
+				/>
+			</div>
 
-			<ChatEngine
-				height='80vh'
-				width={navSize === "small" ? "calc(100% - 500px)" : "calc(100% - 300px)"}
-				userName={auth.first_name}
-				userSecret={auth.first_name}
-				projectID='d9ef1868-1085-4ef0-bd6c-36276738e453'
-				renderNewChatForm={(creds) => renderNewChatForm(creds)}
-
-				renderIceBreaker={renderIceBreaker}
-			/>
-
-		</GridItem>
+		</GridItem >
 
 	)
 

@@ -33,6 +33,8 @@ import PatientProf from "./pages/Patient/PatientProfile";
 import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
 import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
 import AddExamination from "./pages/AddExamination";
+import FindHLCAdmin from "./pages/Admin/FindHLC";
+
 
 
 import ListSelfAssessmentComponent from './components/Patient/ListSelfAssessmentComponent';
@@ -124,7 +126,6 @@ function App() {
             {/* made these public routes persisting as well */}
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/findHLC" element={<FindHLC />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/test-components" element={<TestComponent />} />
             <Route path="/message" element={<DirectChatPage />} />
@@ -150,6 +151,7 @@ function App() {
               <Route path="/PatientSettings" element={<PatientSettings />} />
               <Route path="/PatientProfile" element={<PatientProfile />} />
               <Route path="/patient" element={<Patient />} />
+              <Route path="AddExamination" element={<AddExamination />} />
               <Route
                 path="/SelfAssessments"
                 element={<ListSelfAssessmentComponent />}
@@ -198,7 +200,11 @@ function App() {
               <Route path="/DoctorHLC" element={<DoctorHLC />} />
               <Route path="/DoctorPatient" element={<DoctorPatient />} />
               <Route path="/DoctorSetting" element={<DoctorSetting />} />
+
               <Route path="/DoctorProfile" element={<DoctorProfile />} />
+
+              <Route path="/findHLC" element={<FindHLC />} />
+
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
@@ -212,7 +218,10 @@ function App() {
               <Route path="/AdminProfile" element={<AdminProfile />} />
 
               <Route path="/ManageUser" element={<ManageUser />} />
-            </Route >
+
+              <Route path="/FindHLCAdmin" element={<FindHLCAdmin />} />
+            </Route>
+
 
             <Route
               element={

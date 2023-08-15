@@ -25,8 +25,9 @@ const PatientSidebar = () => {
 
     return (
         <Flex
-            pos="sticky"
-            left="5"
+            pos="fixed"
+            // left="5"
+            bottom="0"
             h="92vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             borderRadius={navSize === "small" ? "15px" : "30px"}
@@ -34,8 +35,9 @@ const PatientSidebar = () => {
             flexDir="column"
             justifyContent="space-between"
             backgroundColor="#EDEDED"
+
         >
-            <Flex p="5%" flexDir="column" as="nav" alignItems={navSize === "small" ? "center" : "flex-start"}>
+            <Flex top="30px" p="5%" flexDir="column" as="nav" alignItems={navSize === "small" ? "center" : "flex-start"}>
                 <IconButton
                     background="none"
                     mt={5}

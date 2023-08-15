@@ -135,7 +135,7 @@ const ViewSelfAssessmentComponent = () => {
                   <div className="w-1/4">
                     <button
                       className="btn btn-primary text-[15px] bg-primary p-2 font-semibold"
-                      onClick={() => navigate(`/SelfAssessments`)}
+                      onClick={() => navigate(`/AddExamination`)}
                     >
                       Add Medical Data
                     </button>

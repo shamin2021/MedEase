@@ -53,6 +53,10 @@ const Sidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/AddHLC"} />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AdminDoctor"} />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/AdminPatients"} />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" />
+                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/FindHLCAdmin"} />
+                <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" />
                 <NavItem navSize={navSize} icon={FiUsers} href={"/ManageUser"} title="User Management" />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/AdminSetting"} />
 

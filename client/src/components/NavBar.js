@@ -87,7 +87,7 @@ const NavBar = () => {
                                     textDecoration: 'none',
                                     bg: 'gray.200',
                                 }}
-                                href={'#'}>
+                                href={'/about-us'}>
                                 About
                             </Box>
                             <Box
@@ -99,7 +99,7 @@ const NavBar = () => {
                                     textDecoration: 'none',
                                     bg: 'gray.200',
                                 }}
-                                href={'#'}>
+                                href={'/contact-us'}>
                                 Contact Us
                             </Box>
                             <Box

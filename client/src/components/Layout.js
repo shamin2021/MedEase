@@ -27,7 +27,8 @@ const Layout = () => {
         '/loading',
         '/meeting/:id/:role/:time',
         '/findHLC',
-        //add about and contact us
+        '/about-us',
+        '/contact-us'
     ];
 
     const layoutHiddenPaths = [
