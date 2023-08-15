@@ -26,9 +26,10 @@ const PatientSidebar = () => {
     return (
         <Flex
             pos="fixed"     
-            left="0"
-            top="85"         
-            bottom="0"      
+            top="83"         
+            bottom="0" 
+            // left="0"     
+            left={navSize === "small" ? "0" : "0px"}
             h="92vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             borderRadius={navSize === "small" ? "15px" : "30px"}
