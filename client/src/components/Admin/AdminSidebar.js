@@ -25,8 +25,11 @@ const Sidebar = () => {
 
     return (
         <Flex
-            pos="static"
-            left="5"
+            pos="fixed"
+            // top="83"
+            bottom="0"
+            left={navSize === "small" ? "0" : "0px"}
+            
             h="100vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             borderRadius={navSize === "small" ? "15px" : "30px"}
@@ -47,11 +50,11 @@ const Sidebar = () => {
                     }}
                 />
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Admin"} />
-                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/AdminHLC"}/>
-                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AdminPatient"}/>
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/AdminMeetings"}/>
+                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/AddHLC"} />
+                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AdminDoctor"} />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/AdminPatients"} />
                 <NavItem navSize={navSize} icon={FiUsers} href={"/ManageUser"} title="User Management" />
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/AdminSetting"}/>
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/AdminSetting"} />
 
             </Flex>
 
@@ -62,7 +65,7 @@ const Sidebar = () => {
                     <Avatar size="sm" src="" name={auth.first_name} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}
+                            {/* {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()} */}
                         </Heading>
                     </Flex>
                 </Flex>

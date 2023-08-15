@@ -65,7 +65,7 @@ const DoctorSideBar = () => {
                     <Avatar size="sm" src="" name={auth.first_name} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}
+                            {/* {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()} */}
                         </Heading>
                     </Flex>
                 </Flex>

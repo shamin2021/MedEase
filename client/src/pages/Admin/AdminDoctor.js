@@ -1,8 +1,9 @@
 import React from 'react'
+import SearchDoctor from '../SearchDoctor'
 
 function AdminDoctor() {
   return (
-    <div>AdminDoctor</div>
+    <SearchDoctor />
   )
 }
 

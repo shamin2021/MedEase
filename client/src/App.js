@@ -21,23 +21,23 @@ import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 import AddDoctor from './pages/HLC/AddDoctor';
 
-import AddHLC from './pages/Admin/AddHLC';
+// import AddHLC from './pages/Admin/AddHLC';
 import ManageUser from "./pages/Admin/ManageUser";
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
-import DoctorProfile from "./pages/DoctorProfile";
+// import DoctorProfile from "./pages/DoctorProfile";
 import FindHLC from "./pages/FindHLC";
 import AddPrescription from "./pages/AddPrescription";
-import HLCProfile from "./pages/HLCProfile";
+// import HLCProfile from "./pages/HLCProfile";
 import PatientProf from "./pages/Patient/PatientProfile";
 import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
 import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
 import AddExamination from "./pages/AddExamination";
 
 
-import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
-import CreateSelfAssessmentComponent from './components/patient/CreateSelfAssessmentComponent';
-import ViewSelfAssessmentComponent from './components/patient/ViewSelfAssessmentComponent';
+import ListSelfAssessmentComponent from './components/Patient/ListSelfAssessmentComponent';
+import CreateSelfAssessmentComponent from './components/Patient/CreateSelfAssessmentComponent';
+import ViewSelfAssessmentComponent from './components/Patient/ViewSelfAssessmentComponent';
 
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import PatientSettings from './pages/Patient/PatientSettings'
@@ -84,7 +84,7 @@ function App() {
           <Route path="FindHLC" element={<FindHLC />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} /> */}
-          <Route path="PatientProfile/:id" element={<PatientProfile />} />
+          {/* <Route path="PatientProfile/:id" element={<PatientProfile />} />
 
           <Route path="AddPrescription" element={<AddPrescription />} />
           <Route path="HLCProfile" element={<HLCProfile />} />
@@ -94,7 +94,7 @@ function App() {
           <Route path="PatientProf" element={<PatientProf />} />
           <Route path="LifestyleQuiz" element={<LifestyleQuiz />} />
           <Route path="AddLifestyle" element={<AddLifestyle />} />
-          <Route path="AddExamination" element={<AddExamination />} />
+          <Route path="AddExamination" element={<AddExamination />} /> */}
 
           {/* <Route
             path="/SelfAssessments"
@@ -108,6 +108,8 @@ function App() {
             path="/view-SelfAssessment"
             element={<ViewSelfAssessmentComponent />}
           /> */}
+
+          
           {/* <Route path="/ManageUser" element={<ManageUser />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
