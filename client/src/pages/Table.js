@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Table = ({ data }) => {
   return (
     <>
-      <div className=" h-60 m-1 ml-9">
+      <div className=" h-3/4 m-1 ml-9">
         <div className=" flex mt-4 text-[15px] font-medium sticky top-3 p-1">
           <div className="w-1/4 m-1">Name</div>
           <div className="w-1/4 m-1">Surname</div>

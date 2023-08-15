@@ -13,7 +13,7 @@ const SearchDoc = () => {
     };
   return (
     <div className="h-screen py-1 bg-primary">
-      <div className="md:w-3/4 mx-auto shadow-xl rounded-md pb-2 py-1 bg-white mt-9 p-5">
+      <div className="md:w-3/4 h-3/4  mx-auto shadow-xl rounded-md pb-2 py-1 bg-white mt-9 p-5">
         <div className="ml-4 w-full">
           <div className="w-2/4 m-2 mt-4 font-medium font-poppins">
             Find the nearest HLC

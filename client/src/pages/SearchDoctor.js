@@ -13,7 +13,7 @@ const SearchDoc = () => {
     );
   };
   return (
-    <GridItem colSpan={6} >
+    <GridItem colSpan={6}>
       <div className="h-screen py-1 bg-primary">
         <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 p-5">
           <div className="ml-6 flex w-full">
@@ -30,12 +30,11 @@ const SearchDoc = () => {
                 />
               </div>
             </div>
-            <div>{<Table data={search(Docs)} />}</div>
           </div>
+          <div>{<Table data={search(Docs)} />}</div>
         </div>
       </div>
     </GridItem>
-
   );
 }
 

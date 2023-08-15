@@ -12,6 +12,7 @@ const DoctorSideBar = () => {
     const [navSize, changeNavSize] = React.useState("large");
     const { auth } = useAuth();
 
+
     React.useEffect(() => {
         function handleResize() {
             if (window.innerWidth < 768) {
@@ -50,6 +51,7 @@ const DoctorSideBar = () => {
                     }}
                 />
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Doctor"} />
+
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/DoctorHLC"} />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/DoctorPatient"} />
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/DoctorMeetings"} />
