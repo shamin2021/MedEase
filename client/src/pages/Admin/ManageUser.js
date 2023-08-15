@@ -24,7 +24,7 @@ const SearchDoc = () => {
   return (
     <GridItem colSpan={6} >
       <div className="h-screen py-1 bg-primary">
-        <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 p-5">
+        <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-[5%] p-5">
           <div className="ml-6 flex w-full">
             <div className="w-2/4 m-2 mt-4">User Management</div>
             <div className=" w-2/4 m-2 mt-3 float-right">
@@ -33,7 +33,7 @@ const SearchDoc = () => {
                   <FaSearch className="h-[40px] mx-auto" />
                 </div>
                 <input
-                  className="w-full h-[40px] text-[15px] rounded-md bg-[#f5f5f5] p-3 mr-3 border-none"
+                  className="w-full h-[40px] text-[17px] rounded-md bg-[#f5f5f5] p-3 mr-3 border-none"
                   placeholder="Search..."
                   onChange={(e) => setQuery(e.target.value.toLowerCase())}
                 />
@@ -47,10 +47,10 @@ const SearchDoc = () => {
               fontFamily={("Poppins", "sans-serif")}
             >
               <TabList>
-                <Tab fontSize={15} borderBottom={0} paddingLeft={0}>
+                <Tab fontSize={17} borderBottom={0} paddingLeft={0}>
                   Active Users
                 </Tab>
-                <Tab fontSize={15} borderBottom={0}>
+                <Tab fontSize={17} borderBottom={0}>
                   Disabled Users
                 </Tab>
               </TabList>

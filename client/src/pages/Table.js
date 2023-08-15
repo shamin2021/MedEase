@@ -5,7 +5,7 @@ const Table = ({ data }) => {
   return (
     <>
       <div className=" h-3/4 m-1 ml-9">
-        <div className=" flex mt-4 text-[15px] font-medium sticky top-3 p-1">
+        <div className=" flex mt-4 text-[18px] font-medium sticky top-3 p-1">
           <div className="w-1/4 m-1">Name</div>
           <div className="w-1/4 m-1">Surname</div>
           <div className="w-1/4 m-1">Email</div>
@@ -13,11 +13,11 @@ const Table = ({ data }) => {
         </div>
         <hr className="w-7/8 mx-auto mt-1 mb-0" />
         <div>
-          <div className=" h-52 overflow-y-scroll mb-2">
+          <div className=" h-96 overflow-y-scroll mb-2">
             {data.map((item) => (
               <>
                 <Link to={`/PatientProfile/${item.id}`}>
-                  <div className=" flex mt-4 text-[15px] font-medium hover:bg-primary p-1 rounded-lg hover:">
+                  <div className=" flex mt-4 text-[18px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                     <div className="w-1/4 m-1 flex ">
                       <img
                         className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"

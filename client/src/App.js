@@ -32,6 +32,8 @@ import PatientProf from "./pages/Patient/PatientProfile";
 import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
 import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
 import AddExamination from "./pages/AddExamination";
+import FindHLCAdmin from "./pages/Admin/FindHLC";
+
 
 
 import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
@@ -79,7 +81,7 @@ function App() {
           <Route path="PatientProf" element={<PatientProf />} />
           <Route path="LifestyleQuiz" element={<LifestyleQuiz />} />
           <Route path="AddLifestyle" element={<AddLifestyle />} />
-          <Route path="AddExamination" element={<AddExamination />} />
+
 
           {/* <Route
             path="/SelfAssessments"
@@ -100,14 +102,13 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />
-          
+
 
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
             {/* made these public routes persisting as well */}
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/findHLC" element={<FindHLC />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/test-components" element={<TestComponent />} />
             <Route path="/message" element={<DirectChatPage />} />
@@ -126,6 +127,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
               <Route path="/patient" element={<Patient />} />
+              <Route path="AddExamination" element={<AddExamination />} />
               <Route
                 path="/SelfAssessments"
                 element={<ListSelfAssessmentComponent />}
@@ -171,6 +173,7 @@ function App() {
               <Route path="/DoctorHLC" element={<DoctorHLC />} />
               <Route path="/DoctorPatient" element={<DoctorPatient />} />
               <Route path="/DoctorSetting" element={<DoctorSetting />} />
+              <Route path="/findHLC" element={<FindHLC />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
@@ -178,6 +181,7 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
               <Route path="/ManageUser" element={<ManageUser />} />
+              <Route path="/FindHLCAdmin" element={<FindHLCAdmin />} />
             </Route>
 
             <Route

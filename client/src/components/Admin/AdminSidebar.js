@@ -25,8 +25,9 @@ const Sidebar = () => {
 
     return (
         <Flex
-            pos="static"
-            left="5"
+            pos="fixed"
+            // left="5"
+            bottom="0"
             h="100vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             borderRadius={navSize === "small" ? "15px" : "30px"}
@@ -46,8 +47,8 @@ const Sidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard"/>
-                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/AddHLC"} />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" />
+                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/FindHLCAdmin"} />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" />
                 <NavItem navSize={navSize} icon={FiUsers} href={"/ManageUser"} title="User Management" />

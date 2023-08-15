@@ -177,7 +177,7 @@ const CreateSelfAssessmentComponent = () => {
     return (
       <div className="mt-2">
         <div className="flex mb-1">
-          <div className="w-3/4 text-[15px]  ">{props.name}</div>
+          <div className="w-3/4 text-[17px]  ">{props.name}</div>
 
           <div className="w-1/4 flex float-right text-[#797878]">
             <div>
@@ -215,8 +215,8 @@ const CreateSelfAssessmentComponent = () => {
 
   return (
     <GridItem colSpan={6}>
-      <div className=" bg-primary py-1">
-        <div className="md:w-1/2 mx-auto mt-6 shadow-xl rounded-2xl pb-2 py-1 bg-white ">
+      <div className=" py-1 bg-primary mt-[5%]">
+        <div className="md:w-1/2 mx-auto mt-6 shadow-xl rounded-2xl pb-2 py-1 bg-white mb-9">
           <div className="container horizontal justify-center text-xs py-1">
             <div className="flex justify-center text-lg font-medium m-3 mb-0">
               Risk Assessment

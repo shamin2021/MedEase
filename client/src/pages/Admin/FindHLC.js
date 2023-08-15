@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Docs } from './Docs'
-import Table from "./Table";
+import { Docs } from '../Docs'
+import Table from "./TableHLC";
 import { FaSearch } from "react-icons/fa";
-import { GridItem } from '@chakra-ui/react'
+import {
+  GridItem
+} from "@chakra-ui/react";
 
 const SearchDoc = () => {
   const [query, setQuery] = useState("");
@@ -13,7 +15,7 @@ const SearchDoc = () => {
     );
   };
   return (
-    <GridItem colSpan={6}>
+    <GridItem colSpan={6} >
       <div className="h-screen py-1 bg-primary mt-[5%]">
         <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 p-5">
           <div className="ml-6 flex w-full">
