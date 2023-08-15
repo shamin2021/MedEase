@@ -61,10 +61,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/admin" element={<Admin />} />
-        <Route path="/Doctor" element={<Doctor />} />
-
-        <Route path="/HLC" element={<HLC />} /> */}
 
         <Route path="/" element={<Layout />}>
           <Route path="SearchDoctor" element={<SearchDoctor />} />
@@ -72,10 +68,12 @@ function App() {
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
+
           <Route path="AddPrescription" element={<AddPrescription />} />
           <Route path="HLCProfile" element={<HLCProfile />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="DoctorProfile" element={<DoctorProfile />} />
+
           <Route path="PatientProf" element={<PatientProf />} />
           <Route path="LifestyleQuiz" element={<LifestyleQuiz />} />
           <Route path="AddLifestyle" element={<AddLifestyle />} />
@@ -103,6 +101,7 @@ function App() {
             {/* made these public routes persisting as well */}
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/findHLC" element={<FindHLC />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/test-components" element={<TestComponent />} />
             <Route path="/message" element={<DirectChatPage />} />
@@ -150,6 +149,7 @@ function App() {
             >
               {/* routes only for PATIENT and DOCTOR */}
               <Route path="/meeting/:id/:user/:time" element={<Conference />} />
+              <Route path='/link-expired' element={<MeetingExpired />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
@@ -171,6 +171,7 @@ function App() {
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
+              <Route path="/ManageUser" element={<ManageUser />} />
             </Route>
 
             <Route

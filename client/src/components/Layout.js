@@ -25,7 +25,9 @@ const Layout = () => {
         '/unauthorized',
         '/test-components',
         '/loading',
-        '/meeting/:id/:role/:time'
+        '/meeting/:id/:role/:time',
+        '/findHLC',
+        //add about and contact us
     ];
 
     const layoutHiddenPaths = [
@@ -51,11 +53,11 @@ const Layout = () => {
     };
 
     return (
-        <main className='App font-poppins'>
+        <main className='App font-poppins bg-primary'>
 
             {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && !(auth.role === "HLC") && !(auth.role === "DOCTOR") && !(auth.role === "ADMIN") ? (
                 <NavBar />
-            ) : null }
+            ) : null}
 
 
             {auth.role && !sideBarHiddenPaths.includes(location.pathname) ? (
@@ -65,9 +67,8 @@ const Layout = () => {
                     templateColumns='repeat(7, 1fr)'
                     gap={4}
                     mt={1}
-
                 >
-                    < GridItem rowSpan={7} colSpan={1} >
+                    < GridItem rowSpan={7} colSpan={1}>
                         <SimpleGrid >
                             {renderSidebar()}
                         </SimpleGrid>
@@ -80,7 +81,7 @@ const Layout = () => {
                 <Outlet />
             )}
 
-            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && sideBarHiddenPaths.includes(location.pathname) ? (
+            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && sideBarHiddenPaths.includes(location.pathname) && location.pathname.startsWith('/reset-password/')  ? (
                 <Grid><Footer /></Grid>
             ) : null}
 
