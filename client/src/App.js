@@ -29,6 +29,9 @@ import FindHLC from "./pages/FindHLC";
 import AddPrescription from "./pages/AddPrescription";
 import HLCProfile from "./pages/HLCProfile";
 import PatientProf from "./pages/Patient/PatientProfile";
+import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
+import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
+import AddExamination from "./pages/AddExamination";
 
 
 import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
@@ -74,7 +77,10 @@ function App() {
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="DoctorProfile" element={<DoctorProfile />} />
           <Route path="PatientProf" element={<PatientProf />} />
-          PatientProf
+          <Route path="LifestyleQuiz" element={<LifestyleQuiz />} />
+          <Route path="AddLifestyle" element={<AddLifestyle />} />
+          <Route path="AddExamination" element={<AddExamination />} />
+
           <Route
             path="/SelfAssessments"
             element={<ListSelfAssessmentComponent />}
