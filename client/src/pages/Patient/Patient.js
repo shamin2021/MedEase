@@ -1,11 +1,8 @@
 import React from 'react'
-import TestUsers from '../../components/TestUsers'
 
-const Patient = () => {
+function Patient() {
   return (
-    <>
-    </>
-
+    <div>Patient</div>
   )
 }
 

@@ -1,6 +1,6 @@
 import { Box, Center } from '@chakra-ui/react';
 
-const CommonCard = ({ title, description }) => {
+const PatientCard = ({ title, description }) => {
     return (
 
         <Box
@@ -21,11 +21,11 @@ const CommonCard = ({ title, description }) => {
             <Box fontWeight="semibold" fontSize="lg" mb="2" textAlign="center">
                 {title}
             </Box>
-            <Box fontSize="5xl" fontWeight="bold" textAlign="center">
+            <Box fontSize="3xl" fontWeight="bold" textAlign="center">
                 {description}
             </Box>
         </Box>
     );
 };
 
-export default CommonCard;
+export default PatientCard;
