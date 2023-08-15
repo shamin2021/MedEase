@@ -9,7 +9,7 @@
   }
   
   .ce-chats-container {
-    background-color: rgb(240, 240, 240) !important;
+    background-color: #EDEDED !important;
   }
   
   .ce-active-chat-card {
@@ -44,7 +44,7 @@
   }
   
   .ce-settings {
-    background-color: rgb(240, 240, 240) !important;
+    background-color: #EDEDED !important;
   }
   
   .ce-autocomplete-input {
