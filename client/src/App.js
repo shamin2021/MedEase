@@ -43,6 +43,8 @@ import MeetingExpired from './pages/MeetingExpired';
 import Conference from './components/Conference/Conference';
 import Availability from './pages/Availability';
 import MeetingSchedule from './pages/Patient/MeetingSchedule';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 
 import DoctorHLC from './pages/Doctor/DoctorHLC';
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
@@ -61,27 +63,25 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/admin" element={<Admin />} />
-        <Route path="/Doctor" element={<Doctor />} />
-
-        <Route path="/HLC" element={<HLC />} /> */}
 
         <Route path="/" element={<Layout />}>
-          <Route path="SearchDoctor" element={<SearchDoctor />} />
+          {/* <Route path="SearchDoctor" element={<SearchDoctor />} />
           <Route path="FindHLC" element={<FindHLC />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
-          <Route path="AddHLC" element={<AddHLC />} />
+          <Route path="AddHLC" element={<AddHLC />} /> */}
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
+
           <Route path="AddPrescription" element={<AddPrescription />} />
           <Route path="HLCProfile" element={<HLCProfile />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="DoctorProfile" element={<DoctorProfile />} />
+
           <Route path="PatientProf" element={<PatientProf />} />
           <Route path="LifestyleQuiz" element={<LifestyleQuiz />} />
           <Route path="AddLifestyle" element={<AddLifestyle />} />
           <Route path="AddExamination" element={<AddExamination />} />
 
-          <Route
+          {/* <Route
             path="/SelfAssessments"
             element={<ListSelfAssessmentComponent />}
           />
@@ -92,17 +92,22 @@ function App() {
           <Route
             path="/view-SelfAssessment"
             element={<ViewSelfAssessmentComponent />}
-          />
-          <Route path="/ManageUser" element={<ManageUser />} />
+          /> */}
+          {/* <Route path="/ManageUser" element={<ManageUser />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          
+
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
             {/* made these public routes persisting as well */}
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/findHLC" element={<FindHLC />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/test-components" element={<TestComponent />} />
             <Route path="/message" element={<DirectChatPage />} />
@@ -150,6 +155,7 @@ function App() {
             >
               {/* routes only for PATIENT and DOCTOR */}
               <Route path="/meeting/:id/:user/:time" element={<Conference />} />
+              <Route path='/link-expired' element={<MeetingExpired />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
@@ -171,6 +177,7 @@ function App() {
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
+              <Route path="/ManageUser" element={<ManageUser />} />
             </Route>
 
             <Route

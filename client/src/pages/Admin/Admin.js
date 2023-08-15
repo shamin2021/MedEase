@@ -12,7 +12,7 @@ const Admin = () => {
 
   return (
     <>
-      <GridItem colSpan={6} bg='tomato' h="5rem" />
+      {/* <GridItem colSpan={6} bg='tomato' h="5rem" />
 
       <GridItem colSpan={2} bg="yellow" h="15rem">
 
@@ -53,7 +53,7 @@ const Admin = () => {
 
 
       <GridItem colSpan={2} bg='tomato' />
-      <GridItem colSpan={2} bg='tomato' />
+      <GridItem colSpan={2} bg='tomato' /> */}
 
     </>
 

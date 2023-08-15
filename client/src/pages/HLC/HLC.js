@@ -12,7 +12,7 @@ import React from 'react'
 const HLC = () => {
 
   return (
-    <GridItem colSpan={2} bg='tomato' h="5rem" />
+    <GridItem colSpan={2} h="5rem" />
   )
 }
 

@@ -1,5 +1,6 @@
 package com.medease.backend.entity;
 
+import com.medease.backend.enumeration.Risk;
 import com.medease.backend.enumeration.SnackIntake;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,12 +23,17 @@ public class SelfAssessment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	@Enumerated(EnumType.STRING)
+	private Risk risk = Risk.PENDING;
+
 	@Column(name = "created_date")
-    private LocalDateTime date;
+    private LocalDate date;
+
+	private Integer patient;
 
 	@PrePersist
 	public void prePersist() {
-    this.date = LocalDateTime.now();
+    this.date = LocalDate.now();
 }
 	
 	@Column(name = "first_name")

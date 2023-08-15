@@ -36,6 +36,7 @@ const SearchDoc = () => {
             </div>
             <div className="md:w-1/2 p-1 pl-0">
               <iframe
+                title="hlcMap"
                 className="md:w-full h-full rounded-md"
                 src="https://www.google.com/maps/embed/v1/search?q=Healthy+Life+Clinic&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
               ></iframe>
