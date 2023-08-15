@@ -1,12 +1,14 @@
 import React from 'react';
+import useAuth from "../../hooks/useAuth";
 
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiSettings } from "react-icons/fi";
+import { FiMenu, FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 
 const HLCSidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
+    const { auth } = useAuth();
 
     React.useEffect(() => {
         function handleResize() {
@@ -45,7 +47,7 @@ const HLCSidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" />
@@ -56,14 +58,14 @@ const HLCSidebar = () => {
                 <Divider display={navSize === "small" ? "none" : "flex"} />
 
                 <Flex mt={4} align="center">
-                    <Avatar size="sm" src="" />
+                    <Avatar size="sm" src="" name={auth.first_name} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            Asith Amarasekara
+                            {auth.first_name.toUpperCase()}
                         </Heading>
-                        <Text color="gray">HLC</Text>
                     </Flex>
                 </Flex>
+                <NavItem navSize={navSize} icon={FiLogOut} title="Logout" />
             </Flex>
         </Flex>
     );

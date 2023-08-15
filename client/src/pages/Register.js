@@ -3,11 +3,11 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, Box, ButtonGroup, VisuallyHidden, Button, Container, Divider, FormControl, FormLabel, Heading, HStack, Stack, Text, Input } from '@chakra-ui/react'
 import { FcGoogle } from 'react-icons/fc'
-import { GrApple } from 'react-icons/gr'
 
 import axios from '../constants/axios';
 
 const EMAIL_REGEX = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/;
+const USER_REGEX = /^[A-Za-z]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Register = () => {
@@ -15,6 +15,14 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [validEmail, setvalidEmail] = useState(false);
     const [emailFocus, setEmailFocus] = useState(false);
+
+    const [firstName, setFirstName] = useState('');
+    const [validFirstName, setvalidFirstName] = useState(false);
+    const [firstNameFocus, setFirstNameFocus] = useState(false);
+
+    const [lastName, setLastName] = useState('');
+    const [validLastName, setvalidLastName] = useState(false);
+    const [lastNameFocus, setLastNameFocus] = useState(false);
 
     const [password, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -32,13 +40,21 @@ const Register = () => {
     }, [email])
 
     useEffect(() => {
+        setvalidFirstName(USER_REGEX.test(firstName));
+    }, [firstName])
+
+    useEffect(() => {
+        setvalidLastName(USER_REGEX.test(lastName));
+    }, [lastName])
+
+    useEffect(() => {
         setValidPwd(PWD_REGEX.test(password));
         setValidMatch(password === matchPwd);
     }, [password, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [email, password, matchPwd])
+    }, [email, password, firstName, lastName, matchPwd])
 
 
 
@@ -47,7 +63,9 @@ const Register = () => {
 
         const v1 = EMAIL_REGEX.test(email);
         const v2 = PWD_REGEX.test(password);
-        if (!v1 || !v2) {
+        const v3 = USER_REGEX.test(firstName);
+        const v4 = USER_REGEX.test(lastName);
+        if (!v1 || !v2 || !v3 || !v4) {
             setErrMsg("Invalid Entry");
             return;
         }
@@ -55,7 +73,7 @@ const Register = () => {
 
         try {
             const response = await axios.post('/auth/register',
-                JSON.stringify({ email, password }),
+                JSON.stringify({ email, password, firstname: firstName, lastname: lastName }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -66,6 +84,8 @@ const Register = () => {
             setErrMsg(response?.data?.message) //these needs to be chnaged later
 
             setEmail('');
+            setFirstName('');
+            setLastName('');
             setPwd('');
             setMatchPwd('');
         } catch (err) {
@@ -112,6 +132,58 @@ const Register = () => {
                                 )}
                                 <Stack spacing="5">
                                     <FormControl isRequired>
+                                        <FormControl isRequired>
+                                            <FormLabel htmlFor="firstname">Firstname</FormLabel>
+                                            <Input
+                                                id="firstname"
+                                                type="text"
+                                                autoComplete='off'
+                                                onChange={(e) => setFirstName(e.target.value)}
+                                                value={firstName}
+                                                onFocus={() => setFirstNameFocus(true)}
+                                                onBlur={() => setFirstNameFocus(false)}
+                                                aria-invalid={validFirstName ? "false" : "true"}
+                                                aria-describedby="firstnamenote"
+                                            />
+                                        </FormControl>
+                                    </FormControl>
+
+                                    {firstNameFocus && !validFirstName && (
+                                        <Box bg="blue.100" p="2" mb="4" borderRadius="md">
+                                            <p id="firstnamenote">
+                                                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
+                                                Please enter a valid name.
+                                            </p>
+                                        </Box>
+                                    )}
+
+                                    <FormControl isRequired>
+                                        <FormControl isRequired>
+                                            <FormLabel htmlFor="username">Lastname</FormLabel>
+                                            <Input
+                                                id="username"
+                                                type="text"
+                                                autoComplete='off'
+                                                onChange={(e) => setLastName(e.target.value)}
+                                                value={lastName}
+                                                onFocus={() => setLastNameFocus(true)}
+                                                onBlur={() => setLastNameFocus(false)}
+                                                aria-invalid={validLastName ? "false" : "true"}
+                                                aria-describedby="usernamenote"
+                                            />
+                                        </FormControl>
+                                    </FormControl>
+
+                                    {lastNameFocus && !validLastName && (
+                                        <Box bg="blue.100" p="2" mb="4" borderRadius="md">
+                                            <p id="usernamenote">
+                                                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
+                                                Please enter a valid name.
+                                            </p>
+                                        </Box>
+                                    )}
+
+                                    <FormControl isRequired>
                                         <FormLabel htmlFor="email">Email</FormLabel>
                                         <Input
                                             id="email"
@@ -152,7 +224,7 @@ const Register = () => {
                                     {pwdFocus && !validPwd && (
                                         <Box bg="blue.100" p="2" mb="4" borderRadius="md">
                                             <p id="pwdnote">
-                                                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }}  />
+                                                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
                                                 8 to 24 characters.<br />
                                                 Must include uppercase and lowercase letters, a number and a special character.<br />
                                                 Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
@@ -200,10 +272,6 @@ const Register = () => {
                                         <Button key={'Google'} flexGrow={1}>
                                             <VisuallyHidden>Sign up with {'Google'}</VisuallyHidden>
                                             <FcGoogle />
-                                        </Button>
-                                        <Button key={'Apple'} flexGrow={1}>
-                                            <VisuallyHidden>Sign up with {'Apple'}</VisuallyHidden>
-                                            <GrApple />
                                         </Button>
                                     </ButtonGroup>
                                 </Stack>

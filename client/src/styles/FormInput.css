@@ -5,10 +5,26 @@
 }
 
 input {
-    padding: 15px;
+    padding: 5px;
     margin: 0px 0px;
     border-radius: 5px;
     border: 1px solid gray;
+}
+.form-radio-btn{
+    visibility:hidden;
+}
+
+.form-radio-label{
+    cursor: pointer;
+    padding:0.20rem;
+    font-size:16px;
+}
+.form-radio-btn:checked + .form-radio-label {
+    background-color:#dcecf8;
+    border-radius:0.5rem;
+}
+.radio-inputs{
+    display:flex;
 }
 
 label {
@@ -20,7 +36,7 @@ span.AddHLC{
     font-size: 12px;
     padding: 3px;
     color: red;
-    /* display: none; */
+    display: none;
 }
 
 input:invalid[focused="true"] {
@@ -40,15 +56,13 @@ select {
 }
 
 .form-input {
-    font-family: 'Nunito', sans-serif;
-    font-size: 15px;
+    font-size: 22px;
     border: none;
     background-color: #f5f5f5;
 }
 
 .form-label {
-    font-family: 'Nunito', sans-serif;
-    font-size: 16px;
+    font-size: 22px;
     color: #353434;
     margin-top: 15px;
 }

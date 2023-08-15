@@ -70,6 +70,7 @@ public class UserRegistrationService {
         var user = User.builder()
                 .email(registerRequestDTO.getEmail())
                 .mobileNumber(registerRequestDTO.getMobileNumber())
+                .firstname(registerRequestDTO.getHlc_name())
                 .role(Role.HLC)
                 .activated(Boolean.FALSE)
                 .build();
