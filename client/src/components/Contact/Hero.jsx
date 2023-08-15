@@ -169,7 +169,7 @@ export default function ContactFormWithSocialButtons() {
 
                     <InputGroup>
                       <InputLeftElement>
-                        <MdOutlineEmail />
+                        {/* <MdOutlineEmail /> */}
                       </InputLeftElement>
                       <Input type="email" name="email" placeholder="Your Email" />
                     </InputGroup>
