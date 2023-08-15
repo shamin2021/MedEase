@@ -111,7 +111,7 @@ const NavBar = () => {
                                     textDecoration: 'none',
                                     bg: 'gray.200',
                                 }}
-                                href={'#'}>
+                                href={'/findHLC'}>
                                 Find HLC
                             </Box>
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import logo from "../assets/photo-camera.png";
 import "../styles/FormInput.css";
 
-const FileInput = () => {
+const FileInput = (props) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -40,7 +40,7 @@ const FileInput = () => {
           </div>
         ) : (
           <div>
-            <div className="rounded-[100px] mx-auto h-[80px] w-[80px] bg-[#afafaf]">
+            <div className="rounded-[2px] mx-auto h-[80px] w-[80px] bg-[#f0f0f0]">
               <img htmlFor="select-image" src={logo} className="mx-auto p-3 " />
             </div>
             <div
@@ -49,7 +49,7 @@ const FileInput = () => {
               color="primary"
               component="span"
             >
-              Add Image
+              {props.name}
             </div>
           </div>
         )}
