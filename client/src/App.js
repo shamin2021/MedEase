@@ -63,10 +63,10 @@ function App() {
       <Routes>
 
         <Route path="/" element={<Layout />}>
-          <Route path="SearchDoctor" element={<SearchDoctor />} />
+          {/* <Route path="SearchDoctor" element={<SearchDoctor />} />
           <Route path="FindHLC" element={<FindHLC />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
-          <Route path="AddHLC" element={<AddHLC />} />
+          <Route path="AddHLC" element={<AddHLC />} /> */}
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
 
           <Route path="AddPrescription" element={<AddPrescription />} />
@@ -79,7 +79,7 @@ function App() {
           <Route path="AddLifestyle" element={<AddLifestyle />} />
           <Route path="AddExamination" element={<AddExamination />} />
 
-          <Route
+          {/* <Route
             path="/SelfAssessments"
             element={<ListSelfAssessmentComponent />}
           />
@@ -90,8 +90,8 @@ function App() {
           <Route
             path="/view-SelfAssessment"
             element={<ViewSelfAssessmentComponent />}
-          />
-          <Route path="/ManageUser" element={<ManageUser />} />
+          /> */}
+          {/* <Route path="/ManageUser" element={<ManageUser />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
