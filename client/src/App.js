@@ -25,21 +25,22 @@ import AddDoctor from './pages/HLC/AddDoctor';
 import ManageUser from "./pages/Admin/ManageUser";
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
-// import DoctorProfile from "./pages/DoctorProfile";
+import DoctorProfile from "./pages/DoctorProfile";
 import FindHLC from "./pages/FindHLC";
 import AddPrescription from "./pages/AddPrescription";
-// import HLCProfile from "./pages/HLCProfile";
+import HLCProfile from "./pages/HLCProfile";
 import PatientProf from "./pages/Patient/PatientProfile";
 import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
 import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
 import AddExamination from "./pages/AddExamination";
 import FindHLCAdmin from "./pages/Admin/FindHLC";
+import FindHLCPatient from "./pages/Patient/FindHLC";
 
 
 
-import ListSelfAssessmentComponent from './components/Patient/ListSelfAssessmentComponent';
-import CreateSelfAssessmentComponent from './components/Patient/CreateSelfAssessmentComponent';
-import ViewSelfAssessmentComponent from './components/Patient/ViewSelfAssessmentComponent';
+import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
+import CreateSelfAssessmentComponent from './components/patient/CreateSelfAssessmentComponent';
+import ViewSelfAssessmentComponent from './components/patient/ViewSelfAssessmentComponent';
 
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import PatientSettings from './pages/Patient/PatientSettings'
@@ -52,7 +53,7 @@ import ContactUs from './pages/ContactUs';
 
 import HLCPatients from './pages/HLC/HLCPatients';
 import HLCSettings from './pages/HLC/HLCSettings';
-import HLCProfile from './pages/HLC/HLCProfile';
+// import HLCProfile from './pages/HLC/HLCProfile';
 
 import AdminAdd from './pages/Admin/AdminAdd';
 import AddHLC from './pages/Admin/AddHLC';
@@ -65,7 +66,7 @@ import DoctorHLC from './pages/Doctor/DoctorHLC';
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
 import DoctorPatient from './pages/Doctor/DoctorPatients';
 import DoctorSetting from './pages/Doctor/DoctorSetting';
-import DoctorProfile from './pages/Doctor/DoctorProfile';
+// import DoctorProfile from './pages/Doctor/DoctorProfile';
 
 
 function App() {
@@ -111,7 +112,12 @@ function App() {
             element={<ViewSelfAssessmentComponent />}
           /> */}
 
-          
+          <Route path="/DoctorSetting" element={<DoctorSetting />} />
+          <Route path="/PatientSettings" element={<PatientSettings />} />
+          <Route path="/HLCSettings" element={<HLCSettings />} />
+
+
+
           {/* <Route path="/ManageUser" element={<ManageUser />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -148,10 +154,13 @@ function App() {
               <Route path="/PatientMeetings" element={<PatientMeetings />} />
               <Route path='/link-expired' element={<MeetingExpired />} />
               <Route path='/ScheduleMeeting' element={<MeetingSchedule />} />
-              <Route path="/PatientSettings" element={<PatientSettings />} />
+              {/* <Route path="/PatientSettings" element={<PatientSettings />} /> */}
               <Route path="/PatientProfile" element={<PatientProfile />} />
               <Route path="/patient" element={<Patient />} />
               <Route path="AddExamination" element={<AddExamination />} />
+              <Route path="FindHLCPatient" element={<FindHLCPatient />} />
+              <Route path="HLCProfile" element={<HLCProfile />} />
+              <Route path="DoctorProfile" element={<DoctorProfile />} />
               <Route
                 path="/SelfAssessments"
                 element={<ListSelfAssessmentComponent />}
@@ -189,7 +198,7 @@ function App() {
               <Route path="/HLC" element={<HLC />} />
               <Route path="/AddDoctor" element={<AddDoctor />} />
               <Route path="/HLCPatients" element={<HLCPatients />} />
-              <Route path="/HLCSettings" element={<HLCSettings />} />
+              {/* <Route path="/HLCSettings" element={<HLCSettings />} /> */}
               <Route path="/HLCProfile" element={<HLCProfile />} />
             </Route>
 
@@ -199,7 +208,7 @@ function App() {
               <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
               <Route path="/DoctorHLC" element={<DoctorHLC />} />
               <Route path="/DoctorPatient" element={<DoctorPatient />} />
-              <Route path="/DoctorSetting" element={<DoctorSetting />} />
+              {/* <Route path="/DoctorSetting" element={<DoctorSetting />} /> */}
 
               <Route path="/DoctorProfile" element={<DoctorProfile />} />
 

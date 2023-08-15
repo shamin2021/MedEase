@@ -28,8 +28,9 @@ const DoctorSideBar = () => {
 
     return (
         <Flex
-            pos="static"
-            left="5"
+            pos="fixed"
+            // top="83"
+            bottom="0"
             h="100vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             borderRadius={navSize === "small" ? "15px" : "30px"}
@@ -65,7 +66,7 @@ const DoctorSideBar = () => {
                     <Avatar size="sm" src="" name={auth.first_name} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            {/* {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()} */}
+                            {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}
                         </Heading>
                     </Flex>
                 </Flex>

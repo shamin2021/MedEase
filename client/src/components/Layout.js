@@ -5,7 +5,7 @@ import Footer from './Footer'
 import React from "react";
 import useAuth from '../hooks/useAuth';
 import HLCSidebar from './HLC/HLCSidebar';
-import PatientSidebar from './Patient/PatientSidebar';
+import PatientSidebar from './patient/PatientSidebar';
 import DoctorSideBar from './Doctor/DoctorSideBar';
 import AdminSidebar from './Admin/AdminSidebar';
 import { Grid, GridItem, SimpleGrid } from '@chakra-ui/react'
@@ -61,7 +61,7 @@ const Layout = () => {
             ) : null}
 
 
-            {auth.role && !sideBarHiddenPaths.includes(location.pathname) ? (
+            { !sideBarHiddenPaths.includes(location.pathname) ? (
                 <Grid
                     h="calc(100% - 120px)"
                     templateRows='repeat(1, 1fr)'
@@ -82,7 +82,7 @@ const Layout = () => {
                 <Outlet />
             )}
 
-            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && sideBarHiddenPaths.includes(location.pathname) && location.pathname.startsWith('/reset-password/')  ? (
+            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && sideBarHiddenPaths.includes(location.pathname) && location.pathname.startsWith('/reset-password/') ? (
                 <Grid><Footer /></Grid>
             ) : null}
 

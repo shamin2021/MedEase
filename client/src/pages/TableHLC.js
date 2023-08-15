@@ -15,7 +15,7 @@ const Table = ({ data }) => {
         <div>
           <div className=" h-full overflow-y-scroll mb-2 text-[16px] font-poppins">
             <>
-              <Link to={`/PatientProfile/2`}>
+              <Link to={`/HLCProfile`}>
                 <div className=" flex mt-1 font-medium hover:bg-primary p-1 rounded-md hover:">
                   <div className="w-1/2 m-1 flex ">
                     <img

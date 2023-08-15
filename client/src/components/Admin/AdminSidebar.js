@@ -50,13 +50,9 @@ const Sidebar = () => {
                     }}
                 />
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Admin"} />
-                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/AddHLC"} />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AdminDoctor"} />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/AdminPatients"} />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/FindHLCAdmin"} />
-                <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" />
                 <NavItem navSize={navSize} icon={FiUsers} href={"/ManageUser"} title="User Management" />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/AdminSetting"} />
 
@@ -69,7 +65,7 @@ const Sidebar = () => {
                     <Avatar size="sm" src="" name={auth.first_name} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            {/* {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()} */}
+                            {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}
                         </Heading>
                     </Flex>
                 </Flex>

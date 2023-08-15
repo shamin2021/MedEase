@@ -16,7 +16,7 @@ const Table = ({ data }) => {
           <div className=" h-96 overflow-y-scroll mb-2">
             {data.map((item) => (
               <>
-                <Link to={`/PatientProfile/${item.id}`}>
+                <Link to={`/DoctorProfile`}>
                   <div className=" flex mt-4 text-[18px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                     <div className="w-1/4 m-1 flex ">
                       <img
