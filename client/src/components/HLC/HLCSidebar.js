@@ -45,11 +45,11 @@ const HLCSidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
-                <NavItem navSize={navSize} icon={FiHome} title="HLC" />
-                <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" />
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/HLC"} />
+                {/* <NavItem navSize={navSize} icon={FiHome} title="HLC" /> */}
+                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AddDoctor"} />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/HLCPatient"} />
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/HLCSettings"} />
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>

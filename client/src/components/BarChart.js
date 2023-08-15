@@ -84,7 +84,7 @@ const BarChart = () => {
   }
 
   return (
-    <Flex h="15rem">
+    <Flex h="15rem" width= "658px">
       <Bar
         data={data}
         options={options}

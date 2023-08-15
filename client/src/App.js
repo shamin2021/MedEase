@@ -17,19 +17,33 @@ import PersistLogin from './components/PersistLogin';
 import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 import AddDoctor from './pages/HLC/AddDoctor';
-import AddHLC from './pages/Admin/AddHLC';
+
 import SearchDoctor from './pages/SearchDoctor';
-import PatientProfile from "./pages/PatientProfile";
+import PatientProfile from "./pages/Patient/PatientProfile";
 import PatientMeetings from './pages/Patient/PatientMeetings';
+import PatientSettings from './pages/Patient/PatientSettings'
 import MeetingExpired from './pages/MeetingExpired';
 import Conference from './components/Conference/Conference';
 import Availability from './pages/Availability';
 import MeetingSchedule from './pages/Patient/MeetingSchedule';
 
+import HLCPatients from './pages/HLC/HLCPatients';
+import HLCSettings from './pages/HLC/HLCSettings';
+import HLCProfile from './pages/HLC/HLCProfile';
+
+import AdminAdd from './pages/Admin/AdminAdd';
+import AddHLC from './pages/Admin/AddHLC';
+import AdminDoctor from './pages/Admin/AdminDoctor';
+import AdminPatient from './pages/Admin/AdminPatient';
+import AdminSetting from './pages/Admin/AdminSettings';
+import AdminProfile from './pages/Admin/AdminProfile';
+
 import DoctorHLC from './pages/Doctor/DoctorHLC';
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
 import DoctorPatient from './pages/Doctor/DoctorPatients';
 import DoctorSetting from './pages/Doctor/DoctorSetting';
+import DoctorProfile from './pages/Doctor/DoctorProfile';
+
 
 function App() {
 
@@ -76,10 +90,12 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
 
-              <Route path="/patient" element={<Patient />} />
+              <Route path="/Patient" element={<Patient />} />
               <Route path="/PatientMeetings" element={<PatientMeetings />} />
               <Route path='/link-expired' element={<MeetingExpired />} />
               <Route path='/ScheduleMeeting' element={<MeetingSchedule />} /> 
+              <Route path="/PatientSettings" element={<PatientSettings />} />
+              <Route path="/PatientProfile" element={<PatientProfile />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3]]} />}>
@@ -94,8 +110,11 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
               {/* routes only for HLC */}
-              <Route path="/hlc" element={<HLC />} />
+              <Route path="/HLC" element={<HLC />} />
               <Route path="/AddDoctor" element={<AddDoctor />} />
+              <Route path="/HLCPatients" element={<HLCPatients />} />
+              <Route path="/HLCSettings" element={<HLCSettings />} /> 
+              <Route path="/HLCProfile" element={<HLCProfile />} /> 
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
@@ -105,12 +124,19 @@ function App() {
               <Route path="/DoctorHLC" element={<DoctorHLC />} />
               <Route path="/DoctorPatient" element={<DoctorPatient />} />
               <Route path="/DoctorSetting" element={<DoctorSetting />} />
+              <Route path="/DoctorProfile" element={<DoctorProfile />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
+              <Route path="/AdminAdd" element={<AdminAdd />} />
+              <Route path="/AdminDoctor" element={<AdminDoctor />} />
+              <Route path="/AdminPatient" element={<AdminPatient />} />
+              <Route path="/AdminSetting" element={<AdminSetting />} />
+              <Route path="/AdminProfile" element={<AdminProfile />} />
+
             </Route>
             
           </Route>

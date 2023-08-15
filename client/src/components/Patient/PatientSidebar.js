@@ -49,7 +49,7 @@ const PatientSidebar = () => {
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctor"}/>
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/PatientMeetings"} />
                 <NavItem navSize={navSize} icon={FiCalendar} title="Schedule" href={"/ScheduleMeeting"} />
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/PatientSettings"}/>
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>

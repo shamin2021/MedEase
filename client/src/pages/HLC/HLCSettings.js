@@ -15,7 +15,7 @@ import {
     Button,
 } from '@chakra-ui/react';
 
-function SettingsPage() {
+function HLCSettings() {
     const [selectedTimeZone, setSelectedTimeZone, newUsername, setNewUsername] = useState('');
 
     const timeZoneOptions = [
@@ -183,4 +183,4 @@ function SettingsPage() {
     );
 }
 
-export default SettingsPage;
+export default HLCSettings;

@@ -15,7 +15,7 @@ import {
     Button,
 } from '@chakra-ui/react';
 
-function SettingsPage() {
+function DoctorSetting() {
     const [selectedTimeZone, setSelectedTimeZone, newUsername, setNewUsername] = useState('');
 
     const timeZoneOptions = [
@@ -159,28 +159,14 @@ function SettingsPage() {
                     <Link color="blue.500">View User Guides</Link>
                 </Box>
 
-
-
             </Flex>
-
-
-
-
-
 
 
 
         </GridItem>
 
 
-
-
-
-
-
-
-
     );
 }
 
-export default SettingsPage;
+export default DoctorSetting;

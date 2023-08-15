@@ -45,12 +45,12 @@ const Sidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" active />
-                <NavItem navSize={navSize} icon={FiHome} title="HLC" />
-                <NavItem navSize={navSize} icon={FiUser} title="Doctor" />
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Admin"} />
+                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/AdminHLC"}/>
+                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AdminPatient"}/>
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/AdminMeetings"}/>
                 <NavItem navSize={navSize} icon={FiHome} href={"/AddHLC"} title="ADD" />
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/AdminSetting"}/>
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>
