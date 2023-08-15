@@ -1,5 +1,7 @@
 package com.medease.backend.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.medease.backend.dto.AuthenticationResponseDTO;
 import com.medease.backend.repository.TokenRepository;
 import com.medease.backend.service.JwtService;
 import jakarta.servlet.FilterChain;
@@ -44,8 +46,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authHeader.substring(7);
+        System.out.println(jwt);
         //from jwt extract data
         userEmail = jwtService.extractUsername(jwt);
+
         // if user not authenticated
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
             // get user details from database
@@ -55,6 +59,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     .orElse(false);
             // if user and object is valid
             if(jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+                System.out.println("token valid");
+                System.out.println(userDetails.getAuthorities());
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );
@@ -64,6 +70,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
+//        handle token expiration or invalidation
+        else {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+
+            String errorMessage = "Invalid or expired token";
+                     System.out.println(errorMessage);
+
+            var authResponse = AuthenticationResponseDTO.builder()
+                    .message(errorMessage)
+                    .build();
+            new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+        }
+
         filterChain.doFilter(request, response);
     }
 }

@@ -1,6 +1,6 @@
 package com.medease.backend.entity;
 
-
+import com.medease.backend.enumeration.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,22 +22,27 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private  Integer id;
 
     private String firstname;
-
     private String lastname;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
+
+//    @Column(unique = true)
+    private String mobileNumber;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
+
+    private Boolean activated;
 
     // to get role
     @Override
@@ -68,5 +73,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }

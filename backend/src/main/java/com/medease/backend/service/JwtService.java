@@ -1,8 +1,6 @@
 package com.medease.backend.service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +11,8 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+// import java.util.Objects;
+
 import java.util.function.Function;
 
 @Service
@@ -46,15 +45,19 @@ public class JwtService {
 
 
     // can create a jwt token with new claims
-    public String generateToken (Map<String, Objects> extraClaims, UserDetails userDetails) {
+    public String generateToken (Map<String, Object> extraClaims, UserDetails userDetails) {
         return  buildToken(extraClaims, userDetails, jwtExpiration);
+    }
+
+    public String generateResetToken (UserDetails userDetails, long expiration) {
+        return  buildToken(new HashMap<>(), userDetails, expiration);
     }
 
     public String generateRefreshToken (UserDetails userDetails) {
         return  buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
-
-    private String buildToken(Map<String, Objects> extraClaims, UserDetails userDetails, long expiration) {
+  
+    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -81,12 +84,18 @@ public class JwtService {
 
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+
+        try {
+            return Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            return Jwts.claims();
+        }
+
     }
 
     // to ensure the jwt sender is the one who claims that
