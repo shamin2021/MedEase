@@ -29,7 +29,7 @@ const NavBar = () => {
 
     return (
         <>
-            <Box className='bg-indigo-100 dark:bg-indigo-200' px={4}>
+            <Box className='bg-indigo-100 dark:bg-indigo-200' zIndex="999" position="fixed" top={0} width="full" px={4} style={{ backgroundColor: 'rgba(194, 211, 255, 0.55)', backdropFilter: 'blur(10px)' }}>
                 <Flex h={"8vh"} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}

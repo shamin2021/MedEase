@@ -20,7 +20,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-
 @Component
 //create a constructor using private final
 @RequiredArgsConstructor

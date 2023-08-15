@@ -1,25 +1,40 @@
+import axios from 'axios';
 import { ChatEngine, getOrCreateChat } from 'react-chat-engine'
 import React, { useState } from 'react'
-
-import LoginForm  from '../pages/Login'
-
-import DoctorSideBar from './Doctor/DoctorSideBar'
-
-
+import useAuth from "../hooks/useAuth";
 
 import '../styles/Chat.css';
+import { GridItem } from '@chakra-ui/react';
+
 
 const DirectChatPage = () => {
 
-	// localStorage.removeItem('username')
-	// localStorage.removeItem('password')
-
+	const { auth, setAuth } = useAuth();
 	const [username, setUsername] = useState('')
-	//if(!localStorage.getItem('username')) return <LoginForm/>
-	// Check if the user credentials are available in local storage.
-	const storedUsername = localStorage.getItem('username');
-	const storedPassword = localStorage.getItem('password');
-	const isLoggedIn = storedUsername && storedPassword;
+	const [navSize, changeNavSize] = React.useState("large");
+
+	const data = {
+		"username": auth.first_name,
+		"secret": auth.first_name
+	};
+
+
+	const config = {
+		method: 'post',
+		url: 'https://api.chatengine.io/users/',
+		headers: {
+			'PRIVATE-KEY': '1f3bf2d4-09a3-4079-9402-778a08380c74'
+		},
+		data: data
+	};
+
+	axios(config)
+		.then(function (response) {
+			console.log(JSON.stringify(response.data));
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
 
 	function createDirectChat(creds) {
 		getOrCreateChat(
@@ -33,38 +48,43 @@ const DirectChatPage = () => {
 		return (
 			<div className='divnewchat' >
 				<input className="inputnewchat"
-					placeholder='Username' 
-					value={username} 
-					onChange={(e) => setUsername(e.target.value)} 
+					placeholder='Username'
+					value={username}
+					onChange={(e) => setUsername(e.target.value)}
 				/>
 				<button className="buttonnewchat" onClick={() => createDirectChat(creds)}>
-					Create
+					CHAT
 				</button>
 			</div>
 		)
 	}
 
-	return (
-		<>
-      {isLoggedIn ? (
-		<ChatEngine 
-			height='61vh'   //change window height
-			width='300px'
-			// userName='oshani'
-			// userSecret='oshani'
-			userName={localStorage.getItem('username')}
-            userSecret={localStorage.getItem('password')}
-			projectID='9d8045a0-a0b6-4bb5-a31e-dfc440dde62f'
-			renderNewChatForm={(creds) => renderNewChatForm(creds)}
-		/>
+	function renderIceBreaker(chat) {
+		return (
+			<div>
 
-		) : (
-			<LoginForm />
-		  )}
-		</>
+			</div>
+		);
+	}
+
+	return (
+		<GridItem colSpan={6}>
+
+			<ChatEngine
+				height='80vh'
+				width={navSize === "small" ? "calc(100% - 500px)" : "calc(100% - 300px)"}
+				userName={auth.first_name}
+				userSecret={auth.first_name}
+				projectID='d9ef1868-1085-4ef0-bd6c-36276738e453'
+				renderNewChatForm={(creds) => renderNewChatForm(creds)}
+
+				renderIceBreaker={renderIceBreaker}
+			/>
+
+		</GridItem>
+
 	)
 
-	
 }
 
 export default DirectChatPage;

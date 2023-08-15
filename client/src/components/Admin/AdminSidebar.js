@@ -1,7 +1,6 @@
 import React from 'react';
 import useAuth from "../../hooks/useAuth";
 
-import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiUser, FiSettings, FiLogOut, FiUsers } from "react-icons/fi";
