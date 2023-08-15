@@ -6,11 +6,13 @@ import com.medease.backend.Exception.CustomException;
 import com.medease.backend.assets.ResetPasswordEmailTemplate;
 import com.medease.backend.assets.ResetPasswordSmsTemplate;
 import com.medease.backend.dto.*;
+import com.medease.backend.entity.Patient;
 import com.medease.backend.entity.ResetToken;
 import com.medease.backend.enumeration.Role;
 import com.medease.backend.entity.Token;
 import com.medease.backend.enumeration.TokenType;
 import com.medease.backend.entity.User;
+import com.medease.backend.repository.PatientRepository;
 import com.medease.backend.repository.ResetTokenRepository;
 import com.medease.backend.repository.TokenRepository;
 import com.medease.backend.repository.UserRepository;
@@ -38,11 +40,12 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final ResetTokenRepository resetTokenRepository;
+    private final PatientRepository patientRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final EmailService emailService;
-    private final SmsService smsService;
+    // private final SmsService smsService;
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
@@ -61,6 +64,15 @@ public class AuthenticationService {
                 .activated(Boolean.TRUE)
                 .build();
         var savedUser = userRepository.save(user);
+
+        //saved patient related info
+        var patient = Patient.builder()
+                .gender(request.getGender())
+                .dob(request.getDob())
+                .patient_user(user)
+                .build();
+
+        patientRepository.save(patient);
 
         var jwtToken = jwtService.generateToken(user);
 
@@ -83,17 +95,13 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
-        if(!user.getActivated()){
-            return AuthenticationResponseDTO.builder()
-                    .message("Activate Your Account By Setting Up a Password")
-                    .build();
-        }
-
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         createCookie(response ,refreshToken, refreshExpiration/1000);
         var userRole = user.getRole();
         var userID = user.getId();
+        var firstname = user.getFirstname();
+        var lastname = user.getLastname();
 
         revokeAllBearerTokens(user);
 
@@ -103,6 +111,8 @@ public class AuthenticationService {
                 .accessToken(jwtToken)
                 .role(userRole)
                 .id(userID)
+                .firstname(firstname)
+                .lastname(lastname)
                 .build();
     }
 
@@ -180,11 +190,16 @@ public class AuthenticationService {
                 saveUserToken(userDetails, accessToken);
                 var userRole = userDetails.getRole();
                 var userID = userDetails.getId();
+                var firstname = userDetails.getFirstname();
+                var lastname = userDetails.getLastname();
 
               var authResponse = AuthenticationResponseDTO.builder()
+                      .message("Refreshed Access Token")
                       .accessToken(accessToken)
                       .role(userRole)
                       .id(userID)
+                      .firstname(firstname)
+                      .lastname(lastname)
                       .build();
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
@@ -277,6 +292,10 @@ public class AuthenticationService {
                         .orElseThrow(() -> new CustomException("User Not Found"));
                 // save new password as hashed
                 user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+                if(!user.isActivated()){
+                    user.setActivated(true);
+                }
                 userRepository.save(user);
                 // after success revoke reset token
                 revokeResetTokens(user);

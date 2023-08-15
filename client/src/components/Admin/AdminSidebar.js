@@ -1,12 +1,13 @@
 import React from 'react';
+import useAuth from "../../hooks/useAuth";
 
-import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiSettings } from "react-icons/fi";
+import { FiMenu, FiHome, FiUser, FiSettings, FiLogOut, FiUsers } from "react-icons/fi";
 
 const Sidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
+    const { auth } = useAuth();
 
     React.useEffect(() => {
         function handleResize() {
@@ -49,22 +50,23 @@ const Sidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/AdminHLC"}/>
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AdminPatient"}/>
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/AdminMeetings"}/>
-                <NavItem navSize={navSize} icon={FiHome} href={"/AddHLC"} title="ADD" />
+                <NavItem navSize={navSize} icon={FiUsers} href={"/ManageUser"} title="User Management" />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/AdminSetting"}/>
+
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>
                 <Divider display={navSize === "small" ? "none" : "flex"} />
 
                 <Flex mt={4} align="center">
-                    <Avatar size="sm" src="" />
+                    <Avatar size="sm" src="" name={auth.first_name} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            Asith Amarasekara
+                            {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}
                         </Heading>
-                        <Text color="gray"></Text>
                     </Flex>
                 </Flex>
+                <NavItem navSize={navSize} icon={FiLogOut} title="Logout" />
             </Flex>
         </Flex>
     );

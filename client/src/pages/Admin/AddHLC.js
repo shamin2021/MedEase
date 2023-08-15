@@ -56,12 +56,13 @@ const Form1 = ({ formData, setFormData }) => {
                 type="text"
                 id="username"
                 className="form-input"
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 value={name}
                 required
               />
               <span className="AddHLC"></span>
-
             </div>
             <div className="formInput">
               <label className="form-label" htmlFor="mobileNumber">
@@ -71,7 +72,9 @@ const Form1 = ({ formData, setFormData }) => {
                 type="text"
                 id="mobileNumber"
                 className="form-input"
-                onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, mobileNumber: e.target.value })
+                }
                 value={mobileNumber}
                 required
               />
@@ -79,7 +82,7 @@ const Form1 = ({ formData, setFormData }) => {
             </div>
           </div>
           <div className="container ml-3 pt-5 justify-right w-1/4">
-            <ButtonImage />
+            <ButtonImage name="Add Image" />
           </div>
         </div>
         <div className="container flex">
@@ -92,7 +95,9 @@ const Form1 = ({ formData, setFormData }) => {
                 type="email"
                 id="email"
                 className="form-input"
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 value={email}
                 required
               />
@@ -108,7 +113,9 @@ const Form1 = ({ formData, setFormData }) => {
             type="text"
             id="mohArea"
             className="form-input"
-            onChange={(e) => setFormData({ ...formData, mohArea: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, mohArea: e.target.value })
+            }
             value={mohArea}
             required
           />
@@ -519,7 +526,7 @@ const AddHLC = (props) => {
               <Form3 formData={form3State} setFormData={setForm3State} />
             )}
 
-            <ButtonGroup w="100%" mb="5%">
+            <ButtonGroup w="100%" mb="5%" mt="5%">
               <Flex w="100%" justifyContent="space-between">
                 <Flex className="mx-auto">
 

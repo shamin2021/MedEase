@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Flex, Avatar, HStack, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Stack, Image } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
-
+import logo from '../assets/logo.svg';
 import { Link, useNavigate } from 'react-router-dom'
 
 import useAuth from "../hooks/useAuth";
@@ -29,8 +29,8 @@ const NavBar = () => {
 
     return (
         <>
-            <Box className='bg-indigo-100 dark:bg-indigo-200' px={4}>
-                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+            <Box className='bg-indigo-100 dark:bg-indigo-200' zIndex="999" position="fixed" top={0} width="full" px={4} style={{ backgroundColor: 'rgba(194, 211, 255, 0.55)', backdropFilter: 'blur(10px)' }}>
+                <Flex h={"8vh"} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
                         icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -42,9 +42,9 @@ const NavBar = () => {
                     <HStack spacing={8} alignItems={'center'}>
                         <Link to='/'>
                             <Image
-                                src="https://imageupload.io/ib/sMW6PGyr7rrBLxa_1690297021.png"
+                                src={logo}
                                 alt="Logo"
-                                width={100}
+                                width={150}
                             />
                         </Link>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
@@ -111,7 +111,7 @@ const NavBar = () => {
                                     textDecoration: 'none',
                                     bg: 'gray.200',
                                 }}
-                                href={'#'}>
+                                href={'/findHLC'}>
                                 Find HLC
                             </Box>
 
@@ -129,7 +129,7 @@ const NavBar = () => {
                                     cursor={'pointer'}
                                     minW={0}>
                                     <Avatar
-                                        name='User'  // use response user name
+                                        name={auth.first_name}  // use response user name
                                         bg={'teal.500'}
                                         size={'sm'}
                                         src={

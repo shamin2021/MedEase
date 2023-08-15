@@ -114,7 +114,7 @@ const Admin = () => {
 
 
 
-    </GridItem>
+    </GridItem >
   )
 }
 

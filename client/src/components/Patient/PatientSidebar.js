@@ -1,11 +1,13 @@
 import React from 'react'
+import useAuth from "../../hooks/useAuth";
 
-import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiSettings, FiVideo, FiCalendar } from "react-icons/fi";
+import { Flex, IconButton } from "@chakra-ui/react";
+import { FiMenu, FiHome, FiUser, FiVideo, FiCalendar, FiFileText, FiMessageSquare } from "react-icons/fi";
 import NavItem from '../NavItem';
 
 const PatientSidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
+    const { auth } = useAuth();
 
     React.useEffect(() => {
         function handleResize() {
@@ -23,9 +25,9 @@ const PatientSidebar = () => {
 
     return (
         <Flex
-            pos="static"
+            pos="sticky"
             left="5"
-            h="100vh"
+            h="92vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             borderRadius={navSize === "small" ? "15px" : "30px"}
             w={navSize === "small" ? "75px" : "300px"}
@@ -44,9 +46,11 @@ const PatientSidebar = () => {
                         else changeNavSize("small");
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/patient"} active />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/patient"} />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" />
-                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctor"}/>
+                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctor"} />
+                <NavItem navSize={navSize} icon={FiFileText} title="Risk Assessment" href={"/SelfAssessments"} />
+                <NavItem navSize={navSize} icon={FiMessageSquare} title="Messaging" href={"/message"} />
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/PatientMeetings"} />
                 <NavItem navSize={navSize} icon={FiCalendar} title="Schedule" href={"/ScheduleMeeting"} />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/PatientSettings"}/>
