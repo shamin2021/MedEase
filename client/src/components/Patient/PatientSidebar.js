@@ -1,8 +1,8 @@
 import React from 'react'
 import useAuth from "../../hooks/useAuth";
 
-import { Flex, IconButton} from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiSettings, FiVideo, FiCalendar, FiFileText } from "react-icons/fi";
+import { Flex, IconButton } from "@chakra-ui/react";
+import { FiMenu, FiHome, FiUser, FiVideo, FiCalendar, FiFileText, FiMessageSquare } from "react-icons/fi";
 import NavItem from '../NavItem';
 
 const PatientSidebar = () => {
@@ -49,7 +49,8 @@ const PatientSidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/patient"} />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctor"} />
-                <NavItem navSize={navSize} icon={FiFileText} title="Self Assessment" href={"/SelfAssessments"} />
+                <NavItem navSize={navSize} icon={FiFileText} title="Risk Assessment" href={"/SelfAssessments"} />
+                <NavItem navSize={navSize} icon={FiMessageSquare} title="Messaging" href={"/message"} />
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/PatientMeetings"} />
                 <NavItem navSize={navSize} icon={FiCalendar} title="Schedule" href={"/ScheduleMeeting"} />
             </Flex>

@@ -91,8 +91,8 @@ const Login = () => {
     return (
         <div className='login'>
             <Flex alignItems="center" >
-                <Box w={{ base: '80%', md: '40%' }} ref={container} />
-                <Container maxW="md" py={{ base: '10', md: '14' }} px={{ base: '0', sm: '8' }}>
+                <Box w={{ base: '80%', md: '50%' }} ref={container} />
+                <Container maxW="md" py={{ base: '10', md: '14' }} px={{ base: '0', sm: '2' }}>
                     <Stack spacing="6">
                         <Stack spacing="6" align="center">
                             <Stack spacing={{ base: '2', md: '3' }} textAlign="center">

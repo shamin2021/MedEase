@@ -3,10 +3,12 @@ import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../styles/FormInput.css";
 import { GridItem } from "@chakra-ui/react";
+import useAuth from "../../hooks/useAuth";
 
 const CreateSelfAssessmentComponent = () => {
   const [res, setRes] = useState("");
 
+  const { auth } = useAuth();
   const { post } = useAxiosMethods();
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,6 +60,7 @@ const CreateSelfAssessmentComponent = () => {
           kidneyDiseases,
           suddenDeath,
           otherDiseases,
+          patient: auth.user.id,
         },
         setRes
       );
@@ -81,6 +84,7 @@ const CreateSelfAssessmentComponent = () => {
       setkidneyDiseases("");
       setsuddenDeath("");
       setotherDiseases("");
+      navigate('/SelfAssessments')
     } catch (err) {
       console.error(err);
       navigate("/login", { state: { from: location }, replace: true });

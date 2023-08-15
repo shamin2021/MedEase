@@ -34,11 +34,15 @@ const ViewSelfAssessmentComponent = () => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log(selfassessments);
+  }, [selfassessments]);
+
   function InputGeneral(props) {
     return (
       <div className="mt-2 text-[14px] ">
         <div
-          className={` ${props.variant == "3" ? "hidden" : ""
+          className={` ${props.variant === "3" ? "hidden" : ""
             } text-[#797878]`}
         >
           {props.name}
@@ -71,10 +75,10 @@ const ViewSelfAssessmentComponent = () => {
                 </div>
                 <div
                   className={`mr-1 ${props.data === "false"
+                    ? "bg-primary "
+                    : props.dataP === "true"
                       ? "bg-primary "
-                      : props.dataP === "true"
-                        ? "bg-primary "
-                        : ""
+                      : ""
                     } pl-1 pr-1 rounded-lg`}
                 >
                   {props.dataP ? props.dataL : "No"}
@@ -92,6 +96,17 @@ const ViewSelfAssessmentComponent = () => {
       </div>
     );
   }
+
+  const calculateAge = (dateOfBirth) => {
+    const dob = new Date(dateOfBirth);
+    const currentDate = new Date();
+
+    const ageInMilliseconds = currentDate - dob;
+    const ageInYears = Math.floor(ageInMilliseconds / (365 * 24 * 60 * 60 * 1000));
+
+    return ageInYears;
+  }
+
   return (
     <GridItem colSpan={6}>
       <div>
@@ -102,19 +117,29 @@ const ViewSelfAssessmentComponent = () => {
               <div className="md:w-full mt-4 ml-2">
                 <div className="container horizontal justify-center py-1">
                   <div className="parent m-3 mt-1">
-                    <InputGeneral name="Name" data={"X"} />
-                    <InputGeneral name="Date Attempted" data={"X"} />
-                    <InputGeneral name="Age at Assessment" data={"X"} />
-                    <InputGeneral name="Gender" data={"X"} />
-                    <InputGeneral name="Risk" data={"X"} variant="1" />
+                    <InputGeneral name="Name" data={selfassessments.firstName + " " + selfassessments.lastName} />
+                    <InputGeneral name="Date Attempted" data={selfassessments.date} />
+                    <InputGeneral name="Age at Assessment" data={calculateAge(selfassessments.dob)} />
+                    <InputGeneral name="Gender" data={selfassessments.gender} />
+                    <InputGeneral name="Risk" data={selfassessments.risk ? selfassessments.risk : "Not Submitted"} variant="1" />
                   </div>
                 </div>
               </div>
             </div>
             <div className="parent flex md:w-7/12 shadow-xl rounded-md pb-2 py-1 bg-white m-3 mt-9 p-5">
               <div className=" md:w-full m-3">
-                <div className="text-[18px] font-semibold mb-0">
-                  Assessment Information
+                <div className="flex justify-between">
+                  <div className="text-[18px] font-semibold mb-0">
+                    Assessment Information
+                  </div>
+                  <div className="w-1/4">
+                    <button
+                      className="btn btn-primary text-[15px] bg-primary p-2 font-semibold"
+                      onClick={() => navigate(`/SelfAssessments`)}
+                    >
+                      Add Medical Data
+                    </button>
+                  </div>
                 </div>
                 <Tabs
                   position="relative"
@@ -149,35 +174,34 @@ const ViewSelfAssessmentComponent = () => {
                     <TabPanel padding={2}>
                       <div className="flex container horizontal justify-center py-1">
                         <div className="md:w-1/3 parent m-3 mt-0 ml-0">
-                          <InputGeneral name="Weight" data="X" />
-                          <InputGeneral name="Height" data="X" />
-                          <InputGeneral name="Weight" data="X" />
-                          <InputGeneral name="BMI" data="X" />
+                          <InputGeneral name="Weight" data="No Medical Data" />
+                          <InputGeneral name="Height" data="No Medical Data" />
+                          <InputGeneral name="BMI" data="No Medical Data" />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
                           <InputGeneral
                             name="Waist Circumference"
-                            data="X"
+                            data="No Medical Data"
                           />
                           <InputGeneral
                             name="Waist Height Ratio"
-                            data="X"
+                            data="No Medical Data"
                           />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
                           <InputGeneral
                             name="Hearing"
-                            dataR="X"
-                            dataL="X"
+                            dataR="No Data"
+                            dataL="No Data"
                             variant="2"
                           />
                           <InputGeneral
                             name="Vision"
-                            dataR="X"
-                            dataL="X"
+                            dataR="No Data"
+                            dataL="No Data"
                             variant="2"
                           />
-                          <InputGeneral name="Oral Examination" data="X" />
+                          <InputGeneral name="Oral Examination" data="No Medical Data" />
                         </div>
                       </div>
                     </TabPanel>
@@ -187,49 +211,49 @@ const ViewSelfAssessmentComponent = () => {
                           <InputGeneral
                             variant="3"
                             name="Heart Disease"
-                            data="true"
+                            data={selfassessments.heartDisease ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="High Blood Pressure"
-                            data="true"
+                            data={selfassessments.highBloodPressure ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Stroke"
-                            data="true"
+                            data={selfassessments.stroke ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Diabetes"
-                            data="true"
+                            data={selfassessments.diabetes ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Cancer"
-                            data="true"
+                            data={selfassessments.cancer ? "true" : "false"}
                           />
                         </div>
                         <div className="md:w-1/2 parent m-3 mt-0">
                           <InputGeneral
                             variant="3"
                             name="COPD"
-                            data="true"
+                            data={selfassessments.copd ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Asthma"
-                            data="true"
+                            data={selfassessments.asthma ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Kidney Disease"
-                            data="true"
+                            data={selfassessments.kidneyDiseases ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Sudden Death"
-                            data="true"
+                            data={selfassessments.suddenDeath ? "true" : "false"}
                           />
                         </div>
                       </div>
@@ -244,18 +268,9 @@ const ViewSelfAssessmentComponent = () => {
 
                             <div className="text-[#797878]">
                               <InputGeneral
-                                variant="3"
-                                name="Prescription 1"
-                                dataR="true"
-                                dataL="true"
-                                dataP="true"
-                              />
-                              <InputGeneral
-                                variant="3"
-                                name="Prescription 2"
-                                dataR="true"
-                                dataL="true"
-                                dataP="false"
+                                variant="1"
+                                name="Prescription by Dr.Saman"
+                                data="View"
                               />
                             </div>
                           </div>
@@ -265,17 +280,17 @@ const ViewSelfAssessmentComponent = () => {
                     <TabPanel padding={2}>
                       <div className="flex container horizontal justify-center py-1">
                         <div className="md:w-1/3 parent m-3 mt-0 ml-0">
-                          <InputGeneral name="Blood Sugar" data="X" />
-                          <InputGeneral name="Serum Creatinin" data="X" />
+                          <InputGeneral name="Blood Sugar" data="No Medical Data" />
+                          <InputGeneral name="Serum Creatinin" data="No Medical Data" />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
-                          <InputGeneral name="Lipid Profile TG" data="X" />
-                          <InputGeneral name="Lipid TCHL" data="X" />
-                          <InputGeneral name="Lipid Profile TC" data="X" />
+                          <InputGeneral name="Lipid Profile TG" data="No Medical Data" />
+                          <InputGeneral name="Lipid TCHL" data="No Medical Data" />
+                          <InputGeneral name="Lipid Profile TC" data="No Medical Data" />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
-                          <InputGeneral name="Lipid Profile LDL" data="X" />
-                          <InputGeneral name="Lipid Profile HDL" data="X" />
+                          <InputGeneral name="Lipid Profile LDL" data="No Medical Data" />
+                          <InputGeneral name="Lipid Profile HDL" data="No Medical Data" />
                         </div>
                       </div>
                     </TabPanel>
@@ -285,39 +300,29 @@ const ViewSelfAssessmentComponent = () => {
                           <InputGeneral
                             variant="3"
                             name=" Beetle Chewing"
-                            data="true"
+                            data={selfassessments.beetleChewing ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Physical Activity &lt; 30 mins"
-                            data="true"
+                            data={selfassessments.physicalActivity ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Tobacco Smoking"
-                            data="true"
-                          />
-                          <InputGeneral
-                            variant="3"
-                            name="Other tobocco smoking"
-                            data="true"
+                            data={selfassessments.tobaccoSmoking ? "true" : "false"}
                           />
                         </div>
                         <div className="md:w-1/2 parent m-3 mt-0">
                           <InputGeneral
                             variant="3"
                             name="Other Substances Consumption"
-                            data="true"
+                            data={selfassessments.otherSubstance ? "true" : "false"}
                           />
                           <InputGeneral
                             variant="3"
                             name="Alcohol Consumption"
-                            data="true"
-                          />
-                          <InputGeneral
-                            variant="3"
-                            name="Unhealthy Snack Intake"
-                            data="true"
+                            data={selfassessments.alcoholConsumption ? "true" : "false"}
                           />
                         </div>
                       </div>
@@ -328,195 +333,6 @@ const ViewSelfAssessmentComponent = () => {
             </div>
           </div>
           <br></br>
-          {/* <div className="card col-md-8 offset-md-2">
-                <h3 className="text-center"> View SelfAssessment Details</h3>
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>Date Created:</label>
-                    </div>
-                    <div className="col-md-6">{selfassessments.date}</div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>First Name:</label>
-                    </div>
-                    <div className="col-md-6">{selfassessments.firstName}</div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>Last Name:</label>
-                    </div>
-                    <div className="col-md-6">{selfassessments.lastName}</div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>Email ID:</label>
-                    </div>
-                    <div className="col-md-6">{selfassessments.emailId}</div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>Physical Activity state:</label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.physicalActivity ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Smoke Tobacco: </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.tobaccoSmoking ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Chew Beetle: </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.beetlechewing ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Alcohol Consumption: </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.alcoholConsumption ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Other Substance: </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.otherSubstance ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Snack_intake: </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.snackIntake}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>
-                        {" "}
-                        Has a history in the family for Heart Disease ?
-                      </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.heartDisease ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>
-                        {" "}
-                        Has a history in the family for High Blood Pressure ?
-                      </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.HighBloodPressure ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Has a history in the family for Stroke ?</label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.Stroke ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Has a history in the family for Diabetes ?</label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.Diabetes ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Has a history in the family for Cancer ?</label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.Cancer ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Has a history in the family for COPD ?</label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.COPD ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Has a history in the family for Asthma ?</label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.Asthma ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>
-                        {" "}
-                        Has a history in the family for Kidney Diseases ?
-                      </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.kidneyDiseases ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label> Has any of the family had a Sudden Death ?</label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.suddenDeath ? "yes" : "no"}
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label>
-                        {" "}
-                        Is there any other diseases family has suffered from ?
-                      </label>
-                    </div>
-                    <div className="col-md-6">
-                      {selfassessments.otherDiseases}
-                    </div>
-                  </div>
-
-                </div>
-              </div> */}
         </div>
       </div>
     </GridItem>

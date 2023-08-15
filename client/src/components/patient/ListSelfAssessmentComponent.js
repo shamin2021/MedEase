@@ -25,6 +25,10 @@ const ListSelfAssessmentComponent = () => {
     console.log(res);
   }, [res]);
 
+  useEffect(() => {
+    console.log(selfassessments);
+  }, []);
+
   const addSelfAssessment = () => {
     navigate("/CreateSelfAssessment");
   };
@@ -66,7 +70,7 @@ const ListSelfAssessmentComponent = () => {
                       <>
                         <tr key={selfassessment.id} className="flex text-[15px] font-medium sticky p-1 text-left ml-5">
                           <div className="w-1/3 m-1"><td> {selfassessment.id} </td></div>
-                          <div className="w-1/3 m-1"><td> {selfassessment.date.substring(0, 10)} </td></div>
+                          <div className="w-1/3 m-1"><td> {selfassessment.date} </td></div>
                           <div className="w-1/3 m-1">
                             <td>
                               <button
@@ -94,7 +98,11 @@ const ListSelfAssessmentComponent = () => {
             <div className="md:w-1/4 shadow-xl h-60 m-3 mb-1 rounded-md">
               <div className="mt-3">
                 <div className="w-3/4 mx-auto mt-3 rounded-md text-[15px] bg-[#fdc9c9] p-2 font-semibold">
-                  High
+                  {selfassessments.length > 0 ? (
+                    selfassessments[0].risk
+                  ) : (
+                      <p>Not Submitted</p>
+                  )}
                   <div className=" text-[#797878] text-[13px] font-medium">
                     Recent Risk
                   </div>
