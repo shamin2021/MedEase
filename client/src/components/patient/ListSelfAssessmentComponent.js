@@ -59,7 +59,7 @@ const ListSelfAssessmentComponent = () => {
               <div className="w-full  ">
                 <div className=" flex text-[17px] text-[#797878] font-medium sticky p-1 ml-5 text-left">
                   <div className="w-1/3 m-1 ">Assessment ID</div>
-                  <div className="w-1/3 m-1 ">Assessment Created</div>
+                  <div className="w-1/3 m-1 ">Assessment Attempted date</div>
                   <div className="w-1/3 m-1 ">Actions</div>
                 </div>
                 <hr className=" md:w-4/5  ml-5" />
