@@ -56,12 +56,13 @@ const Form1 = ({ formData, setFormData }) => {
                 type="text"
                 id="username"
                 className="form-input"
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 value={name}
                 required
               />
               <span className="AddHLC"></span>
-
             </div>
             <div className="formInput">
               <label className="form-label" htmlFor="mobileNumber">
@@ -71,7 +72,9 @@ const Form1 = ({ formData, setFormData }) => {
                 type="text"
                 id="mobileNumber"
                 className="form-input"
-                onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, mobileNumber: e.target.value })
+                }
                 value={mobileNumber}
                 required
               />
@@ -79,7 +82,7 @@ const Form1 = ({ formData, setFormData }) => {
             </div>
           </div>
           <div className="container ml-3 pt-5 justify-right w-1/4">
-            <ButtonImage />
+            <ButtonImage name="Add Image" />
           </div>
         </div>
         <div className="container flex">
@@ -92,7 +95,9 @@ const Form1 = ({ formData, setFormData }) => {
                 type="email"
                 id="email"
                 className="form-input"
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 value={email}
                 required
               />
@@ -108,7 +113,9 @@ const Form1 = ({ formData, setFormData }) => {
             type="text"
             id="mohArea"
             className="form-input"
-            onChange={(e) => setFormData({ ...formData, mohArea: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, mohArea: e.target.value })
+            }
             value={mohArea}
             required
           />
@@ -434,23 +441,23 @@ const AddHLC = (props) => {
 
 
   return (
-    <GridItem colSpan={6} bg='tomato'>
-      <div className="h-94 py-1 bg-primary">
-        <div className="md:w-1/2 h-[26rem] mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-1 ">
-          <div className="container horizontal justify-center text-xs py-1">
-            <div className="flex justify-center text-lg font-medium m-3 mb-0">
+    <GridItem colSpan={6} >
+      <div className="h-screen bg-primary">
+        <div className="md:w-1/2 h-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-[5%] ">
+          <div className="container horizontal justify-center py-1">
+            <div className="flex justify-center text-xl font-medium m-3 mb-0">
               HLC Registration
             </div>
-            <div className="flex justify-center font-light text-stone-800- text-[14px] text-[#797878]">
+            <div className="flex justify-center font-light text-stone-800- text-[17px] text-[#797878]">
               Register the HLC here with the relevant details
             </div>
-            <hr className="w-2/3 mx-auto mt-1 mb-0" />
+            <hr className="w-2/3 mx-auto mt-2 mb-0" />
           </div>
-          <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
+          <div className="container horizontal mx-auto mb-0 w-96 justify-left text-[17px] py-1">
 
             {/* just to display state after form submit */}
             <p display={state ? "block" : "none"} aria-live="assertive">{state && state.message}</p>
-            <Stepper index={step} className="w-3/4 mx-auto mt-3">
+            <Stepper index={step} className="w-3/4 mx-auto mt-3 mb-5">
 
               {steps.map((step, index) => (
                 <Step key={index}>
@@ -519,7 +526,7 @@ const AddHLC = (props) => {
               <Form3 formData={form3State} setFormData={setForm3State} />
             )}
 
-            <ButtonGroup w="100%" mb="5%">
+            <ButtonGroup w="100%" mb="5%" mt="9%">
               <Flex w="100%" justifyContent="space-between">
                 <Flex className="mx-auto">
 

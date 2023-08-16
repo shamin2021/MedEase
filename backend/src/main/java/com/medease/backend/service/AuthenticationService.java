@@ -6,11 +6,13 @@ import com.medease.backend.Exception.CustomException;
 import com.medease.backend.assets.ResetPasswordEmailTemplate;
 import com.medease.backend.assets.ResetPasswordSmsTemplate;
 import com.medease.backend.dto.*;
+import com.medease.backend.entity.Patient;
 import com.medease.backend.entity.ResetToken;
 import com.medease.backend.enumeration.Role;
 import com.medease.backend.entity.Token;
 import com.medease.backend.enumeration.TokenType;
 import com.medease.backend.entity.User;
+import com.medease.backend.repository.PatientRepository;
 import com.medease.backend.repository.ResetTokenRepository;
 import com.medease.backend.repository.TokenRepository;
 import com.medease.backend.repository.UserRepository;
@@ -38,11 +40,12 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final ResetTokenRepository resetTokenRepository;
+    private final PatientRepository patientRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final EmailService emailService;
-    private final SmsService smsService;
+    // private final SmsService smsService;
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
@@ -61,6 +64,15 @@ public class AuthenticationService {
                 .activated(Boolean.TRUE)
                 .build();
         var savedUser = userRepository.save(user);
+
+        //saved patient related info
+        var patient = Patient.builder()
+                .gender(request.getGender())
+                .dob(request.getDob())
+                .patient_user(user)
+                .build();
+
+        patientRepository.save(patient);
 
         var jwtToken = jwtService.generateToken(user);
 

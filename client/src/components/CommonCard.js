@@ -1,24 +1,31 @@
-import React from 'react';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Center } from '@chakra-ui/react';
 
-const SimpleCard = ({ title, description }) => {
+const CommonCard = ({ title, description }) => {
     return (
+
         <Box
-            maxW="520px"
-            borderWidth="1px"
+            maxW="20rem"
+            h="10rem"
             borderRadius="lg"
             overflow="hidden"
             p="4"
-            boxShadow="lg"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+
+            bg="#E4EFFF"
+            border="none"
+
         >
-            <Text fontSize="xl" fontWeight="bold" mb="2">
+            <Box fontWeight="semibold" fontSize="lg" mb="2" textAlign="center">
                 {title}
-            </Text>
-            <Text>
-                {description} 
-            </Text>
+            </Box>
+            <Box fontSize="5xl" fontWeight="bold" textAlign="center">
+                {description}
+            </Box>
         </Box>
     );
 };
 
-export default SimpleCard;
+export default CommonCard;
