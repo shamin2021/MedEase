@@ -106,10 +106,10 @@ const Register = () => {
     }, []);
 
     return (
-        <div className='Register'>
-            <Flex alignItems="center" >
+        <div className='Register mt-[3%]' >
+            <Flex alignItems="center"  >
                 <Box w={{ base: '80%', md: '40%' }} ref={container} />
-                <Container maxW="xl" py={{ base: '2', md: '4' }} px={{ base: '0', sm: '8' }}>
+                <Container maxW="xl" py={{ base: '2', md: '4' }} px={{ base: '0', sm: '8' }} >
                     <Stack spacing="2">
                         <Stack spacing="2" align="center">
                             <Stack spacing={{ base: '2', md: '2' }} textAlign="center">

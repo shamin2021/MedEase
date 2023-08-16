@@ -4,8 +4,11 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Calendar.css";
 import { GridItem } from '@chakra-ui/react';
+import { useNavigate, useLocation } from "react-router-dom";
 
 const DoctorProfile = () => {
+
+  const navigate = useNavigate();
   return (
     <GridItem colSpan={6} mx={4} mt={2}>
       <div className="h-screen bg-primary py-1">
@@ -27,9 +30,16 @@ const DoctorProfile = () => {
                   <div className="flex justify-center font-light text-stone-800- text-[18px] text-[#797878]">
                     Lunawa Hospital
                   </div>
-                  <div className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary">
+                  <button
+                    // style={{ marginLeft: "5px" }}
+                    onClick={() =>
+                      // navigate(`/message?doctor=${item.first_name}`)
+                      navigate(`/message?doctor=${'Shamin'}`)
+                    }
+                    className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary"
+                  >
                     Message
-                  </div>
+                  </button>
                   <div className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary">
                     Schedule
                   </div>

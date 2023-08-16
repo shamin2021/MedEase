@@ -73,7 +73,7 @@ const Availability = () => {
         console.log(removeId)
         try {
             del(`/removeMeeting/${removeId}`, setDelRes);
-        } catch(err) {
+        } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true });
         }
@@ -121,7 +121,7 @@ const Availability = () => {
         };
 
         fetchData();
-    }, [meetings]);
+    }, []);
 
     // useEffect(() => {
     //     console.log(meetings); // Logged the users state here
@@ -263,7 +263,7 @@ const Availability = () => {
                                     <Button colorScheme="blue" mr={3} onClick={closeModal}>
                                         Close
                                     </Button>
-                                        <Button colorScheme="teal" onClick={()=>{}}>
+                                    <Button colorScheme="teal" onClick={() => { }}>
                                         Add Availability
                                     </Button>
                                 </ModalFooter>

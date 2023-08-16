@@ -37,7 +37,7 @@ const MeetingSchedule = () => {
         };
 
         fetchData();
-    }, [meetings]);
+    }, []);
 
 
 
