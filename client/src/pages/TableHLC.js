@@ -22,9 +22,9 @@ const Table = ({ data }) => {
                       className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                       src={Doc}
                     />
-                    <div className="w-3/4 ml-3 mt-1">Lunawa</div>
+                    <div className="w-3/4 ml-3 mt-1">Radawana</div>
                   </div>
-                  <div className="w-1/2 m-2">Panadura</div>
+                  <div className="w-1/2 m-2">Dompe</div>
                 </div>
               </Link>
             </>
@@ -36,9 +36,9 @@ const Table = ({ data }) => {
                       className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                       src={Doc}
                     />
-                    <div className="w-3/4 ml-3 mt-1">Lunawa</div>
+                    <div className="w-3/4 ml-3 mt-1">Divulapitiya</div>
                   </div>
-                  <div className="w-1/2 m-2 ">Panadura</div>
+                  <div className="w-1/2 m-2 ">Divulapitiya</div>
                 </div>
               </Link>
             </>
@@ -50,9 +50,9 @@ const Table = ({ data }) => {
                       className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                       src={Doc}
                     />
-                    <div className="w-3/4 ml-3 mt-1">Lunawa</div>
+                    <div className="w-3/4 ml-3 mt-1">Wekada</div>
                   </div>
-                  <div className="w-1/2 m-2">Panadura</div>
+                  <div className="w-1/2 m-2">Divulapitiya</div>
                 </div>
               </Link>
             </>
@@ -64,9 +64,9 @@ const Table = ({ data }) => {
                       className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                       src={Doc}
                     />
-                    <div className="w-3/4 ml-3 mt-1">Lunawa</div>
+                    <div className="w-3/4 ml-3 mt-1">Weliweriya</div>
                   </div>
-                  <div className="w-1/2 m-2">Panadura</div>
+                  <div className="w-1/2 m-2">Gampaha</div>
                 </div>
               </Link>
             </>
@@ -78,9 +78,9 @@ const Table = ({ data }) => {
                       className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                       src={Doc}
                     />
-                    <div className="w-3/4 ml-3 mt-1 ">Lunawa</div>
+                    <div className="w-3/4 ml-3 mt-1 ">Gallawatta</div>
                   </div>
-                  <div className="w-1/2 m-2 ">Panadura</div>
+                  <div className="w-1/2 m-2 ">Jaela</div>
                 </div>
               </Link>
             </>
