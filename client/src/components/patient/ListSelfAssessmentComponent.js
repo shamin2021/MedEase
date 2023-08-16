@@ -41,7 +41,7 @@ const ListSelfAssessmentComponent = () => {
             <h2 className="text-left ml-5 w-3/4">Risk Assessments </h2>
             <div className="w-1/4">
               <button
-                className="btn btn-primary text-[17px] bg-primary p-2 font-semibold"
+                className="btn btn-primary text-[18px] bg-primary p-2 font-semibold"
                 onClick={addSelfAssessment}
               >
                 Add Risk Assessment
@@ -53,11 +53,11 @@ const ListSelfAssessmentComponent = () => {
           <div className="flex h-3/4 ">
             <br></br>
             <div className="md:w-3/4 h-full shadow-xl rounded-md  m-3 mb-1">
-              <div className="text-left text-sm pb-2  ml-5">
+              <div className="text-left text-[20px] pb-2  ml-5">
                 Previous Assessments
               </div>
               <div className="w-full  ">
-                <div className=" flex text-[17px] text-[#797878] font-medium sticky p-1 ml-5 text-left">
+                <div className=" flex text-[18px] text-[#797878] font-medium sticky p-1 ml-5 text-left">
                   <div className="w-1/3 m-1 ">Assessment ID</div>
                   <div className="w-1/3 m-1 ">Assessment Created</div>
                   <div className="w-1/3 m-1 ">Actions</div>
@@ -68,13 +68,12 @@ const ListSelfAssessmentComponent = () => {
                   <tbody>
                     {selfassessments.map((selfassessment) => (
                       <>
-                        <tr key={selfassessment.id} className="flex text-[17px] font-medium sticky p-1 text-left ml-5">
+                        <tr key={selfassessment.id} className="flex text-[18px]  font-medium sticky p-1 text-left ml-5">
                           <div className="w-1/3 m-1"><td> {selfassessment.id} </td></div>
                           <div className="w-1/3 m-1"><td> {selfassessment.date} </td></div>
                           <div className="w-1/3 m-1">
                             <td>
                               <button
-                                style={{ marginLeft: "10px" }}
                                 onClick={() =>
                                   navigate(
                                     `/view-SelfAssessment/${selfassessment.id}`
@@ -97,19 +96,19 @@ const ListSelfAssessmentComponent = () => {
 
             <div className="md:w-1/4 shadow-xl h-full m-3 mb-1 rounded-md">
               <div className="mt-3">
-                <div className="w-3/4 mx-auto mt-3 rounded-md text-[17px] bg-[#fdc9c9] p-2 font-semibold">
+                <div className="w-3/4 mx-auto mt-3 rounded-md text-[18px]  bg-[#fdc9c9] p-2 font-semibold">
                   {selfassessments.length > 0 ? (
-                    selfassessments[0].risk
+                    selfassessments[selfassessments.length - 1].risk
                   ) : (
                     <p>Not Submitted</p>
                   )}
-                  <div className=" text-[#797878] text-[15px] font-medium">
+                  <div className=" text-[#797878] text-[16px]  font-medium">
                     Recent Risk
                   </div>
                 </div>
                 <div className="w-3/4 mx-auto mt-3 rounded-md text-[17px] bg-primary p-2 font-semibold">
-                  2
-                  <div className=" text-[#797878] text-[15px] font-medium">
+                  {selfassessments.length > 0 ? selfassessments.length : 0}
+                  <div className=" text-[#797878] text-[16px]  font-medium">
                     Assessments
                   </div>
                 </div>

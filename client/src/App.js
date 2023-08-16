@@ -32,10 +32,17 @@ import HLCProfile from "./pages/HLCProfile";
 import PatientProf from "./pages/Patient/PatientProfile";
 import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
 import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
+import LifestyleDashboard from "./pages/LifestyleMonitoring/LifestyleDashboard";
 import AddExamination from "./pages/AddExamination";
+import AddExaminationHLC from "./pages/AddExamination";
 import FindHLCAdmin from "./pages/Admin/FindHLC";
 import FindHLCPatient from "./pages/Patient/FindHLC";
-
+import SearchDoctorPatient from "./pages/Patient/SearchDoctor";
+import ManagePatient from "./pages/Doctor/ManagePatient";
+import ManagePatientHLC from "./pages/HLC/ManagePatient";
+import ManageDoctor from "./pages/HLC/ManageDoctor";
+import AddLifestyleHLC from "./pages/LifestyleMonitoring/AddLifestyle";
+import PatientProfileHLC from "./pages/HLC/PatientProfile";
 
 
 import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
@@ -89,7 +96,7 @@ function App() {
           <Route path="AddHLC" element={<AddHLC />} /> */}
           {/* <Route path="PatientProfile/:id" element={<PatientProfile />} />
 
-          <Route path="AddPrescription" element={<AddPrescription />} />
+         
           <Route path="HLCProfile" element={<HLCProfile />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="DoctorProfile" element={<DoctorProfile />} />
@@ -112,9 +119,9 @@ function App() {
             element={<ViewSelfAssessmentComponent />}
           /> */}
 
-          <Route path="/DoctorSetting" element={<DoctorSetting />} />
-          <Route path="/PatientSettings" element={<PatientSettings />} />
-          <Route path="/HLCSettings" element={<HLCSettings />} />
+
+          {/* <Route path="/PatientSettings" element={<PatientSettings />} /> */}
+
 
 
 
@@ -149,18 +156,20 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
               {/* routes only for PATIENT */}
-
+              <Route path="/LifestyleQuiz" element={<LifestyleQuiz />} />
+              <Route path="/LifestyleDashboard" element={<LifestyleDashboard />} />
               <Route path="/Patient" element={<Patient />} />
               <Route path="/PatientMeetings" element={<PatientMeetings />} />
               <Route path='/link-expired' element={<MeetingExpired />} />
               <Route path='/ScheduleMeeting' element={<MeetingSchedule />} />
-              {/* <Route path="/PatientSettings" element={<PatientSettings />} /> */}
+              <Route path="/PatientSettings" element={<PatientSettings />} />
               <Route path="/PatientProfile" element={<PatientProfile />} />
               <Route path="/patient" element={<Patient />} />
-              <Route path="AddExamination" element={<AddExamination />} />
-              <Route path="FindHLCPatient" element={<FindHLCPatient />} />
-              <Route path="HLCProfile" element={<HLCProfile />} />
-              <Route path="DoctorProfile" element={<DoctorProfile />} />
+              <Route path="/AddExamination/:id" element={<AddExamination />} />
+              <Route path="/FindHLCPatient" element={<FindHLCPatient />} />
+              <Route path="/HLCProfile" element={<HLCProfile />} />
+              <Route path="/DoctorProfile" element={<DoctorProfile />} />
+              <Route path="/SearchDoctorPatient" element={<SearchDoctorPatient />} />
               <Route
                 path="/SelfAssessments"
                 element={<ListSelfAssessmentComponent />}
@@ -173,9 +182,6 @@ function App() {
                 path="/view-SelfAssessment/:id"
                 element={<ViewSelfAssessmentComponent />}
               />
-              <Route path="/PatientMeetings" element={<PatientMeetings />} />
-              <Route path="/link-expired" element={<MeetingExpired />} />
-              <Route path="/ScheduleMeeting" element={<MeetingSchedule />} />
             </Route >
 
             <Route
@@ -183,6 +189,13 @@ function App() {
             >
               {/* routes only for HLC and DOCTOR */}
               <Route path="/DoctorAvailability" element={<Availability />} />
+            </Route>
+
+            <Route
+              element={<RequireAuth allowedRoles={[ROLES[4], ROLES[3]]} />}
+            >
+              {/* routes only for HLC and DOCTOR */}
+              <Route path="/FindHLCAdmin" element={<FindHLCAdmin />} />
             </Route>
 
             <Route
@@ -195,19 +208,30 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
               {/* routes only for HLC */}
+              <Route path="/DoctorProfileHLC" element={<DoctorProfile />} />
+              <Route path="/HLCSettings" element={<HLCSettings />} />
+              <Route path="/PatientProfileHLC/:id" element={<PatientProfileHLC />} />
+              <Route path="/AddExaminationHLC/:id" element={<AddExaminationHLC />} />
               <Route path="/HLC" element={<HLC />} />
+              <Route path="/ManagePatientHLC" element={<ManagePatientHLC />} />
+              <Route path="/ManageDoctor" element={<ManageDoctor />} />
               <Route path="/AddDoctor" element={<AddDoctor />} />
               <Route path="/HLCPatients" element={<HLCPatients />} />
               {/* <Route path="/HLCSettings" element={<HLCSettings />} /> */}
               <Route path="/HLCProfile" element={<HLCProfile />} />
+              <Route path="/AddLifestyleHLC" element={<AddLifestyleHLC />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
               {/* routes only for DOCTOR */}
+              <Route path="/DoctorSetting" element={<DoctorSetting />} />
+              <Route path="/AddPrescription" element={<AddPrescription />} />
               <Route path="/doctor" element={<Doctor />} />
+              <Route path="/AddLifestyle" element={<AddLifestyle />} />
               <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
               <Route path="/DoctorHLC" element={<DoctorHLC />} />
               <Route path="/DoctorPatient" element={<DoctorPatient />} />
+              <Route path="/ManagePatient" element={<ManagePatient />} />
               {/* <Route path="/DoctorSetting" element={<DoctorSetting />} /> */}
 
               <Route path="/DoctorProfile" element={<DoctorProfile />} />
@@ -225,10 +249,9 @@ function App() {
               <Route path="/AdminPatient" element={<AdminPatient />} />
               <Route path="/AdminSetting" element={<AdminSetting />} />
               <Route path="/AdminProfile" element={<AdminProfile />} />
-
               <Route path="/ManageUser" element={<ManageUser />} />
 
-              <Route path="/FindHLCAdmin" element={<FindHLCAdmin />} />
+
             </Route>
 
 

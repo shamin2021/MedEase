@@ -34,6 +34,8 @@ public class MedicalTest {
     private Integer visionRight;
     private Integer visionLeft;
     private String oralExamination;
+    private Integer cholesterolLvl;
+    private Double sbp;
 
     private Double fastingbloodSugar;
     private Double randombloodSugar;

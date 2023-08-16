@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GridItem } from '@chakra-ui/react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Switch, Input, Box, Text } from '@chakra-ui/react';
-
+import useAxiosMethods from "../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 const Availability = () => {
+
+    const { get, post, put, del } = useAxiosMethods();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -16,6 +21,11 @@ const Availability = () => {
     const [fromTime, setFromTime] = useState('');
     const [toTime, setToTime] = useState('');
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [delRes, setDelRes] = useState('');
+    const [res, setRes] = useState('');
+    const [meetingID, setMeetingID] = useState('');
+    const [meetings, setMeetings] = useState([]);
+    const [removeId, setRemoveId] = useState(null);
 
 
     const timeSlots = [];
@@ -59,6 +69,69 @@ const Availability = () => {
         setSelectedEvent(null);
     };
 
+    const hadleEventRemove = async (removeId) => {
+        console.log(removeId)
+        try {
+            del(`/removeMeeting/${removeId}`, setDelRes);
+        } catch(err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+
+    }
+
+    // const formatDateAndTime = (selectedDate, selectedTime) => {
+    //     // Convert the selectedDate to the format YYYY-MM-DD
+    //     const formattedDate = selectedDate.toISOString().split('T')[0];
+
+    //     // Split the selectedTime into hours and minutes
+    //     const [hours, minutes] = selectedTime.split(':');
+
+    //     // Create the formatted time string
+    //     const formattedTime = `${formattedDate} ${hours}:${minutes}:00.000000`;
+
+    //     return formattedTime;
+    // };
+
+    // const handleAdd = (selectedDate) => {
+    //     // console.log(formatDateAndTime(selectedDate, fromTime))
+    //     try {
+    //         post('/ScheduleMeeting', { type: "Virtual", start: formatDateAndTime(selectedDate,fromTime), end:formatDateAndTime(selectedDate,toTime)}, setRes)
+    //     } catch (err){
+    //         console.error(err);
+    //         navigate('/login', { state: { from: location }, replace: true });
+    //     }
+    // }
+
+
+
+    const fetchMeetings = async () => {
+        try {
+            get('/getMeetings', setMeetings);
+
+        } catch (err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await fetchMeetings();
+        };
+
+        fetchData();
+    }, [meetings]);
+
+    // useEffect(() => {
+    //     console.log(meetings); // Logged the users state here
+    // }, [meetings]);
+
+    useEffect(() => {
+        console.log(fromTime); // Logged the users state here
+        console.log(toTime)
+        console.log(selectedDate)
+    }, [fromTime, toTime]);
 
     return (
         <GridItem colSpan={6} mx={4} mt={2}>
@@ -66,37 +139,9 @@ const Availability = () => {
                 <FullCalendar
                     plugins={[interactionPlugin, dayGridPlugin]}
                     initialView="dayGridMonth"
-                    events={[
-                        {
-                            id: 1,
-                            type: 'Physical',
-                            start: '2023-08-10T10:00:00',
-                            end: '2023-08-10T12:00:00',
-                            backgroundColor: '#79b1ff'
-                        },
-                        {
-                            id: 2,
-                            type: 'Virtual',
-                            start: '2023-08-10T14:00:00',
-                            end: '2023-08-10T16:00:00',
-                            backgroundColor: 'teal'
-                        },
-                        {
-                            id: 3,
-                            type: 'Virtual',
-                            start: '2023-08-10T10:30:00',
-                            end: '2023-08-10T12:00:00',
-                            backgroundColor: 'teal'
-                        },
-                        {
-                            id: 4,
-                            type: 'Physical',
-                            start: '2023-08-07T14:00:00',
-                            end: '2023-08-07T16:00:00',
-                            backgroundColor: '#79b1ff'
-                        },
-
-                    ]}
+                    events={
+                        meetings
+                    }
 
                     eventDisplay="block"
                     selectable={true}
@@ -154,7 +199,7 @@ const Availability = () => {
                                     <Button colorScheme="blue" mr={3} onClick={() => setSelectedEvent(null)}>
                                         Close
                                     </Button>
-                                    <Button colorScheme="red" onClick={() => { }}>
+                                    <Button colorScheme="red" onClick={() => hadleEventRemove(selectedEvent.extendedProps.meeting_id)}>
                                         Remove
                                     </Button>
                                 </Box>
@@ -218,7 +263,7 @@ const Availability = () => {
                                     <Button colorScheme="blue" mr={3} onClick={closeModal}>
                                         Close
                                     </Button>
-                                    <Button colorScheme="teal" onClick={() => { }}>
+                                        <Button colorScheme="teal" onClick={()=>{}}>
                                         Add Availability
                                     </Button>
                                 </ModalFooter>

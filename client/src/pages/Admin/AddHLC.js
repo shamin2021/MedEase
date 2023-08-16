@@ -443,7 +443,7 @@ const AddHLC = (props) => {
   return (
     <GridItem colSpan={6} >
       <div className="h-screen bg-primary">
-        <div className="md:w-1/2 h-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-[5%] ">
+        <div className="md:w-1/2 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-[5%] ">
           <div className="container horizontal justify-center py-1">
             <div className="flex justify-center text-xl font-medium m-3 mb-0">
               HLC Registration

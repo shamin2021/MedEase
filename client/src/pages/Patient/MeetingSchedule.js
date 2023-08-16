@@ -1,16 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GridItem } from '@chakra-ui/react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Modal, ModalOverlay, ModalContent, ModalBody, Button, Box, Text } from '@chakra-ui/react';
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 const MeetingSchedule = () => {
 
+    const { get, post, put, del } = useAxiosMethods();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [res, setRes] = useState('');
+    const [meetingID, setMeetingID] = useState('');
+    const [meetings, setMeetings] = useState([]);
+
+    const fetchMeetings = async () => {
+        try {
+            get('/getMeetings', setMeetings);
+
+        } catch (err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await fetchMeetings();
+        };
+
+        fetchData();
+    }, [meetings]);
+
+
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -25,41 +54,7 @@ const MeetingSchedule = () => {
                     <FullCalendar
                         plugins={[interactionPlugin, dayGridPlugin]}
                         initialView="dayGridMonth"
-                        events={[
-                            {
-                                id: 1,
-                                doctor: 'Dr. John Doe',
-                                type: 'Physical',
-                                start: '2023-08-10T10:00:00',
-                                end: '2023-08-10T12:00:00',
-                                backgroundColor: '#79b1ff'
-                            },
-                            {
-                                id: 2,
-                                type: 'Virtual',
-                                doctor: 'Dr. John Doe',
-                                start: '2023-08-10T14:00:00',
-                                end: '2023-08-10T16:00:00',
-                                backgroundColor: 'teal'
-                            },
-                            {
-                                id: 3,
-                                type: 'Virtual',
-                                doctor: 'Dr. John Doe',
-                                start: '2023-08-10T10:30:00',
-                                end: '2023-08-10T12:00:00',
-                                backgroundColor: 'teal'
-                            },
-                            {
-                                id: 4,
-                                type: 'Physical',
-                                doctor: 'Dr. John Doe',
-                                start: '2023-08-07T14:00:00',
-                                end: '2023-08-07T16:00:00',
-                                backgroundColor: '#79b1ff'
-                            },
-
-                        ]}
+                        events={meetings}
 
                         eventDisplay="block"
                         selectable={true}
