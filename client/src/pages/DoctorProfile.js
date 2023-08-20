@@ -1,10 +1,9 @@
 import React from "react";
 import logo from "../assets/patient.jpg";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Calendar.css";
 import { GridItem } from '@chakra-ui/react';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const DoctorProfile = () => {
 
