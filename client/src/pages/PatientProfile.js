@@ -8,6 +8,7 @@ import {
   TabPanel,
   TabIndicator,
 } from "@chakra-ui/react";
+import { FaSearch, FaPlus } from "react-icons/fa";
 
 const PatientProfile = () => {
   return (
@@ -542,7 +543,7 @@ const PatientProfile = () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto flex rounded-md pb-2 py-1 p-5 mb-9">
+      {/* <div className="mx-auto flex rounded-md pb-2 py-1 p-5 mb-9">
         <div className="md:w-full shadow-xl rounded-md pb-2 py-1 bg-white m-3 mt-1 p-5">
           <div className="text-[18px] font-semibold mt-3">Assessments</div>
           <div className="mt-2 bg-primary pl-3 pr-3 pt-1 rounded-md p-3 mb-3 h-28 overflow-y-scroll ">
@@ -678,6 +679,81 @@ const PatientProfile = () => {
                   View Information
                 </div>
                 <div className=" text-center text-[15px] font-semibold mb-0"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+      <div className="mx-auto flex rounded-md pb-2 py-1 p-5 mb-9">
+        <div className="md:w-full shadow-xl rounded-md pb-2 py-1 bg-white m-3 mt-1 p-5">
+          <div className="flex">
+            <h2 className="text-left ml-5 mt-5 w-3/4">Risk Assessments </h2>
+            <div className="w-1/4">
+            <button className="w-2/4 h-[50px] float-right bg-secondary text-[17px] rounded-md p-2 m-2 text-[#ffffff] font-semibold ">
+              <div className="flex w-3/4 mx-auto text-center">
+                <div className=" align-middle ml-1 mx-auto">Add Medical Data</div>
+              </div>
+            </button>
+            </div>
+          </div>
+          <hr className="m-3 mt-2"></hr>
+          <div className="flex">
+            <br></br>
+            <div className="md:w-3/4 shadow-xl rounded-md m-3 mb-1">
+              <div className="text-left text-sm pb-2  ml-5">
+                Previous Assessments
+              </div>
+              <div className="w-full h-24">
+                <div className=" flex text-[16px] text-[#797878] font-medium sticky p-1 ml-5 text-left">
+                  <div className="w-1/3 m-1 ">Assessment ID</div>
+                  <div className="w-1/3 m-1 ">Assessment Created</div>
+                  <div className="w-1/3 m-1 ">Actions</div>
+                </div>
+                <hr className=" md:w-4/5  ml-5" />
+
+                <table className="table-auto">
+                  <tbody>
+                    <>
+                      <tr className="flex text-[15px] font-medium sticky p-1 text-left ml-5">
+                        <div className="w-1/3 m-1">
+                          <td> X </td>
+                        </div>
+                        <div className="w-1/3 m-1">
+                          <td> X </td>
+                        </div>
+                        <div className="w-1/3 m-1">
+                          <td>
+                            <button
+                              style={{ marginLeft: "10px" }}
+                              onClick={() => navigate(`/view-SelfAssessment/X`)}
+                              className="btn w-1/3 bg-primary pl-1 pr-1 rounded-lg"
+                            >
+                              View{" "}
+                            </button>
+                          </td>
+                        </div>
+                      </tr>
+                      <hr className=" md:w-4/5 ml-5" />
+                    </>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="md:w-1/4 shadow-xl h-60 m-3 mb-1 rounded-md">
+              <div className="mt-3">
+                <div className="w-3/4 mx-auto mt-3 rounded-md text-[15px] bg-[#fdc9c9] p-2 font-semibold">
+                  <p>Not Submitted</p>
+                  <div className=" text-[#797878] text-[13px] font-medium">
+                    Recent Risk
+                  </div>
+                </div>
+                <div className="w-3/4 mx-auto mt-3 rounded-md text-[15px] bg-primary p-2 font-semibold">
+                  2
+                  <div className=" text-[#797878] text-[13px] font-medium">
+                    Assessments
+                  </div>
+                </div>
               </div>
             </div>
           </div>

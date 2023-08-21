@@ -32,6 +32,9 @@ import PatientProf from "./pages/Patient/PatientProfile";
 import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
 import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
 import AddExamination from "./pages/AddExamination";
+import ManageDoctor from "./pages/ManageDoctor";
+import ManagePatient from "./pages/ManagePatient";
+import LifestyleDashboard from "./pages/LifestyleMonitoring/LifestyleDashboard";
 
 
 import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
@@ -63,25 +66,26 @@ function App() {
   return (
     <Router>
       <Routes>
-
         <Route path="/" element={<Layout />}>
           {/* <Route path="SearchDoctor" element={<SearchDoctor />} />
           <Route path="FindHLC" element={<FindHLC />} />
           <Route path="AddDoctor" element={<AddDoctor />} />
           <Route path="AddHLC" element={<AddHLC />} /> */}
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
-
           <Route path="AddPrescription" element={<AddPrescription />} />
           <Route path="HLCProfile" element={<HLCProfile />} />
           <Route path="PatientProfile/:id" element={<PatientProfile />} />
           <Route path="DoctorProfile" element={<DoctorProfile />} />
-
           <Route path="PatientProf" element={<PatientProf />} />
           <Route path="LifestyleQuiz" element={<LifestyleQuiz />} />
           <Route path="AddLifestyle" element={<AddLifestyle />} />
           <Route path="AddExamination" element={<AddExamination />} />
+          <Route path="/SearchDoctor" element={<SearchDoctor />} />
+          <Route path="/ManageDoctor" element={<ManageDoctor />} />
+          <Route path="/ManagePatient" element={<ManagePatient />} />
+          <Route path="/LifestyleDashboard" element={<LifestyleDashboard />} />
 
-          {/* <Route
+          <Route
             path="/SelfAssessments"
             element={<ListSelfAssessmentComponent />}
           />
@@ -92,7 +96,7 @@ function App() {
           <Route
             path="/view-SelfAssessment"
             element={<ViewSelfAssessmentComponent />}
-          /> */}
+          />
           {/* <Route path="/ManageUser" element={<ManageUser />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -100,8 +104,6 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />
-          
-
           {/* protected routes  */}
           <Route element={<PersistLogin />}>
             {/* made these public routes persisting as well */}
@@ -120,7 +122,7 @@ function App() {
               }
             >
               {/* routes allowed for all authenticated users */}
-              <Route path="/SearchDoctor" element={<SearchDoctor />} />
+              {/* <Route path="/SearchDoctor" element={<SearchDoctor />} /> */}
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
@@ -155,7 +157,7 @@ function App() {
             >
               {/* routes only for PATIENT and DOCTOR */}
               <Route path="/meeting/:id/:user/:time" element={<Conference />} />
-              <Route path='/link-expired' element={<MeetingExpired />} />
+              <Route path="/link-expired" element={<MeetingExpired />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
