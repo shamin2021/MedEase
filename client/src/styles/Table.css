@@ -23,3 +23,21 @@ td {
     padding: 8px 16px;
     width: 33%;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* Apply custom styling to scrollbar when hovered */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

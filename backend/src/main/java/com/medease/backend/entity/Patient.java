@@ -20,7 +20,7 @@ import java.time.LocalDate;
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer patient_id;
 
     @OneToOne

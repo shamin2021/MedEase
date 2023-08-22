@@ -1,9 +1,13 @@
 package com.medease.backend.dto;
 
+import com.medease.backend.enumeration.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,6 +19,8 @@ public class RegisterRequestDTO {
     private String lastname;
     private String email;
     private String password;
+    private Gender gender;
+    private LocalDate dob;
 
     private String licenseNumber;
     private Integer speciality;

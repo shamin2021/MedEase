@@ -1,16 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GridItem } from '@chakra-ui/react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Modal, ModalOverlay, ModalContent, ModalBody, Button, Box, Text } from '@chakra-ui/react';
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 const MeetingSchedule = () => {
 
+    const { get, post, put, del } = useAxiosMethods();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const [res, setRes] = useState('');
+    const [meetingID, setMeetingID] = useState('');
+    const [meetings, setMeetings] = useState([]);
+
+    const fetchMeetings = async () => {
+        try {
+            get('/getMeetings', setMeetings);
+
+        } catch (err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await fetchMeetings();
+        };
+
+        fetchData();
+    }, []);
+
+
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -20,118 +49,86 @@ const MeetingSchedule = () => {
 
     return (
         <GridItem colSpan={6} mx={4} mt={2}>
-            <div>
-                <FullCalendar
-                    plugins={[interactionPlugin, dayGridPlugin]}
-                    initialView="dayGridMonth"
-                    events={[
-                        {
-                            id: 1,
-                            doctor: 'Dr. John Doe',
-                            type: 'Physical',
-                            start: '2023-08-10T10:00:00',
-                            end: '2023-08-10T12:00:00',
-                            backgroundColor: '#79b1ff'
-                        },
-                        {
-                            id: 2,
-                            type: 'Virtual',
-                            doctor: 'Dr. John Doe',
-                            start: '2023-08-10T14:00:00',
-                            end: '2023-08-10T16:00:00',
-                            backgroundColor: 'teal'
-                        },
-                        {
-                            id: 3,
-                            type: 'Virtual',
-                            doctor: 'Dr. John Doe',
-                            start: '2023-08-10T10:30:00',
-                            end: '2023-08-10T12:00:00',
-                            backgroundColor: 'teal'
-                        },
-                        {
-                            id: 4,
-                            type: 'Physical',
-                            doctor: 'Dr. John Doe',
-                            start: '2023-08-07T14:00:00',
-                            end: '2023-08-07T16:00:00',
-                            backgroundColor: '#79b1ff'
-                        },
+            <div className="ml-[30px] h-screen bg-white mt-[4%]">
+                <div>
+                    <FullCalendar
+                        plugins={[interactionPlugin, dayGridPlugin]}
+                        initialView="dayGridMonth"
+                        events={meetings}
 
-                    ]}
+                        eventDisplay="block"
+                        selectable={true}
 
-                    eventDisplay="block"
-                    selectable={true}
+                        eventClick={(event) => {
+                            if (event.event.extendedProps.type === 'Virtual') {
+                                setSelectedEvent(event.event);
+                                setIsModalOpen(true);
+                            }
+                        }}
 
-                    eventClick={(event) => {
-                        if (event.event.extendedProps.type === 'Virtual') {
-                            setSelectedEvent(event.event);
-                            setIsModalOpen(true);
-                        }
-                    }}
+                        eventTimeFormat={{
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            meridiem: false
+                        }}
 
-                    eventTimeFormat={{
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        meridiem: false
-                    }}
+                        displayEventEnd={true}
+                        progressiveEventRendering={true}
 
-                    displayEventEnd={true}
-                    progressiveEventRendering={true}
+                        headerToolbar={{
+                            left: 'title',
+                            center: '',
+                            right: 'prev today next'
+                        }}
 
-                    headerToolbar={{
-                        left: 'title',
-                        center: '',
-                        right: 'prev today next'
-                    }}
+                        buttonText={{
+                            today: 'Today',
+                        }}
 
-                    buttonText={{
-                        today: 'Today',
-                    }}
+                        height={"auto"}
+                        contentHeight={"auto"}
 
-                    height={"auto"}
-                    contentHeight={"auto"}
+                    />
 
-                />
-
-                {selectedEvent && (
-                    <Modal isOpen={selectedEvent !== null} onClose={closeModal}>
-                        <ModalOverlay />
-                        <ModalContent maxWidth="90vw" width="auto" mx={[4, 8, 16]} my={[4, 8, 12]}>
-                            <ModalBody>
-                                <Box>
-                                    <Text fontWeight="bold" mb={2}>Schedule Meeting:</Text>
-                                    <Box mb={2}>
-                                        <span>Doctor:</span>
-                                        <Text>{selectedEvent?.extendedProps?.doctor}</Text>
-                                    </Box>
-
+                    {selectedEvent && (
+                        <Modal isOpen={selectedEvent !== null} onClose={closeModal}>
+                            <ModalOverlay />
+                            <ModalContent maxWidth="90vw" width="auto" mx={[4, 8, 16]} my={[4, 8, 12]}>
+                                <ModalBody>
                                     <Box>
+                                        <Text fontWeight="bold" mb={2}>Schedule Meeting:</Text>
                                         <Box mb={2}>
-                                            <span>From:</span>
-                                            <Text>{selectedEvent.start.toLocaleString()}</Text>
+                                            <span>Doctor:</span>
+                                            <Text>{selectedEvent?.extendedProps?.doctor}</Text>
                                         </Box>
+
                                         <Box>
-                                            <span>To:</span>
-                                            <Text>{selectedEvent.end.toLocaleString()}</Text>
+                                            <Box mb={2}>
+                                                <span>From:</span>
+                                                <Text>{selectedEvent.start.toLocaleString()}</Text>
+                                            </Box>
+                                            <Box>
+                                                <span>To:</span>
+                                                <Text>{selectedEvent.end.toLocaleString()}</Text>
+                                            </Box>
                                         </Box>
+
                                     </Box>
+                                    <Box mt={4}>
+                                        <Button colorScheme="blue" mr={3} onClick={closeModal}>
+                                            Close
+                                        </Button>
 
-                                </Box>
-                                <Box mt={4}>
-                                    <Button colorScheme="blue" mr={3} onClick={closeModal}>
-                                        Close
-                                    </Button>
+                                        <Button colorScheme="teal" onClick={() => { }}>
+                                            Schedule
+                                        </Button>
 
-                                    <Button colorScheme="teal" onClick={() => { }}>
-                                        Schedule
-                                    </Button>
-
-                                </Box>
-                            </ModalBody>
-                        </ModalContent>
-                    </Modal>
-                )}
+                                    </Box>
+                                </ModalBody>
+                            </ModalContent>
+                        </Modal>
+                    )}
+                </div>
             </div>
         </GridItem>
     )

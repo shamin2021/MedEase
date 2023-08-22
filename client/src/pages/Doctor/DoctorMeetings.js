@@ -175,87 +175,91 @@ const DoctorMeetings = () => {
     }
     return (
         <GridItem colSpan={6} rowSpan={7}>
-            <Box p={4}>
-                <Tabs index={currentTab} onChange={handleTabChange} variant='enclosed'>
+            <div className=" h-screen py-1 bg-primary mt-[3%]">
+                <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 p-5 h-3/4">
+                    <Box p={4}>
+                        <Tabs index={currentTab} onChange={handleTabChange} variant='enclosed'>
 
-                    <TabList>
-                        <Tab>Ongoing</Tab>
-                        <Tab>Upcoming</Tab>
-                        <Tab>History</Tab>
-                    </TabList>
+                            <TabList>
+                                <Tab>Ongoing</Tab>
+                                <Tab>Upcoming</Tab>
+                                <Tab>History</Tab>
+                            </TabList>
 
-                    <TabPanels>
+                            <TabPanels>
 
-                        <TabPanel>
-                            {meetingsData
-                                .filter((meeting) => meeting.status === 'current')
-                                .map((meeting) => (
-                                    <>
-                                        <Heading size='md' mb={4}>
-                                            {formatMeetingDate(meeting.date)}
-                                        </Heading>
-                                        <Box key={meeting.id} p={4} borderWidth="1px" borderRadius="md" mb={2}>
-                                            <Flex direction="column">
-                                                <Text>
-                                                    {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
-                                                </Text>
-                                                <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
-                                                {renderCardAction(meeting)}
-                                            </Flex>
+                                <TabPanel>
+                                    {meetingsData
+                                        .filter((meeting) => meeting.status === 'current')
+                                        .map((meeting) => (
+                                            <>
+                                                <Heading size='md' mb={4}>
+                                                    {formatMeetingDate(meeting.date)}
+                                                </Heading>
+                                                <Box key={meeting.id} p={4} borderWidth="1px" borderRadius="md" mb={2}>
+                                                    <Flex direction="column">
+                                                        <Text>
+                                                            {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
+                                                        </Text>
+                                                        <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
+                                                        {renderCardAction(meeting)}
+                                                    </Flex>
 
-                                        </Box>
-                                    </>
+                                                </Box>
+                                            </>
 
-                                ))}
-                        </TabPanel>
+                                        ))}
+                                </TabPanel>
 
-                        <TabPanel>
-                            {meetingsData
-                                .filter((meeting) => meeting.status === 'future')
-                                .map((meeting) => (
-                                    <>
-                                        <Heading size='md' mb={4}>
-                                            {formatMeetingDate(meeting.date)}
-                                        </Heading>
-                                        <Box key={meeting.id} p={4} borderWidth="1px" borderRadius="md" mb={2}>
-                                            <Flex direction="column">
-                                                <Text>
-                                                    {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
-                                                </Text>
-                                                <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
-                                                {renderCardAction(meeting)}
-                                            </Flex>
+                                <TabPanel>
+                                    {meetingsData
+                                        .filter((meeting) => meeting.status === 'future')
+                                        .map((meeting) => (
+                                            <>
+                                                <Heading size='md' mb={4}>
+                                                    {formatMeetingDate(meeting.date)}
+                                                </Heading>
+                                                <Box key={meeting.id} p={4} borderWidth="1px" borderRadius="md" mb={2}>
+                                                    <Flex direction="column">
+                                                        <Text>
+                                                            {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
+                                                        </Text>
+                                                        <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
+                                                        {renderCardAction(meeting)}
+                                                    </Flex>
 
-                                        </Box>
-                                    </>
-                                ))}
-                        </TabPanel>
+                                                </Box>
+                                            </>
+                                        ))}
+                                </TabPanel>
 
-                        <TabPanel>
-                            {meetingsData
-                                .filter((meeting) => meeting.status === 'past')
-                                .map((meeting) => (
-                                    <>
-                                        <Heading size='md' mb={4}>
-                                            {formatMeetingDate(meeting.date)}
-                                        </Heading>
-                                        <Box key={meeting.id} p={4} borderWidth="1px" borderRadius="md" mb={2}>
-                                            <Flex direction="column">
-                                                <Text>
-                                                    {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
-                                                </Text>
-                                                <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
-                                                {renderCardAction(meeting)}
-                                            </Flex>
+                                <TabPanel>
+                                    {meetingsData
+                                        .filter((meeting) => meeting.status === 'past')
+                                        .map((meeting) => (
+                                            <>
+                                                <Heading size='md' mb={4}>
+                                                    {formatMeetingDate(meeting.date)}
+                                                </Heading>
+                                                <Box key={meeting.id} p={4} borderWidth="1px" borderRadius="md" mb={2}>
+                                                    <Flex direction="column">
+                                                        <Text>
+                                                            {formatMeetingTime(meeting.time)} - {formatMeetingTime(meeting.time + 30)} (30 Minutes)
+                                                        </Text>
+                                                        <Text fontWeight='bold' fontSize="lg">Meeting with Patient, {meeting.doctor}</Text>
+                                                        {renderCardAction(meeting)}
+                                                    </Flex>
 
-                                        </Box>
-                                    </>
-                                ))}
-                        </TabPanel>
+                                                </Box>
+                                            </>
+                                        ))}
+                                </TabPanel>
 
-                    </TabPanels>
-                </Tabs>
-            </Box>
+                            </TabPanels>
+                        </Tabs>
+                    </Box>
+                </div>
+            </div>
         </GridItem>
     );
 }

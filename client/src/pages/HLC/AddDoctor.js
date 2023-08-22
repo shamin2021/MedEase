@@ -106,10 +106,9 @@ const AddDoc = props => {
 
   // change text tag to span for * displaying fields (react wont supprt text tag)
   return (
-
-    <GridItem colSpan={6} >
-      <div className="h-screen py-1 bg-primary">
-        <div className="md:w-1/2 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-1 ">
+    <GridItem colSpan={6}>
+      <div className="h-screen py-1 bg-primary ">
+        <div className="md:w-1/2 h-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-[5%] ">
           <div className="container horizontal justify-center text-xs py-1">
             <div className="flex justify-center text-lg font-medium m-3 mb-0">
               Doctor Registration
@@ -121,7 +120,9 @@ const AddDoc = props => {
           </div>
           <div className="container horizontal mx-auto mb-0 w-96 justify-left text-xs py-1">
             {/* just to display state after form submit */}
-            <p display={state ? "block" : "none"} aria-live="assertive">{state && state.message}</p>
+            <p display={state ? "block" : "none"} aria-live="assertive">
+              {state && state.message}
+            </p>
             <form className="mt-0" onSubmit={handleFormSubmit}>
               <div className="container flex">
                 <div className="container w-3/4">
@@ -142,7 +143,9 @@ const AddDoc = props => {
                     <span></span>
                   </div>
                   <div className="formInput" id="right">
-                    <label className="form-label" htmlFor="lastName">Last Name</label>
+                    <label className="form-label" htmlFor="lastName">
+                      Last Name
+                    </label>
                     <input
                       type="text"
                       id="lastName"
@@ -156,7 +159,7 @@ const AddDoc = props => {
                   </div>
                 </div>
                 <div className="container ml-3 pt-5 justify-right w-1/4">
-                  <ButtonImage />
+                  <ButtonImage name="Add Image" />
                 </div>
               </div>
               <div className="container flex">
@@ -206,12 +209,14 @@ const AddDoc = props => {
                   onChange={(e) => setSpeciality(e.target.value)}
                 >
                   <option value="">Select a speciality</option>
-                  {specialities.map(speciality => (
-                    <option key={speciality.speciality_id} value={speciality.speciality_id}>
+                  {specialities.map((speciality) => (
+                    <option
+                      key={speciality.speciality_id}
+                      value={speciality.speciality_id}
+                    >
                       {speciality.speciality_name}
                     </option>
                   ))}
-
                 </select>
                 <span></span>
               </div>
@@ -230,9 +235,11 @@ const AddDoc = props => {
                 />
                 <span></span>
               </div>
-              <button className="bg-secondary w-1/4 mx-auto rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 ">
-                Submit
-              </button>
+              <div className=" text-center">
+                <button className="bg-secondary w-1/4 rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 p-2">
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
         </div>

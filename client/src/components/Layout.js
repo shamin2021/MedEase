@@ -5,7 +5,7 @@ import Footer from './Footer'
 import React from "react";
 import useAuth from '../hooks/useAuth';
 import HLCSidebar from './HLC/HLCSidebar';
-import PatientSidebar from './Patient/PatientSidebar';
+import PatientSidebar from './patient/PatientSidebar';
 import DoctorSideBar from './Doctor/DoctorSideBar';
 import AdminSidebar from './Admin/AdminSidebar';
 import { Grid, GridItem, SimpleGrid } from '@chakra-ui/react'
@@ -25,7 +25,10 @@ const Layout = () => {
         '/unauthorized',
         '/test-components',
         '/loading',
-        '/meeting/:id/:role/:time'
+        '/meeting/:id/:role/:time',
+        '/findHLC',
+        '/about-us',
+        '/contact-us'
     ];
 
     const layoutHiddenPaths = [
@@ -51,23 +54,22 @@ const Layout = () => {
     };
 
     return (
-        <main className='App font-poppins'>
+        <main className='App font-poppins bg-primary'>
 
             {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && !(auth.role === "HLC") && !(auth.role === "DOCTOR") && !(auth.role === "ADMIN") ? (
                 <NavBar />
-            ) : null }
+            ) : null}
 
 
-            {auth.role && !sideBarHiddenPaths.includes(location.pathname) ? (
+            { !sideBarHiddenPaths.includes(location.pathname) ? (
                 <Grid
-                    h="calc(100vh - 120px)"
-                    templateRows='repeat(7, 1fr)'
+                    h="calc(100% - 120px)"
+                    templateRows='repeat(1, 1fr)'
                     templateColumns='repeat(7, 1fr)'
                     gap={4}
                     mt={1}
-
                 >
-                    < GridItem rowSpan={7} colSpan={1} >
+                    < GridItem rowSpan={1} colSpan={1}>
                         <SimpleGrid >
                             {renderSidebar()}
                         </SimpleGrid>
@@ -80,7 +82,7 @@ const Layout = () => {
                 <Outlet />
             )}
 
-            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && sideBarHiddenPaths.includes(location.pathname) ? (
+            {!layoutHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && sideBarHiddenPaths.includes(location.pathname) && location.pathname.startsWith('/reset-password/') ? (
                 <Grid><Footer /></Grid>
             ) : null}
 

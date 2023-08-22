@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex, Avatar, HStack, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Stack, Image } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import logo from '../assets/logo.svg';
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -29,7 +29,7 @@ const NavBar = () => {
 
     return (
         <>
-            <Box className='bg-indigo-100 dark:bg-indigo-200' px={4}>
+            <Box className='bg-indigo-100 dark:bg-indigo-200' zIndex="999" position="fixed" top={0} width="full" px={4} style={{ backgroundColor: 'rgba(194, 211, 255, 0.55)', backdropFilter: 'blur(10px)' }}>
                 <Flex h={"8vh"} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
@@ -87,7 +87,7 @@ const NavBar = () => {
                                     textDecoration: 'none',
                                     bg: 'gray.200',
                                 }}
-                                href={'#'}>
+                                href={'/about-us'}>
                                 About
                             </Box>
                             <Box
@@ -99,7 +99,7 @@ const NavBar = () => {
                                     textDecoration: 'none',
                                     bg: 'gray.200',
                                 }}
-                                href={'#'}>
+                                href={'/contact-us'}>
                                 Contact Us
                             </Box>
                             <Box
@@ -111,7 +111,7 @@ const NavBar = () => {
                                     textDecoration: 'none',
                                     bg: 'gray.200',
                                 }}
-                                href={'#'}>
+                                href={'/findHLC'}>
                                 Find HLC
                             </Box>
 
@@ -140,7 +140,7 @@ const NavBar = () => {
                                 <MenuList>
                                     <MenuItem
                                         as={'a'}
-                                        href={'#'}>
+                                        href={'/PatientSettings'}>
                                         Profile Settings
                                     </MenuItem>
                                     <MenuDivider />
