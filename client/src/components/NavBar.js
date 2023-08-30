@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex, Avatar, HStack, IconButton, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, Stack, Image } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon} from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import logo from '../assets/logo.svg';
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -140,7 +140,7 @@ const NavBar = () => {
                                 <MenuList>
                                     <MenuItem
                                         as={'a'}
-                                        href={'#'}>
+                                        href={'/PatientSettings'}>
                                         Profile Settings
                                     </MenuItem>
                                     <MenuDivider />

@@ -48,7 +48,7 @@ const Conference = () => {
             region: "sg001", // region for new meeting
 
             containerId: null,
-            redirectOnLeave: window.location.origin + "/meetings",
+            redirectOnLeave: user === "doctor" ? window.location.origin + "/DoctorMeetings" : window.location.origin + "/PatientMeetings", 
 
             micEnabled: false,
             webcamEnabled: false,

@@ -29,7 +29,7 @@ const Sidebar = () => {
             // top="83"
             bottom="0"
             left={navSize === "small" ? "0" : "0px"}
-            
+
             h="100vh"
             boxShadow="0 4px 12px 0 rgba(0, 0, 0, 0.05)"
             borderRadius={navSize === "small" ? "15px" : "30px"}
@@ -50,8 +50,8 @@ const Sidebar = () => {
                     }}
                 />
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Admin"} />
-                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AdminDoctor"} />
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/AdminPatients"} />
+                {/* <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/AdminDoctor"} /> */}
+                {/* <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/AdminPatients"} /> */}
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/FindHLCAdmin"} />
                 <NavItem navSize={navSize} icon={FiUsers} href={"/ManageUser"} title="User Management" />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/AdminSetting"} />

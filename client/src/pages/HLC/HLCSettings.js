@@ -15,7 +15,7 @@ import {
     Button,
 } from '@chakra-ui/react';
 
-function HLCSettings() {
+function DoctorSetting() {
     const [selectedTimeZone, setSelectedTimeZone, newUsername, setNewUsername] = useState('');
 
     const timeZoneOptions = [
@@ -48,120 +48,95 @@ function HLCSettings() {
             borderRadius="lg"
             p="4"
         >
+            <div className=" h-screen w-3/4 mx-auto mt-[5%]">
+                <div className=" flex h-3/4  m-3 bg-white mt-5 rounded-md p-5 ">
+                    <Flex
+                        display={"flex"}
+                        flexDir={"column"}
+                        mr="20"
+                        ml="5"
+                    >
+                        <Heading size="lg" mb={4}>
+                            General Settings
+                        </Heading>
 
-            <Flex
-                display={"flex"}
-                flexDir={"column"}
-                ml="20"
-                mr="20"
-            >
-                <Heading size="lg" mb={4}>
-                    General Settings
-                </Heading>
+                        <Flex
+                            alignItems={"center"}
+                            mb={6}
+                        >
+                            <Text mr="60px" >Language:</Text>
+                            <Select placeholder="Select language">
+                                <option value="english">English</option>
+                                <option value="spanish">Spanish</option>
+                                <option value="french">French</option>
+                            </Select>
+                        </Flex>
 
-                <Flex
-                    alignItems={"center"}
-                    mb={6}
-                >
-                    <Text mr="60px" >Language:</Text>
-                    <Select placeholder="Select language">
-                        <option value="english">English</option>
-                        <option value="spanish">Spanish</option>
-                        <option value="french">French</option>
-                    </Select>
-                </Flex>
+                        <Flex
+                            alignItems={"center"}
+                            mb={6}
+                        >
+                            <Text mr="93px"  >Theme:</Text>
+                            <RadioGroup>
+                                <Stack direction="row">
+                                    <Radio value="light">Light</Radio>
+                                    <Radio value="dark">Dark</Radio>
+                                    <Radio value="custom">Custom</Radio>
+                                </Stack>
+                            </RadioGroup>
+                        </Flex>
 
-                <Flex
-                    alignItems={"center"}
-                    mb={6}
-                >
-                    <Text mr="93px"  >Theme:</Text>
-                    <RadioGroup>
-                        <Stack direction="row">
-                            <Radio value="light">Light</Radio>
-                            <Radio value="dark">Dark</Radio>
-                            <Radio value="custom">Custom</Radio>
-                        </Stack>
-                    </RadioGroup>
-                </Flex>
+                        <Flex
+                            alignItems={"center"}
+                            mb={6}
+                        >
+                            <Text mr="53px">Time Zone:</Text>
+                            <select value={selectedTimeZone} onChange={handleTimeZoneChange}>
+                                <option value="">Select a time zone</option>
+                                {timeZoneOptions.map((timeZone, index) => (
+                                    <option key={index} value={timeZone}>
+                                        {timeZone}
+                                    </option>
+                                ))}
+                            </select>
+                        </Flex>
 
-                <Flex
-                    alignItems={"center"}
-                    mb={6}
-                >
-                    <Text mr="53px">Time Zone:</Text>
-                    <select value={selectedTimeZone} onChange={handleTimeZoneChange}>
-                        <option value="">Select a time zone</option>
-                        {timeZoneOptions.map((timeZone, index) => (
-                            <option key={index} value={timeZone}>
-                                {timeZone}
-                            </option>
-                        ))}
-                    </select>
-                </Flex>
+                    </Flex>
 
-            </Flex>
+                    <Flex
+                        display={"flex"}
+                        flexDir={"column"}
+                        mr="20"
+                    >
+                        <Heading size="lg">
+                            Account Settings
+                        </Heading>
 
-            <Flex
-                display={"flex"}
-                flexDir={"column"}
-                ml="20"
-                mr="20"
-            >
-                <Heading size="lg" my={4}>
-                    Account Settings
-                </Heading>
+                        <Text mb={2}>Username :</Text>
+                        <form onSubmit={handleSubmit}>
+                            <Input
+                                value={newUsername}
+                                onChange={handleChange}
+                                placeholder="Enter new username"
+                                mb={2}
+                            />
+                            <Button mb={4} type="submit">Change Username</Button>
+                        </form>
 
-                <Text mb={2}>Username :</Text>
-                <form onSubmit={handleSubmit}>
-                    <Input
-                        value={newUsername}
-                        onChange={handleChange}
-                        placeholder="Enter new username"
-                        mb={2}
-                    />
-                    <Button mb={4} type="submit">Change Username</Button>
-                </form>
+                        <Text mb={2}>Username :</Text>
+                        <form onSubmit={handleSubmit}>
+                            <Input
+                                value={newUsername}
+                                onChange={handleChange}
+                                placeholder="Enter new username"
+                                mb={2}
+                            />
+                            <Button mb={4} type="submit">Change Username</Button>
+                        </form>
 
-                <Text mb={2}>Username :</Text>
-                <form onSubmit={handleSubmit}>
-                    <Input
-                        value={newUsername}
-                        onChange={handleChange}
-                        placeholder="Enter new username"
-                        mb={2}
-                    />
-                    <Button mb={4} type="submit">Change Username</Button>
-                </form>
-
-            </Flex>
-
-            <Flex
-                display={"flex"}
-                flexDir={"column"}
-                ml="20"
-                mr="20"
-            >
-                <Heading size="lg" my={4}>
-                    Help and Support
-                </Heading>
-
-                <Box mb={6}>
-                    <Text mb={2}>FAQs:</Text>
-                    {/* List of frequently asked questions */}
-                </Box>
-                <Box mb={6}>
-                    <Text mb={2}>Contact Support:</Text>
-                    {/* Options to get in touch with customer support */}
-                </Box>
-                <Box mb={6}>
-                    <Text mb={2}>User Guides:</Text>
-                    <Link color="blue.500">View User Guides</Link>
-                </Box>
-
-
-
-            </Flex>
+                    </Flex>
+                </div>
+            </div>
 
 
 
@@ -183,4 +158,4 @@ function HLCSettings() {
     );
 }
 
-export default HLCSettings;
+export default DoctorSetting;

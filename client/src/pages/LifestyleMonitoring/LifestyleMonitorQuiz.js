@@ -35,17 +35,18 @@ const daysOfWeek = [
 const percentage = 66;
 function InputGeneral(props) {
   return (
-    <div className="mt-2 text-[15px] ">
+
+    <div className="mt-2 text-[18px] ">
       <div className="flex  mb-2">
         <div className="flex w-3/4">
           {props.type == "weekly" ? (
-            <input type="checkbox" className="mr-3 w-[15px]"></input>
+            <input type="checkbox" className="mr-3 w-[18px]"></input>
           ) : (
             ""
           )}
-          <div className="text-[#797878]">{props.name}</div>
+          <div className="text-[#797878] p-1 ">{props.name}</div>
         </div>
-        <div className="text-[#797878] w-1/5 bg-primary rounded-md text-center">
+        <div className="text-[#797878] w-1/5 bg-primary p-1 rounded-md text-center">
           {" "}
           {props.type == "weekly" ? "Weekly" : "Daily"}
         </div>
@@ -63,7 +64,7 @@ function InputGeneral(props) {
         </>
       )}
 
-      <hr></hr>
+      <hr className="mt-2"></hr>
     </div>
   );
 }

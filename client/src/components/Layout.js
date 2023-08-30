@@ -21,11 +21,9 @@ const Layout = () => {
         '/register',
         '/login',
         '/forgot-password',
-        '/reset-password/:token',
         '/unauthorized',
         '/test-components',
         '/loading',
-        '/meeting/:id/:role/:time',
         '/findHLC',
         '/about-us',
         '/contact-us'
@@ -38,7 +36,7 @@ const Layout = () => {
 
     const renderSidebar = () => {
 
-        if (auth.role && !sideBarHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/')) {
+        if (auth.role && !sideBarHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/meeting/') && !location.pathname.startsWith('/reset-password/')) {
 
             if (auth?.role === "PATIENT") {
                 return <PatientSidebar />;
@@ -61,7 +59,7 @@ const Layout = () => {
             ) : null}
 
 
-            { !sideBarHiddenPaths.includes(location.pathname) ? (
+            {!sideBarHiddenPaths.includes(location.pathname) && !location.pathname.startsWith('/reset-password/') ? (
                 <Grid
                     h="calc(100% - 120px)"
                     templateRows='repeat(1, 1fr)'

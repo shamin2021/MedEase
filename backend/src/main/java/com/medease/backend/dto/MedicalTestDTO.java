@@ -27,6 +27,8 @@ public class MedicalTestDTO {
     private Integer visionRight;
     private Integer visionLeft;
     private String oralExamination;
+    private Integer cholesterolLvl;
+    private Double sbp;
 
     private Double fastingbloodSugar;
     private Double randombloodSugar;
@@ -38,5 +40,4 @@ public class MedicalTestDTO {
     private Double lipidTC;
 
     private LocalDate medicalTestDate;
-    private Risk risk;
 }

@@ -107,8 +107,8 @@ const AddDoc = props => {
   // change text tag to span for * displaying fields (react wont supprt text tag)
   return (
     <GridItem colSpan={6}>
-      <div className="h-screen py-1 bg-primary">
-        <div className="md:w-1/2 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-1 ">
+      <div className="h-screen py-1 bg-primary ">
+        <div className="md:w-1/2 h-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-[5%] ">
           <div className="container horizontal justify-center text-xs py-1">
             <div className="flex justify-center text-lg font-medium m-3 mb-0">
               Doctor Registration
@@ -236,7 +236,7 @@ const AddDoc = props => {
                 <span></span>
               </div>
               <div className=" text-center">
-                <button className="bg-secondary w-1/4 rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 ">
+                <button className="bg-secondary w-1/4 rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 p-2">
                   Submit
                 </button>
               </div>

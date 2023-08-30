@@ -66,7 +66,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className='forgotpw' >
+    <div className='forgotpw h-screen py-5 px-5' >
       <Flex alignItems="center" >
         <Box w={{ base: '80%', md: '40%' }} ref={container} />
         <Container maxW="md" py={{ base: '50', md: '150' }} px={{ base: '0', sm: '8' }} height="90vh" >

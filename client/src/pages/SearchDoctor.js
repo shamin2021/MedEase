@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Docs } from './Docs'
-import Table from "./Table";
+import Table from "./PatientTable";
 import { FaSearch } from "react-icons/fa";
 import { GridItem } from '@chakra-ui/react'
 
@@ -14,7 +14,7 @@ const SearchDoc = () => {
   };
   return (
     <GridItem colSpan={6}>
-      <div className="h-screen py-1 bg-primary mt-[5%]">
+      <div className="h-screen py-1 bg-primary mt-[3%]">
         <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 p-5">
           <div className="ml-6 flex w-full">
             <div className="w-2/4 m-2 mt-4 ">Search for Doctors</div>

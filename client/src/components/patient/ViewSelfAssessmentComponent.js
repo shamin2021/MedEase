@@ -22,11 +22,13 @@ const ViewSelfAssessmentComponent = () => {
   const location = useLocation();
 
   const [selfassessments, setSelfAssessments] = useState([]);
+  const [medicalTest, setMedicalTest] = useState([])
 
 
   useEffect(() => {
     try {
       get(`/SelfAssessments/${id}`, setSelfAssessments);
+      get(`/MedicalAssessments/${id}`, setMedicalTest);
 
     } catch (err) {
       console.error(err);
@@ -35,12 +37,12 @@ const ViewSelfAssessmentComponent = () => {
   }, []);
 
   useEffect(() => {
-    console.log(selfassessments);
-  }, [selfassessments]);
+    console.log(medicalTest);
+  }, [medicalTest]);
 
   function InputGeneral(props) {
     return (
-      <div className="mt-2 text-[14px] ">
+      <div className="mt-5 text-[18px] ">
         <div
           className={` ${props.variant === "3" ? "hidden" : ""
             } text-[#797878]`}
@@ -99,7 +101,7 @@ const ViewSelfAssessmentComponent = () => {
 
   const calculateAge = (dateOfBirth) => {
     const dob = new Date(dateOfBirth);
-    const currentDate = new Date();
+    const currentDate = new Date(selfassessments.date);
 
     const ageInMilliseconds = currentDate - dob;
     const ageInYears = Math.floor(ageInMilliseconds / (365 * 24 * 60 * 60 * 1000));
@@ -110,9 +112,9 @@ const ViewSelfAssessmentComponent = () => {
   return (
     <GridItem colSpan={6}>
       <div>
-        <div className="py-1 bg-primary">
-          <div className="mx-auto flex rounded-md py-1 p-5">
-            <div className="parent flex md:w-3/12 shadow-xl rounded-md pb-2 py-1 bg-white m-3 mt-9 p-5">
+        <div className="py-1  bg-primary h-screen">
+          <div className="ml-[7%] mx-auto h-full flex rounded-md py-1 p-5 mt-[5%]">
+            <div className="parent flex md:w-3/12 shadow-xl rounded-md pb-2 py-1 h-3/4 bg-white m-3 mt-9 p-5">
               <div className="child mt-3 mb-3 md:w-[1px] bg-[#bebebe]"></div>
               <div className="md:w-full mt-4 ml-2">
                 <div className="container horizontal justify-center py-1">
@@ -126,16 +128,16 @@ const ViewSelfAssessmentComponent = () => {
                 </div>
               </div>
             </div>
-            <div className="parent flex md:w-7/12 shadow-xl rounded-md pb-2 py-1 bg-white m-3 mt-9 p-5">
+            <div className="parent flex md:w-7/12 shadow-xl rounded-md pb-2 py-1 h-3/4 bg-white m-3 mt-9 p-5">
               <div className=" md:w-full m-3">
-                <div className="flex justify-between">
-                  <div className="text-[18px] font-semibold mb-0">
+                <div className="flex justify-between mb-5 mt-5">
+                  <div className="text-[20px] font-semibold mb-0">
                     Assessment Information
                   </div>
                   <div className="w-1/4">
                     <button
-                      className="btn btn-primary text-[15px] bg-primary p-2 font-semibold"
-                      onClick={() => navigate(`/AddExamination`)}
+                      className="btn btn-primary text-[17px] bg-primary p-2 font-semibold"
+                      onClick={() => navigate(`/AddExamination/${id}`)}
                     >
                       Add Medical Data
                     </button>
@@ -147,19 +149,19 @@ const ViewSelfAssessmentComponent = () => {
                   fontFamily={("Poppins", "sans-serif")}
                 >
                   <TabList>
-                    <Tab fontSize={15} borderBottom={0} paddingLeft={0}>
+                    <Tab fontSize={18} borderBottom={0} paddingLeft={0}>
                       General
                     </Tab>
-                    <Tab fontSize={15} borderBottom={0}>
+                    <Tab fontSize={18} borderBottom={0}>
                       Family History
                     </Tab>
-                    <Tab fontSize={15} borderBottom={0}>
+                    <Tab fontSize={18} borderBottom={0}>
                       Prescriptions
                     </Tab>
-                    <Tab fontSize={15} borderBottom={0}>
+                    <Tab fontSize={18} borderBottom={0}>
                       Examination
                     </Tab>
-                    <Tab fontSize={15} borderBottom={0}>
+                    <Tab fontSize={18} borderBottom={0}>
                       Habits
                     </Tab>
                   </TabList>
@@ -174,34 +176,34 @@ const ViewSelfAssessmentComponent = () => {
                     <TabPanel padding={2}>
                       <div className="flex container horizontal justify-center py-1">
                         <div className="md:w-1/3 parent m-3 mt-0 ml-0">
-                          <InputGeneral name="Weight" data="No Medical Data" />
-                          <InputGeneral name="Height" data="No Medical Data" />
-                          <InputGeneral name="BMI" data="No Medical Data" />
+                          <InputGeneral name="Weight" data={medicalTest.weight? medicalTest.weight  : "No Medical Data"} />
+                          <InputGeneral name="Height" data={medicalTest.height ? medicalTest.height : "No Medical Data"} />
+                          <InputGeneral name="BMI" data={medicalTest.bmi ? medicalTest.bmi : "No Medical Data"} />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
                           <InputGeneral
                             name="Waist Circumference"
-                            data="No Medical Data"
+                            data={medicalTest.waistCircumference ? medicalTest.waistCircumference : "No Medical Data"}
                           />
                           <InputGeneral
                             name="Waist Height Ratio"
-                            data="No Medical Data"
+                            data={medicalTest.waistHeightRatio ? medicalTest.waistHeightRatio : "No Medical Data"}
                           />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
                           <InputGeneral
                             name="Hearing"
-                            dataR="No Data"
-                            dataL="No Data"
+                            dataR={medicalTest.hearingRight ? medicalTest.hearingRight : "No Medical Data"}
+                            dataL={medicalTest.hearingLeft ? medicalTest.hearingLeft : "No Medical Data"}
                             variant="2"
                           />
                           <InputGeneral
                             name="Vision"
-                            dataR="No Data"
-                            dataL="No Data"
+                            dataR={medicalTest.visionRight ? medicalTest.visionRight : "No Medical Data"}
+                            dataL={medicalTest.visionLeft ? medicalTest.visionLeft : "No Medical Data"}
                             variant="2"
                           />
-                          <InputGeneral name="Oral Examination" data="No Medical Data" />
+                          <InputGeneral name="Oral Examination" data={medicalTest.oralExamination ? medicalTest.oralExamination : "No Medical Data"} />
                         </div>
                       </div>
                     </TabPanel>
@@ -262,7 +264,7 @@ const ViewSelfAssessmentComponent = () => {
                       <div className="flex container horizontal justify-center py-1">
                         <div className="md:w-full parent m-3 mt-0 ml-0">
                           <div className="mt-2">
-                            <div className="text-[14px]  mb-3">
+                            <div className="text-[18px]  mb-3">
                               Prescriptions
                             </div>
 
@@ -280,17 +282,17 @@ const ViewSelfAssessmentComponent = () => {
                     <TabPanel padding={2}>
                       <div className="flex container horizontal justify-center py-1">
                         <div className="md:w-1/3 parent m-3 mt-0 ml-0">
-                          <InputGeneral name="Blood Sugar" data="No Medical Data" />
-                          <InputGeneral name="Serum Creatinin" data="No Medical Data" />
+                          <InputGeneral name="Blood Sugar" data={medicalTest.visionLeft ? medicalTest.visionLeft : "No Medical Data"} />
+                          <InputGeneral name="Serum Creatinin" data={medicalTest.visionLeft ? medicalTest.visionLeft : "No Medical Data"} />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
-                          <InputGeneral name="Lipid Profile TG" data="No Medical Data" />
-                          <InputGeneral name="Lipid TCHL" data="No Medical Data" />
-                          <InputGeneral name="Lipid Profile TC" data="No Medical Data" />
+                          <InputGeneral name="Lipid Profile TG" data={medicalTest.lipidTg ? medicalTest.lipidTg : "No Medical Data"} />
+                          <InputGeneral name="Lipid TCHL" data={medicalTest.lipidTCHL ? medicalTest.lipidTCHL : "No Medical Data"} />
+                          <InputGeneral name="Lipid Profile TC" data={medicalTest.lipidTC ? medicalTest.lipidTC : "No Medical Data"} />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
-                          <InputGeneral name="Lipid Profile LDL" data="No Medical Data" />
-                          <InputGeneral name="Lipid Profile HDL" data="No Medical Data" />
+                          <InputGeneral name="Lipid Profile LDL" data={medicalTest.lipidLDL ? medicalTest.lipidLDL : "No Medical Data"} />
+                          <InputGeneral name="Lipid Profile HDL" data={medicalTest.lipidHDL ? medicalTest.lipidHDL : "No Medical Data"} />
                         </div>
                       </div>
                     </TabPanel>

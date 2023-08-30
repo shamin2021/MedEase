@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { ChatEngine, getOrCreateChat } from 'react-chat-engine'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from "../hooks/useAuth";
+import { useLocation } from "react-router-dom";
 
 import '../styles/Chat.css';
 import { GridItem } from '@chakra-ui/react';
@@ -12,6 +13,15 @@ const DirectChatPage = () => {
 	const { auth, setAuth } = useAuth();
 	const [username, setUsername] = useState('')
 	const [navSize, changeNavSize] = React.useState("large");
+	const location = useLocation();
+
+	useEffect(() => {
+		const searchParams = new URLSearchParams(location.search);
+		const doctorName = searchParams.get("doctor");
+		if (doctorName) {
+			setUsername(doctorName);
+		}
+	}, [location.search]);
 
 	const data = {
 		"username": auth.first_name,
@@ -69,7 +79,7 @@ const DirectChatPage = () => {
 
 	return (
 		<GridItem colSpan={6}>
-			<div className="ml-[30px] h-screen bg-primary mt-[4%]">
+			<div className="ml-[30px] h-screen bg-primary mt-[7.5%]">
 				<ChatEngine
 					height='80vh'
 					width={navSize === "small" ? "calc(100% - 500px)" : "calc(100% - 300px)"}

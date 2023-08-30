@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { Docs } from '../Docs'
-import Table from "./TableHLC";
-import {
-  GridItem
-} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import Table from "./Table";
 import { FaSearch, FaPlus } from "react-icons/fa";
+import { GridItem } from '@chakra-ui/react';
+import { Link } from "react-router-dom";
 
-const SearchDoc = () => {
+const ManageDoctor = () => {
   const [query, setQuery] = useState("");
   const keys = ["first_name", "last_name", "email"];
   const search = (data) => {
@@ -16,11 +14,11 @@ const SearchDoc = () => {
     );
   };
   return (
-    <GridItem colSpan={6} >
-      <div className="h-screen py-1 bg-primary mt-[5%]">
-        <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-9 p-5">
+    <GridItem colSpan={6}>
+      <div className="h-screen py-1 bg-primary mt-[4%]">
+        <div className="md:w-3/4 mx-auto shadow-xl rounded-2xl pb-2 py-1 bg-white mt-2 p-5">
           <div className="ml-6 flex w-full">
-            <div className="w-2/4 m-2 mt-4 ">Search for HLC</div>
+            <div className="w-2/4 m-2 mt-5 ">Doctors</div>
             <div className=" w-2/4 m-2 mt-3">
               <div className="flex ">
                 <div className="w-1/12 h-[50px] mr-1 rounded-md bg-[#f5f5f5]">
@@ -31,12 +29,12 @@ const SearchDoc = () => {
                   placeholder="Search..."
                   onChange={(e) => setQuery(e.target.value.toLowerCase())}
                 />
-                <Link to={"/AddHLC"} className="w-1/4">
+                <Link to={"/AddDoctor"} className="w-1/4">
                   <button className=" h-[50px] bg-secondary text-[17px] rounded-md p-2 text-[#ffffff] font-semibold ">
                     <div className="flex mx-auto">
                       <FaPlus size={17} mt={1} />
                       <div className=" align-middle ml-1">
-                        Add HLC
+                        Add Doctor
                       </div>
                     </div>
                   </button>
@@ -51,4 +49,4 @@ const SearchDoc = () => {
   );
 }
 
-export default SearchDoc
+export default ManageDoctor
