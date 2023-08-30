@@ -67,36 +67,6 @@ const HLC = () => {
         display="flex"
         flexDirection="row"
         alignItems="center"
-        justifyContent="flex-end"
-        pb="25"
-      >
-        <Input
-          w="400px"
-          type="text"
-          placeholder="Search"
-          borderRadius="lg"
-          border="2px solid #909090"
-          size="sm"
-          mr="3"
-          pl="10"
-          pr="3"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <Button
-          colorScheme="teal"
-          // size="sm"
-          leftIcon={<HiSearch />}
-          onClick={handleSearch}
-        >
-        </Button>
-
-      </Flex>
-
-      <Flex
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
         justifyContent="space-between"
         spacing={10}
         pb="4"
