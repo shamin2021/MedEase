@@ -63,7 +63,6 @@ import HLCPatients from './pages/HLC/HLCPatients';
 import HLCSettings from './pages/HLC/HLCSettings';
 // import HLCProfile from './pages/HLC/HLCProfile';
 
-import AdminAdd from './pages/Admin/AdminAdd';
 import AddHLC from './pages/Admin/AddHLC';
 import AdminDoctor from './pages/Admin/AdminDoctor';
 import AdminPatient from './pages/Admin/AdminPatient';
@@ -94,8 +93,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/contact-us" element={<ContactUs />} />
 
 
           {/* protected routes  */}
@@ -107,6 +104,8 @@ function App() {
             <Route path="/test-components" element={<TestComponent />} />
             {/* <Route path="/message" element={<DirectChatPage />} /> */}
             <Route path="/findHLC" element={<FindHLC />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/contact-us" element={<ContactUs />} />
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />} >
               {/* routes allowed for all authenticated users */}
@@ -186,7 +185,7 @@ function App() {
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
-              <Route path="/AdminAdd" element={<AdminAdd />} />
+
               <Route path="/AdminDoctor" element={<AdminDoctor />} />
               <Route path="/AdminPatient" element={<AdminPatient />} />
               <Route path="/AdminSetting" element={<AdminSetting />} />

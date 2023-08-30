@@ -75,10 +75,10 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className='resetpw'>
+    <div className='resetpw h-screen py-5 px-5'>
       <Flex alignItems="center" >
         <Box w={{ base: '80%', md: '40%' }} ref={container} />
-        <Container maxW="md" py={{ base: '10', md: '150' }} px={{ base: '0', sm: '8' }}>
+        <Container maxW="md" py={{ base: '50', md: '150' }} px={{ base: '0', sm: '8' }}>
           <Stack spacing="6">
             <Stack spacing="6" align="center">
               <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
