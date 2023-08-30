@@ -23,6 +23,7 @@ public class RecommendationController {
 
     @GetMapping("")
     public ResponseEntity<?> getLifestyleInstruction() {
+        System.out.println("Getting all recommendations");
         return ResponseEntity.ok(this.recommendationRepository.findAll());
     }
 

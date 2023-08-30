@@ -75,6 +75,18 @@ const AddLifestyle = () => {
     }
   }
 
+  const handleAssignRecommendation = async (recommendation_id) => {
+    const assign = {
+      assignedRecommendationId: recommendation_id,
+      assigenedUserId: 52
+    }
+
+    try {
+      post('/assignedRecommendation/assignhandle', assign, setState)
+    } catch (err) {
+      console.error(err);
+    }
+  }
   useEffect(() => {
     if (!isOpen)
       getRecommendations();
@@ -139,9 +151,13 @@ const AddLifestyle = () => {
                     {recommendations.map((r) => {
                       return (
                         <div className="m-1 flex" key={r.recommendation_id}>
-                          <div className="w-2/4">{r.recommendation}</div>
-                          <div className="w-1/4">{r.frequency}</div>
-                          <div className="w-1/4">{r.type}</div>
+                          <div className="w-2/5">{r.recommendation}</div>
+                          <div className="w-1/5">{r.frequency}</div>
+                          <div className="w-1/5">{r.type}</div>
+                          <div className="w-1/5">
+                            {/* input type = check box. id = 'recommendation' + r.recommendation_id */}
+                            <input type="checkbox" id={'recommendation' + r.recommendation_id} onClick={handleAssignRecommendation(r.recommendation_id)} />
+                          </div>
                         </div>
                       )
                     })}
