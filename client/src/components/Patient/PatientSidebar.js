@@ -55,23 +55,6 @@ const PatientSidebar = () => {
                 <NavItem navSize={navSize} icon={FiCalendar} title="Lifestyle" href={"/Lifestyledashboard"} />
                 <NavItem navSize={navSize} icon={FiMessageSquare} title="Messaging" href={"/message"} />
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/PatientMeetings"} />
-                <NavItem navSize={navSize} icon={FiCalendar} title="Schedule" href={"/ScheduleMeeting"} />
-
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/PatientSettings"} />
-            </Flex>
-
-            <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>
-                <Divider display={navSize === "small" ? "none" : "flex"} />
-
-                <Flex mt={4} align="center">
-                    <Avatar size="sm" src="" />
-                    <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
-                        <Heading as="h3" size="sm">
-                            Asith Amarasekara
-                        </Heading>
-                        <Text color="gray">HLC</Text>
-                    </Flex>
-                </Flex>
             </Flex>
         </Flex>
     );

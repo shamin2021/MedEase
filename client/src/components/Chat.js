@@ -79,7 +79,7 @@ const DirectChatPage = () => {
 
 	return (
 		<GridItem colSpan={6}>
-			<div className="ml-[30px] h-screen bg-primary mt-[4%]">
+			<div className="ml-[30px] h-screen bg-primary mt-[7.5%]">
 				<ChatEngine
 					height='80vh'
 					width={navSize === "small" ? "calc(100% - 500px)" : "calc(100% - 300px)"}
