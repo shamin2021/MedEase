@@ -14,6 +14,7 @@ import com.medease.backend.repository.HlcRepository;
 import com.medease.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class UserRegistrationService {
     private final AuthenticationService authenticationService;
     private final DoctorRepository doctorRepository;
     private final HlcRepository hlcRepository;
+    private final UploadService uploadService;
 
     public List<DoctorSpeciality> getSpecialities() {
         return doctorSpecialityRepository.findAll();
@@ -58,6 +60,42 @@ public class UserRegistrationService {
                 .build();
 
         doctorRepository.save(doctor);
+
+        return GlobalResponseDTO.builder()
+                .status(200)
+                .message("Doctor Registered Successfully")
+                .build();
+    }
+
+    public GlobalResponseDTO addDoctorWithImage(String email, String firstname, String lastname, String licenseNumber, String mobileNumber, Integer speciality, MultipartFile image) {
+
+        var user = User.builder()
+                .firstname(firstname)
+                .lastname(lastname)
+                .email(email)
+                .mobileNumber(mobileNumber)
+                .role(Role.DOCTOR)
+                .activated(Boolean.FALSE)
+                .build();
+
+        var savedUser = userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        authenticationService.saveUserToken(savedUser, jwtToken);
+
+        DoctorSpeciality doctorSpeciality = DoctorSpeciality.builder()
+                .speciality_id(speciality)
+                .build();
+
+        var doctor = Doctor.builder()
+                .doctor_user(user)
+                .license_number(licenseNumber)
+                .speciality(doctorSpeciality)
+                .build();
+
+        doctorRepository.save(doctor);
+
+        // to upload image
+        uploadService.uploadImage(image,user);
 
         return GlobalResponseDTO.builder()
                 .status(200)

@@ -133,7 +133,7 @@ const NavBar = () => {
                                         bg={'teal.500'}
                                         size={'sm'}
                                         src={
-                                            ''
+                                            auth.profile_image ? `data:image/png;base64, ${auth.profile_image}` : null
                                         } // use response user image
                                     />
                                 </MenuButton>
