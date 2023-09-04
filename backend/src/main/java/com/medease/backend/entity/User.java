@@ -43,6 +43,7 @@ public class User implements UserDetails {
     private List<Token> tokens;
 
     private Boolean activated;
+    private Boolean enabled;
 
     // to get role
     @Override
@@ -70,9 +71,12 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public boolean isActivated() {

@@ -1,13 +1,11 @@
 package com.medease.backend.controller;
 
-import com.medease.backend.entity.User;
+import com.medease.backend.dto.GlobalResponseDTO;
+import com.medease.backend.dto.UserDTO;
 import com.medease.backend.service.UserManagementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +18,13 @@ public class UserManagementController {
     private final UserManagementService userManagementService;
 
     @GetMapping("/getUserList")
-    public ResponseEntity<List<User>> getAllUsers (){
+    public ResponseEntity<List<UserDTO>> getAllUsers (){
         return ResponseEntity.ok(userManagementService.getAllUsers());
+    }
+
+    @PutMapping("/manageUser/{id}")
+    public ResponseEntity<GlobalResponseDTO> manageUser (@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userManagementService.manageUser(id, userDTO.getEnabled()));
     }
 
 }

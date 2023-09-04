@@ -1,6 +1,5 @@
 package com.medease.backend.repository;
 
-import com.medease.backend.entity.Patient;
 import com.medease.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,8 +11,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
 
     @Query("""
-        select firstname,lastname,email,mobileNumber,activated from User
+        select id,firstname,lastname,email,mobileNumber,activated,enabled, role from User
     where role = 'PATIENT' or role = 'HLC' or role = 'DOCTOR'
 """)
-    List<User> retrieveUserList();
+    List<Object[]> retrieveUserList();
 }
