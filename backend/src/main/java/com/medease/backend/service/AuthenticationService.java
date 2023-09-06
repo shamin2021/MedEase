@@ -46,6 +46,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final EmailService emailService;
     // private final SmsService smsService;
+    private final UploadService uploadService;
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
@@ -105,15 +106,32 @@ public class AuthenticationService {
 
         revokeAllBearerTokens(user);
 
+        //to get profile image
+        String profileImage = uploadService.retrieveProfileImage(userID);
+
         saveUserToken(user, jwtToken);
-        return AuthenticationResponseDTO.builder()
-                .message("Logged In Successfully")
-                .accessToken(jwtToken)
-                .role(userRole)
-                .id(userID)
-                .firstname(firstname)
-                .lastname(lastname)
-                .build();
+
+        if(profileImage != null){
+            return AuthenticationResponseDTO.builder()
+                    .message("Logged In Successfully")
+                    .accessToken(jwtToken)
+                    .role(userRole)
+                    .id(userID)
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .profileImage(profileImage)
+                    .build();
+        }
+        else{
+            return AuthenticationResponseDTO.builder()
+                    .message("Logged In Successfully")
+                    .accessToken(jwtToken)
+                    .role(userRole)
+                    .id(userID)
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .build();
+        }
     }
 
 
@@ -193,14 +211,32 @@ public class AuthenticationService {
                 var firstname = userDetails.getFirstname();
                 var lastname = userDetails.getLastname();
 
-              var authResponse = AuthenticationResponseDTO.builder()
-                      .message("Refreshed Access Token")
-                      .accessToken(accessToken)
-                      .role(userRole)
-                      .id(userID)
-                      .firstname(firstname)
-                      .lastname(lastname)
-                      .build();
+                //to get profile image
+                String profileImage = uploadService.retrieveProfileImage(userID);
+                AuthenticationResponseDTO authResponse;
+
+                if(profileImage != null){
+                    authResponse = AuthenticationResponseDTO.builder()
+                            .message("Refreshed Access Token")
+                            .accessToken(accessToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .profileImage(profileImage)
+                            .build();
+                }
+                else {
+                    authResponse = AuthenticationResponseDTO.builder()
+                            .message("Refreshed Access Token")
+                            .accessToken(accessToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .build();
+                }
+
               new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }

@@ -11,8 +11,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
 
     @Query("""
-        select firstname,lastname,email,mobileNumber,activated from User
+        select id,firstname,lastname,email,mobileNumber,activated,enabled, role from User
     where role = 'PATIENT' or role = 'HLC' or role = 'DOCTOR'
 """)
-    List<User> retrieveUserList();
+    List<Object[]> retrieveUserList();
 }

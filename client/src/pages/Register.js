@@ -277,19 +277,6 @@ const Register = () => {
 
                                     <Stack spacing="4">
                                         <Button colorScheme='blue' type='submit' size="sm" isDisabled={!validEmail || !validPwd || !validMatch ? true : false}>Sign up</Button>
-                                        <HStack>
-                                            <Divider />
-                                            <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                                                or continue with
-                                            </Text>
-                                            <Divider />
-                                        </HStack>
-                                        <ButtonGroup variant="outline" spacing="2">
-                                            <Button key={'Google'} flexGrow={1} size="sm">
-                                                <VisuallyHidden>Sign up with {'Google'}</VisuallyHidden>
-                                                <FcGoogle />
-                                            </Button>
-                                        </ButtonGroup>
                                     </Stack>
                                 </Stack>
                             </form>

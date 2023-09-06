@@ -7,6 +7,7 @@ import com.medease.backend.service.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,8 +29,20 @@ public class UserRegistrationController {
     public ResponseEntity<GlobalResponseDTO> addDoctor(
             @RequestBody RegisterRequestDTO registerRequestDTO
     ) {
-        System.out.println(registerRequestDTO);
         return ResponseEntity.ok(userRegistrationService.addDoctor(registerRequestDTO));
+    }
+
+    @PostMapping("/register-doctor-image")
+    public ResponseEntity<GlobalResponseDTO> addDoctorWithImage(
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("email") String email,
+            @RequestParam("firstname") String firstname,
+            @RequestParam("lastname") String lastname,
+            @RequestParam("licenseNumber") String licenseNumber,
+            @RequestParam("mobileNumber") String mobileNumber,
+            @RequestParam("speciality") Integer speciality
+    ) {
+        return ResponseEntity.ok(userRegistrationService.addDoctorWithImage(email,firstname,lastname,licenseNumber,mobileNumber,speciality,image));
     }
 
     // register HLC

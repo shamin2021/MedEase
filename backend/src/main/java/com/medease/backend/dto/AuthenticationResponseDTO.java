@@ -26,4 +26,7 @@ public class AuthenticationResponseDTO {
 
     @JsonProperty("last_name")
     private String lastname;
+
+    @JsonProperty("profile_image")
+    private String profileImage;
 }

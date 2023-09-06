@@ -142,19 +142,6 @@ const Login = () => {
                                     </HStack>
                                     <Stack spacing="6">
                                         <Button colorScheme='blue' type='submit'>Sign in</Button>
-                                        <HStack>
-                                            <Divider />
-                                            <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                                                or continue with
-                                            </Text>
-                                            <Divider />
-                                        </HStack>
-                                        <ButtonGroup variant="outline" spacing="4">
-                                            <Button key={'Google'} flexGrow={1}>
-                                                <VisuallyHidden>Sign in with {'Google'}</VisuallyHidden>
-                                                <FcGoogle />
-                                            </Button>
-                                        </ButtonGroup>
                                     </Stack>
                                 </Stack>
                             </form>
