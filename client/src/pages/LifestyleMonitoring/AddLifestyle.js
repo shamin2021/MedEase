@@ -1,21 +1,22 @@
-import { React, useEffect, useState } from 'react'
+import { React, useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import Modal from "react-modal";
-import { GridItem } from "@chakra-ui/react";
-import useAxiosMethods from '../../hooks/useAxiosMethods';
+import { Checkbox, CheckboxGroup, GridItem } from "@chakra-ui/react";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
 
 const AddLifestyle = () => {
-
   const initial = {
-    frequency: 'Daily',
-    type: 'Diet',
-    recommendation: ''
-  }
+    frequency: "Daily",
+    type: "Diet",
+    recommendation: "",
+  };
 
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
+  const [assignedRecommendations, setAssignedRecommendations] = useState([]);
 
+  const [userId, setUserId] = useState(102); // Temporary user id
   const [frequency, setFrequency] = useState(initial.frequency);
   const [type, setType] = useState(initial.type);
   const [recommendation, setRecommendation] = useState(initial.recommendation);
@@ -32,29 +33,31 @@ const AddLifestyle = () => {
 
   const changeFrequency = (event) => {
     setFrequency(event.target.value);
-  }
+  };
 
   const changeType = (event) => {
     setType(event.target.value);
-  }
+  };
 
   const changeRecommendation = (event) => {
     setRecommendation(event.target.value);
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (recommendation === '') {
-      setState('Please enter a recommendation')
+    if (recommendation === "") {
+      setState("Please enter a recommendation");
     } else {
       // Handle form submission logic here
       const formData = {
-        frequency, type, recommendation
-      }
+        frequency,
+        type,
+        recommendation,
+      };
 
       try {
-        post('/recommendation', formData, setState)
+        post("/recommendation", formData, setState);
       } catch (err) {
         console.error(err);
       }
@@ -69,35 +72,63 @@ const AddLifestyle = () => {
 
   const getRecommendations = async () => {
     try {
-      get('/recommendation', setRecommendations);
+      get("/recommendation", setRecommendations);
     } catch (err) {
       console.error(err);
     }
-  }
+  };
+
+  const getAssignedRecommendations = async () => {
+    try {
+      get(`/assignedRecommendation/${userId}`, setAssignedRecommendations);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleAssignRecommendation = async (recommendation_id) => {
     const assign = {
       assignedRecommendationId: recommendation_id,
-      assigenedUserId: 52
-    }
-
+      assigenedUserId: userId,
+    };
     try {
-      post('/assignedRecommendation/assignhandle', assign, setState)
+      post("/assignedRecommendation/assign", assign, setState);
+      // if assign exists, delete it
+      if (
+        assignedRecommendations.some(
+          (ar) =>
+            ar.assignedRecommendationId === assign.assignedRecommendationId
+        )
+      ) {
+        setAssignedRecommendations(
+          assignedRecommendations.filter(
+            (ar) =>
+              ar.assignedRecommendationId !== assign.assignedRecommendationId
+          )
+        );
+      } else {
+        // if assign doesn't exist, add it
+        setAssignedRecommendations([...assignedRecommendations, assign]);
+      }
     } catch (err) {
       console.error(err);
     }
-  }
+  };
+
   useEffect(() => {
-    if (!isOpen)
-      getRecommendations();
-  }, [isOpen])
+    getAssignedRecommendations();
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) getRecommendations();
+  }, [isOpen]);
 
   const customStyles = {
     content: {
       width: "40%", // Set your desired width
       height: "60%", // Set your desired height
       margin: "auto",
-      borderRadius: "12px",// Center the modal
+      borderRadius: "12px", // Center the modal
     },
   };
 
@@ -155,11 +186,20 @@ const AddLifestyle = () => {
                           <div className="w-1/5">{r.frequency}</div>
                           <div className="w-1/5">{r.type}</div>
                           <div className="w-1/5">
-                            {/* input type = check box. id = 'recommendation' + r.recommendation_id */}
-                            <input type="checkbox" id={'recommendation' + r.recommendation_id} onClick={handleAssignRecommendation(r.recommendation_id)} />
+                            <Checkbox
+                              id={"recommendation" + r.recommendation_id}
+                              isChecked={assignedRecommendations.some(
+                                (ar) =>
+                                  ar.assignedRecommendationId ===
+                                  r.recommendation_id
+                              )}
+                              onChange={() => {
+                                handleAssignRecommendation(r.recommendation_id);
+                              }}
+                            />
                           </div>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 </div>
@@ -195,8 +235,14 @@ const AddLifestyle = () => {
                   <label className="form-label" htmlFor="licenseNumber">
                     Frequency
                   </label>
-                  <select className="form-input" id="recommendationFrequency" onChange={changeFrequency}>
-                    <option value="Daily" default>Daily</option>
+                  <select
+                    className="form-input"
+                    id="recommendationFrequency"
+                    onChange={changeFrequency}
+                  >
+                    <option value="Daily" default>
+                      Daily
+                    </option>
                     <option value="Weekly">Weekly</option>
                   </select>
                 </div>
@@ -205,7 +251,11 @@ const AddLifestyle = () => {
                   <label className="form-label" htmlFor="licenseNumber">
                     Type of Reccomendation
                   </label>
-                  <select className="form-input" id="recommendationType" onChange={changeType}>
+                  <select
+                    className="form-input"
+                    id="recommendationType"
+                    onChange={changeType}
+                  >
                     <option value="Diet">Diet</option>
                     <option value="Excercise">Excercise</option>
                     <option value="CheckUp">CheckUp</option>
@@ -216,7 +266,10 @@ const AddLifestyle = () => {
                   <label className="form-label" htmlFor="licenseNumber">
                     Reccomendation
                   </label>
-                  <textarea className=" border" onChange={changeRecommendation}></textarea>
+                  <textarea
+                    className=" border"
+                    onChange={changeRecommendation}
+                  ></textarea>
                 </div>
                 <div className="text-center">
                   <button className="bg-secondary w-1/4 rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 ">
@@ -236,6 +289,6 @@ const AddLifestyle = () => {
       </div>
     </GridItem>
   );
-}
+};
 
-export default AddLifestyle
+export default AddLifestyle;

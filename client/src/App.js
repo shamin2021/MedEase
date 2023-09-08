@@ -73,10 +73,6 @@ import DoctorMeetings from './pages/Doctor/DoctorMeetings';
 import DoctorSetting from './pages/Doctor/DoctorSetting';
 // import DoctorProfile from './pages/Doctor/DoctorProfile';
 
-
-import ViewWeeklyTasks from './pages/LifestyleMonitor/Patient/ViewWeeklyTasks';
-import AddWeeklyTasks from './pages/LifestyleMonitor/Staff/AddWeeklyTasks/AddWeeklyTasks';
-
 function App() {
 
   const ROLES = {

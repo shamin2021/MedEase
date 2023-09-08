@@ -1,6 +1,7 @@
 package com.medease.backend.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import com.medease.backend.entity.AssignedRecommendation;
 import com.medease.backend.repository.AssignedRecommendationRepository;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/assignedRecommendation")
 public class AssignedRecommendationController {
 
@@ -30,6 +32,15 @@ public class AssignedRecommendationController {
     @PostMapping("/assign")
     public ResponseEntity<?> assignRecommendation(@RequestBody AssignedRecommendation recommendation) {
         System.out.println(recommendation);
-        return ResponseEntity.ok(this.assignedRecommendationRepository.save(recommendation));
+
+        // if recommendation already exists, remove it. else add it
+        if (this.assignedRecommendationRepository.existsByAssigenedUserIdAndAssignedRecommendationId(
+                recommendation.getAssigenedUserId(),
+                recommendation.getAssignedRecommendationId())) {
+            this.assignedRecommendationRepository.delete(recommendation);
+        } else {
+            this.assignedRecommendationRepository.save(recommendation);
+        }
+        return ResponseEntity.ok("success");
     }
 }

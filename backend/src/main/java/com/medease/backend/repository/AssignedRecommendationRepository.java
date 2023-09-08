@@ -9,4 +9,7 @@ import com.medease.backend.entity.UserRecommendationId;
 
 public interface AssignedRecommendationRepository extends JpaRepository<AssignedRecommendation, UserRecommendationId> {
     List<AssignedRecommendation> findByAssigenedUserId(Integer user_id);
+
+    boolean existsByAssigenedUserIdAndAssignedRecommendationId(Integer assigenedUserId,
+            Integer assignedRecommendationId);
 }
