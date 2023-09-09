@@ -11,22 +11,43 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medease.backend.entity.AssignedRecommendation;
 import com.medease.backend.repository.AssignedRecommendationRepository;
+import com.medease.backend.repository.RecommendationRepository;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/assignedRecommendation")
 public class AssignedRecommendationController {
 
+    private final RecommendationRepository recommendationRepository;
     private final AssignedRecommendationRepository assignedRecommendationRepository;
 
-    public AssignedRecommendationController(AssignedRecommendationRepository assignedRecommendationRepository) {
+    public AssignedRecommendationController(RecommendationRepository recommendationRepository,
+            AssignedRecommendationRepository assignedRecommendationRepository) {
+        this.recommendationRepository = recommendationRepository;
         this.assignedRecommendationRepository = assignedRecommendationRepository;
     }
 
-    @GetMapping("/{user_id}")
-    public ResponseEntity<?> getAllAssignedRecommendations(@PathVariable("user_id") Integer userId) {
-        System.out.println("user id: " + userId);
-        return ResponseEntity.ok(this.assignedRecommendationRepository.findByAssigenedUserId(userId));
+    @GetMapping("/{patient_id}")
+    public ResponseEntity<?> getAllAssignedRecommendations(@PathVariable("patient_id") Integer patientId) {
+        System.out.println("user id: " + patientId);
+        return ResponseEntity.ok(this.assignedRecommendationRepository.findByAssigenedUserId(patientId));
+    }
+
+    @GetMapping("/patient/{patient_id}")
+    public ResponseEntity<?> getAllAssignedRecommendationsWithName(@PathVariable("patient_id") Integer patientId) {
+        System.out.println("user id: " + patientId);
+
+        // get all assigned recommendations
+        var assignedRecommendations = this.assignedRecommendationRepository.findByAssigenedUserId(patientId);
+
+        // for each assigned recommendation, get the recommendation details
+        var recommendations = assignedRecommendations.stream().map(assignedRecommendation -> {
+            return this.recommendationRepository.findById(assignedRecommendation.getAssignedRecommendationId())
+                    .orElse(null);
+        }).toList();
+
+        return ResponseEntity.ok(recommendations);
+
     }
 
     @PostMapping("/assign")
