@@ -58,6 +58,10 @@ import MeetingExpired from './pages/MeetingExpired';
 import Availability from './pages/Availability';
 import MeetingSchedule from './pages/Patient/MeetingSchedule';
 
+///////////
+import PatientReport from './pages/Reports/PatientReport';
+/////////////
+
 import AddDoctor from './pages/HLC/AddDoctor';
 import HLCPatients from './pages/HLC/HLCPatients';
 import HLCSettings from './pages/HLC/HLCSettings';
@@ -136,6 +140,8 @@ function App() {
               <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
               <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
               <Route path="/view-SelfAssessment/:id" element={<ViewSelfAssessmentComponent />} />
+              
+              <Route path="/PatientReport" element={<PatientReport />} />
             </Route >
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3]]} />} >
