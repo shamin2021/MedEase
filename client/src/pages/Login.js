@@ -56,6 +56,9 @@ const Login = () => {
             if (response.data.message === "Activate Your Account By Setting Up a Password") {
                 setErrorMsg(response.data.message);
             }
+            else if (response.data.message === "Account Disabled") {
+                setErrorMsg(response.data.message);
+            }
             else {
                 setAuth(response?.data);
                 setEmail('');

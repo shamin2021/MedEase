@@ -96,40 +96,47 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        createCookie(response ,refreshToken, refreshExpiration/1000);
-        var userRole = user.getRole();
-        var userID = user.getId();
-        var firstname = user.getFirstname();
-        var lastname = user.getLastname();
+        if (user.isEnabled()) {
+            var jwtToken = jwtService.generateToken(user);
+            var refreshToken = jwtService.generateRefreshToken(user);
+            createCookie(response ,refreshToken, refreshExpiration/1000);
+            var userRole = user.getRole();
+            var userID = user.getId();
+            var firstname = user.getFirstname();
+            var lastname = user.getLastname();
 
-        revokeAllBearerTokens(user);
+            revokeAllBearerTokens(user);
 
-        //to get profile image
-        String profileImage = uploadService.retrieveProfileImage(userID);
+            //to get profile image
+            String profileImage = uploadService.retrieveProfileImage(userID);
 
-        saveUserToken(user, jwtToken);
+            saveUserToken(user, jwtToken);
 
-        if(profileImage != null){
-            return AuthenticationResponseDTO.builder()
-                    .message("Logged In Successfully")
-                    .accessToken(jwtToken)
-                    .role(userRole)
-                    .id(userID)
-                    .firstname(firstname)
-                    .lastname(lastname)
-                    .profileImage(profileImage)
-                    .build();
+            if(profileImage != null){
+                return AuthenticationResponseDTO.builder()
+                        .message("Logged In Successfully")
+                        .accessToken(jwtToken)
+                        .role(userRole)
+                        .id(userID)
+                        .firstname(firstname)
+                        .lastname(lastname)
+                        .profileImage(profileImage)
+                        .build();
+            }
+            else{
+                return AuthenticationResponseDTO.builder()
+                        .message("Logged In Successfully")
+                        .accessToken(jwtToken)
+                        .role(userRole)
+                        .id(userID)
+                        .firstname(firstname)
+                        .lastname(lastname)
+                        .build();
+            }
         }
         else{
             return AuthenticationResponseDTO.builder()
-                    .message("Logged In Successfully")
-                    .accessToken(jwtToken)
-                    .role(userRole)
-                    .id(userID)
-                    .firstname(firstname)
-                    .lastname(lastname)
+                    .message("Account Disabled")
                     .build();
         }
     }
@@ -188,6 +195,7 @@ public class AuthenticationService {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String refreshToken = null;
         final String userEmail;
+        AuthenticationResponseDTO authResponse;
 
         refreshToken = getRefreshTokenFromCookie(request);
 
@@ -202,43 +210,45 @@ public class AuthenticationService {
             var userDetails = this.userRepository.findByEmail(userEmail)
                     .orElseThrow();
 
-            if(jwtService.isTokenValid(refreshToken, userDetails)) {
-              var accessToken = jwtService.generateToken(userDetails);
-                revokeAllBearerTokens(userDetails);
-                saveUserToken(userDetails, accessToken);
-                var userRole = userDetails.getRole();
-                var userID = userDetails.getId();
-                var firstname = userDetails.getFirstname();
-                var lastname = userDetails.getLastname();
+            if(userDetails.isEnabled()){
+                if(jwtService.isTokenValid(refreshToken, userDetails)) {
+                    var accessToken = jwtService.generateToken(userDetails);
+                    revokeAllBearerTokens(userDetails);
+                    saveUserToken(userDetails, accessToken);
+                    var userRole = userDetails.getRole();
+                    var userID = userDetails.getId();
+                    var firstname = userDetails.getFirstname();
+                    var lastname = userDetails.getLastname();
 
-                //to get profile image
-                String profileImage = uploadService.retrieveProfileImage(userID);
-                AuthenticationResponseDTO authResponse;
+                    //to get profile image
+                    String profileImage = uploadService.retrieveProfileImage(userID);
 
-                if(profileImage != null){
-                    authResponse = AuthenticationResponseDTO.builder()
-                            .message("Refreshed Access Token")
-                            .accessToken(accessToken)
-                            .role(userRole)
-                            .id(userID)
-                            .firstname(firstname)
-                            .lastname(lastname)
-                            .profileImage(profileImage)
-                            .build();
+                    if(profileImage != null){
+                        authResponse = AuthenticationResponseDTO.builder()
+                                .message("Refreshed Access Token")
+                                .accessToken(accessToken)
+                                .role(userRole)
+                                .id(userID)
+                                .firstname(firstname)
+                                .lastname(lastname)
+                                .profileImage(profileImage)
+                                .build();
+                    }
+                    else {
+                        authResponse = AuthenticationResponseDTO.builder()
+                                .message("Refreshed Access Token")
+                                .accessToken(accessToken)
+                                .role(userRole)
+                                .id(userID)
+                                .firstname(firstname)
+                                .lastname(lastname)
+                                .build();
+                    }
+
+                    new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
                 }
-                else {
-                    authResponse = AuthenticationResponseDTO.builder()
-                            .message("Refreshed Access Token")
-                            .accessToken(accessToken)
-                            .role(userRole)
-                            .id(userID)
-                            .firstname(firstname)
-                            .lastname(lastname)
-                            .build();
-                }
-
-              new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
+
         }
     }
 
