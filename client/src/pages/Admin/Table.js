@@ -2,9 +2,9 @@ import "../../styles/Table.css";
 import Doc from "../../assets/Doc.jpg";
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const UserTable = ({ data, status }) => {
+const UserTable = ({ data, status, clicked }) => {
 
   const [res, setRes] = useState('');
 
@@ -14,26 +14,31 @@ const UserTable = ({ data, status }) => {
 
 
   const handleUser = (id, disable) => {
-    // if (disable === true) {
-    //   try {
-    //     put(`/admin/manageUser/${id}`, { enabled:false }, setRes);
+    if (disable === true) {
+      try {
+        put(`/admin/manageUser/${id}`, { enabled:false }, setRes);
 
-    //   } catch (err) {
-    //     console.error(err);
-    //     navigate('/login', { state: { from: location }, replace: true });
-    //   }
-    // }
-    // else {
-    //   try {
-    //     put(`/admin/manageUser/${id}`, { enabled: true }, setRes);
+      } catch (err) {
+        console.error(err);
+        navigate('/login', { state: { from: location }, replace: true });
+      }
+    }
+    else {
+      try {
+        put(`/admin/manageUser/${id}`, { enabled: true }, setRes);
 
-    //   } catch (err) {
-    //     console.error(err);
-    //     navigate('/login', { state: { from: location }, replace: true });
-    //   }
-    // }
+      } catch (err) {
+        console.error(err);
+        navigate('/login', { state: { from: location }, replace: true });
+      }
+    }
   }
 
+  useEffect(() => {
+    if (res.status === 200) {
+      clicked(true);
+    }
+  }, [res]);
 
   return (
     <>
@@ -48,25 +53,28 @@ const UserTable = ({ data, status }) => {
         <div>
           <div className="h-96 overflow-y-scroll mb-2">
             {data.map((item) => (
+              
               <>
                 <div className=" flex mt-1 text-[17px] font-medium p-1 rounded-lg hover:">
                   <div className="w-1/4 m-1 flex ">
                     <img
                       className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                       src={Doc}
-                      alt="Doctor Profile"
+                      alt="Profile Img"
                     />
-                    <div className="w-3/4 ml-3">{item.firstname + " " + item.lastname}</div>
+                    <div className="w-3/4 ml-3">
+                      {item.role === "HLC" ? item.firstname : item.firstname + " " + item.lastname}
+                    </div>
                   </div>
                   <div className="w-1/4 m-1">{item.email}</div>
                   <div className="w-1/4 m-1">{item.role}</div>
                   <div className="w-1/4 m-1">
                     {status === true ? (
-                      <button className="p-1 bg-[#eb5a5a] text-white rounded-md hover:bg-red-600" onClick={handleUser(item.id, true)}>
+                      <button className="p-1 bg-[#eb5a5a] text-white rounded-md hover:bg-red-600" onClick={() => handleUser(item.id, true)}>
                         Disable
                       </button>
                     ) : (
-                      <button className="p-1 bg-[#5aeb7e] text-white rounded-md hover:bg-green-600" onClick={handleUser(item.id, false)}>
+                      <button className="p-1 bg-[#5aeb7e] text-white rounded-md hover:bg-green-600" onClick={() => handleUser(item.id, false)}>
                         Enable
                       </button>
                     )}
