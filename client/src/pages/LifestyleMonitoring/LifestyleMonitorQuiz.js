@@ -98,6 +98,9 @@ const LifestyleMonitorQuiz = () => {
   const [quizData, setQuizData] = useState(null); // {completedQuizzes: [], recommendations: []}
   const [assignedRecommendations, setAssignedRecommendations] = useState([]);
   const [completedQuizzes, setCompletedQuizzes] = useState([]);
+  const [totalRecommendations, setTotalRecommendations] = useState(0); // total number of recommendations for this week
+  const [completedRecommendations, setCompletedRecommendations] = useState(0); // total number of completed recommendations for this week
+  const [percentage, setPercentage] = useState(0); // percentage of completed recommendations for this week
 
   const { get, post } = useAxiosMethods();
 
@@ -107,6 +110,18 @@ const LifestyleMonitorQuiz = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const calculateTotalRecommendations = (assignedRecommendations) => {
+    let total = 0;
+    assignedRecommendations.forEach((recommendation) => {
+      if (recommendation.frequency === "Weekly") {
+        total += 1;
+      } else {
+        total += 7;
+      }
+    });
+    return total;
   };
 
   const handleMarkComplete = async (recommendationId, day_num) => {
@@ -130,12 +145,20 @@ const LifestyleMonitorQuiz = () => {
   }, []);
 
   useEffect(() => {
+    setPercentage(
+      Math.round((completedRecommendations / totalRecommendations) * 100)
+    );
+  }, [completedRecommendations, totalRecommendations]);
+
+  useEffect(() => {
     if (quizData != null && quizData.recommendations !== undefined) {
       setAssignedRecommendations(quizData.recommendations);
+      setTotalRecommendations(calculateTotalRecommendations(quizData.recommendations));
     }
 
     if (quizData != null && quizData.completedQuizzes !== undefined) {
       setCompletedQuizzes(quizData.completedQuizzes);
+      setCompletedRecommendations(quizData.completedQuizzes.length);
     }
   }, [quizData]);
 
