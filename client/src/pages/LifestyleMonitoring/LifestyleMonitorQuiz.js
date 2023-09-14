@@ -7,6 +7,7 @@ import {
   TabPanel,
   TabIndicator,
   Progress,
+  Checkbox,
 } from "@chakra-ui/react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -15,42 +16,72 @@ import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { NAVBARHEIGHT } from "../../components/NavBar";
 
 const daysOfWeek = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  { day_num: 0, name: "Sunday" },
+  { day_num: 1, name: "Monday" },
+  { day_num: 2, name: "Tuesday" },
+  { day_num: 3, name: "Wednesday" },
+  { day_num: 4, name: "Thursday" },
+  { day_num: 5, name: "Friday" },
+  { day_num: 6, name: "Saturday" },
 ];
 
 const percentage = 66;
 
 function InputGeneral(props) {
+  const recommendation = props.recommendation;
+  const completedQuizzes = props.completedQuizzes;
+
+  // get all completed quizzes for this recommendation
+  const completedQuiz = completedQuizzes.filter(
+    (quiz) => quiz.assignedRecommendationId === recommendation.recommendation_id
+  );
+
   return (
     <div className="mt-2 text-[18px] ">
       <div className="flex  mb-2">
         <div className="flex w-3/4">
-          {props.type === "Weekly" ? (
-            <input type="checkbox" className="mr-3 w-[18px]"></input>
+          {recommendation.frequency === "Weekly" ? (
+            <Checkbox
+              isChecked={completedQuiz.length > 0}
+              onChange={() =>
+                props.handleCheck(recommendation.recommendation_id, 0)
+              }
+              className="mr-3 w-[18px]"
+            />
           ) : (
             ""
           )}
-          <div className="text-[#797878] p-1 ">{props.name}</div>
+          <div className="text-[#797878] p-1 ">
+            {recommendation.recommendation}
+          </div>
         </div>
         <div className="text-[#797878] w-1/5 bg-primary p-1 rounded-md text-center">
           {" "}
-          {props.type === "Weekly" ? "Weekly" : "Daily"}
+          {recommendation.frequency === "Weekly" ? "Weekly" : "Daily"}
         </div>
       </div>
-      {props.type === "Weekly" ? (
+      {recommendation.frequency === "Weekly" ? (
         ""
       ) : (
         <>
           {daysOfWeek.map((day, index) => (
-            <div className="flex w-3/4">
-              <input type="checkbox" className="mr-3 w-[15px]"></input>
-              <div className="text-[#797878]">{day}</div>
+            <div className="flex w-3/4" key={day.day_num}>
+              <Checkbox
+                id={day.day_num}
+                isChecked={
+                  completedQuiz.length > 0 &&
+                  completedQuiz.filter((quiz) => quiz.dayNumber === day.day_num)
+                    .length > 0
+                }
+                onChange={() =>
+                  props.handleCheck(
+                    recommendation.recommendation_id,
+                    day.day_num
+                  )
+                }
+                className="mr-3 w-[15px]"
+              />
+              <div className="text-[#797878]">{day.name}</div>
             </div>
           ))}
         </>
@@ -63,16 +94,32 @@ function InputGeneral(props) {
 
 const LifestyleMonitorQuiz = () => {
   const [userId, setUserId] = useState(102); // Temporary user id
+  const [state, setState] = useState(null);
+  const [quizData, setQuizData] = useState(null); // {completedQuizzes: [], recommendations: []}
   const [assignedRecommendations, setAssignedRecommendations] = useState([]);
+  const [completedQuizzes, setCompletedQuizzes] = useState([]);
 
   const { get, post } = useAxiosMethods();
 
   const getAssignedRecommendations = async () => {
     try {
-      get(
-        `/assignedRecommendation/patient/${userId}`,
-        setAssignedRecommendations
-      );
+      get(`/completeQuiz/${userId}/4`, setQuizData);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleMarkComplete = async (recommendationId, day_num) => {
+    const data = {
+      assigenedUserId: userId,
+      assignedRecommendationId: recommendationId,
+      weekNumber: 4,
+      dayNumber: day_num,
+    };
+
+    try {
+      post("/completeQuiz/mark", data, setState);
+      getAssignedRecommendations(); // ToDo: This is a temporary fix. Need to update the state of completedQuizzes
     } catch (err) {
       console.error(err);
     }
@@ -81,6 +128,16 @@ const LifestyleMonitorQuiz = () => {
   useEffect(() => {
     getAssignedRecommendations();
   }, []);
+
+  useEffect(() => {
+    if (quizData != null && quizData.recommendations !== undefined) {
+      setAssignedRecommendations(quizData.recommendations);
+    }
+
+    if (quizData != null && quizData.completedQuizzes !== undefined) {
+      setCompletedQuizzes(quizData.completedQuizzes);
+    }
+  }, [quizData]);
 
   return (
     <GridItem colSpan={6} mx={4} mt={NAVBARHEIGHT}>
@@ -120,8 +177,10 @@ const LifestyleMonitorQuiz = () => {
                       {assignedRecommendations.map((recommendation) => {
                         return (
                           <InputGeneral
-                            name={recommendation.recommendation}
-                            type={recommendation.frequency}
+                            key={recommendation.recommendation_id}
+                            recommendation={recommendation}
+                            completedQuizzes={completedQuizzes}
+                            handleCheck={handleMarkComplete}
                           ></InputGeneral>
                         );
                       })}
