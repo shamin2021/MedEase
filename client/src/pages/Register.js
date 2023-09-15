@@ -36,6 +36,8 @@ const Register = () => {
     const [errMsg, setErrMsg] = useState(null)
     const [success, setSuccess] = useState(false);
 
+    const chosenHlcName = localStorage.getItem("HLCName")
+
     useEffect(() => {
         setvalidEmail(EMAIL_REGEX.test(email));
     }, [email])
@@ -66,10 +68,9 @@ const Register = () => {
             return;
         }
 
-        console.log(gender, dob);
         try {
             const response = await axios.post('/auth/register',
-                JSON.stringify({ email, password, firstname: firstName, lastname: lastName, dob, gender }),
+                JSON.stringify({ email, password, firstname: firstName, lastname: lastName, dob, gender, chosenHlcName }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true

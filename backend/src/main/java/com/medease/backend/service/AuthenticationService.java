@@ -57,6 +57,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.PATIENT)
                 .activated(Boolean.TRUE)
+                .enabled(Boolean.TRUE)
                 .build();
         var savedUser = userRepository.save(user);
 
@@ -65,6 +66,7 @@ public class AuthenticationService {
                 .gender(request.getGender())
                 .dob(request.getDob())
                 .patient_user(user)
+                .patient_hlc_name(request.getChosenHlcName())
                 .build();
 
         patientRepository.save(patient);

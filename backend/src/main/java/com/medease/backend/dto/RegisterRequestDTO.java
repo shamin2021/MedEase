@@ -22,6 +22,7 @@ public class RegisterRequestDTO {
     private String password;
     private Gender gender;
     private LocalDate dob;
+    private String chosenHlcName;
 
     private String licenseNumber;
     private Integer speciality;

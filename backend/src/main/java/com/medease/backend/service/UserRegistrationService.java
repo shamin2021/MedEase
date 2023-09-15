@@ -43,6 +43,7 @@ public class UserRegistrationService {
                 .mobileNumber(registerRequestDTO.getMobileNumber())
                 .role(Role.DOCTOR)
                 .activated(Boolean.FALSE)
+                .enabled(Boolean.TRUE)
                 .build();
 
         var savedUser = userRepository.save(user);
@@ -76,6 +77,7 @@ public class UserRegistrationService {
                 .mobileNumber(mobileNumber)
                 .role(Role.DOCTOR)
                 .activated(Boolean.FALSE)
+                .enabled(Boolean.TRUE)
                 .build();
 
         var savedUser = userRepository.save(user);
@@ -111,6 +113,7 @@ public class UserRegistrationService {
                 .firstname(registerRequestDTO.getHlc_name())
                 .role(Role.HLC)
                 .activated(Boolean.FALSE)
+                .enabled(Boolean.TRUE)
                 .build();
 
         var savedUser = userRepository.save(user);

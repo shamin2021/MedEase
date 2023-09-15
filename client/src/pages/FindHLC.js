@@ -72,7 +72,6 @@ const FindHLC = () => {
             content: infoContent,
           });
 
-          console.log(currentInfoWindow)
           if (currentInfoWindow) {
             currentInfoWindow.close();
           }
