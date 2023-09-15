@@ -15,8 +15,6 @@ const FindHLC = () => {
   const [map, setMap] = useState(null);
   const [currentInfoWindow, setCurrentInfoWindow] = useState(null)
 
-  let infoContent = null
-  let infowindow = null
   let infoWindowTimeout = null
 
   const navigate = useNavigate();
@@ -68,9 +66,9 @@ const FindHLC = () => {
             title: nearestPoint.name,
           });
 
-          infoContent = renderInfoContentToString(nearestPoint.name);
+          const infoContent = renderInfoContentToString(nearestPoint.name);
 
-          infowindow = new window.google.maps.InfoWindow({
+          const infowindow = new window.google.maps.InfoWindow({
             content: infoContent,
           });
 
@@ -140,9 +138,9 @@ const FindHLC = () => {
         });
 
         // to change the object to a string
-        infoContent = renderInfoContentToString(item.name);
+        const infoContent = renderInfoContentToString(item.name);
 
-        infowindow = new window.google.maps.InfoWindow({
+        const infowindow = new window.google.maps.InfoWindow({
           content: infoContent,
         });
 
