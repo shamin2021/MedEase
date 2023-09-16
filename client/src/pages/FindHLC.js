@@ -16,6 +16,7 @@ const FindHLC = () => {
   const [currentInfoWindow, setCurrentInfoWindow] = useState(null)
 
   let infoWindowTimeout = null
+  const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 
   const navigate = useNavigate();
   const { auth } = useAuth();
@@ -24,7 +25,7 @@ const FindHLC = () => {
     try {
       // get geocordinates
       const geocodingResponse = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=AIzaSyDDsKlSr8ztzjLoj0tYshjsvuUAlbGI_rI`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=${apiKey}`
       );
       const geocodingData = await geocodingResponse.json();
 
@@ -192,12 +193,11 @@ const FindHLC = () => {
 
     // to load google api script 
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDDsKlSr8ztzjLoj0tYshjsvuUAlbGI_rI&libraries=geometry`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=geometry`;
     script.onload = () => {
       fetchLocations();
     }
     document.body.appendChild(script);
-
   }, [])
 
   return (
