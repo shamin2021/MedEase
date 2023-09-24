@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -142,6 +143,7 @@ public class AuthenticationService {
                 var hlc = hlcRepository.findHLCById(userID);
                 String[] hlcDetails = hlc.split(",");
                 String hlcName = hlcDetails[0].trim();
+                System.out.println(Arrays.toString(hlcDetails));
 
                 if(profileImage != null){
                     return AuthenticationResponseDTO.builder()
@@ -258,26 +260,59 @@ public class AuthenticationService {
                     //to get profile image
                     String profileImage = uploadService.retrieveProfileImage(userID);
 
-                    if(profileImage != null){
-                        authResponse = AuthenticationResponseDTO.builder()
-                                .message("Refreshed Access Token")
-                                .accessToken(accessToken)
-                                .role(userRole)
-                                .id(userID)
-                                .firstname(firstname)
-                                .lastname(lastname)
-                                .profileImage(profileImage)
-                                .build();
+                    if(userRole != Role.HLC) {
+                        if(profileImage != null){
+                            authResponse = AuthenticationResponseDTO.builder()
+                                    .message("Logged In Successfully")
+                                    .accessToken(accessToken)
+                                    .role(userRole)
+                                    .id(userID)
+                                    .firstname(firstname)
+                                    .lastname(lastname)
+                                    .profileImage(profileImage)
+                                    .build();
+                        }
+                        else{
+                            authResponse = AuthenticationResponseDTO.builder()
+                                    .message("Logged In Successfully")
+                                    .accessToken(accessToken)
+                                    .role(userRole)
+                                    .id(userID)
+                                    .firstname(firstname)
+                                    .lastname(lastname)
+                                    .build();
+                        }
                     }
                     else {
-                        authResponse = AuthenticationResponseDTO.builder()
-                                .message("Refreshed Access Token")
-                                .accessToken(accessToken)
-                                .role(userRole)
-                                .id(userID)
-                                .firstname(firstname)
-                                .lastname(lastname)
-                                .build();
+
+                        var hlc = hlcRepository.findHLCById(userID);
+                        String[] hlcDetails = hlc.split(",");
+                        String hlcName = hlcDetails[0].trim();
+                        System.out.println(Arrays.toString(hlcDetails));
+
+                        if(profileImage != null){
+                            authResponse = AuthenticationResponseDTO.builder()
+                                    .message("Logged In Successfully")
+                                    .accessToken(accessToken)
+                                    .role(userRole)
+                                    .id(userID)
+                                    .firstname(firstname)
+                                    .lastname(lastname)
+                                    .hlcName(hlcName)
+                                    .profileImage(profileImage)
+                                    .build();
+                        }
+                        else{
+                            authResponse = AuthenticationResponseDTO.builder()
+                                    .message("Logged In Successfully")
+                                    .accessToken(accessToken)
+                                    .role(userRole)
+                                    .id(userID)
+                                    .firstname(firstname)
+                                    .lastname(lastname)
+                                    .hlcName(hlcName)
+                                    .build();
+                        }
                     }
 
                     new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
