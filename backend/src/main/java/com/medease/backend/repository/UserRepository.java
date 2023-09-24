@@ -15,4 +15,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     where role = 'PATIENT' or role = 'HLC' or role = 'DOCTOR'
 """)
     List<Object[]> retrieveUserList();
+
+    @Query("""
+        select id,firstname,lastname,email,mobileNumber from User
+    where role = 'PATIENT'
+""")
+    List<Object[]> retrievePatientList();
 }

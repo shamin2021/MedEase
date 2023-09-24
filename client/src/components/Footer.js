@@ -1,5 +1,6 @@
 import { Box, Text, Flex } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react';
+import logo from '../assets/logo.svg';
 
 const Footer = () => {
 
@@ -23,9 +24,9 @@ const Footer = () => {
                         ml: 4,
                     }}>
                     <Image
-                        src="https://imageupload.io/ib/sMW6PGyr7rrBLxa_1690297021.png"
+                        src={logo}
                         alt="Logo"
-                        width={120}
+                        width={150}
                     />
                 </Flex>
                 <Text pt={6} fontSize={'sm'} textAlign={'center'}>

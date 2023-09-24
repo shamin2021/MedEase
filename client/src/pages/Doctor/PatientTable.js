@@ -17,25 +17,26 @@ const Table = ({ data }) => {
                     <div className=" h-96 overflow-y-scroll mb-2">
                         {data.map((item) => (
                             <>
-                                <Link to={`/PatientProfile/${item.id}`}>
+                                <Link to={`/PatientProfile/${item.patient_id}`}>
                                     <div className=" flex mt-4 text-[15px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                                         <div className="w-1/5 m-1 flex ">
                                             <img
                                                 className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                                                 src={Doc}
+                                                alt="User Img"
                                             />
-                                            <div className="w-3/4 ml-6">{item.first_name}</div>
+                                            <div className="w-3/4 ml-6">{item.firstname}</div>
                                         </div>
-                                        <div className="w-1/5 m-1">{item.last_name}</div>
+                                        <div className="w-1/5 m-1">{item.lastname}</div>
                                         <div className="w-1/5 m-1">{item.email}</div>
                                         <div className="w-1/5 m-1">{item.gender}</div>
                                         <div className="w-2/5 m-1 text-center">
-                                            <Link to={"/AddLifestyle"}>
+                                            <Link to={`/AddLifestyle/${item.patient_id}`}>
                                                 <button className="p-2 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white">
                                                     Lifestyle Tips
                                                 </button>
                                             </Link>
-                                            <Link to={"/AddPrescription"}>
+                                            <Link to={`/AddPrescription/${item.patient_id}`}>
                                                 <button
                                                     href={"/patient"}
                                                     className="p-2 ml-3 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white"

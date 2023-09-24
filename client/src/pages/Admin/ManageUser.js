@@ -16,56 +16,73 @@ import { useNavigate, useLocation } from "react-router-dom";
 const ManageUser = () => {
 
   const [query, setQuery] = useState("");
-  const keys = ["firstname", "lastname", "email"];
   const [users, setUsers] = useState([]);
   const [enabledUsers, setEnabledUsers] = useState([]);
   const [disabledUsers, setDisabledUsers] = useState([]);
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [initializedSearch, setInitializedSearch] = useState(false);
+  const [stateChaged, setStateChanged] = useState(false);
 
   const { get } = useAxiosMethods();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const search = (data) => {
-    return data.filter((item) =>
-      keys.some((key) => item[key].toLowerCase().includes(query))
-    );
+  const search = () => {
+
+    setSearchedUsers(users.filter((item) => {
+      if (item.role === "HLC") {
+        return (
+          item.hlc_name.toLowerCase().includes(query) ||
+          item.email.toLowerCase().includes(query)
+        );
+      }
+      else {
+        return (
+          item.firstname.toLowerCase().includes(query) ||
+          item.lastname.toLowerCase().includes(query) ||
+          item.email.toLowerCase().includes(query)
+        );
+      }
+    }));
   };
 
-  // const search = (searchString) => {
-  //   return users.filter((item) =>
-  //     item.firstname.toLowerCase().includes(searchString) ||
-  //     item.lastname.toLowerCase().includes(searchString) ||
-  //     item.email.toLowerCase().includes(searchString)
-  //   );
-  // };
-
-  const handleSearch = (value) => {
-    setQuery(value);
-    console.log(query)
-    // search(enabledUsers)
-  }
-
-  const getUsers = async () => {
+  useEffect(() => {
     try {
       get("/admin/getUserList", setUsers)
-
-      setEnabledUsers(users.filter((item) => item.enabled === true))
-      setDisabledUsers(users.filter((item) => item.enabled === false))
-      console.log(enabledUsers)
 
     } catch (err) {
       console.error(err);
       navigate('/login', { state: { from: location }, replace: true });
     }
-  };
+  }, [stateChaged]);
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getUsers();
-    };
+    if (users.length > 0) {
+      console.log(users);
+      if (searchedUsers.length === 0 && !initializedSearch) {
+        setSearchedUsers(users)
+        setInitializedSearch(true)
+      }
+      console.log(searchedUsers);
+      setEnabledUsers(searchedUsers.filter((item) => item.enabled === true))
+      setDisabledUsers(searchedUsers.filter((item) => item.enabled === false))
+    }
+  }, [users, searchedUsers]);
 
-    fetchData();
+  useEffect(() => {
+    search();
+    setStateChanged(false);
   }, [users]);
+
+  useEffect(() => {
+    if (query !== "") {
+      search();
+      console.log(query);
+    } else {
+      setSearchedUsers(users);
+    }
+  }, [query]);
 
   return (
     <GridItem colSpan={6} >
@@ -81,7 +98,7 @@ const ManageUser = () => {
                 <input
                   className="w-full h-[40px] text-[17px] rounded-md bg-[#f5f5f5] p-3 mr-3 border-none"
                   placeholder="Search..."
-                  onChange={(e) => handleSearch(e.target.value.toLowerCase())}
+                  onChange={(e) => setQuery(e.target.value.toLowerCase())}
                 />
               </div>
             </div>
@@ -110,10 +127,10 @@ const ManageUser = () => {
               <TabPanels>
                 {/* should send either enabled or disable user arrays */}
                 <TabPanel padding={2}>
-                  <div>{<Table data={enabledUsers} status={true} />}</div>
+                  <div>{<Table data={enabledUsers} status={true} clicked={setStateChanged} />}</div>
                 </TabPanel>
                 <TabPanel padding={2}>
-                  <div>{<Table data={disabledUsers} status={false} />}</div>
+                  <div>{<Table data={disabledUsers} status={false} clicked={setStateChanged} />}</div>
                 </TabPanel>
               </TabPanels>
             </Tabs>

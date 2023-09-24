@@ -7,7 +7,6 @@ const AboutUs = () => {
   return (
     <Box bg="#DCECF8">
       <Hero />
-      <Footer />
     </Box>
   );
 };

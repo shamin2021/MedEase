@@ -22,6 +22,7 @@ public class RegisterRequestDTO {
     private String password;
     private Gender gender;
     private LocalDate dob;
+    private String chosenHlcName;
 
     private String licenseNumber;
     private Integer speciality;
@@ -39,6 +40,7 @@ public class RegisterRequestDTO {
     private String in_charge_designation;
     private String in_charge_email;
     private String in_charge_mobile;
-
+    private String longitude;
+    private String latitude;
 
 }

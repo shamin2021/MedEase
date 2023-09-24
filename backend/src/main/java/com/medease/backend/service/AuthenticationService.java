@@ -4,18 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.medease.backend.Exception.CustomException;
 import com.medease.backend.assets.ResetPasswordEmailTemplate;
-import com.medease.backend.assets.ResetPasswordSmsTemplate;
 import com.medease.backend.dto.*;
-import com.medease.backend.entity.Patient;
-import com.medease.backend.entity.ResetToken;
+import com.medease.backend.entity.*;
 import com.medease.backend.enumeration.Role;
-import com.medease.backend.entity.Token;
 import com.medease.backend.enumeration.TokenType;
-import com.medease.backend.entity.User;
-import com.medease.backend.repository.PatientRepository;
-import com.medease.backend.repository.ResetTokenRepository;
-import com.medease.backend.repository.TokenRepository;
-import com.medease.backend.repository.UserRepository;
+import com.medease.backend.repository.*;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +35,7 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
     private final ResetTokenRepository resetTokenRepository;
     private final PatientRepository patientRepository;
+    private final HLCRepository hlcRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -63,14 +58,22 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.PATIENT)
                 .activated(Boolean.TRUE)
+                .enabled(Boolean.TRUE)
                 .build();
         var savedUser = userRepository.save(user);
+
+        HLC hlc = null;
+
+        if(request.getChosenHlcName() != null){
+            hlc = hlcRepository.findHLCByName(request.getChosenHlcName());
+        }
 
         //saved patient related info
         var patient = Patient.builder()
                 .gender(request.getGender())
                 .dob(request.getDob())
                 .patient_user(user)
+                .patient_hlc(hlc)
                 .build();
 
         patientRepository.save(patient);
@@ -96,40 +99,81 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        createCookie(response ,refreshToken, refreshExpiration/1000);
-        var userRole = user.getRole();
-        var userID = user.getId();
-        var firstname = user.getFirstname();
-        var lastname = user.getLastname();
+        if (user.isEnabled()) {
+            var jwtToken = jwtService.generateToken(user);
+            var refreshToken = jwtService.generateRefreshToken(user);
+            createCookie(response ,refreshToken, refreshExpiration/1000);
+            var userRole = user.getRole();
+            var userID = user.getId();
+            var firstname = user.getFirstname();
+            var lastname = user.getLastname();
 
-        revokeAllBearerTokens(user);
+            revokeAllBearerTokens(user);
 
-        //to get profile image
-        String profileImage = uploadService.retrieveProfileImage(userID);
+            //to get profile image
+            String profileImage = uploadService.retrieveProfileImage(userID);
 
-        saveUserToken(user, jwtToken);
+            saveUserToken(user, jwtToken);
 
-        if(profileImage != null){
-            return AuthenticationResponseDTO.builder()
-                    .message("Logged In Successfully")
-                    .accessToken(jwtToken)
-                    .role(userRole)
-                    .id(userID)
-                    .firstname(firstname)
-                    .lastname(lastname)
-                    .profileImage(profileImage)
-                    .build();
+            if(userRole != Role.HLC) {
+                if(profileImage != null){
+                    return AuthenticationResponseDTO.builder()
+                            .message("Logged In Successfully")
+                            .accessToken(jwtToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .profileImage(profileImage)
+                            .build();
+                }
+                else{
+                    return AuthenticationResponseDTO.builder()
+                            .message("Logged In Successfully")
+                            .accessToken(jwtToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .build();
+                }
+            }
+            else {
+
+                var hlc = hlcRepository.findHLCById(userID);
+                String[] hlcDetails = hlc.split(",");
+                String hlcName = hlcDetails[0].trim();
+                System.out.println(Arrays.toString(hlcDetails));
+
+                if(profileImage != null){
+                    return AuthenticationResponseDTO.builder()
+                            .message("Logged In Successfully")
+                            .accessToken(jwtToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .hlcName(hlcName)
+                            .profileImage(profileImage)
+                            .build();
+                }
+                else{
+                    return AuthenticationResponseDTO.builder()
+                            .message("Logged In Successfully")
+                            .accessToken(jwtToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .hlcName(hlcName)
+                            .build();
+                }
+            }
+
         }
         else{
             return AuthenticationResponseDTO.builder()
-                    .message("Logged In Successfully")
-                    .accessToken(jwtToken)
-                    .role(userRole)
-                    .id(userID)
-                    .firstname(firstname)
-                    .lastname(lastname)
+                    .message("Account Disabled")
                     .build();
         }
     }
@@ -188,6 +232,7 @@ public class AuthenticationService {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String refreshToken = null;
         final String userEmail;
+        AuthenticationResponseDTO authResponse;
 
         refreshToken = getRefreshTokenFromCookie(request);
 
@@ -202,43 +247,78 @@ public class AuthenticationService {
             var userDetails = this.userRepository.findByEmail(userEmail)
                     .orElseThrow();
 
-            if(jwtService.isTokenValid(refreshToken, userDetails)) {
-              var accessToken = jwtService.generateToken(userDetails);
-                revokeAllBearerTokens(userDetails);
-                saveUserToken(userDetails, accessToken);
-                var userRole = userDetails.getRole();
-                var userID = userDetails.getId();
-                var firstname = userDetails.getFirstname();
-                var lastname = userDetails.getLastname();
+            if(userDetails.isEnabled()){
+                if(jwtService.isTokenValid(refreshToken, userDetails)) {
+                    var accessToken = jwtService.generateToken(userDetails);
+                    revokeAllBearerTokens(userDetails);
+                    saveUserToken(userDetails, accessToken);
+                    var userRole = userDetails.getRole();
+                    var userID = userDetails.getId();
+                    var firstname = userDetails.getFirstname();
+                    var lastname = userDetails.getLastname();
 
-                //to get profile image
-                String profileImage = uploadService.retrieveProfileImage(userID);
-                AuthenticationResponseDTO authResponse;
+                    //to get profile image
+                    String profileImage = uploadService.retrieveProfileImage(userID);
 
-                if(profileImage != null){
-                    authResponse = AuthenticationResponseDTO.builder()
-                            .message("Refreshed Access Token")
-                            .accessToken(accessToken)
-                            .role(userRole)
-                            .id(userID)
-                            .firstname(firstname)
-                            .lastname(lastname)
-                            .profileImage(profileImage)
-                            .build();
+                    if(userRole != Role.HLC) {
+                        if(profileImage != null){
+                            authResponse = AuthenticationResponseDTO.builder()
+                                    .message("Logged In Successfully")
+                                    .accessToken(accessToken)
+                                    .role(userRole)
+                                    .id(userID)
+                                    .firstname(firstname)
+                                    .lastname(lastname)
+                                    .profileImage(profileImage)
+                                    .build();
+                        }
+                        else{
+                            authResponse = AuthenticationResponseDTO.builder()
+                                    .message("Logged In Successfully")
+                                    .accessToken(accessToken)
+                                    .role(userRole)
+                                    .id(userID)
+                                    .firstname(firstname)
+                                    .lastname(lastname)
+                                    .build();
+                        }
+                    }
+                    else {
+
+                        var hlc = hlcRepository.findHLCById(userID);
+                        String[] hlcDetails = hlc.split(",");
+                        String hlcName = hlcDetails[0].trim();
+                        System.out.println(Arrays.toString(hlcDetails));
+
+                        if(profileImage != null){
+                            authResponse = AuthenticationResponseDTO.builder()
+                                    .message("Logged In Successfully")
+                                    .accessToken(accessToken)
+                                    .role(userRole)
+                                    .id(userID)
+                                    .firstname(firstname)
+                                    .lastname(lastname)
+                                    .hlcName(hlcName)
+                                    .profileImage(profileImage)
+                                    .build();
+                        }
+                        else{
+                            authResponse = AuthenticationResponseDTO.builder()
+                                    .message("Logged In Successfully")
+                                    .accessToken(accessToken)
+                                    .role(userRole)
+                                    .id(userID)
+                                    .firstname(firstname)
+                                    .lastname(lastname)
+                                    .hlcName(hlcName)
+                                    .build();
+                        }
+                    }
+
+                    new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
                 }
-                else {
-                    authResponse = AuthenticationResponseDTO.builder()
-                            .message("Refreshed Access Token")
-                            .accessToken(accessToken)
-                            .role(userRole)
-                            .id(userID)
-                            .firstname(firstname)
-                            .lastname(lastname)
-                            .build();
-                }
-
-              new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
+
         }
     }
 
