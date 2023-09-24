@@ -12,13 +12,53 @@ const ManagePatient = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const [patients, setPatients] = useState([]);
+    const [searchedPatients, setSearchedPatients] = useState([]);
+    const [initializedSearch, setInitializedSearch] = useState(false);
     const [query, setQuery] = useState("");
-    const keys = ["first_name", "last_name", "email"];
-    const search = (data) => {
-        return data.filter((item) =>
-            keys.some((key) => item[key].toLowerCase().includes(query))
-        );
+
+    const search = () => {
+
+        setSearchedPatients(patients.filter((item) => {
+            return (
+                item.firstname.toLowerCase().includes(query) ||
+                item.lastname.toLowerCase().includes(query) ||
+                item.email.toLowerCase().includes(query)
+            );
+        }));
     };
+
+
+    useEffect(() => {
+        if (patients.length > 0) {
+            console.log(patients);
+            if (searchedPatients.length === 0 && !initializedSearch) {
+                setSearchedPatients(patients)
+                setInitializedSearch(true)
+            }
+            console.log(searchedPatients);
+        }
+    }, [patients, searchedPatients]);
+
+    useEffect(() => {
+        try {
+            get("/patient/getPatientList", setPatients)
+
+        } catch (err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    }, []);
+
+
+    useEffect(() => {
+        if (query !== "") {
+            search();
+            console.log(query);
+        } else {
+            setSearchedPatients(patients);
+        }
+    }, [query]);
 
     return (
         <GridItem colSpan={6}>
@@ -39,7 +79,7 @@ const ManagePatient = () => {
                             </div>
                         </div>
                     </div>
-                    <div>{<Table data={search(Docs)} />}</div>
+                    <div>{<Table data={searchedPatients} />}</div>
                 </div>
             </div>
         </GridItem>

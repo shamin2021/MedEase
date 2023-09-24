@@ -4,7 +4,6 @@ import com.medease.backend.entity.HLC;
 import com.medease.backend.enumeration.EducationStatus;
 import com.medease.backend.enumeration.Gender;
 import com.medease.backend.enumeration.MaritalStatus;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +20,6 @@ public class PatientDTO {
     private Integer patient_id;
     private HLC patient_hlc;
     private String patient_hlc_name;
-    private String name;
     private String phn;
     private String nic;
     private String permanent_address;
