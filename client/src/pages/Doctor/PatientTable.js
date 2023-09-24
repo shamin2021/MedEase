@@ -23,6 +23,7 @@ const Table = ({ data }) => {
                                             <img
                                                 className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                                                 src={Doc}
+                                                alt="User Img"
                                             />
                                             <div className="w-3/4 ml-6">{item.first_name}</div>
                                         </div>

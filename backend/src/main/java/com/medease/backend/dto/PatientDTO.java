@@ -1,5 +1,6 @@
-package com.medease.backend.entity;
+package com.medease.backend.dto;
 
+import com.medease.backend.entity.HLC;
 import com.medease.backend.enumeration.EducationStatus;
 import com.medease.backend.enumeration.Gender;
 import com.medease.backend.enumeration.MaritalStatus;
@@ -13,50 +14,31 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "patient")
-public class Patient {
+@NoArgsConstructor
+public class PatientDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer patient_id;
-
-    @OneToOne
-    @JoinColumn(name = "patient_user_id", referencedColumnName = "id")
-    private User patient_user;
-
-    @ManyToOne
-    @JoinColumn(name = "patient_hlc_id" , referencedColumnName = "hlc_id")
     private HLC patient_hlc;
-
+    private String patient_hlc_name;
     private String name;
-
-    @Column(unique = true)
     private String phn;
-
-    @Column(unique = true)
     private String nic;
-
     private String permanent_address;
     private String current_address;
     private String emergency_name;
     private String emergency_contact_number;
     private String emergency_address;
-
-    @Enumerated(EnumType.STRING)
     private Gender gender;
-
     private String home_contact_number;
     private LocalDate dob;
-
-    @Enumerated(EnumType.STRING)
     private MaritalStatus marital_status;
-
-    @Enumerated(EnumType.STRING)
     private EducationStatus highest_education_status;
-
     private LocalDate date_of_registration;
+
+    private String firstname;
+    private String lastname;
+    private String email;
+    private String mobileNumber;
 
 }

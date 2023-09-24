@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { Link, Box, ButtonGroup, VisuallyHidden, Button, Checkbox, Flex, Container, Divider, FormControl, FormLabel, Heading, HStack, Stack, Text, Input, InputRightElement, InputGroup } from '@chakra-ui/react'
+import { Link, Box, Button, Checkbox, Flex, Container,  FormControl, FormLabel, Heading, HStack, Stack, Text, Input, InputRightElement, InputGroup } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import { FcGoogle } from 'react-icons/fc'
 import lottie from 'lottie-web';
 import loginAnimation from '../assets/lottie/login.json';
 
@@ -144,7 +143,7 @@ const Login = () => {
                                         <Link color='blue.500' href="/forgot-password" size='sm' style={{ textDecoration: 'none' }}>Forgot password?</Link>
                                     </HStack>
                                     <Stack spacing="6">
-                                        <Button colorScheme='blue' type='submit'>Sign in</Button>
+                                        <Button colorScheme='blue' type='submit' id="login">Sign in</Button>
                                     </Stack>
                                 </Stack>
                             </form>

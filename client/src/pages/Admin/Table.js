@@ -63,7 +63,7 @@ const UserTable = ({ data, status, clicked }) => {
                       alt="Profile Img"
                     />
                     <div className="w-3/4 ml-3">
-                      {item.role === "HLC" ? item.firstname : item.firstname + " " + item.lastname}
+                      {item.role === "HLC" ? item.hlc_name : item.firstname + " " + item.lastname}
                     </div>
                   </div>
                   <div className="w-1/4 m-1">{item.email}</div>

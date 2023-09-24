@@ -15,6 +15,7 @@ public class UserDTO {
     private Integer id;
     private String firstname;
     private String lastname;
+    private String hlc_name;
     private String email;
     private String mobileNumber;
     private Boolean activated;

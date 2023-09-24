@@ -59,10 +59,10 @@ const HLCSidebar = () => {
                 <Divider display={navSize === "small" ? "none" : "flex"} />
 
                 <Flex mt={4} align="center">
-                    <Avatar size="sm" name={auth.first_name} src={auth.profile_image ? `data:image/png;base64, ${auth.profile_image}` : null} />
+                    <Avatar size="sm" name={auth.hlc_name} src={auth.profile_image ? `data:image/png;base64, ${auth.profile_image}` : null} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            {auth.first_name.toUpperCase()}
+                            {auth.hlc_name.toUpperCase()}
                         </Heading>
                     </Flex>
                 </Flex>

@@ -32,7 +32,7 @@ const ManageUser = () => {
     setSearchedUsers(users.filter((item) => {
       if (item.role === "HLC") {
         return (
-          item.firstname.toLowerCase().includes(query) ||
+          item.hlc_name.toLowerCase().includes(query) ||
           item.email.toLowerCase().includes(query)
         );
       }

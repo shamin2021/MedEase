@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Docs } from '../Docs'
 import Table from "./PatientTable";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import { GridItem } from '@chakra-ui/react';
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ManagePatient = () => {
+
+    const { get } = useAxiosMethods();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const [query, setQuery] = useState("");
     const keys = ["first_name", "last_name", "email"];
     const search = (data) => {
@@ -12,6 +19,7 @@ const ManagePatient = () => {
             keys.some((key) => item[key].toLowerCase().includes(query))
         );
     };
+
     return (
         <GridItem colSpan={6}>
             <div className="h-screen py-1 bg-primary ">

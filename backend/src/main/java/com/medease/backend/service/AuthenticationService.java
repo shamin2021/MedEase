@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.medease.backend.Exception.CustomException;
 import com.medease.backend.assets.ResetPasswordEmailTemplate;
-import com.medease.backend.assets.ResetPasswordSmsTemplate;
 import com.medease.backend.dto.*;
 import com.medease.backend.entity.*;
 import com.medease.backend.enumeration.Role;
@@ -35,6 +34,7 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
     private final ResetTokenRepository resetTokenRepository;
     private final PatientRepository patientRepository;
+    private final HLCRepository hlcRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -61,12 +61,18 @@ public class AuthenticationService {
                 .build();
         var savedUser = userRepository.save(user);
 
+        HLC hlc = null;
+
+        if(request.getChosenHlcName() != null){
+            hlc = hlcRepository.findHLCByName(request.getChosenHlcName());
+        }
+
         //saved patient related info
         var patient = Patient.builder()
                 .gender(request.getGender())
                 .dob(request.getDob())
                 .patient_user(user)
-                .patient_hlc_name(request.getChosenHlcName())
+                .patient_hlc(hlc)
                 .build();
 
         patientRepository.save(patient);
@@ -108,27 +114,60 @@ public class AuthenticationService {
 
             saveUserToken(user, jwtToken);
 
-            if(profileImage != null){
-                return AuthenticationResponseDTO.builder()
-                        .message("Logged In Successfully")
-                        .accessToken(jwtToken)
-                        .role(userRole)
-                        .id(userID)
-                        .firstname(firstname)
-                        .lastname(lastname)
-                        .profileImage(profileImage)
-                        .build();
+            if(userRole != Role.HLC) {
+                if(profileImage != null){
+                    return AuthenticationResponseDTO.builder()
+                            .message("Logged In Successfully")
+                            .accessToken(jwtToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .profileImage(profileImage)
+                            .build();
+                }
+                else{
+                    return AuthenticationResponseDTO.builder()
+                            .message("Logged In Successfully")
+                            .accessToken(jwtToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .build();
+                }
             }
-            else{
-                return AuthenticationResponseDTO.builder()
-                        .message("Logged In Successfully")
-                        .accessToken(jwtToken)
-                        .role(userRole)
-                        .id(userID)
-                        .firstname(firstname)
-                        .lastname(lastname)
-                        .build();
+            else {
+
+                var hlc = hlcRepository.findHLCById(userID);
+                String[] hlcDetails = hlc.split(",");
+                String hlcName = hlcDetails[0].trim();
+
+                if(profileImage != null){
+                    return AuthenticationResponseDTO.builder()
+                            .message("Logged In Successfully")
+                            .accessToken(jwtToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .hlcName(hlcName)
+                            .profileImage(profileImage)
+                            .build();
+                }
+                else{
+                    return AuthenticationResponseDTO.builder()
+                            .message("Logged In Successfully")
+                            .accessToken(jwtToken)
+                            .role(userRole)
+                            .id(userID)
+                            .firstname(firstname)
+                            .lastname(lastname)
+                            .hlcName(hlcName)
+                            .build();
+                }
             }
+
         }
         else{
             return AuthenticationResponseDTO.builder()

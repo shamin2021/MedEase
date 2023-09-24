@@ -18,9 +18,11 @@ public class HLCMap {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer location_id;
 
-    private String name;
-    private String moh_division;
-    private Double longitude;
-    private Double latitude;
+    @OneToOne
+    @JoinColumn(name = "hlc_id", referencedColumnName = "hlc_id")
+    private HLC hlc;
+
+    private String longitude;
+    private String latitude;
 
 }

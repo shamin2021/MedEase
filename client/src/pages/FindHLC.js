@@ -62,7 +62,7 @@ const FindHLC = () => {
           console.log("Nearest Point:", nearestPoint);
 
           const newMarker = new window.google.maps.Marker({
-            position: { lat: nearestPoint.latitude, lng: nearestPoint.longitude },
+            position: { lat: parseFloat(nearestPoint.latitude), lng: parseFloat(nearestPoint.longitude) },
             map: map,
             title: nearestPoint.name,
           });
@@ -132,7 +132,7 @@ const FindHLC = () => {
 
       response.forEach(item => {
         const marker = new window.google.maps.Marker({
-          position: { lat: item.latitude, lng: item.longitude },
+          position: { lat: parseFloat(item.latitude), lng: parseFloat(item.longitude) },
           map: newMap,
           title: item.name,
         });

@@ -1,5 +1,6 @@
 package com.medease.backend.controller;
 
+import com.medease.backend.dto.MapDTO;
 import com.medease.backend.entity.HLCMap;
 import com.medease.backend.service.HomeService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class HomeController {
     private final HomeService homeService;
 
     @GetMapping("get-map-locations")
-    public ResponseEntity<List<HLCMap>> getMapLocations() {
+    public ResponseEntity<List<MapDTO>> getMapLocations() {
         return ResponseEntity.ok(homeService.getMapLocations());
     }
 }

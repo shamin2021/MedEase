@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Box, ButtonGroup, VisuallyHidden, Button, Container, Divider, FormControl, FormLabel, Flex, Heading, HStack, Stack, Text, Input, Select } from '@chakra-ui/react'
-import { FcGoogle } from 'react-icons/fc'
+import { Link, Box, Button, Container, FormControl, FormLabel, Flex, Heading, Stack, Text, Input, Select } from '@chakra-ui/react'
 import lottie from 'lottie-web';
 import registerAnimation from '../assets/lottie/register.json';
 
