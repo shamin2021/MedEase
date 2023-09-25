@@ -66,6 +66,8 @@ const AddLifestyle = () => {
       setFrequency(initial.frequency);
       setType(initial.type);
 
+      getRecommendations();// ToDo: This is a temporary fix. Need to update the state of recommendations
+
       closeModal();
     }
   };
@@ -134,9 +136,9 @@ const AddLifestyle = () => {
 
   return (
     <GridItem colSpan={6} mx={4} mt={2}>
-      <div className="pt-10 pb-1 bg-primary">
+      <div className="py-1 bg-primary min-h-screen">
         <div className="flex h-screen mx-auto">
-          <div className="h-3/4 w-3/4 m-3 bg-white mx-auto mt-5 rounded-md py-5 ">
+          <div className="w-full m-3 bg-white mt-5 rounded-md p-5">
             <div className="container horizontal justify-center text-md py-1">
               <div className="flex justify-center text-lg font-medium m-3 mb-0">
                 Lifestyle Modification Recommendations
@@ -178,7 +180,7 @@ const AddLifestyle = () => {
                     </div>
                     <hr className="mt-2 mb-0" />
                   </div>
-                  <div className="text-[#797878] text-md mt-3 h-32 overflow-y-scroll">
+                  <div className="text-[#797878] text-md mt-3">
                     {recommendations.map((r) => {
                       return (
                         <div className="m-1 flex" key={r.recommendation_id}>
@@ -257,7 +259,7 @@ const AddLifestyle = () => {
                     onChange={changeType}
                   >
                     <option value="Diet">Diet</option>
-                    <option value="Excercise">Excercise</option>
+                    <option value="Exercise">Exercise</option>
                     <option value="CheckUp">CheckUp</option>
                   </select>
                 </div>

@@ -25,7 +25,11 @@ const daysOfWeek = [
   { day_num: 6, name: "Saturday" },
 ];
 
-const percentage = 66;
+const recommendationTypes = [
+  { id: 1, name: "Diet" },
+  { id: 2, name: "Exercise" },
+  { id: 3, name: "CheckUp" },
+];
 
 function InputGeneral(props) {
   const recommendation = props.recommendation;
@@ -100,6 +104,7 @@ const LifestyleMonitorQuiz = () => {
   const [completedQuizzes, setCompletedQuizzes] = useState([]);
   const [totalRecommendations, setTotalRecommendations] = useState(0); // total number of recommendations for this week
   const [completedRecommendations, setCompletedRecommendations] = useState(0); // total number of completed recommendations for this week
+
   const [percentage, setPercentage] = useState(0); // percentage of completed recommendations for this week
 
   const { get, post } = useAxiosMethods();
@@ -153,7 +158,9 @@ const LifestyleMonitorQuiz = () => {
   useEffect(() => {
     if (quizData != null && quizData.recommendations !== undefined) {
       setAssignedRecommendations(quizData.recommendations);
-      setTotalRecommendations(calculateTotalRecommendations(quizData.recommendations));
+      setTotalRecommendations(
+        calculateTotalRecommendations(quizData.recommendations)
+      );
     }
 
     if (quizData != null && quizData.completedQuizzes !== undefined) {
@@ -177,16 +184,19 @@ const LifestyleMonitorQuiz = () => {
                 fontFamily={("Poppins", "sans-serif")}
               >
                 <TabList>
-                  <Tab fontSize={15} borderBottom={0} paddingLeft={0}>
-                    Diet
-                  </Tab>
-                  <Tab fontSize={15} borderBottom={0}>
-                    Exercise
-                  </Tab>
-                  <Tab fontSize={15} borderBottom={0}>
-                    CheckUp
-                  </Tab>
+                  {recommendationTypes.map((recommendationType) => {
+                    return (
+                      <Tab
+                        fontSize={15}
+                        borderBottom={0}
+                        key={recommendationType.id}
+                      >
+                        {recommendationType.name}
+                      </Tab>
+                    );
+                  })}
                 </TabList>
+
                 <TabIndicator
                   mt="-1.5px"
                   height="2px"
@@ -195,31 +205,34 @@ const LifestyleMonitorQuiz = () => {
                   w={14}
                 />
                 <TabPanels>
-                  <TabPanel padding={2}>
-                    <div>
-                      {assignedRecommendations.map((recommendation) => {
-                        return (
-                          <InputGeneral
-                            key={recommendation.recommendation_id}
-                            recommendation={recommendation}
-                            completedQuizzes={completedQuizzes}
-                            handleCheck={handleMarkComplete}
-                          ></InputGeneral>
-                        );
-                      })}
-                      <div className=" text-right">
-                        <button className="bg-secondary text-[15px] w-1/5 rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 ">
-                          Next
-                        </button>
-                      </div>
-                    </div>
-                  </TabPanel>
-                  <TabPanel padding={2}>
-                    <div>sas</div>
-                  </TabPanel>
-                  <TabPanel padding={2}>
-                    <div>sas</div>
-                  </TabPanel>
+                  {recommendationTypes.map((recommendationType) => {
+                    return (
+                      <TabPanel padding={2} key={recommendationType.id}>
+                        <div>
+                          {assignedRecommendations
+                            .filter(
+                              (recommendation) =>
+                                recommendation.type === recommendationType.name
+                            )
+                            .map((recommendation) => {
+                              return (
+                                <InputGeneral
+                                  key={recommendation.recommendation_id}
+                                  recommendation={recommendation}
+                                  completedQuizzes={completedQuizzes}
+                                  handleCheck={handleMarkComplete}
+                                ></InputGeneral>
+                              );
+                            })}
+                          {/* <div className=" text-right">
+                            <button className="bg-secondary text-[15px] w-1/5 rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 ">
+                              Next
+                            </button>
+                          </div> */}
+                        </div>
+                      </TabPanel>
+                    );
+                  })}
                 </TabPanels>
               </Tabs>
             </div>
