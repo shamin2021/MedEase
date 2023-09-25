@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Docs } from '../Docs'
 import Table from "./PatientTable";
-import { FaSearch, FaPlus } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import { GridItem } from '@chakra-ui/react';
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";

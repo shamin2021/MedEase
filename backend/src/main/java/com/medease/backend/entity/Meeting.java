@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,10 +20,21 @@ public class Meeting {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer meeting_id;
 
-    private String type;
+    @Column(name = "meeting_start_time")
     private LocalDateTime start;
 
-    @Column(name = "end_time")
+    @Column(name = "meeting_end_time")
     private LocalDateTime end;
+
+    @OneToOne
+    @JoinColumn(name = "meeting_doctor_id" , referencedColumnName = "doctor_id")
+    private Doctor doctor;
+
+    @OneToOne
+    @JoinColumn(name = "meeting_patient_id" , referencedColumnName = "patient_id")
+    private Patient patient;
+
+    @Column(unique = true)
+    private String meetingURL;
 
 }
