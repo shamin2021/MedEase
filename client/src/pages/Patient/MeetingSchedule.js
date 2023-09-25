@@ -5,25 +5,24 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Modal, ModalOverlay, ModalContent, ModalBody, Button, Box, Text } from '@chakra-ui/react';
 import useAxiosMethods from "../../hooks/useAxiosMethods";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 
 const MeetingSchedule = () => {
 
-    const { get, post, put, del } = useAxiosMethods();
+    const { get, post, del } = useAxiosMethods();
+    const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [res, setRes] = useState('');
-    const [meetingID, setMeetingID] = useState('');
-    const [meetings, setMeetings] = useState([]);
+    const [availableSlots, setAvailableSlots] = useState([]);
+    const [stateChanged, setStateChanged] = useState(false);
 
-    const fetchMeetings = async () => {
+    const fetchAvailableSlots = async () => {
         try {
-            get('/getMeetings', setMeetings);
+            get(`/meetings/getAvailableSlots/${id}`, setAvailableSlots);
 
         } catch (err) {
             console.error(err);
@@ -33,17 +32,23 @@ const MeetingSchedule = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetchMeetings();
+            await fetchAvailableSlots();
         };
 
         fetchData();
-    }, []);
+    }, [stateChanged]);
 
 
+    useEffect(() => {
+        console.log(isModalOpen, selectedEvent);
+    }, [isModalOpen, selectedEvent]);
+
+    const scheduleMeeting = (event) => {
+        //schedule related logic
+    }
 
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedDate(null);
         setSelectedEvent(null);
     };
 
@@ -54,13 +59,17 @@ const MeetingSchedule = () => {
                     <FullCalendar
                         plugins={[interactionPlugin, dayGridPlugin]}
                         initialView="dayGridMonth"
-                        events={meetings}
+                        events={availableSlots.map(event => ({
+                            ...event,
+                            color: event.meetingType === "VIRTUAL" ? '#1e57c9' : '#bb7cd9',
+                        }))}
 
                         eventDisplay="block"
                         selectable={true}
 
                         eventClick={(event) => {
-                            if (event.event.extendedProps.type === 'Virtual') {
+                            console.log(event.event.extendedProps.meetingType);
+                            if (event.event.extendedProps.meetingType === 'VIRTUAL') {
                                 setSelectedEvent(event.event);
                                 setIsModalOpen(true);
                             }
@@ -91,16 +100,12 @@ const MeetingSchedule = () => {
                     />
 
                     {selectedEvent && (
-                        <Modal isOpen={selectedEvent !== null} onClose={closeModal}>
+                        <Modal isOpen={isModalOpen || selectedEvent !== null} onClose={closeModal}>
                             <ModalOverlay />
                             <ModalContent maxWidth="90vw" width="auto" mx={[4, 8, 16]} my={[4, 8, 12]}>
                                 <ModalBody>
                                     <Box>
                                         <Text fontWeight="bold" mb={2}>Schedule Meeting:</Text>
-                                        <Box mb={2}>
-                                            <span>Doctor:</span>
-                                            <Text>{selectedEvent?.extendedProps?.doctor}</Text>
-                                        </Box>
 
                                         <Box>
                                             <Box mb={2}>
@@ -119,7 +124,7 @@ const MeetingSchedule = () => {
                                             Close
                                         </Button>
 
-                                        <Button colorScheme="teal" onClick={() => { }}>
+                                        <Button colorScheme="teal" onClick={(event) => { scheduleMeeting(event) }}>
                                             Schedule
                                         </Button>
 
@@ -128,6 +133,7 @@ const MeetingSchedule = () => {
                             </ModalContent>
                         </Modal>
                     )}
+
                 </div>
             </div>
         </GridItem>

@@ -124,7 +124,7 @@ function App() {
               <Route path="/Patient" element={<Patient />} />
               <Route path="/PatientMeetings" element={<PatientMeetings />} />
               <Route path='/link-expired' element={<MeetingExpired />} />
-              <Route path='/ScheduleMeeting' element={<MeetingSchedule />} />
+              <Route path='/ScheduleMeeting/:id' element={<MeetingSchedule />} />
               <Route path="/PatientSettings" element={<PatientSettings />} />
               <Route path="/PatientProfile" element={<PatientProfile />} />
               <Route path="/patient" element={<Patient />} />
@@ -172,9 +172,9 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
               {/* routes only for DOCTOR */}
               <Route path="/DoctorSetting" element={<DoctorSetting />} />
-              <Route path="/AddPrescription" element={<AddPrescription />} />
+              <Route path="/AddPrescription/:id" element={<AddPrescription />} />
               <Route path="/doctor" element={<Doctor />} />
-              <Route path="/AddLifestyle" element={<AddLifestyle />} />
+              <Route path="/AddLifestyle/:id" element={<AddLifestyle />} />
               <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
               <Route path="/ManagePatient" element={<ManagePatient />} />
               <Route path="/DoctorProfile" element={<DoctorProfile />} />

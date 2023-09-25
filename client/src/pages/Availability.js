@@ -12,7 +12,7 @@ import useAuth from "../hooks/useAuth";
 
 const Availability = () => {
 
-    const { get, post, put, del } = useAxiosMethods();
+    const { get, post, del } = useAxiosMethods();
     const { auth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -25,9 +25,7 @@ const Availability = () => {
     const [toTime, setToTime] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [res, setRes] = useState('');
-    const [meetingID, setMeetingID] = useState('');
     const [availableSlots, setAvailableSlots] = useState([]);
-    const [removeId, setRemoveId] = useState(null);
     const [stateChanged, setStateChanged] = useState(false);
     const [hlcList, setHlcList] = useState([]);
     const [selectedHlc, setSelectedHlc] = useState(null);
@@ -167,18 +165,13 @@ const Availability = () => {
         }
     };
 
-    useEffect(() => {
-        console.log("state changed");
+    useEffect(() => {;
         const fetchData = async () => {
             await fetchAvailableSlots();
         };
 
         fetchData();
     }, [stateChanged]);
-
-    useEffect(() => {
-        console.log(availableSlots); // Logged the users state here
-    }, [availableSlots]);
 
     return (
         <GridItem colSpan={6} mx={4} mt={2}>

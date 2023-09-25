@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     where role = 'PATIENT'
 """)
     List<Object[]> retrievePatientList();
+
+    @Query(value = "SELECT id,firstname,lastname,email,mobile_number FROM _user WHERE id= :userId", nativeQuery = true)
+    String retrieveDoctorUser(Integer userId);
 }
