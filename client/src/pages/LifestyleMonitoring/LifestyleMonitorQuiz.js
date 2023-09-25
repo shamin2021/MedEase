@@ -106,6 +106,8 @@ const LifestyleMonitorQuiz = () => {
   const [completedRecommendations, setCompletedRecommendations] = useState(0); // total number of completed recommendations for this week
 
   const [percentage, setPercentage] = useState(0); // percentage of completed recommendations for this week
+  const [dietProgress, setDietProgress] = useState(0);
+  const [exerciseProgress, setExerciseProgress] = useState(0);
 
   const { get, post } = useAxiosMethods();
 
@@ -168,6 +170,56 @@ const LifestyleMonitorQuiz = () => {
       setCompletedRecommendations(quizData.completedQuizzes.length);
     }
   }, [quizData]);
+
+  useEffect(() => {
+    let dietRecommendations = [];
+    let exerciseRecommendations = [];
+    let dietIds = [];
+    let exerciseIds = [];
+
+    assignedRecommendations.filter((recommendation) => {
+      if (recommendation.type === recommendationTypes[0].name) {
+        dietRecommendations.push(recommendation);
+        dietIds.push(recommendation.recommendation_id);
+      } else if (recommendation.type === recommendationTypes[1].name) {
+        exerciseRecommendations.push(recommendation);
+        exerciseIds.push(recommendation.recommendation_id);
+      }
+      return null;
+    });
+
+    const totalDietRecommendations =
+      calculateTotalRecommendations(dietRecommendations);
+
+    const totalExerciseRecommendations = calculateTotalRecommendations(
+      exerciseRecommendations
+    );
+
+    let completedDietRecommendations = 0;
+    let completedExerciseRecommendations = 0;
+
+    completedQuizzes.filter((quiz) => {
+      // check if quiz is a diet quiz
+      if (dietIds.includes(quiz.assignedRecommendationId)) {
+        completedDietRecommendations += 1;
+      } else if (exerciseIds.includes(quiz.assignedRecommendationId)) {
+        completedExerciseRecommendations += 1;
+      }
+      return null;
+    });
+
+    setDietProgress(
+      Math.round(
+        (completedDietRecommendations / totalDietRecommendations) * 100
+      )
+    );
+
+    setExerciseProgress(
+      Math.round(
+        (completedExerciseRecommendations / totalExerciseRecommendations) * 100
+      )
+    );
+  }, [completedQuizzes, assignedRecommendations]);
 
   return (
     <GridItem colSpan={6} mx={4} mt={NAVBARHEIGHT}>
@@ -249,13 +301,17 @@ const LifestyleMonitorQuiz = () => {
               <div className=" mt-4">
                 <div className="m-1">
                   <div className="text-[16px] font-poppins m-1">Diet</div>
-                  <Progress value={70} height="10px" rounded="5px" />
+                  <Progress value={dietProgress} height="10px" rounded="5px" />
                 </div>
                 <div className="m-1">
                   <div className="text-[16px] font-poppins m-1 mt-2">
                     Exercise
                   </div>
-                  <Progress value={40} height="10px" rounded="5px" />
+                  <Progress
+                    value={exerciseProgress}
+                    height="10px"
+                    rounded="5px"
+                  />
                 </div>
               </div>
             </div>
