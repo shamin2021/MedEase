@@ -177,7 +177,7 @@ const PDFGenerator = () => {
         // Display the chart image on the webpage
         const chartImage = new Image();
         chartImage.src = chartImageUrl;
-        document.body.appendChild(chartImage); // Append the image to the body for display
+        //document.body.appendChild(chartImage); // Append the image to the body for display
 
         // Add the canvas to the PDF
         doc.addImage(chartImageUrl, 'JPEG', 10, 45, 190, 100); // Adjust the position and size as needed
@@ -192,7 +192,8 @@ const PDFGenerator = () => {
                 <Button onClick={generatePDF}>Generate PDF</Button>
             </Flex>
             {/* Add a canvas element for the chart */}
-            <canvas ref={chartCanvasRef} width={400} height={200} style={{ display: 'block' }} />
+            <canvas ref={chartCanvasRef} width={400} height={200} style={{ display: 'none' }} />  
+            {/* to view the graph use block */}
         </GridItem>
     );
 };
