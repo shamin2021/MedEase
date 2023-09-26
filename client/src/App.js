@@ -60,6 +60,8 @@ import MeetingSchedule from './pages/Patient/MeetingSchedule';
 
 ///////////
 import PatientReport from './pages/Reports/PatientReport';
+import BarChart from './pages/Reports/BarChart';
+import Chart from './pages/Reports/chart';
 /////////////
 
 import AddDoctor from './pages/HLC/AddDoctor';
@@ -142,6 +144,8 @@ function App() {
               <Route path="/view-SelfAssessment/:id" element={<ViewSelfAssessmentComponent />} />
               
               <Route path="/PatientReport" element={<PatientReport />} />
+              <Route path="/BarChart" element={<BarChart />} />
+              <Route path="/chart" element={<Chart />} />
             </Route >
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3]]} />} >
