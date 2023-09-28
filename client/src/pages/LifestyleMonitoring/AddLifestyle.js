@@ -3,8 +3,11 @@ import { FaUserCircle } from "react-icons/fa";
 import Modal from "react-modal";
 import { Checkbox, CheckboxGroup, GridItem } from "@chakra-ui/react";
 import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useParams } from "react-router-dom";
 
 const AddLifestyle = () => {
+  const { userId } = useParams();
+
   const initial = {
     frequency: "Daily",
     type: "Diet",
@@ -13,10 +16,11 @@ const AddLifestyle = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState(null);
+  const [patient, setPatient] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
   const [assignedRecommendations, setAssignedRecommendations] = useState([]);
 
-  const [userId, setUserId] = useState(102); // Temporary user id
+  // const [userId, setUserId] = useState(102); // Temporary user id
   const [frequency, setFrequency] = useState(initial.frequency);
   const [type, setType] = useState(initial.type);
   const [recommendation, setRecommendation] = useState(initial.recommendation);
@@ -66,7 +70,7 @@ const AddLifestyle = () => {
       setFrequency(initial.frequency);
       setType(initial.type);
 
-      getRecommendations();// ToDo: This is a temporary fix. Need to update the state of recommendations
+      getRecommendations(); // ToDo: This is a temporary fix. Need to update the state of recommendations
 
       closeModal();
     }
@@ -82,7 +86,10 @@ const AddLifestyle = () => {
 
   const getAssignedRecommendations = async () => {
     try {
-      get(`/assignedRecommendation/${userId}`, setAssignedRecommendations);
+      get(`/assignedRecommendation/${userId}`, (response)=>{
+        setAssignedRecommendations(response.assignedRecommendation)
+        setPatient(response.userDetails)
+      });
     } catch (err) {
       console.error(err);
     }
@@ -158,19 +165,19 @@ const AddLifestyle = () => {
                       </div>
                       <div className="w-3/4 p-1 rounded-md">
                         {" "}
-                        Shamin Fernando{" "}
+                        {patient.name}{" "}
                       </div>
                     </div>
                   </div>
                   <div className=" flex flex-col md:w-1/4">
                     <div className="text-[#797878]">Recent Risk</div>
                     <div className="p-1 pl-0 text-[#f85353] font-semibold">
-                      High
+                      {patient?.riskLevel}
                     </div>
                   </div>
                   <div className=" flex flex-col md:w-1/4">
                     <div className="text-[#797878]">HLC</div>
-                    <div className="p-1 pl-0 ">Lunawa</div>
+                    <div className="p-1 pl-0 ">{patient.hlcName}</div>
                   </div>
                 </div>
                 <div>

@@ -1,5 +1,7 @@
 package com.medease.backend.controller;
 
+import java.util.HashMap;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,26 +13,39 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medease.backend.entity.AssignedRecommendation;
 import com.medease.backend.repository.AssignedRecommendationRepository;
+import com.medease.backend.repository.PatientRepository;
 import com.medease.backend.repository.RecommendationRepository;
+import com.medease.backend.service.PatientService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/assignedRecommendation")
+@RequiredArgsConstructor
 public class AssignedRecommendationController {
 
     private final RecommendationRepository recommendationRepository;
     private final AssignedRecommendationRepository assignedRecommendationRepository;
 
-    public AssignedRecommendationController(RecommendationRepository recommendationRepository,
-            AssignedRecommendationRepository assignedRecommendationRepository) {
-        this.recommendationRepository = recommendationRepository;
-        this.assignedRecommendationRepository = assignedRecommendationRepository;
-    }
+    private final PatientService patientService;
 
     @GetMapping("/{patient_id}")
     public ResponseEntity<?> getAllAssignedRecommendations(@PathVariable("patient_id") Integer patientId) {
         System.out.println("user id: " + patientId);
-        return ResponseEntity.ok(this.assignedRecommendationRepository.findByAssigenedUserId(patientId));
+
+        var userDetails = new HashMap<String, Object>();
+        userDetails.put("id", patientId.toString());
+        userDetails.put("name", "Shamin Fernando");
+        userDetails.put("riskLevel", "High");
+        userDetails.put("hlcName", "Colombo");
+
+        var assignedRecommendation = this.assignedRecommendationRepository.findByAssigenedUserId(patientId);
+
+        var response = new HashMap<String, Object>();
+        response.put("userDetails", userDetails);
+        response.put("assignedRecommendation", assignedRecommendation);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/patient/{patient_id}")
