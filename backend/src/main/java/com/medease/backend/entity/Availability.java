@@ -38,4 +38,6 @@ public class Availability {
     @Column(name = "end_time")
     private LocalDateTime end;
 
+    private Integer scheduled = 0;
+
 }

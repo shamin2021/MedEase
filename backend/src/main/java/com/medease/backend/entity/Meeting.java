@@ -26,15 +26,17 @@ public class Meeting {
     @Column(name = "meeting_end_time")
     private LocalDateTime end;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "meeting_doctor_id" , referencedColumnName = "doctor_id")
     private Doctor doctor;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "meeting_patient_id" , referencedColumnName = "patient_id")
     private Patient patient;
 
     @Column(unique = true)
     private String meetingURL;
+
+    private Integer cancelled = 0;
 
 }

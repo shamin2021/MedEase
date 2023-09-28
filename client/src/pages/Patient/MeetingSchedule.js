@@ -6,12 +6,14 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { Modal, ModalOverlay, ModalContent, ModalBody, Button, Box, Text } from '@chakra-ui/react';
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import useAuth from '../../hooks/useAuth';
 
 
 const MeetingSchedule = () => {
 
-    const { get, post, del } = useAxiosMethods();
+    const { get, post, put } = useAxiosMethods();
     const { id } = useParams();
+    const { auth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -19,6 +21,8 @@ const MeetingSchedule = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [availableSlots, setAvailableSlots] = useState([]);
     const [stateChanged, setStateChanged] = useState(false);
+    const [scheduleUpdated, setScheduleUpdated] = useState(false);
+    const [scheduledMeeting, setScheduledMeeting] = useState(false);
 
     const fetchAvailableSlots = async () => {
         try {
@@ -43,8 +47,19 @@ const MeetingSchedule = () => {
         console.log(isModalOpen, selectedEvent);
     }, [isModalOpen, selectedEvent]);
 
+
     const scheduleMeeting = (event) => {
-        //schedule related logic
+        console.log(selectedEvent.start, selectedEvent.end);
+        try {
+            post('/meetings/scheduleMeeting', {start: selectedEvent.start, end: selectedEvent.end, doctor: id, patient: auth.user_id}, setScheduledMeeting);
+            put(`/meetings/removeSlotAfterSchedule/${selectedEvent.extendedProps.availability_id}`, {} , setScheduleUpdated);
+            closeModal();
+
+        } catch (err) {
+            console.error(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+        setStateChanged(!stateChanged);
     }
 
     const closeModal = () => {
@@ -124,7 +139,7 @@ const MeetingSchedule = () => {
                                             Close
                                         </Button>
 
-                                        <Button colorScheme="teal" onClick={(event) => { scheduleMeeting(event) }}>
+                                        <Button colorScheme="teal" onClick={scheduleMeeting}>
                                             Schedule
                                         </Button>
 

@@ -22,5 +22,6 @@ public class AvailabilityDTO {
     private Timestamp end;
     private List<Timestamp> slotStarts;
     private List<Timestamp> slotEnds;
+    private Integer scheduled;
 
 }

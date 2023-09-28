@@ -5,6 +5,8 @@ import { FaSearch } from "react-icons/fa";
 import { GridItem } from '@chakra-ui/react';
 
 const SearchDoc = () => {
+  
+  localStorage.setItem('activeItem', 'Dashboard');
   const [query, setQuery] = useState("");
   const keys = ["first_name", "last_name", "email"];
   const search = (data) => {

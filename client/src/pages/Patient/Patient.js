@@ -9,7 +9,8 @@ import LineChart from '../../components/LineChart'
 import SimpleTable from '../../components/Table/SimpleTable'
 
 
-const Pstient = () => {
+const Patient = () => {
+
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const handleSearch = () => {
@@ -108,4 +109,4 @@ const Pstient = () => {
   )
 }
 
-export default Pstient
+export default Patient
