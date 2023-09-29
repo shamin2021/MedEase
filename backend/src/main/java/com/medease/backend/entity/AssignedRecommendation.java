@@ -26,4 +26,7 @@ public class AssignedRecommendation {
     @Id
     @JoinColumn(referencedColumnName = "id")
     private Integer assigenedUserId;
+
+    @Id
+    private Integer assignedWeek;
 }

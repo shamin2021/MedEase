@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medease.backend.entity.AssignedRecommendation;
+import com.medease.backend.entity.UserRecommendationId;
 import com.medease.backend.repository.AssignedRecommendationRepository;
-import com.medease.backend.repository.PatientRepository;
 import com.medease.backend.repository.RecommendationRepository;
+import com.medease.backend.service.AssignedRecommendationService;
+import com.medease.backend.service.DateHandleService;
 import com.medease.backend.service.PatientService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,12 +29,14 @@ public class AssignedRecommendationController {
 
     private final RecommendationRepository recommendationRepository;
     private final AssignedRecommendationRepository assignedRecommendationRepository;
+    private final AssignedRecommendationService assignedRecommendationService;
 
     private final PatientService patientService;
 
     @GetMapping("/{patient_id}")
     public ResponseEntity<?> getAllAssignedRecommendations(@PathVariable("patient_id") Integer patientId) {
-        System.out.println("user id: " + patientId);
+        System.out.println("Calling getAllAssignedRecommendations()");
+        System.out.println("User id: " + patientId);
 
         var userDetails = new HashMap<String, Object>();
         userDetails.put("id", patientId.toString());
@@ -40,20 +44,38 @@ public class AssignedRecommendationController {
         userDetails.put("riskLevel", "High");
         userDetails.put("hlcName", "Colombo");
 
-        var assignedRecommendation = this.assignedRecommendationRepository.findByAssigenedUserId(patientId);
+        int weekNumber = DateHandleService.getCurrentWeekNumber();
+
+        var assignedRecommendations = this.assignedRecommendationService.getAssignedRecommendations(patientId,
+                weekNumber);
 
         var response = new HashMap<String, Object>();
         response.put("userDetails", userDetails);
-        response.put("assignedRecommendation", assignedRecommendation);
+        response.put("assignedRecommendation", assignedRecommendations);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/patient/{patient_id}")
     public ResponseEntity<?> getAllAssignedRecommendationsWithName(@PathVariable("patient_id") Integer patientId) {
-        System.out.println("user id: " + patientId);
+        System.out.println("Calling getAllAssignedRecommendationsWithName()");
+        System.out.println("User id: " + patientId);
 
         // get all assigned recommendations
-        var assignedRecommendations = this.assignedRecommendationRepository.findByAssigenedUserId(patientId);
+        int weekNumber = DateHandleService.getCurrentWeekNumber();
+
+        var assignedRecommendations = this.assignedRecommendationRepository
+                .findByAssigenedUserIdAndAssignedWeek(patientId, weekNumber);
+
+        // if assigned recommendation is empty, get the previous week's recommendation
+        for (int i = 0; i < 8; i++) {
+            if (assignedRecommendations.isEmpty()) {
+                weekNumber = DateHandleService.getPreviousWeekNumberByWeekNumber(weekNumber);
+                assignedRecommendations = this.assignedRecommendationRepository
+                        .findByAssigenedUserIdAndAssignedWeek(patientId, weekNumber);
+            } else {
+                break;
+            }
+        }
 
         // for each assigned recommendation, get the recommendation details
         var recommendations = assignedRecommendations.stream().map(assignedRecommendation -> {
@@ -67,16 +89,31 @@ public class AssignedRecommendationController {
 
     @PostMapping("/assign")
     public ResponseEntity<?> assignRecommendation(@RequestBody AssignedRecommendation recommendation) {
+        System.out.println("Calling assignRecommendation()");
         System.out.println(recommendation);
 
-        // if recommendation already exists, remove it. else add it
-        if (this.assignedRecommendationRepository.existsByAssigenedUserIdAndAssignedRecommendationId(
-                recommendation.getAssigenedUserId(),
-                recommendation.getAssignedRecommendationId())) {
-            this.assignedRecommendationRepository.delete(recommendation);
-        } else {
-            this.assignedRecommendationRepository.save(recommendation);
+        int weekNumber = DateHandleService.getCurrentWeekNumber();
+
+        if (weekNumber == -1) {
+            return ResponseEntity.badRequest().body("Invalid date");
         }
-        return ResponseEntity.ok("success");
+
+        try {
+            var userRecommendationId = new UserRecommendationId(
+                    recommendation.getAssigenedUserId(),
+                    recommendation.getAssignedRecommendationId(),
+                    weekNumber);
+
+            // if recommendation already exists, remove it. else add it
+            if (this.assignedRecommendationRepository.existsById(userRecommendationId)) {
+                this.assignedRecommendationRepository.deleteById(userRecommendationId);
+            } else {
+                recommendation.setAssignedWeek(weekNumber);
+                this.assignedRecommendationRepository.save(recommendation);
+            }
+            return ResponseEntity.ok("success");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Invalid recommendation");
+        }
     }
 }

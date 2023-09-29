@@ -165,7 +165,7 @@ const AddLifestyle = () => {
                       </div>
                       <div className="w-3/4 p-1 rounded-md">
                         {" "}
-                        {patient.name}{" "}
+                        {patient?.name}{" "}
                       </div>
                     </div>
                   </div>
@@ -177,7 +177,7 @@ const AddLifestyle = () => {
                   </div>
                   <div className=" flex flex-col md:w-1/4">
                     <div className="text-[#797878]">HLC</div>
-                    <div className="p-1 pl-0 ">{patient.hlcName}</div>
+                    <div className="p-1 pl-0 ">{patient?.hlcName}</div>
                   </div>
                 </div>
                 <div>

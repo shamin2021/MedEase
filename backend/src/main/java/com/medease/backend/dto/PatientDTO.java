@@ -38,5 +38,6 @@ public class PatientDTO {
     private String lastname;
     private String email;
     private String mobileNumber;
+    private Integer user_profile_id;
 
 }

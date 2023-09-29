@@ -97,7 +97,7 @@ function InputGeneral(props) {
 }
 
 const LifestyleMonitorQuiz = () => {
-  const [userId, setUserId] = useState(102); // Temporary user id
+  const [userId, setUserId] = useState(752); // Temporary user id
   const [state, setState] = useState(null);
   const [quizData, setQuizData] = useState(null); // {completedQuizzes: [], recommendations: []}
   const [assignedRecommendations, setAssignedRecommendations] = useState([]);
@@ -113,7 +113,9 @@ const LifestyleMonitorQuiz = () => {
 
   const getAssignedRecommendations = async () => {
     try {
-      get(`/completeQuiz/${userId}/4`, setQuizData);
+      const date = new Date().toISOString().slice(0, 10);
+      // const date = '2023-10-30';
+      get(`/completeQuiz/${userId}/${date}`, setQuizData);
     } catch (err) {
       console.error(err);
     }
@@ -223,9 +225,9 @@ const LifestyleMonitorQuiz = () => {
 
   return (
     <GridItem colSpan={6} mx={4} mt={NAVBARHEIGHT}>
-      <div className=" py-1 bg-primary min-h-screen">
+      <div className="py-1 bg-primary min-h-screen">
         <div className="flex mx-auto">
-          <div className="h-3/4 w-3/4 m-3 bg-white mt-5 rounded-md p-5 ">
+          <div className="h-3/4 w-3/4 m-3 bg-white mt-5 rounded-md p-5">
             <div className="text-[1rem] m-2 font-medium font-poppins">
               Weekly Quiz
             </div>

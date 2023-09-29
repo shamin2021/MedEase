@@ -51,6 +51,7 @@ public class PatientService {
                     .marital_status(patient.getMarital_status())
                     .highest_education_status(patient.getHighest_education_status())
                     .date_of_registration(patient.getDate_of_registration())
+                    .user_profile_id(patientUserId)
                     .build();
             patientDTOList.add(patientDTO);
         }

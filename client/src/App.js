@@ -173,7 +173,7 @@ function App() {
               <Route path="/DoctorSetting" element={<DoctorSetting />} />
               <Route path="/AddPrescription" element={<AddPrescription />} />
               <Route path="/doctor" element={<Doctor />} />
-              <Route path="/AddLifestyle" element={<AddLifestyle />} />
+              <Route path="/AddLifestyle/:userId" element={<AddLifestyle />} />
               <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
               <Route path="/ManagePatient" element={<ManagePatient />} />
               <Route path="/DoctorProfile" element={<DoctorProfile />} />
