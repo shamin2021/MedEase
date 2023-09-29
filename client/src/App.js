@@ -123,7 +123,6 @@ function App() {
               <Route path="/LifestyleDashboard" element={<LifestyleDashboard />} />
               <Route path="/Patient" element={<Patient />} />
               <Route path="/PatientMeetings" element={<PatientMeetings />} />
-              <Route path='/link-expired' element={<MeetingExpired />} />
               <Route path='/ScheduleMeeting/:id' element={<MeetingSchedule />} />
               <Route path="/PatientSettings" element={<PatientSettings />} />
               <Route path="/PatientProfile" element={<PatientProfile />} />
@@ -148,11 +147,7 @@ function App() {
               <Route path="/FindHLCAdmin" element={<FindHLCAdmin />} />
             </Route>
 
-            <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[3]]} />} >
-              {/* routes only for PATIENT and DOCTOR */}
-              <Route path="/meeting/:id/:user/:time" element={<Conference />} />
-              <Route path='/link-expired' element={<MeetingExpired />} />
-            </Route>
+
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
               {/* routes only for HLC */}
@@ -178,7 +173,12 @@ function App() {
               <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
               <Route path="/ManagePatient" element={<ManagePatient />} />
               <Route path="/DoctorProfile" element={<DoctorProfile />} />
+            </Route>
 
+            <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[3]]} />} >
+              {/* routes only for PATIENT and DOCTOR */}
+              <Route path="/meeting/:id/:user/:time" element={<Conference />} />
+              <Route path='/link-expired' element={<MeetingExpired />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4]]} />}>
