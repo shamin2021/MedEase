@@ -48,7 +48,9 @@ const DoctorMeetings = () => {
             await new Promise(resolve => setTimeout(resolve, 1000));
             setShowMeeting(true);
 
-            const meetingUrl = `/meeting/${meeting.meeting_id}/doctor/${meeting.start}`
+            const meetingStart = changeUTCFormat(meeting.start)
+
+            const meetingUrl = `/meeting/${meeting.meeting_id}/doctor/${meetingStart}`
 
             const conferenceWindow = window.open(
                 meetingUrl,
@@ -74,6 +76,20 @@ const DoctorMeetings = () => {
             setIsLoading(false);
         }
     };
+
+    const changeUTCFormat = (dateStr) => {
+        const dateObj = new Date(dateStr);
+        console.log(dateStr);
+        const localTime = new Date();
+        localTime.setFullYear(dateObj.getFullYear());
+        localTime.setMonth(dateObj.getMonth());
+        localTime.setDate(dateObj.getDate());
+        localTime.setHours(dateObj.getHours());
+        localTime.setMinutes(dateObj.getMinutes());
+        localTime.setSeconds(dateObj.getSeconds());
+        return localTime;
+    }
+
 
     // to keep track that user is already in a meeting
     useEffect(() => {
@@ -108,45 +124,56 @@ const DoctorMeetings = () => {
         if (new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) < Date.now()) {
             return null;
 
-        } else if (new Date(meeting.start) >= Date.now() && new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) <= Date.now()) {
+        } else if (new Date(meeting.start) <= Date.now() && new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) >= Date.now()) {
             return (
                 <>
-                    <div>
+                    <div className='flex gap-3'>
                         {!showMeeting ? (
-                            <Button
-                                rightIcon={<CheckIcon />}
-                                colorScheme='teal'
-                                variant='outline'
-                                size='sm'
-                                onClick={() => { handleMeeting(meeting) }}
-                                loadingText="Joining..."
-                                isLoading={isLoading}
-                            >
-                                Join
-                            </Button>
+                            <>
+                                <Button
+                                    rightIcon={<CheckIcon />}
+                                    colorScheme='teal'
+                                    variant='outline'
+                                    size='sm'
+                                    onClick={() => { handleMeeting(meeting) }}
+                                    loadingText="Joining..."
+                                    isLoading={isLoading}
+                                >
+                                    Join
+                                </Button>
+                                <Button
+                                    colorScheme="blue"
+                                    rightIcon={<PlusSquareIcon />}
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => console.log('Pescription clicked')}
+                                >
+                                    Add Prescription
+                                </Button>
+                            </>
                         ) : (
-                            <Button
-                                colorScheme="teal"
-                                variant="outline"
-                                size="sm"
-                                isLoading={showMeeting}
-                                loadingText="In Progress"
-                            />
+                            <>
+                                <Button
+                                    colorScheme="teal"
+                                    variant="outline"
+                                    size="sm"
+                                    isLoading={showMeeting}
+                                    loadingText="In Progress"
+                                />
+                                <Button
+                                    colorScheme="blue"
+                                    rightIcon={<PlusSquareIcon />}
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => console.log('Pescription clicked')}
+                                >
+                                    Add Prescription
+                                </Button>
+                            </>
                         )}
                     </div>
-                    <div>
-                        <Button
-                            colorScheme="blue"
-                            rightIcon={<PlusSquareIcon />}
-                            variant="outline"
-                            size="sm"
-                            onClick={() => console.log('Pescription clicked')}
-                        >
-                            Add Prescription
-                        </Button>
-                    </div>    
                 </>
-                
+
             );
         } else {
             return (
@@ -174,8 +201,8 @@ const DoctorMeetings = () => {
 
     function formatMeetingTime(timeString) {
         const date = new Date(timeString);
-        const hours = date.getUTCHours();
-        const minutes = date.getUTCMinutes();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
 
         const ampm = hours >= 12 ? 'PM' : 'AM';
         const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
@@ -201,7 +228,7 @@ const DoctorMeetings = () => {
 
                                 <TabPanel>
                                     {meetingsData
-                                        .filter((meeting) => new Date(meeting.start) >= Date.now() && new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) <= Date.now())
+                                        .filter((meeting) => new Date(meeting.start) <= Date.now() && new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) >= Date.now())
                                         .map((meeting) => (
                                             <>
                                                 <Heading size='md' mb={4}>

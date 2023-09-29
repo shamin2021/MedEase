@@ -17,7 +17,6 @@ const PatientMeetings = () => {
     const [showMeeting, setShowMeeting] = useState(false);
     const [meetingsData, setMeetingsData] = useState([]);
     const [stateChanged, setStateChanged] = useState(false);
-    const [adjustedMeetingsData, setAdjustedMeetingsData] = useState([]);
 
 
     const handleTabChange = (index) => {
@@ -44,22 +43,6 @@ const PatientMeetings = () => {
     }, [stateChanged]);
 
 
-    useEffect(() => {
-        console.log(meetingsData);
-        changeTimeFormat(meetingsData);
-        console.log(Date.now());
-    }, [meetingsData]);
-
-
-    const changeTimeFormat = (meetingsData) => {
-        setAdjustedMeetingsData(meetingsData.map((meeting) => ({
-            ...meeting,
-            start: new Date(new Date(meeting.start).getTime() + (5 * 60 * 60 * 1000) + (30 * 60 * 1000)).toISOString(),
-            end: new Date(new Date(meeting.end).getTime() + (5 * 60 * 60 * 1000) + (30 * 60 * 1000)).toISOString(),
-        })));
-    }
-
-
     // to join the meeting on a new tab
     const handleMeeting = async (meeting) => {
         setIsLoading(true);
@@ -67,7 +50,9 @@ const PatientMeetings = () => {
             await new Promise(resolve => setTimeout(resolve, 1000));
             setShowMeeting(true);
 
-            const meetingUrl = `/meeting/${meeting.meeting_id}/patient/${meeting.start}`
+            const meetingStart = changeUTCFormat(meeting.start)
+
+            const meetingUrl = `/meeting/${meeting.meeting_id}/patient/${meetingStart}`
 
             const conferenceWindow = window.open(
                 meetingUrl,
@@ -111,6 +96,20 @@ const PatientMeetings = () => {
     }, []);
 
 
+    const changeUTCFormat = (dateStr) => {
+        const dateObj = new Date(dateStr);
+        console.log(dateStr);
+        const localTime = new Date();
+        localTime.setFullYear(dateObj.getFullYear());
+        localTime.setMonth(dateObj.getMonth());
+        localTime.setDate(dateObj.getDate());
+        localTime.setHours(dateObj.getHours());
+        localTime.setMinutes(dateObj.getMinutes());
+        localTime.setSeconds(dateObj.getSeconds());
+        return localTime;
+    }
+
+
     const handleRemove = (meetingId) => {
         try {
             put(`/meetings/cancelAfterSchedule/${meetingId}`, {}, setStateChanged);
@@ -128,7 +127,7 @@ const PatientMeetings = () => {
         if (new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) < Date.now()) {
             return null;
 
-        } else if (new Date(meeting.start) >= Date.now() && new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) <= Date.now()) {
+        } else if (new Date(meeting.start) <= Date.now() && new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) >= Date.now()) {
             return (
                 <div>
                     {!showMeeting ? (
@@ -180,8 +179,8 @@ const PatientMeetings = () => {
 
     function formatMeetingTime(timeString) {
         const date = new Date(timeString);
-        const hours = date.getUTCHours();
-        const minutes = date.getUTCMinutes();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
 
         const ampm = hours >= 12 ? 'PM' : 'AM';
         const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
@@ -206,8 +205,8 @@ const PatientMeetings = () => {
                             <TabPanels className='h-[22rem] overflow-y-scroll'>
 
                                 <TabPanel>
-                                    {adjustedMeetingsData
-                                        .filter((meeting) => new Date(meeting.start) >= Date.now() && new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) <= Date.now())
+                                    {meetingsData
+                                        .filter((meeting) => new Date(meeting.start) <= Date.now() && new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) >= Date.now())
                                         .map((meeting) => (
                                             <>
                                                 <Heading size='md' mb={4}>
@@ -229,7 +228,7 @@ const PatientMeetings = () => {
                                 </TabPanel>
 
                                 <TabPanel>
-                                    {adjustedMeetingsData
+                                    {meetingsData
                                         .filter((meeting) => new Date(meeting.start) > Date.now())
                                         .map((meeting) => (
                                             <>
@@ -251,7 +250,7 @@ const PatientMeetings = () => {
                                 </TabPanel>
 
                                 <TabPanel>
-                                    {adjustedMeetingsData
+                                    {meetingsData
                                         .filter((meeting) => new Date(meeting.start).setMinutes(new Date(meeting.start).getMinutes() + 30) < Date.now())
                                         .map((meeting) => (
                                             <>
