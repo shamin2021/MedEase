@@ -12,5 +12,7 @@ public interface CompleteQuizRepository extends JpaRepository<CompletQuiz, Compl
 
     List<CompletQuiz> findByAssigenedUserIdAndWeekNumber(Integer assigenedUserId, Integer weekNumber);
 
+    CompletQuiz findTopByAssigenedUserIdOrderByWeekNumberDesc(Integer assigenedUserId);
+
     boolean existsById(CompleteQuizId id);
 }

@@ -53,6 +53,15 @@ public class DateHandleService {
         return year * 100 + week;
     }
 
+    public static int getNPreviousWeek(int n) {
+        int weekNumber = getCurrentWeekNumber();
+        for (int i = 0; i < n; i++) {
+            weekNumber = getPreviousWeekNumberByWeekNumber(weekNumber);
+        }
+
+        return weekNumber;
+    }
+
     /**
      * Get the previous week number of a date
      * 

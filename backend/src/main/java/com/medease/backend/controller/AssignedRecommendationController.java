@@ -63,19 +63,8 @@ public class AssignedRecommendationController {
         // get all assigned recommendations
         int weekNumber = DateHandleService.getCurrentWeekNumber();
 
-        var assignedRecommendations = this.assignedRecommendationRepository
-                .findByAssigenedUserIdAndAssignedWeek(patientId, weekNumber);
-
-        // if assigned recommendation is empty, get the previous week's recommendation
-        for (int i = 0; i < 8; i++) {
-            if (assignedRecommendations.isEmpty()) {
-                weekNumber = DateHandleService.getPreviousWeekNumberByWeekNumber(weekNumber);
-                assignedRecommendations = this.assignedRecommendationRepository
-                        .findByAssigenedUserIdAndAssignedWeek(patientId, weekNumber);
-            } else {
-                break;
-            }
-        }
+        var assignedRecommendations = this.assignedRecommendationService.getAssignedRecommendations(patientId,
+                weekNumber);
 
         // for each assigned recommendation, get the recommendation details
         var recommendations = assignedRecommendations.stream().map(assignedRecommendation -> {

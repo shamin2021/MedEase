@@ -14,4 +14,6 @@ public interface AssignedRecommendationRepository extends JpaRepository<Assigned
 
     boolean existsByAssigenedUserIdAndAssignedRecommendationId(Integer assigenedUserId,
             Integer assignedRecommendationId);
+
+    AssignedRecommendation findTopByAssigenedUserIdOrderByAssignedWeekDesc(Integer assigenedUserId);
 }

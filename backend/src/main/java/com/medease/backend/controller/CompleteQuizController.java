@@ -1,6 +1,8 @@
 package com.medease.backend.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medease.backend.entity.CompletQuiz;
 import com.medease.backend.entity.CompleteQuizId;
-import com.medease.backend.repository.AssignedRecommendationRepository;
 import com.medease.backend.repository.CompleteQuizRepository;
 import com.medease.backend.repository.RecommendationRepository;
 import com.medease.backend.service.AssignedRecommendationService;
@@ -27,30 +28,56 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CompleteQuizController {
     private final RecommendationRepository recommendationRepository;
-    private final AssignedRecommendationRepository assignedRecommendationRepository;
     private final CompleteQuizRepository completeQuizRepository;
 
     private final AssignedRecommendationService assignedRecommendationService;
 
-    @GetMapping("/dashboard/{patient_id}")
-    public ResponseEntity<?> getDashboardData(@PathVariable("patient_id") Integer patientId) {
+    @GetMapping("/dashboard/{patient_id}/{page}")
+    public ResponseEntity<?> getDashboardData(@PathVariable("patient_id") Integer patientId,
+            @PathVariable("page") Integer page) {
         System.out.println("Calling getDashboardData()");
+        System.out.println("User_id: " + patientId);
+        System.out.println("Page: " + page);
 
-        // get all assigned recommendations
-        var assignedRecommendations = this.assignedRecommendationRepository.findByAssigenedUserId(patientId);
-
-        // for each assigned recommendation, get the recommendation details
-        var recommendations = assignedRecommendations.stream().map(assignedRecommendation -> {
-            return this.recommendationRepository.findById(assignedRecommendation.getAssignedRecommendationId())
-                    .orElse(null);
-        }).toList();
-
-        // get all completed quizzes
-        var completedQuizzes = this.completeQuizRepository.findByAssigenedUserId(patientId);
-
+        // get id of the last record of the user
+        int lastRecordWeekNumber = this.assignedRecommendationService.getLastRecordWeekNumber(patientId);
+        System.out.println("Last week number: " + lastRecordWeekNumber);
         var response = new HashMap<String, Object>();
-        response.put("previousQuizes", recommendations);
-        response.put("thisWeekProgress", completedQuizzes);
+        List<HashMap<String, Object>> weeklyQuizzes = new ArrayList<>();
+
+        int startFrom = (page - 1) * 10;
+        int endFrom = page * 10;
+
+        for (int i = startFrom + 1; i <= endFrom; i++) {
+            response.put("isLastPage", false);
+
+            int weekNumber = DateHandleService.getNPreviousWeek(i);
+            if (weekNumber < lastRecordWeekNumber) {
+                response.put("isLastPage", true);
+                break;
+            }
+
+            var weekRes = new HashMap<String, Object>();
+
+            // get all assigned recommendations
+            var assignedRecommendations = this.assignedRecommendationService.getAssignedRecommendations(patientId,
+                    weekNumber);
+
+            // for each assigned recommendation, get the recommendation details
+            var recommendations = assignedRecommendations.stream().map(assignedRecommendation -> {
+                return this.recommendationRepository.findById(assignedRecommendation.getAssignedRecommendationId())
+                        .orElse(null);
+            }).toList();
+
+            var completedQuizzes = this.completeQuizRepository.findByAssigenedUserIdAndWeekNumber(patientId,
+                    weekNumber);
+            weekRes.put("weekNumber", weekNumber);
+            weekRes.put("recommendations", recommendations);
+            weekRes.put("completedQuizzes", completedQuizzes);
+
+            weeklyQuizzes.add(i, weekRes);
+        }
+        response.put("weeklyQuizzes", weeklyQuizzes);
 
         return ResponseEntity.ok(response);
     }
@@ -97,7 +124,7 @@ public class CompleteQuizController {
         if (weekNumber == -1) {
             return ResponseEntity.badRequest().body("Invalid date");
         }
-        
+
         completQuiz.setWeekNumber(weekNumber);
         try {
             // if quiz already exists, remove it. else add it
