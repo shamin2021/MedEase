@@ -23,6 +23,7 @@ public class AssignedRecommendationService {
         // if assigned recommendation is empty, get the previous week's recommendation
         if (assignedRecommendations.isEmpty()) {
             int lastRecordWeekNumber = this.getLastRecordWeekNumber(patientId);
+            int currenWeekNumber = DateHandleService.getCurrentWeekNumber();
 
             if (lastRecordWeekNumber == 0) {
                 return assignedRecommendations;
@@ -36,18 +37,26 @@ public class AssignedRecommendationService {
                     System.out.println("Getting data for (user, week number): " + patientId + " " + weekNumber);
                     assignedRecommendations = this.assignedRecommendationRepository
                             .findByAssigenedUserIdAndAssignedWeek(patientId, weekNumber);
-                } else {
-                    try {
-                        for (int i = 0; i < assignedRecommendations.size(); i++) {
-                            AssignedRecommendation ar = assignedRecommendations.get(i);
-                            ar.setAssignedWeek(weekNumber);
-                            this.assignedRecommendationRepository.save(ar);
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Error in saving previous weeks recommendations for this week: " + e);
-                    }
 
-                    break;
+                    if (!assignedRecommendations.isEmpty()) {
+                        try {
+                            for (int i = 0; i < assignedRecommendations.size(); i++) {
+                                AssignedRecommendation ar = assignedRecommendations.get(i);
+                                AssignedRecommendation newAr = new AssignedRecommendation();
+                                newAr.setAssignedRecommendationId(ar.getAssignedRecommendationId());
+                                newAr.setAssigenedUserId(ar.getAssigenedUserId());
+                                newAr.setAssignedWeek(currenWeekNumber);
+                                
+                                System.out.println("Saving previous weeks recommendations for this week ("
+                                        + currenWeekNumber + "): " + newAr);
+                                this.assignedRecommendationRepository.save(newAr);
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Error in saving previous weeks recommendations for this week: " + e);
+                        }
+
+                        break;
+                    }
                 }
             }
         }
@@ -56,7 +65,7 @@ public class AssignedRecommendationService {
     }
 
     public Integer getLastRecordWeekNumber(Integer userId) {
-        var lastRecord = this.assignedRecommendationRepository.findTopByAssigenedUserIdOrderByAssignedWeekDesc(userId);
+        var lastRecord = this.assignedRecommendationRepository.findTopByAssigenedUserIdOrderByAssignedWeek(userId);
         if (lastRecord == null) {
             return 0;
         }

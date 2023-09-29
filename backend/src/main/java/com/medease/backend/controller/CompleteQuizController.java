@@ -41,15 +41,15 @@ public class CompleteQuizController {
 
         // get id of the last record of the user
         int lastRecordWeekNumber = this.assignedRecommendationService.getLastRecordWeekNumber(patientId);
-        System.out.println("Last week number: " + lastRecordWeekNumber);
+        System.out.println("Last record number: " + lastRecordWeekNumber);
         var response = new HashMap<String, Object>();
         List<HashMap<String, Object>> weeklyQuizzes = new ArrayList<>();
 
         int startFrom = (page - 1) * 10;
         int endFrom = page * 10;
 
+        response.put("isLastPage", false);
         for (int i = startFrom + 1; i <= endFrom; i++) {
-            response.put("isLastPage", false);
 
             int weekNumber = DateHandleService.getNPreviousWeek(i);
             if (weekNumber < lastRecordWeekNumber) {
@@ -69,27 +69,27 @@ public class CompleteQuizController {
                         .orElse(null);
             }).toList();
 
+            System.out.println("Get all completed quizzes " + patientId + " " + weekNumber);
             var completedQuizzes = this.completeQuizRepository.findByAssigenedUserIdAndWeekNumber(patientId,
                     weekNumber);
+
             weekRes.put("weekNumber", weekNumber);
             weekRes.put("recommendations", recommendations);
             weekRes.put("completedQuizzes", completedQuizzes);
 
-            weeklyQuizzes.add(i, weekRes);
+            weeklyQuizzes.add(weekRes);
         }
         response.put("weeklyQuizzes", weeklyQuizzes);
 
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{patient_id}/{date}")
-    public ResponseEntity<?> getAllCompletedQuizzes(@PathVariable("patient_id") Integer patientId,
-            @PathVariable("date") String date) {
+    @GetMapping("/{patient_id}")
+    public ResponseEntity<?> getAllCompletedQuizzes(@PathVariable("patient_id") Integer patientId) {
         System.out.println("Calling getAllCompletedQuizzes()");
         System.out.println("User_id: " + patientId);
-        System.out.println("Req_date: " + date);
 
-        int weekNumber = DateHandleService.getWeekNumber(date);
+        int weekNumber = DateHandleService.getCurrentWeekNumber();
         System.out.println("WeekNumber: " + weekNumber);
 
         // get all assigned recommendations

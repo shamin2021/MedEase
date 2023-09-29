@@ -13,7 +13,7 @@ public class CompleteQuizService {
     private final CompleteQuizRepository completeQuizRepository;
 
     public Integer getLastRecordId(Integer userId) {
-        var lastRecord = this.completeQuizRepository.findTopByAssigenedUserIdOrderByWeekNumberDesc(userId);
+        var lastRecord = this.completeQuizRepository.findTopByAssigenedUserIdOrderByWeekNumber(userId);
         if (lastRecord == null) {
             return 0;
         }
