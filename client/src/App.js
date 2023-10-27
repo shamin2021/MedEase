@@ -38,7 +38,6 @@ import LifestyleDashboard from "./pages/LifestyleMonitoring/LifestyleDashboard";
 import AddExamination from "./pages/AddExamination";
 import AddExaminationHLC from "./pages/AddExamination";
 import FindHLCAdmin from "./pages/Admin/FindHLC";
-import FindHLCPatient from "./pages/Patient/FindHLC";
 import SearchDoctorPatient from "./pages/Patient/SearchDoctor";
 import ManagePatient from "./pages/Doctor/ManagePatient";
 import ManagePatientHLC from "./pages/HLC/ManagePatient";
@@ -126,8 +125,6 @@ function App() {
               <Route path="/PatientProfile" element={<PatientProfile />} />
               <Route path="/patient" element={<Patient />} />
               <Route path="/AddExamination/:id" element={<AddExamination />} />
-              <Route path="/FindHLCPatient" element={<FindHLCPatient />} />
-              <Route path="/HLCProfile" element={<HLCProfile />} />
               <Route path="/DoctorProfile" element={<DoctorProfile />} />
               <Route path="/SearchDoctorPatient" element={<SearchDoctorPatient />} />
               <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
