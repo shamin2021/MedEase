@@ -14,5 +14,6 @@ public class MapDTO {
     private String name;
     private String longitude;
     private String latitude;
+    private String contactNumber;
 
 }

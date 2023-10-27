@@ -15,7 +15,6 @@ import ResetPassword from './pages/ResetPassword';
 import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
-import ContactUs from './pages/ContactUs';
 
 import Patient from './pages/Patient/Patient';
 import Admin from './pages/Admin/Admin';
@@ -105,7 +104,6 @@ function App() {
             {/* <Route path="/message" element={<DirectChatPage />} /> */}
             <Route path="/findHLC" element={<FindHLC />} />
             <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/contact-us" element={<ContactUs />} />
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3], ROLES[4]]} />} >
               {/* routes allowed for all authenticated users */}
