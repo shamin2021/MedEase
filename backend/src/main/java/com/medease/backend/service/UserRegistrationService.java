@@ -102,11 +102,11 @@ public class UserRegistrationService {
                 .build();
     }
 
-    public GlobalResponseDTO addHlc(RegisterRequestDTO registerRequestDTO) {
+    public GlobalResponseDTO addHlc(String hlc_name, MultipartFile image, String mobileNumber, String email, String moh_area, String longitude, String latitude, String phm_area, String phi_area, String gn_division, String ds_division, String gn_number, String in_charge, String in_charge_designation, String in_charge_email, String in_charge_mobile) {
 
         var user = User.builder()
-                .email(registerRequestDTO.getEmail())
-                .mobileNumber(registerRequestDTO.getMobileNumber())
+                .email(email)
+                .mobileNumber(mobileNumber)
                 .role(Role.HLC)
                 .activated(Boolean.FALSE)
                 .enabled(Boolean.TRUE)
@@ -117,29 +117,33 @@ public class UserRegistrationService {
         authenticationService.saveUserToken(savedUser, jwtToken);
 
         var hlc = HLC.builder()
-                .hlc_name(registerRequestDTO.getHlc_name())
+                .hlc_name(hlc_name)
                 .hlc_user(user)
-                .moh_area(registerRequestDTO.getMoh_area())
-                .phm_area(registerRequestDTO.getPhm_area())
-                .phi_area(registerRequestDTO.getPhi_area())
-                .gn_division(registerRequestDTO.getGn_division())
-                .ds_division(registerRequestDTO.getDs_division())
-                .gn_number(registerRequestDTO.getGn_number())
-                .in_charge(registerRequestDTO.getIn_charge())
-                .in_charge_designation(registerRequestDTO.getIn_charge_designation())
-                .in_charge_email(registerRequestDTO.getIn_charge_email())
-                .in_charge_mobile(registerRequestDTO.getIn_charge_mobile())
+                .moh_area(moh_area)
+                .phm_area(phm_area)
+                .phi_area(phi_area)
+                .gn_division(gn_division)
+                .ds_division(ds_division)
+                .gn_number(gn_number)
+                .in_charge(in_charge)
+                .in_charge_designation(in_charge_designation)
+                .in_charge_email(in_charge_email)
+                .in_charge_mobile(in_charge_mobile)
                 .build();
 
         hlcRepository.save(hlc);
 
         var hlcMap = HLCMap.builder()
                 .hlc(hlc)
-                .longitude(registerRequestDTO.getLongitude())
-                .latitude(registerRequestDTO.getLatitude())
+                .longitude(longitude)
+                .latitude(latitude)
                 .build();
 
         hlcMapRepository.save(hlcMap);
+
+        if(image != null) {
+            uploadService.uploadImage(image,user);
+        }
 
         return GlobalResponseDTO.builder()
                 .status(200)

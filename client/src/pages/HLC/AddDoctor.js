@@ -33,7 +33,6 @@ const AddDoc = props => {
   const [licenseNumber, setLicenseNumber] = useState("");
 
   const [image, setImage] = useState(null);
-  const [imageState, setImageState] = useState("");
 
   // to get the response from the server
   const [state, setState] = useState(null)

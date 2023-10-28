@@ -2,6 +2,7 @@ package com.medease.backend.service;
 
 import com.medease.backend.dto.MapDTO;
 import com.medease.backend.entity.HLC;
+import com.medease.backend.entity.User;
 import com.medease.backend.repository.HLCMapRepository;
 import com.medease.backend.repository.HLCRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +25,14 @@ public class HomeService {
 
         for(HLC hlc : hlcList ) {
             String hlcMapDetails = hlcMapRepository.findHLCMapById(hlc.getHlc_id());
+            User hlcUser = hlc.getHlc_user();
             String[] hlcMapDetailsSplit = hlcMapDetails.split(",");
             String longitude = hlcMapDetailsSplit[0].trim();
             String latitude = hlcMapDetailsSplit[1].trim();
 
             var mapDTo = MapDTO.builder()
                     .name(hlc.getHlc_name())
-                    .contactNumber(hlc.getIn_charge_mobile())
+                    .contactNumber(hlcUser.getMobileNumber())
                     .longitude(longitude)
                     .latitude(latitude)
                     .build();

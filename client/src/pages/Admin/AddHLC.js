@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import "../../styles/FormInput.css";
@@ -38,7 +38,14 @@ const form3Data = [];
 // better to remove the functions from this page and make components and import them here
 const Form1 = ({ formData, setFormData }) => {
 
-  const { name, mobileNumber, email, mohArea, longitude, latitude } = formData;
+  const { name, mobileNumber, email, mohArea, longitude, latitude, image } = formData;
+  const [tempImgHolder, setTempImageHolder] = useState(null);
+
+  useEffect(() => {
+    if (tempImgHolder != null) {
+      setFormData({ ...formData, image: tempImgHolder })
+    }
+  }, [tempImgHolder]);
 
   return (
     <>
@@ -80,7 +87,7 @@ const Form1 = ({ formData, setFormData }) => {
             </div>
           </div>
           <div className="container ml-3 pt-5 justify-right w-1/4">
-            <ButtonImage name="Add Image" />
+            <ButtonImage name="Add Image" setImage={setTempImageHolder} image={image} />
           </div>
         </div>
         <div className="container flex">
@@ -341,7 +348,8 @@ const AddHLC = (props) => {
     email: "",
     mohArea: "",
     latitude: "",
-    longitude: ""
+    longitude: "",
+    image: null
   });
 
   const [form2State, setForm2State] = useState({
@@ -392,27 +400,30 @@ const AddHLC = (props) => {
     }
 
     try {
-      post('/register-user/register-hlc', formData, setState);
+      post('/register-user/register-hlc', formData, setState, true);
 
-      setForm1State({
-        name: "",
-        mobileNumber: "",
-        email: "",
-        mohArea: "",
-      });
-      setForm2State({
-        phmArea: "",
-        phiArea: "",
-        gnDivision: "",
-        dsDivision: "",
-        gnNumber: "",
-      });
-      setForm3State({
-        incharge: "",
-        designation: "",
-        inchargeEmail: "",
-        inchargeMobile: "",
-      });
+      // setForm1State({
+      //   name: "",
+      //   mobileNumber: "",
+      //   email: "",
+      //   mohArea: "",
+      //   latitude: "",
+      //   longitude: "",
+      //   image: null
+      // });
+      // setForm2State({
+      //   phmArea: "",
+      //   phiArea: "",
+      //   gnDivision: "",
+      //   dsDivision: "",
+      //   gnNumber: "",
+      // });
+      // setForm3State({
+      //   incharge: "",
+      //   designation: "",
+      //   inchargeEmail: "",
+      //   inchargeMobile: "",
+      // });
 
     } catch (err) {
       console.error(err);
@@ -431,8 +442,9 @@ const AddHLC = (props) => {
         form1State.mobileNumber,
         form1State.email,
         form1State.mohArea,
-        form1Data.longitude,
-        form1Data.latitude
+        form1State.longitude,
+        form1State.latitude,
+        form1State.image
       );
     } else if (formStep === 1) {
       form2Data.push(
@@ -460,6 +472,7 @@ const AddHLC = (props) => {
         moh_area: form1Data[3],
         longitude: form1Data[4],
         latitude: form1Data[5],
+        image: form1Data[6],
         phm_area: form2Data[0],
         phi_area: form2Data[1],
         gn_division: form2Data[2],
