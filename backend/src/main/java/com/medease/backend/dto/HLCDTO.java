@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MapDTO {
+public class HLCDTO {
 
-    private String name;
-    private String longitude;
-    private String latitude;
-    private String contactNumber;
+    private Integer hlc_id;
+    private String hlc_name;
 
 }

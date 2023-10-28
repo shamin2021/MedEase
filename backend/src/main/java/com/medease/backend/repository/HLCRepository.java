@@ -4,6 +4,8 @@ import com.medease.backend.entity.HLC;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface HLCRepository extends JpaRepository<HLC, Integer> {
 
     @Query("""
@@ -21,4 +23,10 @@ public interface HLCRepository extends JpaRepository<HLC, Integer> {
     where hlc_user.id= :id
 """)
     String findHLCNameByUserId(Integer id);
+
+
+    @Query("""
+        select hlc_id,hlc_name from HLC
+""")
+    List<Object[]> findAllHlcNames();
 }

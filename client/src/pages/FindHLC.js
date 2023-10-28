@@ -107,12 +107,13 @@ const FindHLC = () => {
   }
 
   // to add a btn to infowindow
-  const renderInfoContentToString = (name) => {
+  const renderInfoContentToString = (name, contact) => {
     const shouldShowSignUpButton = auth.user_id == null;
 
     return ReactDOMServer.renderToString(
       <div id="info-window">
-        <h3>{name}</h3>
+        <h3>Name: {name}</h3>
+        <h3>Contact: <a href={`tel:${contact}`}>{contact}</a></h3>
         {shouldShowSignUpButton && (
           <button className="signup-button" id="signup-button">Sign Up</button>
         )}
@@ -138,7 +139,7 @@ const FindHLC = () => {
         });
 
         // to change the object to a string
-        const infoContent = renderInfoContentToString(item.name);
+        const infoContent = renderInfoContentToString(item.name, item.contactNumber);
 
         const infowindow = new window.google.maps.InfoWindow({
           content: infoContent,

@@ -6,22 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MeetingDTO {
-    private Integer meeting_id;
-    private String type;
+public class AvailabilityDTO {
+
+    private Integer availability_id;
+    private String meetingType;
     private Integer doctor;
-    private String doctor_name;
-    private Integer patient;
-    private String patient_name;
+    private Integer availableHLC;
     private Timestamp start;
     private Timestamp end;
-    private String meetingUrl;
-    private Integer cancelled;
-}
+    private List<Timestamp> slotStarts;
+    private List<Timestamp> slotEnds;
+    private Integer scheduled;
 
+}

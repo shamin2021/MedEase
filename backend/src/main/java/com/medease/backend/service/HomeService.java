@@ -30,6 +30,7 @@ public class HomeService {
 
             var mapDTo = MapDTO.builder()
                     .name(hlc.getHlc_name())
+                    .contactNumber(hlc.getIn_charge_mobile())
                     .longitude(longitude)
                     .latitude(latitude)
                     .build();

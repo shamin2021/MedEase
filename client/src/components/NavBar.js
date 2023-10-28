@@ -107,47 +107,33 @@ const NavBar = () => {
                 </Box>
               )}
 
-              <Box
-                as="a"
-                px={2}
-                py={1}
-                rounded={"md"}
-                _hover={{
-                  textDecoration: "none",
-                  bg: "gray.200",
-                }}
-                href={"/about-us"}
-              >
-                About
-              </Box>
-              <Box
-                as="a"
-                px={2}
-                py={1}
-                rounded={"md"}
-                _hover={{
-                  textDecoration: "none",
-                  bg: "gray.200",
-                }}
-                href={"/contact-us"}
-              >
-                Contact Us
-              </Box>
-              <Box
-                as="a"
-                px={2}
-                py={1}
-                rounded={"md"}
-                _hover={{
-                  textDecoration: "none",
-                  bg: "gray.200",
-                }}
-                href={"/findHLC"}
-              >
-                Find HLC
-              </Box>
-            </HStack>
-          </HStack>
+                            <Box
+                                as="a"
+                                px={2}
+                                py={1}
+                                rounded={'md'}
+                                _hover={{
+                                    textDecoration: 'none',
+                                    bg: 'gray.200',
+                                }}
+                                href={'/about-us'}>
+                                About
+                            </Box>
+                            <Box
+                                as="a"
+                                px={2}
+                                py={1}
+                                rounded={'md'}
+                                _hover={{
+                                    textDecoration: 'none',
+                                    bg: 'gray.200',
+                                }}
+                                href={'/findHLC'}>
+                                Find HLC
+                            </Box>
+
+                        </HStack>
+                    </HStack>
 
           <Flex alignItems={"center"}>
             {auth.user_id ? (

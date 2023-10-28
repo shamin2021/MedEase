@@ -16,7 +16,8 @@ import SimpleTable from '../../components/Table/SimpleTable'
 import Calendar from 'react-calendar';
 
 
-const Pstient = () => {
+const Patient = () => {
+
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const handleSearch = () => {
@@ -250,4 +251,4 @@ const Pstient = () => {
   );
 }
 
-export default Pstient
+export default Patient
