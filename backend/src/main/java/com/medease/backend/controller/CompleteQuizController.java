@@ -111,7 +111,34 @@ public class CompleteQuizController {
         response.put("completedQuizzes", completedQuizzes);
 
         return ResponseEntity.ok(response);
+    }
 
+    @GetMapping("/{patient_id}/{quiz_id}")
+    public ResponseEntity<?> getCompletedQuizzesById(@PathVariable("patient_id") Integer patientId,
+            @PathVariable("quiz_id") Integer quizId) {
+        System.out.println("Calling getCompletedQuizzesById()");
+        System.out.println("User_id: " + patientId);
+        System.out.println("WeekNumber: " + quizId);
+
+        // get all assigned recommendations
+        var assignedRecommendations = this.assignedRecommendationService.getAssignedRecommendations(patientId,
+                quizId);
+
+        // for each assigned recommendation, get the recommendation details
+        var recommendations = assignedRecommendations.stream().map(assignedRecommendation -> {
+            return this.recommendationRepository.findById(assignedRecommendation.getAssignedRecommendationId())
+                    .orElse(null);
+        }).toList();
+
+        // get all completed quizzes
+        System.out.println("Get all completed quizzes " + patientId + " " + quizId);
+        var completedQuizzes = this.completeQuizRepository.findByAssigenedUserIdAndWeekNumber(patientId, quizId);
+
+        var response = new HashMap<String, Object>();
+        response.put("recommendations", recommendations);
+        response.put("completedQuizzes", completedQuizzes);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/mark")
