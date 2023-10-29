@@ -42,4 +42,9 @@ public class RegisterRequestDTO {
     private String longitude;
     private String latitude;
 
+    private String address;
+    private String emergencyContact;
+    private String emergencyName;
+    private Integer requested;
+
 }

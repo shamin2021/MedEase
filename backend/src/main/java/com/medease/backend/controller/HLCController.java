@@ -48,5 +48,8 @@ public class HLCController {
         return ResponseEntity.ok(hlcService.updateProfileWithImage(userId, image, mobileNumber, longitude, latitude, mohArea, phmArea, phiArea, gnDivision, dsDivision, gnNumber, incharge, inchargeMail, inchargeMobile, designation));
     }
 
+    //to show HLC list in Patient Settings
+
+
 
 }

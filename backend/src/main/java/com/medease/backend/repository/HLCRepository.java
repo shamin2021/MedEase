@@ -31,6 +31,12 @@ public interface HLCRepository extends JpaRepository<HLC, Integer> {
 """)
     String findHLCNameByUserId(Integer id);
 
+    @Query("""
+        select hlc_name from HLC
+    where hlc_id= :id
+""")
+    String findHLCNameByHLCId(Integer id);
+
 
     @Query("""
         select hlc_id,hlc_name from HLC

@@ -60,7 +60,6 @@ public class DoctorService {
         var doctorInfo = doctor.split(",");
         var doctorUser = userRepository.retrieveDoctorUser(userId);
         String[] doctorDetailsSplit = doctorUser.split(",");
-        System.out.println(Arrays.toString(doctorDetailsSplit));
         var doctorSpeciality = doctorSpecialityRepository.findSpecialityById(Integer.parseInt(doctorInfo[2].trim()));
 
         //to get profile image
