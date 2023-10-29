@@ -7,74 +7,130 @@ import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import medeaseLogo from "../../assets/Medeaselogo.png";
 import useAuth from "../../hooks/useAuth";
+import {useParams } from "react-router-dom";
+
+import { useNavigate, useLocation, } from "react-router-dom";
+
+
 
 const PDFGenerator = () => {
 
     const { auth, setAuth } = useAuth();
     const [username, setUsername] = useState('')
+    const navigate = useNavigate();
+
+    const { id } = useParams();
+    console.log(id);
 
     const { get } = useAxiosMethods();
     
-  const [assessments, setAssessments] = useState([]);
-  const id = 61; // Replace with the actual self-assessment ID you want to fetch
-
+    const [assessments, setSelfAssessments] = useState([]);
+    const [medicalTest, setMedicalTest] = useState([])
+ 
     const loggedInUser = {
       "username": auth.first_name,
       "role": auth.role,
       "user_id": auth.user_id
     };
 
-  useEffect(() => {
-    try {
-      get(`/SelfAssessments`, setAssessments);
+    useEffect(() => {
+      try {
+        get(`/SelfAssessments/${id}`, setSelfAssessments);
+        get(`/MedicalAssessments/${id}`, setMedicalTest);
 
-    } catch (err) {
-      console.error(err);
-    }
-  }, []);
+      } catch (err) {
+        console.error(err);
+      }
+    }, []);
 
-  useEffect(() => {
-    console.log(assessments);
-  }, [assessments]);
+
+    useEffect(() => {
+      console.log(assessments);
+    }, [assessments]);
+
+    useEffect(() => {
+      console.log(medicalTest);
+    }, [medicalTest]);  
+
+    useEffect(() => {
+      // Call generatePDF function when the component is mounted
+      generatePDF();
+
+      navigate(`/view-SelfAssessment/${id}`);
+
+    }, []);
 
 const generatePDF = () => {
       const doc = new jsPDF();
 
       // Define a function to add the header content
       const addHeader = (pageNumber) => {
-        // Add the company logo to the header
         doc.addImage(medeaseLogo, 'PNG', 10, 10, 27, 10);
 
-        // Add the timestamp to the header
         const currentDate = new Date().toLocaleString();
         doc.setFontSize(10);
         doc.text(`Page ${pageNumber} - ${currentDate}`, 150, 15);
-        doc.text(`Name: ${loggedInUser.username}`, 10, 25); // Print Name
-        doc.text(`Role: ${loggedInUser.role}`, 70, 25); // Print role
-        doc.text(`User ID: ${loggedInUser.user_id}`, 150, 25); // Print id
+        doc.text(`Name: ${loggedInUser.username}`, 10, 25); 
+        doc.text(`Role: ${loggedInUser.role}`, 80, 25); 
+        doc.text(`User ID: ${loggedInUser.user_id}`, 150, 25); 
       };
 
-      // Define table headers and data
-      const selfassessmentheaders = [['Index','First Name', 'Last Name', 'Created Date', 'Risk']];
-      const selfassessmentdata = assessments.map((assessment, index) => [
-          index + 1, //10, 20 + index * 10,
-          assessment.firstName,
-          assessment.lastName,
-          assessment.created_date,
-          assessment.risk,
-      ]);
+       const generalheaders = [['Weight', 'Height', 'BMI','Waist Circumference','Waist Height Ratio']];
+        const generaldata =[[
+          medicalTest.weight,
+          medicalTest.height ,
+          medicalTest.bmi ,
+          medicalTest.waist_circumference,
+          medicalTest.waistHeightRatio,
+        ],];
 
-      const visitsheaders = [['Date', 'Time', 'Mode']];
-      const visitsdata = assessments.map((assessment, index) => [
-          index + 1, 10, 20 + index * 10,
-          assessment.firstName,
-          assessment.lastName,
-          assessment.created_date,
-          assessment.risk,
-      ]);
+        const generalheaders2 = [['Hearing Left','Hearing Right','Vision Left','Vision Right','Oral Examination']];
+        const generaldata2 =[[
+          medicalTest.hearingLeft,
+          medicalTest.hearingRight,
+          medicalTest.visionRight,
+          medicalTest.visionLeft,
+          medicalTest.oralExamination,
+        ],];
+
+        const familyheaders = [['Heart Disease', 'High Blood Pressure', 'Stroke','Diabetes','Cancer','COPD','Asthma','Kidney Disease']];
+        const familysdata = [[
+          assessments.heartDisease ? "Yes" : "No",
+          assessments.HighBloodPressure ? "Yes" : "No",
+          assessments.stroke ? "Yes" : "No",
+          assessments.diabetes ? "Yes" : "No",
+          assessments.cancer ? "Yes" : "No",
+          assessments.copd ? "Yes" : "No",
+          assessments.asthma ? "Yes" : "No",
+          assessments.kidneyDiseases ? "Yes" : "No",
+        ],];
+
+        const habitsheaders = [['Beetle Chewing', 'Physical Activity', 'Tobacco Smoking','Other Substances Consumption','Alcohol Consumption']];
+        const habitsdata = [[
+          assessments.beetlechewing ? "Yes" : "No",
+          assessments.physicalActivity ? "Sufficient" : "Insufficient",
+          assessments.tobaccoSmoking ? "Yes" : "No",
+          assessments.otherSubstance ? "Yes" : "No",
+          assessments.alcoholConsumption ? "Yes" : "No",
+        ],];
+
+        const examinationsheaders = [['Cholestorol Level','SBP','FBS','RBS','Blood Sugar', 'Serum Creatinin', 'Lipid Profile TG','Lipid TCHL','Lipid Profile TC','Lipid Profile LDL','Lipid Profile HDL']];
+        const examinationsdata = [[
+          medicalTest.cholesterolLvl,
+          medicalTest.sbp,
+          medicalTest.fastingbloodSugar,
+          medicalTest.randombloodSugar,
+          medicalTest.serumCreatinin,
+          medicalTest.lipidTg,
+          medicalTest.lipidLDL,
+          medicalTest.lipidTCHL,
+          medicalTest.lipidHDL,
+          medicalTest.lipidTC,
+          
+        ],];
 
       // Calculate the height of the first table (Self Assessment)
-      const table1Height = selfassessmentheaders.length * 10 + selfassessmentdata.length * 10;
+      const table1Height = habitsheaders.length * 10 + habitsdata.length * 10;
 
       // Check if there is enough space on page 1 for the first table
       if (table1Height <= doc.internal.pageSize.getHeight()) {
@@ -82,69 +138,54 @@ const generatePDF = () => {
         addHeader(1);
 
         doc.setFontSize(12);
-        doc.text('Self Assessment Data', 10, 35);
+        doc.text(`Assessment ID : ${id}`, 10, 45); 
 
-          // There is enough space on page 1, so we can print the first table on page 1
-          doc.autoTable({
-              head: selfassessmentheaders,
-              body: selfassessmentdata,
-              startY: 40, // Start Y-position of the first table
-              margin: { top: 10 },
-          });
+        doc.text(`Risk Level :  ${assessments.risk}`, 150, 45); 
 
-          // Add a page break
-          doc.addPage();
+        doc.setFontSize(12);
+        doc.text('General Details', 10, 55);
+        doc.autoTable({
+            head: generalheaders,
+            body: generaldata,
+            startY: 60, 
+            margin: { top: 10 },
+        });
+        doc.autoTable({
+          head: generalheaders2,
+          body: generaldata2,
+          startY: 80, 
+          margin: { top: 10 },
+      });
 
-          // Add the header to page 2
-          addHeader(2);
+        doc.setFontSize(12);
+        doc.text('Family History', 10, 110);
+        doc.autoTable({
+            head: familyheaders,
+            body: familysdata,
+            startY: 115, 
+            margin: { top: 10 },
+        });
 
-          doc.setFontSize(12);
-          doc.text('History of Visits', 10, 35);
-          // Print the second table (Visits) on page 2
-          doc.autoTable({
-              head: visitsheaders,
-              body: visitsdata,
-              startY: 40, // Start Y-position of the second table on page 2
-              margin: { top: 10 },
-          });
-      } else {
+        doc.setFontSize(12);
+        doc.text('Habits', 10, 145);
+        doc.autoTable({
+            head: habitsheaders,
+            body: habitsdata,
+            startY: 150, 
+            margin: { top: 10 },
+        });
 
-        // Add the header to page 1
-        addHeader(1);
-
-          // There is not enough space on page 1 for the first table, so print it on page 2
-          doc.addPage();
-
-          // Add the header to page 2
-          addHeader(2);
-
-          doc.setFontSize(12);
-          doc.text('Self Assessment Data', 10, 35);
-          // Print the first table (Self Assessment) on page 2
-          doc.autoTable({
-              head: selfassessmentheaders,
-              body: selfassessmentdata,
-              startY: 40, // Start Y-position of the first table on page 2
-              margin: { top: 10 },
-          });
-
-          // Add a page break
-          doc.addPage();
-
-          // Add the header to page 3
-          addHeader(3);
-
-          doc.setFontSize(12);
-          doc.text('History of Visits', 10, 35);
-          // Print the second table (Visits) on page 3
-          doc.autoTable({
-              head: visitsheaders,
-              body: visitsdata,
-              startY: 40, // Start Y-position of the second table on page 3
-              margin: { top: 10 },
-          });
-      }
-
+        doc.setFontSize(12);
+        doc.text('Medical Examinations', 10, 180);
+        doc.autoTable({
+            head: examinationsheaders,
+            body: examinationsdata,
+            startY: 185, 
+            margin: { top: 10 },
+        });
+          
+      } 
+    
       doc.save('PatientReport.pdf');
     };
 
@@ -155,7 +196,6 @@ const generatePDF = () => {
         rowSpan={1}
         borderRadius="lg"
         p="4"
-
       >
           <Flex
           align="center"
@@ -169,3 +209,5 @@ const generatePDF = () => {
 }
 
 export default PDFGenerator;
+
+
