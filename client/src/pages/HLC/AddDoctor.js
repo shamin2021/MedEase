@@ -248,7 +248,7 @@ const AddDoc = props => {
                   License Number <span className="text-[#ff2727]">*</span>
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="licenseNumber"
                   className="form-input"
                   onChange={(e) => setLicenseNumber(e.target.value)}

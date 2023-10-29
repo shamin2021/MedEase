@@ -133,7 +133,7 @@ const Form1 = ({ formData, setFormData }) => {
             </label>
 
             <input
-              type="text"
+              type="number"
               id="longitude"
               className="form-input"
               onChange={(e) =>
@@ -149,7 +149,7 @@ const Form1 = ({ formData, setFormData }) => {
               Latitude <span className="text-[#ff2727]">*</span>
             </label>
             <input
-              type="text"
+              type="number"
               id="latitude"
               className="form-input"
               onChange={(e) =>
@@ -240,7 +240,7 @@ const Form2 = ({ formData, setFormData }) => {
             GN Number <span className="text-[#ff2727]">*</span>
           </label>
           <input
-            type="text"
+            type="number"
             id="gnNumber"
             className="form-input"
             onChange={(e) => setFormData({ ...formData, gnNumber: e.target.value })}
@@ -399,31 +399,47 @@ const AddHLC = (props) => {
       return;
     }
 
-    try {
-      post('/register-user/register-hlc', formData, setState, true);
+    if (formData.latitude == null || formData.latitude === '') {
+      setState({ message: "Please Provide Latitude Information" });
+      return;
+    }
 
-      // setForm1State({
-      //   name: "",
-      //   mobileNumber: "",
-      //   email: "",
-      //   mohArea: "",
-      //   latitude: "",
-      //   longitude: "",
-      //   image: null
-      // });
-      // setForm2State({
-      //   phmArea: "",
-      //   phiArea: "",
-      //   gnDivision: "",
-      //   dsDivision: "",
-      //   gnNumber: "",
-      // });
-      // setForm3State({
-      //   incharge: "",
-      //   designation: "",
-      //   inchargeEmail: "",
-      //   inchargeMobile: "",
-      // });
+    if (formData.longitude == null || formData.longitude === '') {
+      setState({ message: "Please Provide Longitude Information" });
+      return;
+    }
+
+    try {
+      if (formData.image != null) {
+        post('/register-user/register-hlc-image', formData, setState, true);
+      }
+      else {
+        post('/register-user/register-hlc', formData, setState);
+      }
+
+
+      setForm1State({
+        name: "",
+        mobileNumber: "",
+        email: "",
+        mohArea: "",
+        latitude: "",
+        longitude: "",
+        image: null
+      });
+      setForm2State({
+        phmArea: "",
+        phiArea: "",
+        gnDivision: "",
+        dsDivision: "",
+        gnNumber: "",
+      });
+      setForm3State({
+        incharge: "",
+        designation: "",
+        inchargeEmail: "",
+        inchargeMobile: "",
+      });
 
     } catch (err) {
       console.error(err);

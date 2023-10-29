@@ -48,6 +48,14 @@ public class UserRegistrationController {
     // register HLC
     @PostMapping("/register-hlc")
     public ResponseEntity<GlobalResponseDTO> addHlc(
+            @RequestBody RegisterRequestDTO registerRequestDTO
+    ) {
+        return ResponseEntity.ok(userRegistrationService.addHlc(registerRequestDTO));
+    }
+
+
+    @PostMapping("/register-hlc-image")
+    public ResponseEntity<GlobalResponseDTO> addHlcWithImage(
             @RequestParam("hlc_name") String hlc_name,
             @RequestParam("image") MultipartFile image,
             @RequestParam("mobileNumber") String mobileNumber,
@@ -65,7 +73,7 @@ public class UserRegistrationController {
             @RequestParam("in_charge_email") String in_charge_email,
             @RequestParam("in_charge_mobile") String in_charge_mobile
     ) {
-        return ResponseEntity.ok(userRegistrationService.addHlc(hlc_name,image,mobileNumber,email,moh_area,longitude,latitude,phm_area,phi_area,gn_division,ds_division,gn_number,in_charge,in_charge_designation,in_charge_email,in_charge_mobile));
+        return ResponseEntity.ok(userRegistrationService.addHlcWithImage(hlc_name,image,mobileNumber,email,moh_area,longitude,latitude,phm_area,phi_area,gn_division,ds_division,gn_number,in_charge,in_charge_designation,in_charge_email,in_charge_mobile));
     }
 
 }

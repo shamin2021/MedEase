@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 import java.util.UUID;
@@ -72,5 +74,48 @@ public class UploadService {
         else{
             return null;
         }
+    }
+
+    @Transactional
+    public void editImage(MultipartFile image, User user) throws IOException {
+
+        String rootDirectory = System.getProperty("user.dir");
+        // File.separator used to get the correct path for whatever unix or Windows environment
+        String imageUploadPath = rootDirectory + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "uploads" + File.separator + "images";
+        System.out.println(imageUploadPath);
+
+
+        try {
+            if (!image.isEmpty()) {
+                byte[] imageBytes = image.getBytes();
+                String fileName = generateUniqueFileName(image.getOriginalFilename());
+                System.out.println(fileName);
+                Path filePath = Paths.get(imageUploadPath, fileName);
+                Files.write(filePath, imageBytes);
+
+                var userId = user.getId();
+
+                Optional<UserImage> userImage = userImageRepository.findByUserId(userId);
+
+                if(userImage.isPresent()) {
+                    var existingImage = userImage.get();
+                    existingImage.setImage(imageBytes);
+                    userImageRepository.save(existingImage);
+                }
+                else{
+                    UserImage newUserImage = new UserImage();
+                    newUserImage.setImage(imageBytes);
+                    newUserImage.setUserId(user);
+                    userImageRepository.save(newUserImage);
+                }
+
+            }
+
+        } catch (Exception e) {
+            throw e;
+        }
+
+
+
     }
 }

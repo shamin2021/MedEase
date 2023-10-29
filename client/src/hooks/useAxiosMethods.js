@@ -70,20 +70,37 @@ const useAxiosMethods = () => {
         }
     }
 
-    const put = (url, data, setResponse) => {
+    const put = (url, data, setResponse, isImageUpload=false) => {
         let isMounted = true;
         const controller = new AbortController();
 
         const putData = async () => {
-            try {
-                const response = await axiosPrivate.put(url, data, {
-                    signal: controller.signal
-                });
-                isMounted && setResponse(response.data);
-                console.log(response);
-            } catch (err) {
-                console.error(err);
+            if (!isImageUpload) {
+                try {
+                    const response = await axiosPrivate.put(url, data, {
+                        signal: controller.signal
+                    });
+                    isMounted && setResponse(response.data);
+                    console.log(response);
+                } catch (err) {
+                    console.error(err);
+                }
             }
+            else {
+                try {
+                    const response = await axiosPrivate.put(url, data, {
+                        signal: controller.signal,
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                    isMounted && setResponse(response.data);
+                    console.log(response);
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+
         }
 
         putData();

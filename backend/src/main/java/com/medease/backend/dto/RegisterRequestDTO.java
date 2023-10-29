@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -26,8 +24,9 @@ public class RegisterRequestDTO {
 
     private String licenseNumber;
     private Integer speciality;
+    private String doctor_speciality;
     private String mobileNumber;
-    private MultipartFile image;
+    private String image;
 
     private String hlc_name;
     private String moh_area;
