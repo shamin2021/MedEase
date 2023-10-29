@@ -2,8 +2,8 @@ import React from 'react';
 import useAuth from "../../hooks/useAuth";
 
 import NavItem from '../NavItem';
-import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiSettings, FiLogOut, FiUsers } from "react-icons/fi";
+import { Flex, IconButton, Avatar, Heading, Divider } from "@chakra-ui/react";
+import { FiMenu, FiHome, FiLogOut, FiUsers } from "react-icons/fi";
 
 const Sidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
@@ -52,7 +52,6 @@ const Sidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/Admin"} />
                 <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/FindHLCAdmin"} />
                 <NavItem navSize={navSize} icon={FiUsers} href={"/ManageUser"} title="User Management" />
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/AdminSetting"} />
 
             </Flex>
 

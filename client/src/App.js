@@ -62,10 +62,6 @@ import HLCSettings from './pages/HLC/HLCSettings';
 // import HLCProfile from './pages/HLC/HLCProfile';
 
 import AddHLC from './pages/Admin/AddHLC';
-import AdminDoctor from './pages/Admin/AdminDoctor';
-import AdminPatient from './pages/Admin/AdminPatient';
-import AdminSetting from './pages/Admin/AdminSettings';
-import AdminProfile from './pages/Admin/AdminProfile';
 
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
 import DoctorSetting from './pages/Doctor/DoctorSetting';
@@ -180,11 +176,6 @@ function App() {
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
-
-              <Route path="/AdminDoctor" element={<AdminDoctor />} />
-              <Route path="/AdminPatient" element={<AdminPatient />} />
-              <Route path="/AdminSetting" element={<AdminSetting />} />
-              <Route path="/AdminProfile" element={<AdminProfile />} />
               <Route path="/ManageUser" element={<ManageUser />} />
 
             </Route>
