@@ -71,7 +71,7 @@ public class DoctorService {
                 .firstname(doctorDetailsSplit[1].trim())
                 .lastname(doctorDetailsSplit[2].trim())
                 .email(doctorDetailsSplit[3].trim())
-                .mobileNumber(doctorDetailsSplit[4].trim())
+                .mobileNumber(!doctorDetailsSplit[4].trim().equals("null") ? doctorDetailsSplit[4].trim() : null)
                 .doctor_speciality(doctorSpeciality)
                 .licenseNumber(doctorInfo[1].trim())
                 .image(profileImage)

@@ -46,7 +46,6 @@ function DoctorSetting() {
             navigate('/login', { state: { from: location }, replace: true });
         }
 
-
     }
 
     useEffect(() => {
@@ -88,7 +87,7 @@ function DoctorSetting() {
             borderRadius="lg"
             p="4"
         >
-            <div className=" h-screen w-3/4 mx-auto mt-[5%]">
+            <div className="w-3/4 mx-auto mt-[5%]">
                 <div className=" m-3 bg-white mt-5 rounded-md p-5 ">
 
                     <div>
@@ -121,7 +120,7 @@ function DoctorSetting() {
 
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-medium leading-6 text-gray-900">Mobile Number</dt>
-                                    <input className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0" type="text" value={mobileNumber != null ? mobileNumber : ''} onChange={(e) => setMobileNumber(e.target.value)} />
+                                    <input className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 py-0" type="text" value={mobileNumber != null ? mobileNumber : ''} onChange={(e) => setMobileNumber(e.target.value)} />
                                 </div>
 
                             </dl>
