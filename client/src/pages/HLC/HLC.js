@@ -260,7 +260,7 @@ const Pstient = () => {
                 flexDirection="column"
                 className="w-full h-60 mx-auto p-3 ml-3"
               >
-                <DonutCh />
+                {/* <DonutCh /> */}
                 <div className=" m-auto">
                   <div className="text-[20px] text-center mt-2">
                     Patient Risk

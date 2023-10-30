@@ -58,7 +58,7 @@ const Layout = () => {
                 <Grid
                     h="calc(100% - 120px)"
                     templateRows='repeat(1, 1fr)'
-                    templateColumns='repeat(1, 1fr)'
+                    templateColumns='repeat(7, 1fr)'
                     gap={4}
                     mt={1}
                 >

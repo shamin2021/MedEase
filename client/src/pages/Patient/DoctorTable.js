@@ -29,7 +29,7 @@ const DoctorTable = ({ data }) => {
 
                     <div className="w-1/5 m-1">
                       {item.doctor_speciality}
-                    </div>]
+                    </div>
                     <div className="w-1/5 m-1 text-center">
                       <Link to={`/ScheduleMeeting/${item.doctor_user_id}`}>
                         <button className="p-2 m-0 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white">

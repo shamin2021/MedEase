@@ -157,7 +157,6 @@ function App() {
               <Route path="/AddDoctor" element={<AddDoctor />} />
               <Route path="/HLCPatients" element={<HLCPatients />} />
               <Route path="/HLCProfile" element={<HLCProfile />} />
-              <Route path="/AddLifestyleHLC" element={<AddLifestyleHLC />} />
               <Route path="/TransferPatient" element={<TransferPatient />} />
             </Route>
 
