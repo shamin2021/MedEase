@@ -46,7 +46,7 @@ public class AssignedRecommendationService {
                                 newAr.setAssignedRecommendationId(ar.getAssignedRecommendationId());
                                 newAr.setAssigenedUserId(ar.getAssigenedUserId());
                                 newAr.setAssignedWeek(currenWeekNumber);
-                                
+
                                 System.out.println("Saving previous weeks recommendations for this week ("
                                         + currenWeekNumber + "): " + newAr);
                                 this.assignedRecommendationRepository.save(newAr);
@@ -71,5 +71,12 @@ public class AssignedRecommendationService {
         }
 
         return lastRecord.getAssignedWeek();
+    }
+
+    public Integer getAssignedRecommendationCount(Integer userId) {
+        System.out.println("Getting assigned recommendation count for user: " + userId);
+        Integer count = this.getAssignedRecommendations(userId, DateHandleService.getCurrentWeekNumber()).size();
+        System.out.println("Assigned recommendation count: " + count);
+        return count;
     }
 }

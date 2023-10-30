@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -25,7 +24,7 @@ public class DoctorService {
         List<DoctorDTO> doctorDTOList = new ArrayList<>();
         System.out.println(doctors);
 
-        for (Object[] doctor : doctors){
+        for (Object[] doctor : doctors) {
             var doctorUserID = (Integer) doctor[2];
             String doctorUser = userRepository.retrieveDoctorUser(doctorUserID);
             String[] doctorDetailsSplit = doctorUser.split(",");
@@ -46,5 +45,9 @@ public class DoctorService {
         }
         return doctorDTOList;
 
+    }
+
+    public Integer getDoctorCount() {
+        return (int) doctorRepository.count();
     }
 }
