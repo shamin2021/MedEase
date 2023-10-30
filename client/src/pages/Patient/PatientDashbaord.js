@@ -11,59 +11,56 @@ import {
 import { FiLogOut } from "react-icons/fi";
 import { HiSearch } from "react-icons/hi";
 import logo from "../../assets/human_outline.png";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FaUserDoctor,
   FaAngleRight,
   FaVialCircleCheck,
   FaHeartCircleCheck,
 } from "react-icons/fa6";
+import CommonCard from "../../components/CommonCard";
+import BarChart from "../../components/BarChart";
+import LineChart from "../../components/LineChart";
+import SimpleTable from "../../components/Table/SimpleTable";
+import Calendar from "react-calendar";
 
-import CommonCard from '../../components/CommonCard'
-import BarChart from '../../components/BarChart'
-import LineChart from '../../components/LineChart'
-import SimpleTable from '../../components/Table/SimpleTable'
-import Calendar from 'react-calendar';
-import useAxiosMethods from "../../hooks/useAxiosMethods";
-import { useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+const Pstient = () => {
+  const [searchQuery, setSearchQuery] = React.useState("");
 
-const Patient = () => {
-  
-  const { get } = useAxiosMethods();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { auth } = useAuth();
+  const handleSearch = () => {
+    console.log(`Searching for: ${searchQuery}`);
+  };
 
-  const [userId, setUserId] = useState(auth.user_id);
-  const [dashboard, setDashboardData] = useState([]);
+  const columns = [
+    { header: "Employee Name", accessor: "employeeName" },
+    { header: "Position", accessor: "position" },
+    { header: "Department", accessor: "department" },
+  ];
 
-    useEffect(() => {
-      try {
-        get(`/dashboard/patient/${userId}`, setDashboardData);
-      } catch (err) {
-        console.error(err);
-        navigate("/login", { state: { from: location }, replace: true });
-      }
-    }, []);
-
-    
-    let bgColorClass;
-
-    if (dashboard.lastSelfAssessment?.risk === "PENDING") {
-      bgColorClass = "bg-[#fbfbfb]";
-    } else if (dashboard.lastSelfAssessment?.risk === "HIGH") {
-      bgColorClass = "bg-[#fdc2c2]";
-    }else{
-      bgColorClass = "bg-[#d5ffcf]";
-    }
+  const data = [
+    {
+      employeeName: "Dr. P. Jayamanna",
+      position: "Chief Medical Officer",
+      department: "Medical Department",
+    },
+    {
+      employeeName: "Mrs. V. Warnakulasooriya",
+      position: "Nurse",
+      department: "Nursing Department",
+    },
+    {
+      employeeName: "Ms. D. Jayasinghe",
+      position: "Administrative Assistant",
+      department: "Administration Department",
+    },
+  ];
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
       <Flex className=" mt-[4%]">
         <div className="w-3/4 h-auto m-3 mt-0  bg-white shadow-xl rounded-2xl p-[4%] pt-[2%] ">
           <Flex flexDirection="column" className="w-3/4">
-            <div className="font-bold ">Hi {dashboard.user},</div>
+            <div className="font-bold ">Hi John,</div>
             <div className=" text-[21px] text-[#707070]">
               This is your health Check for today
             </div>
@@ -72,12 +69,11 @@ const Patient = () => {
           <Flex className="mb-0 mt-[2%]">
             <Flex
               flexDirection="column"
-              className={`w-1/5 ${bgColorClass} shadow-md rounded-lg p-3`}
+              className=" w-1/5 bg-[#c5ff8c] shadow-md rounded-lg p-3"
             >
               <div className=" m-auto">
-                <div className="font-bold text-center">
-                  {dashboard.lastSelfAssessment?.risk}
-                </div>
+                <div className="font-bold text-center">Healthy</div>
+                <div className="font-bold text-center">No Risk</div>
                 <div className="text-center text-[18px] text-[#707070]">
                   Health Status
                 </div>
@@ -103,29 +99,22 @@ const Patient = () => {
                     <Flex className="mt-3">
                       <div className="m-1 border border-1 rounded-lg p-2">
                         <div className="text-center">Weight</div>
-                        <div className="text-center">
-                          {dashboard.medicalTest?.weight}
-                        </div>
+                        <div className="text-center">75kg</div>
                       </div>
                       <div className="m-1 border border-1 rounded-lg p-2">
                         <div className="text-center">Height</div>
-                        <div className="text-center">
-                          {dashboard.medicalTest?.height}
-                        </div>
+                        <div className="text-center">125cm</div>
                       </div>
                       <div className="m-1 border border-1 rounded-lg p-2">
                         <div className="text-center">Waist</div>
-                        <div className="text-center">
-                          {dashboard.medicalTest?.waistCircumference}
-                        </div>
+                        <div className="text-center">25</div>
                       </div>
                       <div className="m-1 ">
                         <div className="text-center bg-primary rounded-lg p-2 mb-1 ">
-                          BMI : {dashboard.medicalTest?.bmi}
+                          BMI : 22
                         </div>
                         <div className="text-center bg-primary rounded-lg p-2">
-                          Waist/Height :{" "}
-                          {dashboard.medicalTest?.waistHeightRatio}
+                          Waist/Height : 22
                         </div>
                       </div>
                     </Flex>
@@ -140,23 +129,17 @@ const Patient = () => {
             >
               <div className="mb-1">
                 <div className="text-[18px] font-bold">Blood Sugar</div>
-                <div className="text-[18px] text-[#707070]">
-                  {dashboard.medicalTest?.fastingbloodSugar}
-                </div>
+                <div className="text-[18px] text-[#04050c]">23 | Normal</div>
                 <hr />
               </div>
               <div className="mb-1">
                 <div className="text-[18px] font-bold">Pressure</div>
-                <div className="text-[18px] text-[#707070]">
-                  {dashboard.medicalTest?.sbp}
-                </div>
+                <div className="text-[18px] text-[#707070]">18 | Normal</div>
                 <hr />
               </div>
               <div className="mb-1">
                 <div className="text-[18px] font-bold">Lipid</div>
-                <div className="text-[18px] text-[#707070]">
-                  {dashboard.medicalTest?.lipidTg}
-                </div>
+                <div className="text-[18px] text-[#707070]">03 | Normal</div>
                 <hr />
               </div>
             </Flex>
@@ -166,23 +149,23 @@ const Patient = () => {
             <div className="w-full grid grid-cols-5">
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Assessments</div>
-                <div>{dashboard.selfAssessmentsCount}</div>
+                <div>2</div>
               </div>
               <div className=" text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Appointments</div>
-                <div>{dashboard.appointmentsCount}</div>
+                <div>3</div>
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Lifestyle</div>
-                <div></div>
+                <div>4</div>
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">HLC visits</div>
-                <div></div>
+                <div>1</div>
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Treatments</div>
-                <div></div>
+                <div>None</div>
               </div>
             </div>
           </Flex>
@@ -286,5 +269,4 @@ const Patient = () => {
   );
 };
 
-export default Patient
-
+export default Pstient;
