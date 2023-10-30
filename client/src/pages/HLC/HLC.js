@@ -60,6 +60,7 @@ const HLC = () => {
       rowSpan={1}
       borderRadius="lg"
       p="4"
+      marginLeft={40}
 
     // background="blue.300"
     >
@@ -67,7 +68,7 @@ const HLC = () => {
         display="flex"
         flexDirection="row"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent="space-around"
         spacing={10}
         pb="4"
       // bg="blue.200"
