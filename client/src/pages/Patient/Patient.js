@@ -53,9 +53,7 @@ const Patient = () => {
       <Flex className=" mt-[4%]">
         <div className="w-3/4 h-auto m-3 mt-0  bg-white shadow-xl rounded-2xl p-[4%] pt-[2%] ">
           <Flex flexDirection="column" className="w-3/4">
-            <div className="font-bold ">
-              Hi {dashboard.lastSelfAssessment?.email_id},
-            </div>
+            <div className="font-bold ">Hi {dashboard.user},</div>
             <div className=" text-[21px] text-[#707070]">
               This is your health Check for today
             </div>
