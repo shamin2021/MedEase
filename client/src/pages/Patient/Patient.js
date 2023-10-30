@@ -25,7 +25,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Patient = () => {
-  
+
   const { get } = useAxiosMethods();
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,25 +34,25 @@ const Patient = () => {
   const [userId, setUserId] = useState(auth.user_id);
   const [dashboard, setDashboardData] = useState([]);
 
-    useEffect(() => {
-      try {
-        get(`/dashboard/patient/${userId}`, setDashboardData);
-      } catch (err) {
-        console.error(err);
-        navigate("/login", { state: { from: location }, replace: true });
-      }
-    }, []);
-
-    
-    let bgColorClass;
-
-    if (dashboard.lastSelfAssessment?.risk === "PENDING") {
-      bgColorClass = "bg-[#fbfbfb]";
-    } else if (dashboard.lastSelfAssessment?.risk === "HIGH") {
-      bgColorClass = "bg-[#fdc2c2]";
-    }else{
-      bgColorClass = "bg-[#d5ffcf]";
+  useEffect(() => {
+    try {
+      get(`/dashboard/patient/${userId}`, setDashboardData);
+    } catch (err) {
+      console.error(err);
+      navigate("/login", { state: { from: location }, replace: true });
     }
+  }, []);
+
+
+  let bgColorClass;
+
+  if (dashboard.lastSelfAssessment?.risk === "PENDING") {
+    bgColorClass = "bg-[#fbfbfb]";
+  } else if (dashboard.lastSelfAssessment?.risk === "HIGH") {
+    bgColorClass = "bg-[#fdc2c2]";
+  } else {
+    bgColorClass = "bg-[#d5ffcf]";
+  }
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
@@ -90,7 +90,7 @@ const Patient = () => {
                 flexDirection="column"
                 className="w-full h-60 mx-auto p-3 ml-3"
               >
-                <DonutCh />
+                {/* <DonutCh /> */}
                 <div className=" m-auto">
                   <div className="text-[20px] text-center mt-2">
                     Patient Risk
@@ -132,8 +132,10 @@ const Patient = () => {
                       </div>
                     </Flex>
                   </div>
+                </div>
                 </Flex>
-              </div>
+              
+            </Flex>
             </Flex>
 
             <Flex
@@ -162,7 +164,7 @@ const Patient = () => {
                 <hr />
               </div>
             </Flex>
-          </Flex>
+
 
           <Flex className="parent h-auto mt-[2%] text-[20px] bg-white rounded-2xl">
             <div className="w-full grid grid-cols-5">
@@ -247,10 +249,9 @@ const Patient = () => {
             </Flex>
           </div>
         </div>
-      </Flex>
-    </GridItem>
+      </Flex >
+    </GridItem >
   );
-};
+}
 
 export default Patient
-
