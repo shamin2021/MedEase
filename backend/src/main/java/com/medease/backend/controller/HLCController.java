@@ -1,5 +1,6 @@
 package com.medease.backend.controller;
 
+import com.medease.backend.dto.ChangeRequestDTO;
 import com.medease.backend.dto.GlobalResponseDTO;
 import com.medease.backend.dto.RegisterRequestDTO;
 import com.medease.backend.service.HLCService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/hlc")
@@ -48,8 +50,20 @@ public class HLCController {
         return ResponseEntity.ok(hlcService.updateProfileWithImage(userId, image, mobileNumber, longitude, latitude, mohArea, phmArea, phiArea, gnDivision, dsDivision, gnNumber, incharge, inchargeMail, inchargeMobile, designation));
     }
 
-    //to show HLC list in Patient Settings
+    @GetMapping("/getRequests/{userId}")
+    public List<ChangeRequestDTO> getRequests(@PathVariable Integer userId) {
+        return hlcService.getRequests(userId);
+    }
 
+    @PostMapping("/acceptRequest")
+    public ResponseEntity<GlobalResponseDTO> acceptRequest(@RequestBody ChangeRequestDTO changeRequestDTO) {
+        return ResponseEntity.ok(hlcService.acceptRequest(changeRequestDTO));
+    }
+
+    @PostMapping("/rejectRequest")
+    public ResponseEntity<GlobalResponseDTO> rejectRequest(@RequestBody ChangeRequestDTO changeRequestDTO) {
+        return ResponseEntity.ok(hlcService.rejectRequest(changeRequestDTO));
+    }
 
 
 }

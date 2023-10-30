@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface HLCRepository extends JpaRepository<HLC, Integer> {
 
     @Query("""
-        select hlc_name,moh_area,gn_number,gn_division,ds_division,phi_area,phm_area, in_charge,in_charge_designation,in_charge_email,in_charge_mobile   from HLC
+        select hlc_name,moh_area,gn_number,gn_division,ds_division,phi_area,phm_area, in_charge,in_charge_designation,in_charge_email,in_charge_mobile,hlc_id   from HLC
     where hlc_user.id= :id
 """)
     String findHLCById(Integer id);

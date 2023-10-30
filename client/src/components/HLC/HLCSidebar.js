@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 
 import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Divider } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUsers, FiSettings, FiLogOut, FiUserPlus } from "react-icons/fi";
+import { FiMenu, FiHome, FiUsers, FiSettings, FiLogOut, FiUserPlus, FiRepeat } from "react-icons/fi";
 
 const HLCSidebar = () => {
     const [navSize, changeNavSize] = React.useState("large");
@@ -50,6 +50,7 @@ const HLCSidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/HLC"} />
                 <NavItem navSize={navSize} icon={FiUsers} title="Patients" href={"/ManagePatientHLC"} />
                 <NavItem navSize={navSize} icon={FiUserPlus} title="Doctor" href={"/ManageDoctor"} />
+                <NavItem navSize={navSize} icon={FiRepeat} title="Transfer Requests" href={"/TransferPatient"} />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/HLCSettings"} />
 
             </Flex>

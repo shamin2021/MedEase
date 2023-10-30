@@ -1,12 +1,12 @@
 package com.medease.backend.service;
 
+import com.medease.backend.dto.ChangeRequestDTO;
 import com.medease.backend.dto.GlobalResponseDTO;
 import com.medease.backend.dto.HLCDTO;
 import com.medease.backend.dto.RegisterRequestDTO;
 import com.medease.backend.entity.HLC;
-import com.medease.backend.repository.HLCMapRepository;
-import com.medease.backend.repository.HLCRepository;
-import com.medease.backend.repository.UserRepository;
+import com.medease.backend.entity.HLCChangeRequest;
+import com.medease.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +23,8 @@ public class HLCService {
     private final HLCRepository hlcRepository;
     private final UserRepository userRepository;
     private final HLCMapRepository hlcMapRepository;
+    private final PatientRepository patientRepository;
+    private final HLCChangeRequestRepository hlcChangeRequestRepository;
     private final UploadService uploadService;
 
     // hlc list for setting availability by doctor
@@ -48,9 +50,9 @@ public class HLCService {
 
         var hlc = hlcRepository.findHLCById(userId);
         var hlcInfo = hlc.split(",");
-        var doctorUser = userRepository.retrieveHLCUser(userId);
-        String[] doctorDetailsSplit = doctorUser.split(",");
-        var locationInfo = hlcMapRepository.findHLCMapById(userId);
+        var hlcUser = userRepository.retrieveHLCUser(userId);
+        String[] hlcDetailsSplit = hlcUser.split(",");
+        var locationInfo = hlcMapRepository.findHLCMapById(Integer.parseInt(hlcInfo[11].trim()));
         var locationArray = locationInfo.split(",");
 
         //to get profile image
@@ -58,8 +60,8 @@ public class HLCService {
 
         return RegisterRequestDTO.builder()
                 .hlc_name(hlcInfo[0].trim())
-                .mobileNumber(!doctorDetailsSplit[2].trim().equals("null") ? doctorDetailsSplit[2].trim() : null)
-                .email(doctorDetailsSplit[1].trim())
+                .mobileNumber(!hlcDetailsSplit[2].trim().equals("null") ? hlcDetailsSplit[2].trim() : null)
+                .email(hlcDetailsSplit[1].trim())
                 .moh_area(!hlcInfo[1].trim().equals("null") ? hlcInfo[1].trim() : null)
                 .longitude(!locationArray[0].trim().equals("null") ? locationArray[0].trim() : null)
                 .latitude(!locationArray[1].trim().equals("null") ? locationArray[1].trim() : null)
@@ -134,6 +136,63 @@ public class HLCService {
 
         return  GlobalResponseDTO.builder()
                 .message("Successfully Updated")
+                .status(200)
+                .build();
+
+    }
+
+    public List<ChangeRequestDTO> getRequests(Integer userId) {
+
+        var hlc = hlcRepository.findHLC(userId).orElseThrow();
+        var requests = hlcChangeRequestRepository.findRequestByHLC(hlc.getHlc_id());
+        List<ChangeRequestDTO> changeRequestDTOS = new ArrayList<>();
+
+        for(HLCChangeRequest request : requests){
+            var user = userRepository.findById(request.getRequested_user().getId()).orElseThrow();
+            System.out.println(user.getLastname());
+            var changeRequestDTO = ChangeRequestDTO.builder()
+                    .firstname(user.getFirstname())
+                    .lastname(user.getLastname())
+                    .reason(request.getReason())
+                    .hlc_name(hlc.getHlc_name())
+                    .request_id(request.getRequest_id())
+                    .build();
+
+            changeRequestDTOS.add(changeRequestDTO);
+        }
+        return changeRequestDTOS;
+    }
+
+    public GlobalResponseDTO acceptRequest(ChangeRequestDTO changeRequestDTO) {
+
+        var request = hlcChangeRequestRepository.findById(changeRequestDTO.getRequest_id()).orElseThrow();
+        request.setAccepted(1);
+        request.setRequested(0);
+        hlcChangeRequestRepository.save(request);
+
+        var patient = patientRepository.findPatient(request.getRequested_user().getId()).orElseThrow();
+        var hlc = HLC.builder()
+                        .hlc_id(request.getRequested_hlc().getHlc_id())
+                        .build();
+
+        patient.setPatient_hlc(hlc);
+        patientRepository.save(patient);
+
+        return  GlobalResponseDTO.builder()
+                .message("Successfully Accepted")
+                .status(200)
+                .build();
+    }
+
+    public GlobalResponseDTO rejectRequest(ChangeRequestDTO changeRequestDTO) {
+
+        var request = hlcChangeRequestRepository.findById(changeRequestDTO.getRequest_id()).orElseThrow();
+        request.setRequested(0);
+        request.setAccepted(0);
+        hlcChangeRequestRepository.save(request);
+
+        return  GlobalResponseDTO.builder()
+                .message("Successfully Rejected")
                 .status(200)
                 .build();
 

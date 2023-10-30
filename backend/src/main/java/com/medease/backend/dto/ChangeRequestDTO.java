@@ -11,5 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChangeRequestDTO {
     private String hlc_id;
+    private Integer request_id;
+    private String hlc_name;
+    private String firstname;
+    private String lastname;
     private String reason;
 }

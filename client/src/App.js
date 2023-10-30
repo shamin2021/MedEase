@@ -44,6 +44,7 @@ import ManagePatientHLC from "./pages/HLC/ManagePatient";
 import ManageDoctor from "./pages/HLC/ManageDoctor";
 import AddLifestyleHLC from "./pages/LifestyleMonitoring/AddLifestyle";
 import PatientProfileHLC from "./pages/HLC/PatientProfile";
+import TransferPatient from './pages/HLC/TransferPatient';
 
 
 import ListSelfAssessmentComponent from './components/Patient/ListSelfAssessmentComponent';
@@ -153,6 +154,7 @@ function App() {
               <Route path="/HLCPatients" element={<HLCPatients />} />
               <Route path="/HLCProfile" element={<HLCProfile />} />
               <Route path="/AddLifestyleHLC" element={<AddLifestyleHLC />} />
+              <Route path="/TransferPatient" element={<TransferPatient />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
