@@ -2,10 +2,10 @@ import React from 'react';
 import useAuth from "../../hooks/useAuth";
 
 import NavItem from '../NavItem';
-import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiUser, FiSettings } from "react-icons/fi";
+import { Flex, IconButton, Avatar, Heading, Divider } from "@chakra-ui/react";
+import { FiUsers, FiSettings } from "react-icons/fi";
 
-import { FiMenu, FiHome, FiVideo, FiCalendar, FiLogOut } from "react-icons/fi";
+import { FiMenu, FiHome, FiVideo, FiCalendar, FiLogOut, FiMessageSquare } from "react-icons/fi";
 
 const DoctorSideBar = () => {
     const [navSize, changeNavSize] = React.useState("large");
@@ -182,7 +182,9 @@ const DoctorSideBar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={  "/Doctor" } />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/ManagePatient"} />
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/DoctorMeetings"} />
+                <NavItem navSize={navSize} icon={FiMessageSquare} title="Messaging" href={"/message"} />
                 <NavItem navSize={navSize} icon={FiCalendar} title="Availability" href={"/DoctorAvailability"} />
+                <NavItem navSize={navSize} icon={FiUsers} title="Patients" href={"/ManagePatient"} />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/DoctorSetting"} />
             </Flex>
 

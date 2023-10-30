@@ -2,7 +2,7 @@ import React from 'react'
 import useAuth from "../../hooks/useAuth";
 
 import { Flex, IconButton, Divider, Avatar, Heading, Text } from "@chakra-ui/react";
-import { FiMenu, FiHome, FiUser, FiVideo, FiCalendar, FiFileText, FiMessageSquare, FiSettings } from "react-icons/fi";
+import { FiMenu, FiHome, FiUser, FiVideo, FiCalendar, FiFileText, FiMessageSquare, FiUserPlus } from "react-icons/fi";
 import NavItem from '../NavItem';
 
 const PatientSidebar = () => {
@@ -49,9 +49,9 @@ const PatientSidebar = () => {
                     }}
                 />
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/patient"} />
-                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctorPatient"} />
                 <NavItem navSize={navSize} icon={FiFileText} title="Risk Assessment" href={"/SelfAssessments"} />
                 <NavItem navSize={navSize} icon={FiCalendar} title="Lifestyle" href={"/Lifestyledashboard"} />
+                <NavItem navSize={navSize} icon={FiUserPlus} title="Doctor" href={"/SearchDoctorPatient"} />
                 <NavItem navSize={navSize} icon={FiMessageSquare} title="Messaging" href={"/message"} />
                 <NavItem navSize={navSize} icon={FiVideo} title="Meetings" href={"/PatientMeetings"} />
             </Flex>

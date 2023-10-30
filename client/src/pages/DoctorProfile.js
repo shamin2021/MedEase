@@ -3,11 +3,13 @@ import logo from "../assets/patient.jpg";
 import "react-calendar/dist/Calendar.css";
 import "../styles/Calendar.css";
 import { GridItem } from '@chakra-ui/react';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const DoctorProfile = () => {
 
   const navigate = useNavigate();
+  const { auth } = useAuth();
   return (
     <GridItem colSpan={6} mx={4} mt={2}>
       <div className="h-screen bg-primary py-1">
@@ -29,16 +31,19 @@ const DoctorProfile = () => {
                   <div className="flex justify-center font-light text-stone-800- text-[18px] text-[#797878]">
                     Lunawa Hospital
                   </div>
-                  <button
-                    // style={{ marginLeft: "5px" }}
-                    onClick={() =>
-                      // navigate(`/message?doctor=${item.first_name}`)
-                      navigate(`/message?doctor=${'Shamin'}`)
-                    }
-                    className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary"
-                  >
-                    Message
-                  </button>
+                  {auth.role !== "HLC" ?
+                    <button
+                      onClick={() =>
+                        navigate(`/message?doctor=${'Shamin'}`)
+                      }
+                      className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary"
+                    >
+                      Message
+                    </button>
+                    :
+                    null
+                  }
+
                   <div className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary">
                     Schedule
                   </div>

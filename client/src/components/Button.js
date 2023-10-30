@@ -7,6 +7,7 @@ const FileInput = ({name, setImage, image}) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
+    console.log(image);
     if (image) {
       setImageUrl(URL.createObjectURL(image));
     }

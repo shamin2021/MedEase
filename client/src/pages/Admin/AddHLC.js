@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import "../../styles/FormInput.css";
@@ -38,7 +38,14 @@ const form3Data = [];
 // better to remove the functions from this page and make components and import them here
 const Form1 = ({ formData, setFormData }) => {
 
-  const { name, mobileNumber, email, mohArea, longitude, latitude } = formData;
+  const { name, mobileNumber, email, mohArea, longitude, latitude, image } = formData;
+  const [tempImgHolder, setTempImageHolder] = useState(null);
+
+  useEffect(() => {
+    if (tempImgHolder != null) {
+      setFormData({ ...formData, image: tempImgHolder })
+    }
+  }, [tempImgHolder]);
 
   return (
     <>
@@ -80,7 +87,7 @@ const Form1 = ({ formData, setFormData }) => {
             </div>
           </div>
           <div className="container ml-3 pt-5 justify-right w-1/4">
-            <ButtonImage name="Add Image" />
+            <ButtonImage name="Add Image" setImage={setTempImageHolder} image={image} />
           </div>
         </div>
         <div className="container flex">
@@ -126,7 +133,7 @@ const Form1 = ({ formData, setFormData }) => {
             </label>
 
             <input
-              type="text"
+              type="number"
               id="longitude"
               className="form-input"
               onChange={(e) =>
@@ -142,7 +149,7 @@ const Form1 = ({ formData, setFormData }) => {
               Latitude <span className="text-[#ff2727]">*</span>
             </label>
             <input
-              type="text"
+              type="number"
               id="latitude"
               className="form-input"
               onChange={(e) =>
@@ -233,7 +240,7 @@ const Form2 = ({ formData, setFormData }) => {
             GN Number <span className="text-[#ff2727]">*</span>
           </label>
           <input
-            type="text"
+            type="number"
             id="gnNumber"
             className="form-input"
             onChange={(e) => setFormData({ ...formData, gnNumber: e.target.value })}
@@ -341,7 +348,8 @@ const AddHLC = (props) => {
     email: "",
     mohArea: "",
     latitude: "",
-    longitude: ""
+    longitude: "",
+    image: null
   });
 
   const [form2State, setForm2State] = useState({
@@ -391,14 +399,33 @@ const AddHLC = (props) => {
       return;
     }
 
+    if (formData.latitude == null || formData.latitude === '') {
+      setState({ message: "Please Provide Latitude Information" });
+      return;
+    }
+
+    if (formData.longitude == null || formData.longitude === '') {
+      setState({ message: "Please Provide Longitude Information" });
+      return;
+    }
+
     try {
-      post('/register-user/register-hlc', formData, setState);
+      if (formData.image != null) {
+        post('/register-user/register-hlc-image', formData, setState, true);
+      }
+      else {
+        post('/register-user/register-hlc', formData, setState);
+      }
+
 
       setForm1State({
         name: "",
         mobileNumber: "",
         email: "",
         mohArea: "",
+        latitude: "",
+        longitude: "",
+        image: null
       });
       setForm2State({
         phmArea: "",
@@ -431,8 +458,9 @@ const AddHLC = (props) => {
         form1State.mobileNumber,
         form1State.email,
         form1State.mohArea,
-        form1Data.longitude,
-        form1Data.latitude
+        form1State.longitude,
+        form1State.latitude,
+        form1State.image
       );
     } else if (formStep === 1) {
       form2Data.push(
@@ -460,6 +488,7 @@ const AddHLC = (props) => {
         moh_area: form1Data[3],
         longitude: form1Data[4],
         latitude: form1Data[5],
+        image: form1Data[6],
         phm_area: form2Data[0],
         phi_area: form2Data[1],
         gn_division: form2Data[2],

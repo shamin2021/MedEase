@@ -1,15 +1,23 @@
 package com.medease.backend.service;
 
+import com.medease.backend.dto.ChangeRequestDTO;
+import com.medease.backend.dto.GlobalResponseDTO;
 import com.medease.backend.dto.PatientDTO;
+import com.medease.backend.dto.RegisterRequestDTO;
 import com.medease.backend.entity.HLC;
+import com.medease.backend.entity.HLCChangeRequest;
 import com.medease.backend.entity.Patient;
-import com.medease.backend.repository.HLCRepository;
-import com.medease.backend.repository.PatientRepository;
-import com.medease.backend.repository.UserRepository;
+import com.medease.backend.entity.User;
+import com.medease.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -19,16 +27,20 @@ public class PatientService {
     private final UserRepository userRepository;
     private final PatientRepository patientRepository;
     private final HLCRepository hlcRepository;
+    private final UserImageRepository userImageRepository;
+    private final HLCChangeRequestRepository hlcChangeRequestRepository;
+    private final UploadService uploadService;
 
+    @Transactional
     public List<PatientDTO> getAllPatients() {
         List<Object[]> patientUsers = userRepository.retrievePatientList();
         List<PatientDTO> patientDTOList = new ArrayList<>();
 
         for (Object[] patientUser : patientUsers) {
             var patientUserId = (Integer) patientUser[0];
-            System.out.println(patientUserId);
             Patient patient = patientRepository.findPatient(patientUserId).orElseThrow();
             HLC patientHLC = hlcRepository.findById(patient.getPatient_hlc().getHlc_id()).orElseThrow();
+            var profileImage = userImageRepository.findByUserId(patientUserId).orElse(null);
 
             PatientDTO patientDTO = PatientDTO.builder()
                     .patient_id(patient.getPatient_id())
@@ -50,12 +62,125 @@ public class PatientService {
                     .marital_status(patient.getMarital_status())
                     .highest_education_status(patient.getHighest_education_status())
                     .date_of_registration(patient.getDate_of_registration())
+                    .profileImage(profileImage != null ? Base64.getEncoder().encodeToString(profileImage.getImage()) : null)
                     .user_profile_id(patientUserId)
                     .build();
             patientDTOList.add(patientDTO);
         }
 
         return patientDTOList;
+    }
+
+    public RegisterRequestDTO getPatientProfile(Integer userId) {
+
+        var patient = patientRepository.findPatient(userId).orElseThrow();
+        var patientUser = userRepository.retrievePatientUser(userId);
+        var patientInfo = patientUser.split(",");
+        var hlcName = hlcRepository.findHLCNameByHLCId(patient.getPatient_hlc().getHlc_id());
+        var requested = hlcChangeRequestRepository.findRequestedByID(userId).orElse(null);
+
+        //to get profile image
+        String profileImage = uploadService.retrieveProfileImage(userId);
+
+        return RegisterRequestDTO.builder()
+                .firstname(patientInfo[1].trim())
+                .lastname(patientInfo[2].trim())
+                .email(patientInfo[3].trim())
+                .mobileNumber(!patientInfo[4].trim().equals("null") ? patientInfo[4].trim() : null)
+                .address(patient.getCurrent_address())
+                .emergencyContact(patient.getEmergency_contact_number())
+                .emergencyName(patient.getEmergency_name())
+                .gender(patient.getGender())
+                .dob(patient.getDob())
+                .hlc_name(hlcName)
+                .requested(requested != null ? requested.getRequested() : null)
+                .image(profileImage)
+                .build();
+
+    }
+
+    public GlobalResponseDTO changeHLCRequest(Integer userId, ChangeRequestDTO changeRequestDTO) {
+
+        var requested = hlcChangeRequestRepository.findRequestedByID(userId).orElse(null);
+        System.out.println(changeRequestDTO.getHlc_id());
+
+        if(requested == null) {
+            var user = User.builder()
+                    .id(userId)
+                    .build();
+
+            var hlc = HLC.builder()
+                    .hlc_id(Integer.parseInt(changeRequestDTO.getHlc_id()))
+                    .build();
+
+
+            var request = HLCChangeRequest.builder()
+                    .requested_hlc(hlc)
+                    .requested_user(user)
+                    .requested(1)
+                    .reason(changeRequestDTO.getReason())
+                    .accepted(0)
+                    .build();
+
+            hlcChangeRequestRepository.save(request);
+        }
+        else{
+            var hlc = HLC.builder()
+                    .hlc_id(Integer.parseInt(changeRequestDTO.getHlc_id()))
+                    .build();
+
+            requested.setRequested_hlc(hlc);
+            requested.setReason(changeRequestDTO.getReason());
+            requested.setRequested(1);
+            requested.setAccepted(0);
+            hlcChangeRequestRepository.save(requested);
+        }
+
+        return  GlobalResponseDTO.builder()
+                .message("Successfully Requested")
+                .status(200)
+                .build();
+    }
+
+    public GlobalResponseDTO updateProfile(Integer userId, RegisterRequestDTO registerRequestDTO) {
+
+        var user = userRepository.findById(userId).orElseThrow();
+        user.setMobileNumber(registerRequestDTO.getMobileNumber());
+
+        userRepository.save(user);
+
+        var patient = patientRepository.findPatient(userId).orElseThrow();
+        patient.setCurrent_address(registerRequestDTO.getAddress());
+        patient.setEmergency_name(registerRequestDTO.getEmergencyName());
+        patient.setEmergency_contact_number(registerRequestDTO.getEmergencyContact());
+        patientRepository.save(patient);
+
+        return  GlobalResponseDTO.builder()
+                .message("Successfully Updated")
+                .status(200)
+                .build();
+
+    }
+
+    public GlobalResponseDTO updateProfileWithImage(Integer userId, MultipartFile image, String mobileNumber, String emergencyContact, String emergencyName, String address) throws IOException {
+
+        var user = userRepository.findById(userId).orElseThrow();
+        user.setMobileNumber(mobileNumber);
+
+        userRepository.save(user);
+
+        var patient = patientRepository.findPatient(userId).orElseThrow();
+        patient.setCurrent_address(address);
+        patient.setEmergency_name(emergencyName);
+        patient.setEmergency_contact_number(emergencyContact);
+        patientRepository.save(patient);
+
+        uploadService.editImage(image,user);
+
+        return  GlobalResponseDTO.builder()
+                .message("Successfully Updated")
+                .status(200)
+                .build();
     }
 
     public Integer getPatientCount() {

@@ -43,6 +43,7 @@ import ManagePatient from "./pages/Doctor/ManagePatient";
 import ManagePatientHLC from "./pages/HLC/ManagePatient";
 import ManageDoctor from "./pages/HLC/ManageDoctor";
 import PatientProfileHLC from "./pages/HLC/PatientProfile";
+import TransferPatient from './pages/HLC/TransferPatient';
 
 
 import ListSelfAssessmentComponent from './components/Patient/ListSelfAssessmentComponent';
@@ -63,10 +64,6 @@ import HLCSettings from './pages/HLC/HLCSettings';
 // import HLCProfile from './pages/HLC/HLCProfile';
 
 import AddHLC from './pages/Admin/AddHLC';
-import AdminDoctor from './pages/Admin/AdminDoctor';
-import AdminPatient from './pages/Admin/AdminPatient';
-import AdminSetting from './pages/Admin/AdminSettings';
-import AdminProfile from './pages/Admin/AdminProfile';
 
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
 import DoctorSetting from './pages/Doctor/DoctorSetting';
@@ -160,6 +157,8 @@ function App() {
               <Route path="/AddDoctor" element={<AddDoctor />} />
               <Route path="/HLCPatients" element={<HLCPatients />} />
               <Route path="/HLCProfile" element={<HLCProfile />} />
+              <Route path="/AddLifestyleHLC" element={<AddLifestyleHLC />} />
+              <Route path="/TransferPatient" element={<TransferPatient />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>
@@ -181,11 +180,6 @@ function App() {
               {/* routes only for ADMIN */}
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
-
-              <Route path="/AdminDoctor" element={<AdminDoctor />} />
-              <Route path="/AdminPatient" element={<AdminPatient />} />
-              <Route path="/AdminSetting" element={<AdminSetting />} />
-              <Route path="/AdminProfile" element={<AdminProfile />} />
               <Route path="/ManageUser" element={<ManageUser />} />
 
             </Route>

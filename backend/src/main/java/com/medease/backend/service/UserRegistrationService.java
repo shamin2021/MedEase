@@ -102,6 +102,7 @@ public class UserRegistrationService {
                 .build();
     }
 
+
     public GlobalResponseDTO addHlc(RegisterRequestDTO registerRequestDTO) {
 
         var user = User.builder()
@@ -140,6 +141,55 @@ public class UserRegistrationService {
                 .build();
 
         hlcMapRepository.save(hlcMap);
+
+        return GlobalResponseDTO.builder()
+                .status(200)
+                .message("HLC Registered Successfully")
+                .build();
+    }
+
+    public GlobalResponseDTO addHlcWithImage(String hlc_name, MultipartFile image, String mobileNumber, String email, String moh_area, String longitude, String latitude, String phm_area, String phi_area, String gn_division, String ds_division, String gn_number, String in_charge, String in_charge_designation, String in_charge_email, String in_charge_mobile) {
+
+        var user = User.builder()
+                .email(email)
+                .mobileNumber(mobileNumber)
+                .role(Role.HLC)
+                .activated(Boolean.FALSE)
+                .enabled(Boolean.TRUE)
+                .build();
+
+        var savedUser = userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        authenticationService.saveUserToken(savedUser, jwtToken);
+
+        var hlc = HLC.builder()
+                .hlc_name(hlc_name)
+                .hlc_user(user)
+                .moh_area(moh_area)
+                .phm_area(phm_area)
+                .phi_area(phi_area)
+                .gn_division(gn_division)
+                .ds_division(ds_division)
+                .gn_number(gn_number)
+                .in_charge(in_charge)
+                .in_charge_designation(in_charge_designation)
+                .in_charge_email(in_charge_email)
+                .in_charge_mobile(in_charge_mobile)
+                .build();
+
+        hlcRepository.save(hlc);
+
+        var hlcMap = HLCMap.builder()
+                .hlc(hlc)
+                .longitude(longitude)
+                .latitude(latitude)
+                .build();
+
+        hlcMapRepository.save(hlcMap);
+
+        if(image != null) {
+            uploadService.uploadImage(image,user);
+        }
 
         return GlobalResponseDTO.builder()
                 .status(200)

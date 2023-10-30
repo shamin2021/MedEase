@@ -12,6 +12,8 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
     @Query(value = "SELECT doctor_id FROM Doctor WHERE doctor_user_id = :doctorId", nativeQuery = true)
     Integer findDoctorIdByUser(Integer doctorId);
 
+    @Query(value = "SELECT doctor_id,license_number,doctor_speciality_id FROM Doctor WHERE doctor_user_id = :doctorId", nativeQuery = true)
+    String findDoctorInfo(Integer doctorId);
 
     @Query(value = "SELECT * from Doctor", nativeQuery = true)
     List<Object[]> getAllDoctors();
