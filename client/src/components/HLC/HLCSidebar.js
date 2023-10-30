@@ -50,7 +50,7 @@ const HLCSidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/HLC"} />
                 {/* <NavItem navSize={navSize} icon={FiHome} title="HLC" /> */}
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/ManageDoctor"} />
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/ManagePatientHLC"} />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/ManagePatient"} />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/HLCSettings"} />
 
             </Flex>
