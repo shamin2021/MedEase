@@ -1,8 +1,8 @@
 package com.medease.backend.service;
 
 import com.medease.backend.dto.HLCDTO;
-import com.medease.backend.entity.HLC;
 import com.medease.backend.repository.HLCRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class HLCService {
         System.out.println(hlcList);
         List<HLCDTO> hlcdtoList = new ArrayList<>();
 
-        for(Object[] hlc : hlcList) {
+        for (Object[] hlc : hlcList) {
             HLCDTO hlcdto = HLCDTO.builder()
                     .hlc_id((Integer) hlc[0])
                     .hlc_name((String) hlc[1])
@@ -33,4 +33,7 @@ public class HLCService {
         return hlcdtoList;
     }
 
+    public Integer getHlcCount() {
+        return (int) hlcRepository.count();
+    }
 }
