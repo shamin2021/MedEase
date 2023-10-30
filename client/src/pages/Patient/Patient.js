@@ -16,13 +16,16 @@ import {
   FaVialCircleCheck,
   FaHeartCircleCheck,
 } from "react-icons/fa6";
+
 import LineChart from "../../components/LineChart";
 import Calendar from "react-calendar";
+
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Patient = () => {
+  
   const { get } = useAxiosMethods();
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,24 +34,25 @@ const Patient = () => {
   const [userId, setUserId] = useState(auth.user_id);
   const [dashboard, setDashboardData] = useState([]);
 
-  useEffect(() => {
-    try {
-      get(`/dashboard/patient/${userId}`, setDashboardData);
-    } catch (err) {
-      console.error(err);
-      navigate("/login", { state: { from: location }, replace: true });
+    useEffect(() => {
+      try {
+        get(`/dashboard/patient/${userId}`, setDashboardData);
+      } catch (err) {
+        console.error(err);
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+    }, []);
+
+    
+    let bgColorClass;
+
+    if (dashboard.lastSelfAssessment?.risk === "PENDING") {
+      bgColorClass = "bg-[#fbfbfb]";
+    } else if (dashboard.lastSelfAssessment?.risk === "HIGH") {
+      bgColorClass = "bg-[#fdc2c2]";
+    }else{
+      bgColorClass = "bg-[#d5ffcf]";
     }
-  }, []);
-
-  let bgColorClass;
-
-  if (dashboard.lastSelfAssessment?.risk === "PENDING") {
-    bgColorClass = "bg-[#fbfbfb]";
-  } else if (dashboard.lastSelfAssessment?.risk === "HIGH") {
-    bgColorClass = "bg-[#fdc2c2]";
-  } else {
-    bgColorClass = "bg-[#d5ffcf]";
-  }
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
@@ -278,4 +282,5 @@ const Patient = () => {
   );
 };
 
-export default Patient;
+export default Patient
+

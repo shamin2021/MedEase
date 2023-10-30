@@ -11,8 +11,20 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
 
     @Query("""
-        select firstname,lastname,email,mobileNumber,activated from User
+        select id,firstname,lastname,email,mobileNumber,activated,enabled, role from User
     where role = 'PATIENT' or role = 'HLC' or role = 'DOCTOR'
 """)
-    List<User> retrieveUserList();
+    List<Object[]> retrieveUserList();
+
+    @Query("""
+        select id,firstname,lastname,email,mobileNumber from User
+    where role = 'PATIENT'
+""")
+    List<Object[]> retrievePatientList();
+
+    @Query(value = "SELECT id,firstname,lastname,email,mobile_number FROM _user WHERE id= :userId", nativeQuery = true)
+    String retrieveDoctorUser(Integer userId);
+
+    @Query(value = "SELECT firstname FROM _user WHERE id= :userId", nativeQuery = true)
+    String retrieveFirstName(Integer userId);
 }

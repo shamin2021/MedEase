@@ -2,6 +2,7 @@ package com.medease.backend.controller;
 
 
 import com.medease.backend.dto.*;
+import com.medease.backend.entity.HLCMap;
 import com.medease.backend.service.AuthenticationService;
 import jakarta.mail.MessagingException;
 
@@ -9,11 +10,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 
 @RestController

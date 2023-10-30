@@ -160,24 +160,8 @@ const Conference = () => {
 
     }, [id, user, time, doctorJoined, patientJoined]);
 
-
-    useEffect(() => {
-        const handleBeforeUnload = (event) => {
-            event.preventDefault();
-            // this shouldn't be empty, but browser will show a default message
-            event.returnValue = "Are You Sure You Want To Leave?";
-        };
-
-        window.addEventListener("beforeunload", handleBeforeUnload);
-
-        return () => {
-            window.removeEventListener("beforeunload", handleBeforeUnload);
-        };
-    }, []);
-
     return (
-        <div>
-        </div>
+        <div></div>
     )
 }
 

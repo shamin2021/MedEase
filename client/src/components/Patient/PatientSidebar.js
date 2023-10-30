@@ -49,7 +49,6 @@ const PatientSidebar = () => {
                     }}
                 />
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/patient"} />
-                <NavItem navSize={navSize} icon={FiHome} title="HLC" href={"/FindHLCPatient"} />
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/SearchDoctorPatient"} />
                 <NavItem navSize={navSize} icon={FiFileText} title="Risk Assessment" href={"/SelfAssessments"} />
                 <NavItem navSize={navSize} icon={FiCalendar} title="Lifestyle" href={"/Lifestyledashboard"} />

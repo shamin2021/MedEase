@@ -29,21 +29,38 @@ const useAxiosMethods = () => {
         }
     }
 
-    const post = (url, data, setResponse) => {
+    const post = (url, data, setResponse, isImageUpload=false) => {
         let isMounted = true;
         const controller = new AbortController();
 
         const postData = async () => {
-            try {
-                const response = await axiosPrivate.post(url, data, {
-                    signal: controller.signal
-                });
-                isMounted && setResponse(response.data);
-                console.log(response);
-            } catch (err) {
-                console.error(err);
+            if (!isImageUpload) {
+                try {
+                    const response = await axiosPrivate.post(url, data, {
+                        signal: controller.signal
+                    });
+                    isMounted && setResponse(response.data);
+                    console.log(response);
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+            else {
+                try {
+                    const response = await axiosPrivate.post(url, data, {
+                        signal: controller.signal,
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                    isMounted && setResponse(response.data);
+                    console.log(response);
+                } catch (err) {
+                    console.error(err);
+                }
             }
         }
+        
 
         postData().then();
 
