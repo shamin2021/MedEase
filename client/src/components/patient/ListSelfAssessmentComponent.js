@@ -15,7 +15,7 @@ const ListSelfAssessmentComponent = () => {
   const [selfassessments, setSelfAssessments] = useState([]);
 
   const loggedInUser = {
-    "username": auth.first_name,
+    "user_id": auth.user_id
   };
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const ListSelfAssessmentComponent = () => {
     navigate("/CreateSelfAssessment");
   };
 
-  const filteredSelfAssessments = selfassessments.filter(selfassessment => selfassessment.firstName === loggedInUser.username);
+  const filteredSelfAssessments = selfassessments.filter(selfassessment => selfassessment.patient === loggedInUser.user_id);
 
   return (
     <GridItem colSpan={6} >
