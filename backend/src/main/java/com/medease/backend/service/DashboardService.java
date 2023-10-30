@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.medease.backend.entity.MedicalTest;
 import com.medease.backend.entity.SelfAssessment;
 import com.medease.backend.repository.MedicalTestRepository;
+import com.medease.backend.repository.UserRepository;
 import com.medease.backend.repository.SelfAssessmentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class DashboardService {
 
     private final SelfAssessmentRepository selfAssessmentRepository;
     private final MedicalTestRepository medicalTestRepository;
+    private final UserRepository userRepository;
     private final AssignedRecommendationService assignedRecommendationService;
     private final MeetingService meetingService;
     private final PatientService patientService;
@@ -34,6 +36,7 @@ public class DashboardService {
             public final Integer treatmentsCount = 0;
             public final MedicalTest medicalTest = medicalTestRepository.findBySelfAssessment(lastSelfAssessment);
             public final List<Object> riskArray = selfAssessmentRepository.findDateRiskByPatientOrderByDate(id);
+            public final String user = userRepository.retrieveFirstName(id);
         };
 
     }
