@@ -56,23 +56,29 @@ const Pstient = () => {
 
           <Flex className="mb-0 mt-[1%]">
             <Flex className="w-full mt-[1%] bg-white rounded-2xl">
-              <div className="w-full grid grid-cols-3">
-                <div className=" bg-[#e4ebf5] text-center shadow-md rounded-lg p-3 m-1">
+              <div className="w-full grid grid-cols-4">
+                <div className="bg-[#c5ff8c] text-center shadow-md rounded-lg p-3 m-1">
                   <div className="font-bold text-center">20 </div>
                   <div className="text-center text-[20px] text-[#707070]">
                     Patients Registered
                   </div>
                 </div>
+                <div className="bg-[#e4ebf5] text-center shadow-md rounded-lg p-3 m-1">
+                  <div className="font-bold text-center">20 </div>
+                  <div className="text-center text-[18px] text-[#707070]">
+                    High Risk Patients
+                  </div>
+                </div>
                 <div className=" text-center bg-[#e4ebf5] rounded-lg p-3 m-1">
                   <div className="font-bold text-center">20 </div>
                   <div className="text-center text-[18px] text-[#707070]">
-                    Doctors
+                    Consultations
                   </div>
                 </div>
                 <div className="text-center bg-[#e4ebf5] rounded-lg p-3 m-1">
                   <div className="font-bold text-center">20 </div>
                   <div className="text-center text-[18px] text-[#707070]">
-                    HLC regsitered
+                    Doctor Visitations
                   </div>
                 </div>
               </div>
@@ -80,7 +86,9 @@ const Pstient = () => {
           </Flex>
 
           <Flex flexDirection="column" className="w-3/4 mt-[4%]">
-            <div className="text-[20px] font-semibold ml-3">Patient Growth</div>
+            <div className="text-[20px] font-semibold ml-3">
+              Patient Monitored Growth
+            </div>
           </Flex>
           <Flex className="mb-0">
             <Flex className="w-1/5 items-end mb-3 justify-center">
@@ -109,55 +117,83 @@ const Pstient = () => {
                 <CurveLine />
               </div>
             </Flex>
-            <Flex className="w-[300px] m-3 mb-0 mr-0 mt-1">
+            <Flex className="w-[300px] m-3 mb-0 mr-0 mt-1 overflow-hidden">
               <div className="m-0">
-                <div className="text-[20px]">Patients in HLC</div>
-                <Flex className="w-[300px] p-1 m-1 rounded-lg">
-                  <div className="w-2/3 text-[17px] m-1">HLC</div>
-                  <div className="w-1/3 h-5 text-[17px] m-1">Patients</div>
+                <div className="text-[20px]">Patients Monitored</div>
+                <Flex className="w-[350px] p-1 m-1 rounded-lg">
+                  <div className="w-3/5 text-[17px] m-1">Patient</div>
+                  <div className="w-1/5 h-5 text-[17px] m-1">Risk</div>
                 </Flex>
                 <hr />
-                <div className=" w-[300px] h-60 overflow-y-scroll overflow-x-hidden">
-                  <Flex className="w-[300px] p-1 m-1">
-                    <Flex flexDirection="row" className="w-full">
+                <div className=" h-60 overflow-y-scroll">
+                  <Flex className="w-[350px] p-1 m-1">
+                    <div className="w-1/5">
+                      <img
+                        htmlFor="select-image"
+                        src={patient}
+                        className="p-1 h-[60px] w-[60px] rounded-[100%]"
+                      />
+                    </div>
+                    <Flex flexDirection="row" className="w-2/3">
                       <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Lunawa HLC <br /> Dr.Asith Ama
+                        Hasala Patient <br /> 32
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#e0e0e0] text-center rounded-md">
-                        123
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#ffc0c0] text-center rounded-md">
+                        High
                       </div>
                     </Flex>
                   </Flex>
                   <hr />
-                  <Flex className="w-[300px] p-1 m-1">
-                    <Flex flexDirection="row" className="w-full">
+                  <Flex className="w-[350px] p-1 m-1">
+                    <div className="w-1/5">
+                      <img
+                        htmlFor="select-image"
+                        src={patient}
+                        className="p-1 h-[60px] w-[60px] rounded-[100%]"
+                      />
+                    </div>
+                    <Flex flexDirection="row" className="w-2/3">
                       <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Lunawa HLC <br /> Dr.Asith Ama
+                        Hasala Patient <br /> 32
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#e0e0e0] text-center rounded-md">
-                        123
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#ffc0c0] text-center rounded-md">
+                        High
                       </div>
                     </Flex>
                   </Flex>
                   <hr />
-                  <Flex className="w-[300px] p-1 m-1">
-                    <Flex flexDirection="row" className="w-full">
+                  <Flex className="w-[350px] p-1 m-1">
+                    <div className="w-1/5">
+                      <img
+                        htmlFor="select-image"
+                        src={patient}
+                        className="p-1 h-[60px] w-[60px] rounded-[100%]"
+                      />
+                    </div>
+                    <Flex flexDirection="row" className="w-2/3">
                       <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Lunawa HLC <br /> Dr.Asith Ama
+                        Hasala Patient <br /> 32
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#e0e0e0] text-center rounded-md">
-                        123
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#ffc0c0] text-center rounded-md">
+                        High
                       </div>
                     </Flex>
                   </Flex>
                   <hr />
-                  <Flex className="w-[300px] p-1 m-1">
-                    <Flex flexDirection="row" className="w-full">
+                  <Flex className="w-[350px] p-1 m-1">
+                    <div className="w-1/5">
+                      <img
+                        htmlFor="select-image"
+                        src={patient}
+                        className="p-1 h-[60px] w-[60px] rounded-[100%]"
+                      />
+                    </div>
+                    <Flex flexDirection="row" className="w-2/3">
                       <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Lunawa HLC <br /> Dr.Asith Ama
+                        Hasala Patient <br /> 32
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#e0e0e0] text-center rounded-md">
-                        123
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#ffc0c0] text-center rounded-md">
+                        High
                       </div>
                     </Flex>
                   </Flex>
@@ -176,16 +212,16 @@ const Pstient = () => {
             <Flex className="m-3 p-3 bg-[#fafafa] rounded-lg">
               <Flex flexDirection="column" className="w-3/4 ml-1">
                 <div className="text-[17px] text-[#6b6b6b]">
-                  Online Consultations
+                  Dr.Nayana Fernando
                 </div>
-                <div className="text-[17px] text-[#6b6b6b]">321</div>
+                <div className="text-[17px] text-[#6b6b6b]">10 AM - 12 AM </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
             <Flex className="m-3 p-3 bg-[#fafafa] rounded-lg">
               <Flex flexDirection="column" className="w-3/4 ml-1">
-                <div className="text-[17px] text-[#6b6b6b]">Physical Consultations</div>
-                <div className="text-[17px] text-[#6b6b6b]">221</div>
+                <div className="text-[17px] text-[#6b6b6b]">Dr.Asith Ama</div>
+                <div className="text-[17px] text-[#6b6b6b]">10 AM - 12 AM </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>

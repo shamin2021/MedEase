@@ -129,7 +129,7 @@ const Pstient = () => {
             >
               <div className="mb-1">
                 <div className="text-[18px] font-bold">Blood Sugar</div>
-                <div className="text-[18px] text-[#707070]">23 | Normal</div>
+                <div className="text-[18px] text-[#04050c]">23 | Normal</div>
                 <hr />
               </div>
               <div className="mb-1">
@@ -200,7 +200,7 @@ const Pstient = () => {
               <Text fontSize={20} fontWeight={"Bold"}>
                 Risk Assessed
               </Text>
-              <LineChart className=" h-80 w-90" />
+              <LineChart className=" h-80 w-20" />
             </div>
           </Flex>
         </div>
