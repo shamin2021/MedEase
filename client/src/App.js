@@ -48,9 +48,9 @@ import AddLifestyleHLC from "./pages/LifestyleMonitoring/AddLifestyle";
 import PatientProfileHLC from "./pages/HLC/PatientProfile";
 
 
-import ListSelfAssessmentComponent from './components/patient/ListSelfAssessmentComponent';
-import CreateSelfAssessmentComponent from './components/patient/CreateSelfAssessmentComponent';
-import ViewSelfAssessmentComponent from './components/patient/ViewSelfAssessmentComponent';
+import ListSelfAssessmentComponent from './components/Patient/ListSelfAssessmentComponent';
+import CreateSelfAssessmentComponent from './components/Patient/CreateSelfAssessmentComponent';
+import ViewSelfAssessmentComponent from './components/Patient/ViewSelfAssessmentComponent';
 
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import PatientSettings from './pages/Patient/PatientSettings'

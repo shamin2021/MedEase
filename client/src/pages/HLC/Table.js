@@ -9,7 +9,7 @@ const Table = ({ data }) => {
                     <div className="w-1/5 m-1">Name</div>
                     <div className="w-1/5 m-1">Surname</div>
                     <div className="w-1/5 m-1">Email</div>
-                    <div className="w-1/5 m-1">Speciality</div>
+                    <div className="w-1/5 m-1">Speciality 2</div>
                     <div className="w-1/5 m-1"></div>
                 </div>
                 <hr className="w-7/8 mx-auto mt-1 mb-0" />

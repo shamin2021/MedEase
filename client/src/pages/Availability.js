@@ -135,145 +135,183 @@ const Availability = () => {
 
     return (
         <GridItem colSpan={6} mx={4} mt={2}>
-            <div>
-                <FullCalendar
-                    plugins={[interactionPlugin, dayGridPlugin]}
-                    initialView="dayGridMonth"
-                    events={
-                        meetings
-                    }
+            <div class="p-4 sm:ml-64">
+                <div class="p-4 rounded-lg mt-14 bg-white ">
+                    <div class="flex items-center justify-center h-88 mb-4 rounded background-color: #DCECF8;">
 
-                    eventDisplay="block"
-                    selectable={true}
+                        <div>
+                            {/* <FullCalendar
+                                plugins={[interactionPlugin, dayGridPlugin]}
+                                initialView="dayGridMonth"
+                                events={
+                                    meetings
+                                }
 
-                    eventClick={(event) => setSelectedEvent(event.event)}
+                                eventDisplay="block"
+                                selectable={true}
 
-                    eventTimeFormat={{
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        meridiem: false
-                    }}
+                                eventClick={(event) => setSelectedEvent(event.event)}
 
-                    displayEventEnd={true}
-                    progressiveEventRendering={true}
+                                eventTimeFormat={{
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    meridiem: false
+                                }}
 
-                    headerToolbar={{
-                        left: 'title',
-                        center: '',
-                        right: 'prev today next'
-                    }}
+                                displayEventEnd={true}
+                                progressiveEventRendering={true}
 
-                    buttonText={{
-                        today: 'Today',
-                    }}
+                                headerToolbar={{
+                                    left: 'title',
+                                    center: '',
+                                    right: 'prev today next'
+                                }}
 
-                    height={"auto"}
-                    dateClick={handleDayClick}
-                    contentHeight={"auto"}
+                                buttonText={{
+                                    today: 'Today',
+                                }}
+
+                                height={"auto"}
+                                dateClick={handleDayClick}
+                                contentHeight={"auto"}
 
 
 
-                />
+                            /> */}
 
-                <Modal isOpen={isModalOpen || selectedEvent !== null} onClose={closeModal}>
-                    <ModalOverlay />
-                    <ModalContent maxWidth="90vw" width="auto" mx={[4, 8, 16]} my={[4, 8, 12]} >
-                        {selectedEvent ? (
-                            <ModalBody>
-                                <Box >
-                                    <Text fontWeight="bold" mb={2}>Availability Details:</Text>
-                                    <Box mb={2}>
-                                        <span>Type:</span>
-                                        <Text>{selectedEvent.extendedProps.type}</Text>
-                                    </Box>
-                                    <Box mb={2}>
-                                        <span>Start:</span>
-                                        <Text>{selectedEvent.start.toLocaleString()}</Text>
-                                    </Box>
-                                    <Box>
-                                        <span>End:</span>
-                                        <Text>{selectedEvent.end.toLocaleString()}</Text>
-                                    </Box>
-                                </Box>
-                                <Box mt={4}>
-                                    <Button colorScheme="blue" mr={3} onClick={() => setSelectedEvent(null)}>
-                                        Close
-                                    </Button>
-                                    <Button colorScheme="red" onClick={() => hadleEventRemove(selectedEvent.extendedProps.meeting_id)}>
-                                        Remove
-                                    </Button>
-                                </Box>
-                            </ModalBody>
-                        ) : (
-                            <>
-                                <ModalHeader>{selectedDate && selectedDate.toDateString()}</ModalHeader>
-                                <ModalBody>
-                                    <Switch
-                                        onChange={handleToggleSwitch}
-                                        isChecked={isVirtual}
-                                        colorScheme="blue"
-                                        mb={4}
-                                    >
-                                        Virtual
-                                    </Switch>
-                                    <Box overflowY={isVirtual ? "scroll" : "visible"} maxHeight="40vh">
-                                        {isVirtual ? (
-                                            <Box>
-                                                {timeSlots.map(timeSlot => (
-                                                    <Box
-                                                        key={timeSlot}
-                                                        onClick={() => handleTimeSlotClick(timeSlot)}
-                                                        cursor="pointer"
-                                                        bg={selectedTimeSlots.includes(timeSlot) ? "blue.500" : "gray.200"}
-                                                        p={2}
-                                                        borderRadius="md"
-                                                        mb={2}
-                                                    >
-                                                        {timeSlot}
-                                                    </Box>
-                                                ))}
-                                            </Box>
-                                        ) : (
-                                            <Box>
+
+                            <FullCalendar
+                                plugins={[interactionPlugin, dayGridPlugin]}
+                                initialView="dayGridMonth"
+                                events={meetings}
+                                eventDisplay="block"
+                                selectable={true}
+                                eventClick={(event) => setSelectedEvent(event.event)}
+                                eventTimeFormat={{
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    meridiem: false
+                                }}
+                                displayEventEnd={true}
+                                progressiveEventRendering={true}
+                                headerToolbar={{
+                                    left: 'title',
+                                    center: '',
+                                    right: 'prev today next'
+                                }}
+                                buttonText={{
+                                    today: 'Today',
+                                }}
+                                height={"auto"}
+                                dateClick={handleDayClick}
+                                contentHeight={"auto"}
+                                className="w-full h-auto p-4 md:w-1/2 lg:w-1/3 xl:w-1/4"
+                            />
+
+
+                            <Modal isOpen={isModalOpen || selectedEvent !== null} onClose={closeModal}>
+                                <ModalOverlay />
+                                <ModalContent maxWidth="90vw" width="auto" mx={[4, 8, 16]} my={[4, 8, 12]} >
+                                    {selectedEvent ? (
+                                        <ModalBody>
+                                            <Box >
+                                                <Text fontWeight="bold" mb={2}>Availability Details:</Text>
                                                 <Box mb={2}>
-                                                    <span>From:</span>
-                                                    <Input
-                                                        type="time"
-                                                        value={fromTime}
-                                                        onChange={(e) => setFromTime(e.target.value)}
-                                                        ml={2}
-                                                        step={900}
-                                                    />
+                                                    <span>Type:</span>
+                                                    <Text>{selectedEvent.extendedProps.type}</Text>
+                                                </Box>
+                                                <Box mb={2}>
+                                                    <span>Start:</span>
+                                                    <Text>{selectedEvent.start.toLocaleString()}</Text>
                                                 </Box>
                                                 <Box>
-                                                    <span>To:</span>
-                                                    <Input
-                                                        type="time"
-                                                        value={toTime}
-                                                        onChange={(e) => setToTime(e.target.value)}
-                                                        ml={3}
-                                                        step={900}
-                                                    />
+                                                    <span>End:</span>
+                                                    <Text>{selectedEvent.end.toLocaleString()}</Text>
                                                 </Box>
                                             </Box>
-                                        )}
-                                    </Box>
-                                </ModalBody>
-                                <ModalFooter>
-                                    <Button colorScheme="blue" mr={3} onClick={closeModal}>
-                                        Close
-                                    </Button>
-                                    <Button colorScheme="teal" onClick={() => { }}>
-                                        Add Availability
-                                    </Button>
-                                </ModalFooter>
-                            </>
+                                            <Box mt={4}>
+                                                <Button colorScheme="blue" mr={3} onClick={() => setSelectedEvent(null)}>
+                                                    Close
+                                                </Button>
+                                                <Button colorScheme="red" onClick={() => hadleEventRemove(selectedEvent.extendedProps.meeting_id)}>
+                                                    Remove
+                                                </Button>
+                                            </Box>
+                                        </ModalBody>
+                                    ) : (
+                                        <>
+                                            <ModalHeader>{selectedDate && selectedDate.toDateString()}</ModalHeader>
+                                            <ModalBody>
+                                                <Switch
+                                                    onChange={handleToggleSwitch}
+                                                    isChecked={isVirtual}
+                                                    colorScheme="blue"
+                                                    mb={4}
+                                                >
+                                                    Virtual
+                                                </Switch>
+                                                <Box overflowY={isVirtual ? "scroll" : "visible"} maxHeight="40vh">
+                                                    {isVirtual ? (
+                                                        <Box>
+                                                            {timeSlots.map(timeSlot => (
+                                                                <Box
+                                                                    key={timeSlot}
+                                                                    onClick={() => handleTimeSlotClick(timeSlot)}
+                                                                    cursor="pointer"
+                                                                    bg={selectedTimeSlots.includes(timeSlot) ? "blue.500" : "gray.200"}
+                                                                    p={2}
+                                                                    borderRadius="md"
+                                                                    mb={2}
+                                                                >
+                                                                    {timeSlot}
+                                                                </Box>
+                                                            ))}
+                                                        </Box>
+                                                    ) : (
+                                                        <Box>
+                                                            <Box mb={2}>
+                                                                <span>From:</span>
+                                                                <Input
+                                                                    type="time"
+                                                                    value={fromTime}
+                                                                    onChange={(e) => setFromTime(e.target.value)}
+                                                                    ml={2}
+                                                                    step={900}
+                                                                />
+                                                            </Box>
+                                                            <Box>
+                                                                <span>To:</span>
+                                                                <Input
+                                                                    type="time"
+                                                                    value={toTime}
+                                                                    onChange={(e) => setToTime(e.target.value)}
+                                                                    ml={3}
+                                                                    step={900}
+                                                                />
+                                                            </Box>
+                                                        </Box>
+                                                    )}
+                                                </Box>
+                                            </ModalBody>
+                                            <ModalFooter>
+                                                <Button colorScheme="blue" mr={3} onClick={closeModal}>
+                                                    Close
+                                                </Button>
+                                                <Button colorScheme="teal" onClick={() => { }}>
+                                                    Add Availability
+                                                </Button>
+                                            </ModalFooter>
+                                        </>
 
-                        )}
+                                    )}
 
-                    </ModalContent>
-                </Modal>
+                                </ModalContent>
+                            </Modal>
 
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </GridItem>
     );

@@ -43,10 +43,6 @@ function DoctorSetting() {
     return (
 
         <GridItem
-            colSpan={6}
-            rowSpan={1}
-            borderRadius="lg"
-            p="4"
         >
             <div className=" h-screen w-3/4 mx-auto mt-[5%]">
                 <div className=" flex h-3/4  m-3 bg-white mt-5 rounded-md p-5 ">
