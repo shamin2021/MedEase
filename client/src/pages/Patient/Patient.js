@@ -2,7 +2,7 @@ import { Box, Flex, Input, Button, Grid, GridItem, SimpleGrid, Text } from '@cha
 import { FiLogOut } from 'react-icons/fi';
 import { HiSearch } from 'react-icons/hi';
 import logo from "../../assets/human_outline.png";
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import {
   FaUserDoctor,
   FaAngleRight,
@@ -14,35 +14,48 @@ import BarChart from '../../components/BarChart'
 import LineChart from '../../components/LineChart'
 import SimpleTable from '../../components/Table/SimpleTable'
 import Calendar from 'react-calendar';
-
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Patient = () => {
 
-  const [searchQuery, setSearchQuery] = React.useState("");
+  const { get } = useAxiosMethods();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { auth } = useAuth();
 
-  const handleSearch = () => {
-    console.log(`Searching for: ${searchQuery}`);
-  };
+  const [userId, setUserId] = useState(auth.user_id);
+  const [dashboard, setDashboardData] = useState([]);
 
-  const columns = [
-    { header: 'Employee Name', accessor: 'employeeName' },
-    { header: 'Position', accessor: 'position' },
-    { header: 'Department', accessor: 'department' },
-  ];
+    useEffect(() => {
+      try {
+        get(`/dashboard/patient/${userId}`, setDashboardData);
+      } catch (err) {
+        console.error(err);
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+    }, []);
 
-  const data = [
-    { employeeName: 'Dr. P. Jayamanna', position: 'Chief Medical Officer', department: 'Medical Department' },
-    { employeeName: 'Mrs. V. Warnakulasooriya', position: 'Nurse', department: 'Nursing Department' },
-    { employeeName: 'Ms. D. Jayasinghe', position: 'Administrative Assistant', department: 'Administration Department' },
+    
+    let bgColorClass;
 
-  ];
+    if (dashboard.lastSelfAssessment?.risk === "PENDING") {
+      bgColorClass = "bg-[#fbfbfb]";
+    } else if (dashboard.lastSelfAssessment?.risk === "HIGH") {
+      bgColorClass = "bg-[#fdc2c2]";
+    }else{
+      bgColorClass = "bg-[#d5ffcf]";
+    }
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
       <Flex className=" mt-[4%]">
         <div className="w-3/4 h-auto m-3 mt-0  bg-white shadow-xl rounded-2xl p-[4%] pt-[2%] ">
           <Flex flexDirection="column" className="w-3/4">
-            <div className="font-bold ">Hi John,</div>
+            <div className="font-bold ">
+              Hi {dashboard.lastSelfAssessment?.email_id},
+            </div>
             <div className=" text-[21px] text-[#707070]">
               This is your health Check for today
             </div>
@@ -51,11 +64,12 @@ const Patient = () => {
           <Flex className="mb-0 mt-[2%]">
             <Flex
               flexDirection="column"
-              className=" w-1/5 bg-[#c5ff8c] shadow-md rounded-lg p-3"
+              className={`w-1/5 ${bgColorClass} shadow-md rounded-lg p-3`}
             >
               <div className=" m-auto">
-                <div className="font-bold text-center">Healthy</div>
-                <div className="font-bold text-center">No Risk</div>
+                <div className="font-bold text-center">
+                  {dashboard.lastSelfAssessment?.risk}
+                </div>
                 <div className="text-center text-[18px] text-[#707070]">
                   Health Status
                 </div>
@@ -81,22 +95,29 @@ const Patient = () => {
                     <Flex className="mt-3">
                       <div className="m-1 border border-1 rounded-lg p-2">
                         <div className="text-center">Weight</div>
-                        <div className="text-center">75kg</div>
+                        <div className="text-center">
+                          {dashboard.medicalTest?.weight}
+                        </div>
                       </div>
                       <div className="m-1 border border-1 rounded-lg p-2">
                         <div className="text-center">Height</div>
-                        <div className="text-center">125cm</div>
+                        <div className="text-center">
+                          {dashboard.medicalTest?.height}
+                        </div>
                       </div>
                       <div className="m-1 border border-1 rounded-lg p-2">
                         <div className="text-center">Waist</div>
-                        <div className="text-center">25</div>
+                        <div className="text-center">
+                          {dashboard.medicalTest?.waistCircumference}
+                        </div>
                       </div>
                       <div className="m-1 ">
                         <div className="text-center bg-primary rounded-lg p-2 mb-1 ">
-                          BMI : 22
+                          BMI : {dashboard.medicalTest?.bmi}
                         </div>
                         <div className="text-center bg-primary rounded-lg p-2">
-                          Waist/Height : 22
+                          Waist/Height :{" "}
+                          {dashboard.medicalTest?.waistHeightRatio}
                         </div>
                       </div>
                     </Flex>
@@ -111,17 +132,23 @@ const Patient = () => {
             >
               <div className="mb-1">
                 <div className="text-[18px] font-bold">Blood Sugar</div>
-                <div className="text-[18px] text-[#707070]">23 | Normal</div>
+                <div className="text-[18px] text-[#707070]">
+                  {dashboard.medicalTest?.fastingbloodSugar}
+                </div>
                 <hr />
               </div>
               <div className="mb-1">
                 <div className="text-[18px] font-bold">Pressure</div>
-                <div className="text-[18px] text-[#707070]">18 | Normal</div>
+                <div className="text-[18px] text-[#707070]">
+                  {dashboard.medicalTest?.sbp}
+                </div>
                 <hr />
               </div>
               <div className="mb-1">
                 <div className="text-[18px] font-bold">Lipid</div>
-                <div className="text-[18px] text-[#707070]">03 | Normal</div>
+                <div className="text-[18px] text-[#707070]">
+                  {dashboard.medicalTest?.lipidTg}
+                </div>
                 <hr />
               </div>
             </Flex>
@@ -131,11 +158,11 @@ const Patient = () => {
             <div className="w-full grid grid-cols-5">
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Assessments</div>
-                <div>2</div>
+                <div>{dashboard.selfAssessmentsCount}</div>
               </div>
               <div className=" text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Appointments</div>
-                <div>3</div>
+                <div>{dashboard.appointmentsCount}</div>
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Lifestyle</div>
@@ -177,12 +204,12 @@ const Patient = () => {
             </div>
           </Flex> */}
 
-          <Flex className='m-3' >
-            <div className=''>
-            <Text fontSize={20} fontWeight={"Bold"}>
-              Risk Assessed
-            </Text>
-            <LineChart className=" h-80 w-20"/>
+          <Flex className="m-3">
+            <div className="">
+              <Text fontSize={20} fontWeight={"Bold"}>
+                Risk Assessed
+              </Text>
+              <LineChart className=" h-80 w-20" />
             </div>
           </Flex>
         </div>
