@@ -1,6 +1,7 @@
 import "../../styles/Table.css";
-import Doc from "../../assets/Doc.jpg";
 import { Link } from "react-router-dom";
+import { Avatar } from '@chakra-ui/react';
+
 const DoctorTable = ({ data }) => {
   return (
     <>
@@ -20,11 +21,7 @@ const DoctorTable = ({ data }) => {
                 <Link to={`/DoctorProfile`}>
                   <div className=" flex mt-4 text-[18px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                     <div className="w-1/5 m-1 flex ">
-                      <img
-                        className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
-                        src={Doc}
-                        alt="Doctor img"
-                      />
+                      <Avatar size="sm" name={item.firstname} src={item.profile_image ? `data:image/png;base64, ${item.profile_image}` : null} />
                       <div className="w-3/4 ml-6">{item.firstname}</div>
                     </div>
                     <div className="w-1/5 m-1">{item.lastname}</div>

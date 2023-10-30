@@ -1,5 +1,6 @@
 package com.medease.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.medease.backend.entity.HLC;
 import com.medease.backend.enumeration.EducationStatus;
 import com.medease.backend.enumeration.Gender;
@@ -38,5 +39,8 @@ public class PatientDTO {
     private String lastname;
     private String email;
     private String mobileNumber;
+
+    @JsonProperty("profile_image")
+    private String profileImage;
 
 }

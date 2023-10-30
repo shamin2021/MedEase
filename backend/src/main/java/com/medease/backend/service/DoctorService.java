@@ -9,11 +9,13 @@ import com.medease.backend.repository.UserImageRepository;
 import com.medease.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -22,9 +24,11 @@ public class DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final UserRepository userRepository;
+    private final UserImageRepository userImageRepository;
     private final DoctorSpecialityRepository doctorSpecialityRepository;
     private final UploadService uploadService;
 
+    @Transactional
     public List<DoctorDTO> getDoctors() {
 
         var doctors = doctorRepository.getAllDoctors();
@@ -36,6 +40,7 @@ public class DoctorService {
             String doctorUser = userRepository.retrieveDoctorUser(doctorUserID);
             String[] doctorDetailsSplit = doctorUser.split(",");
             var doctorSpeciality = doctorSpecialityRepository.findSpecialityById((Integer) doctor[3]);
+            var profileImage = userImageRepository.findByUserId(doctorUserID).orElse(null);
 
             DoctorDTO doctorDTO = DoctorDTO.builder()
                     .doctor_id((Integer) doctor[0])
@@ -46,6 +51,7 @@ public class DoctorService {
                     .email(doctorDetailsSplit[3].trim())
                     .mobileNumber(doctorDetailsSplit[4].trim())
                     .doctor_user_id(Integer.parseInt(doctorDetailsSplit[0].trim()))
+                    .profileImage(profileImage != null ? Base64.getEncoder().encodeToString(profileImage.getImage()) : null)
                     .build();
 
             doctorDTOList.add(doctorDTO);

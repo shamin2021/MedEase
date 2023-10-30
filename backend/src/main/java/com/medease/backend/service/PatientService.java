@@ -8,17 +8,16 @@ import com.medease.backend.entity.HLC;
 import com.medease.backend.entity.HLCChangeRequest;
 import com.medease.backend.entity.Patient;
 import com.medease.backend.entity.User;
-import com.medease.backend.repository.HLCChangeRequestRepository;
-import com.medease.backend.repository.HLCRepository;
-import com.medease.backend.repository.PatientRepository;
-import com.medease.backend.repository.UserRepository;
+import com.medease.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -28,18 +27,20 @@ public class PatientService {
     private final UserRepository userRepository;
     private final PatientRepository patientRepository;
     private final HLCRepository hlcRepository;
+    private final UserImageRepository userImageRepository;
     private final HLCChangeRequestRepository hlcChangeRequestRepository;
     private final UploadService uploadService;
 
+    @Transactional
     public List<PatientDTO> getAllPatients() {
         List<Object[]> patientUsers = userRepository.retrievePatientList();
         List<PatientDTO> patientDTOList = new ArrayList<>();
 
         for(Object[] patientUser : patientUsers) {
             var patientUserId = (Integer) patientUser[0];
-            System.out.println(patientUserId);
             Patient patient = patientRepository.findPatient(patientUserId).orElseThrow();
             HLC patientHLC = hlcRepository.findById(patient.getPatient_hlc().getHlc_id()).orElseThrow();
+            var profileImage = userImageRepository.findByUserId(patientUserId).orElse(null);
 
             PatientDTO patientDTO = PatientDTO.builder()
                     .patient_id(patient.getPatient_id())
@@ -61,6 +62,7 @@ public class PatientService {
                     .marital_status(patient.getMarital_status())
                     .highest_education_status(patient.getHighest_education_status())
                     .date_of_registration(patient.getDate_of_registration())
+                    .profileImage(profileImage != null ? Base64.getEncoder().encodeToString(profileImage.getImage()) : null)
                     .build();
             patientDTOList.add(patientDTO);
         }

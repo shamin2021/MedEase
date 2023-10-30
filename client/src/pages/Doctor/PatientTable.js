@@ -1,5 +1,5 @@
 import "../../styles/Table.css";
-import Doc from "../../assets/patient.jpg";
+import { Avatar } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
 const Table = ({ data }) => {
     return (
@@ -20,11 +20,7 @@ const Table = ({ data }) => {
                                 <Link to={`/PatientProfile/${item.patient_id}`}>
                                     <div className=" flex mt-4 text-[15px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                                         <div className="w-1/5 m-1 flex ">
-                                            <img
-                                                className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
-                                                src={Doc}
-                                                alt="User Img"
-                                            />
+                                            <Avatar size="sm" name={item.firstname} src={item.profile_image ? `data:image/png;base64, ${item.profile_image}` : null} />
                                             <div className="w-3/4 ml-6">{item.firstname}</div>
                                         </div>
                                         <div className="w-1/5 m-1">{item.lastname}</div>
