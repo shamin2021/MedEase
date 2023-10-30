@@ -8,8 +8,6 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import { FiLogOut } from "react-icons/fi";
-import { HiSearch } from "react-icons/hi";
 import logo from "../../assets/human_outline.png";
 import React, { useEffect, useState } from "react";
 import {
@@ -18,10 +16,7 @@ import {
   FaVialCircleCheck,
   FaHeartCircleCheck,
 } from "react-icons/fa6";
-import CommonCard from "../../components/CommonCard";
-import BarChart from "../../components/BarChart";
 import LineChart from "../../components/LineChart";
-import SimpleTable from "../../components/Table/SimpleTable";
 import Calendar from "react-calendar";
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
