@@ -1,0 +1,227 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 4194304 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3527), pid=7872, tid=15680
+#
+# JRE version:  (19.0.1+10) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (19.0.1+10-21, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -ea -XX:+ShowCodeDetailsInExceptionMessages -Dfile.encoding=UTF-8 org.eclipse.jdt.internal.junit.runner.RemoteTestRunner -version 3 -port 49405 -testLoaderClass org.eclipse.jdt.internal.junit5.runner.JUnit5TestLoader -loaderpluginname org.eclipse.jdt.junit5.runtime -testNameFile C:\Users\LTCOL(~1\AppData\Local\Temp\testNames9034451754743527810.txt
+
+Host: Intel(R) Core(TM) i3-8145U CPU @ 2.10GHz, 4 cores, 15G,  Windows 11 , 64 bit Build 22621 (10.0.22621.2215)
+Time: Thu Sep 14 10:58:51 2023 Sri Lanka Standard Time elapsed time: 0.020203 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000245f9b00400):  JavaThread "Unknown thread" [_thread_in_vm, id=15680, stack(0x000000b17c900000,0x000000b17ca00000)]
+
+Stack: [0x000000b17c900000,0x000000b17ca00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6ee8fa]
+V  [jvm.dll+0x857a1e]
+V  [jvm.dll+0x85940e]
+V  [jvm.dll+0x859ac3]
+V  [jvm.dll+0x28291f]
+V  [jvm.dll+0x6eb6e9]
+V  [jvm.dll+0x6e028a]
+V  [jvm.dll+0x357136]
+V  [jvm.dll+0x35eb96]
+V  [jvm.dll+0x3b5588]
+V  [jvm.dll+0x3b578f]
+V  [jvm.dll+0x32c6ea]
+V  [jvm.dll+0x32d59e]
+V  [jvm.dll+0x821b20]
+V  [jvm.dll+0x3c27c1]
+V  [jvm.dll+0x8022f1]
+V  [jvm.dll+0x44b30f]
+V  [jvm.dll+0x44cc91]
+C  [jli.dll+0x5287]
+C  [ucrtbase.dll+0x29363]
+C  [KERNEL32.DLL+0x1257d]
+C  [ntdll.dll+0x5aa68]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffdb291d048, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x00000245f9b72a90 WorkerThread "GC Thread#0" [stack: 0x000000b17ca00000,0x000000b17cb00000] [id=13880]
+  0x00000245f9b83800 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000b17cb00000,0x000000b17cc00000] [id=3572]
+  0x00000245f9b84230 WorkerThread "G1 Conc#0" [stack: 0x000000b17cc00000,0x000000b17cd00000] [id=23740]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffdb20dd127]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00000245f9afd090] Heap_lock - owner thread: 0x00000245f9b00400
+
+Heap address: 0x0000000701e00000, size: 4066 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 0.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 4 size 8 Array Of Cards #cards 16 size 48 Howl #buckets 8 coarsen threshold 3686 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 4096
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x0000000701e00000, 0x0000000800000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffdb24e6959]
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.013 Loaded shared library C:\Program Files\Java\jdk-19\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff712760000 - 0x00007ff712770000 	C:\Program Files\Java\jdk-19\bin\java.exe
+0x00007ffe3ebf0000 - 0x00007ffe3ee04000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffe3dd40000 - 0x00007ffe3de04000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffe3c550000 - 0x00007ffe3c8f4000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffe3c340000 - 0x00007ffe3c451000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffe19840000 - 0x00007ffe1985b000 	C:\Program Files\Java\jdk-19\bin\VCRUNTIME140.dll
+0x00007ffe18940000 - 0x00007ffe18958000 	C:\Program Files\Java\jdk-19\bin\jli.dll
+0x00007ffe3ead0000 - 0x00007ffe3eb80000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffe3e1f0000 - 0x00007ffe3e297000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffe3dc90000 - 0x00007ffe3dd36000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffe3d530000 - 0x00007ffe3d647000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffe3d9a0000 - 0x00007ffe3db4e000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffe3c520000 - 0x00007ffe3c546000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffe3eb80000 - 0x00007ffe3eba9000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffe3c040000 - 0x00007ffe3c158000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffe3bfa0000 - 0x00007ffe3c03a000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffe23830000 - 0x00007ffe23ac3000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.2215_none_270d72677387dfc3\COMCTL32.dll
+0x00007ffe32fb0000 - 0x00007ffe32fba000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffe3ce90000 - 0x00007ffe3cec1000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffe1a7f0000 - 0x00007ffe1a7fc000 	C:\Program Files\Java\jdk-19\bin\vcruntime140_1.dll
+0x00007ffdeb480000 - 0x00007ffdeb50e000 	C:\Program Files\Java\jdk-19\bin\msvcp140.dll
+0x00007ffdb1da0000 - 0x00007ffdb2a60000 	C:\Program Files\Java\jdk-19\bin\server\jvm.dll
+0x00007ffe352e0000 - 0x00007ffe352e9000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffe35100000 - 0x00007ffe35134000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffe3d7a0000 - 0x00007ffe3d811000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffe3aec0000 - 0x00007ffe3aed8000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffe1a5d0000 - 0x00007ffe1a5da000 	C:\Program Files\Java\jdk-19\bin\jimage.dll
+0x00007ffe39700000 - 0x00007ffe3992e000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffe3d1a0000 - 0x00007ffe3d52a000 	C:\WINDOWS\System32\combase.dll
+0x00007ffe3dea0000 - 0x00007ffe3df77000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ffe33720000 - 0x00007ffe33752000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffe3c900000 - 0x00007ffe3c97a000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffdf8250000 - 0x00007ffdf8276000 	C:\Program Files\Java\jdk-19\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Java\jdk-19\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.2215_none_270d72677387dfc3;C:\Program Files\Java\jdk-19\bin\server
+
+VM Arguments:
+jvm_args: -ea -XX:+ShowCodeDetailsInExceptionMessages -Dfile.encoding=UTF-8 
+java_command: org.eclipse.jdt.internal.junit.runner.RemoteTestRunner -version 3 -port 49405 -testLoaderClass org.eclipse.jdt.internal.junit5.runner.JUnit5TestLoader -loaderpluginname org.eclipse.jdt.junit5.runtime -testNameFile C:\Users\LTCOL(~1\AppData\Local\Temp\testNames9034451754743527810.txt
+java_class_path (initial): c:\Users\LtCol(Dr)HHLKFernand\Documents\MedEase\backend\target\test-classes;c:\Users\LtCol(Dr)HHLKFernand\Documents\MedEase\backend\target\classes;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.1.2\spring-boot-starter-data-jpa-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.1.2\spring-boot-starter-aop-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\aspectj\aspectjweaver\1.9.19\aspectjweaver-1.9.19.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.1.2\spring-boot-starter-jdbc-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-jdbc\6.0.11\spring-jdbc-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\hibernate\orm\hibernate-core\6.2.6.Final\hibernate-core-6.2.6.Final.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\io\smallrye\jandex\3.0.5\jandex-3.0.5.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\fasterxml\classmate\1.5.1\classmate-1.5.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\net\bytebuddy\byte-buddy\1.14.5\byte-buddy-1.14.5.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.3\jaxb-runtime-4.0.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.3\jaxb-core-4.0.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\glassfish\jaxb\txw2\4.0.3\txw2-4.0.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\antlr\antlr4-runtime\4.10.1\antlr4-runtime-4.10.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\data\spring-data-jpa\3.1.2\spring-data-jpa-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\data\spring-data-commons\3.1.2\spring-data-commons-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-orm\6.0.11\spring-orm-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-context\6.0.11\spring-context-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-tx\6.0.11\spring-tx-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-beans\6.0.11\spring-beans-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-aspects\6.0.11\spring-aspects-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.1.2\spring-boot-starter-security-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter\3.1.2\spring-boot-starter-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot\3.1.2\spring-boot-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.1.2\spring-boot-autoconfigure-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.1.2\spring-boot-starter-logging-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\ch\qos\logback\logback-classic\1.4.8\logback-classic-1.4.8.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\ch\qos\logback\logback-core\1.4.8\logback-core-1.4.8.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.20.0\log4j-to-slf4j-2.20.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\slf4j\jul-to-slf4j\2.0.7\jul-to-slf4j-2.0.7.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\yaml\snakeyaml\1.33\snakeyaml-1.33.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-aop\6.0.11\spring-aop-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\security\spring-security-config\6.1.2\spring-security-config-6.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\security\spring-security-web\6.1.2\spring-security-web-6.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-expression\6.0.11\spring-expression-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.1.2\spring-boot-starter-web-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.1.2\spring-boot-starter-json-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.2\jackson-datatype-jdk8-2.15.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.2\jackson-module-parameter-names-2.15.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.1.2\spring-boot-starter-tomcat-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.11\tomcat-embed-core-10.1.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.11\tomcat-embed-el-10.1.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.11\tomcat-embed-websocket-10.1.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-web\6.0.11\spring-web-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\io\micrometer\micrometer-observation\1.11.2\micrometer-observation-1.11.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\io\micrometer\micrometer-commons\1.11.2\micrometer-commons-1.11.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-webmvc\6.0.11\spring-webmvc-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.1.2\spring-boot-starter-mail-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-context-support\6.0.11\spring-context-support-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\eclipse\angus\jakarta.mail\1.1.0\jakarta.mail-1.1.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\postgresql\postgresql\42.6.0\postgresql-42.6.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\checkerframework\checker-qual\3.31.0\checker-qual-3.31.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\projectlombok\lombok\1.18.28\lombok-1.18.28.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.2\jjwt-api-0.11.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.2\jjwt-impl-0.11.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.2\jjwt-jackson-0.11.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.2\jackson-databind-2.15.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\twilio\sdk\twilio\8.8.0\twilio-8.8.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\commons-codec\commons-codec\1.15\commons-codec-1.15.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\commons-io\commons-io\2.7\commons-io-2.7.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\apache\httpcomponents\httpclient\4.5.13\httpclient-4.5.13.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.2\jackson-core-2.15.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.2\jackson-annotations-2.15.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.2\jackson-datatype-jsr310-2.15.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\slf4j\slf4j-api\2.0.7\slf4j-api-2.0.7.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\javax\xml\bind\jaxb-api\2.3.1\jaxb-api-2.3.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\javax\activation\javax.activation-api\1.2.0\javax.activation-api-1.2.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.1.2\spring-boot-starter-test-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-test\3.1.2\spring-boot-test-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.1.2\spring-boot-test-autoconfigure-3.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\jayway\jsonpath\json-path\2.8.0\json-path-2.8.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.0\jakarta.xml.bind-api-4.0.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\net\minidev\json-smart\2.4.11\json-smart-2.4.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\net\minidev\accessors-smart\2.4.11\accessors-smart-2.4.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\junit\jupiter\junit-jupiter\5.9.3\junit-jupiter-5.9.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\mockito\mockito-core\5.3.1\mockito-core-5.3.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.5\byte-buddy-agent-1.14.5.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\mockito\mockito-junit-jupiter\5.3.1\mockito-junit-jupiter-5.3.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-core\6.0.11\spring-core-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-jcl\6.0.11\spring-jcl-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\spring-test\6.0.11\spring-test-6.0.11.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\security\spring-security-test\6.1.2\spring-security-test-6.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\security\spring-security-core\6.1.2\spring-security-core-6.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\springframework\security\spring-security-crypto\6.1.2\spring-security-crypto-6.1.2.jar;c:\Users\LtCol(Dr)HHLKFernand\.m2\repository\org\junit\platform\junit-platform-launcher\1.9.3\junit-platform-launcher-1.9.3.jar;c:\Users\LtCol(Dr)HHLKFernand\AppData\Roaming\Code\User\globalStorage\redhat.java\1.22.0\config_win\org.eclipse.osgi\113\0\.cp;c:\Users\LtCol(Dr)HHLKFernand\AppData\Roaming\Code\User\globalStorage\redhat.java\1.22.0\config_win\org.eclipse.osgi\55\0\.cp
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 3                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 1                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 4                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 268435456                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 4263510016                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5832780                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122912730                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122912730                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool ShowCodeDetailsInExceptionMessages       = true                                   {manageable} {command line}
+   size_t SoftMaxHeapSize                          = 4263510016                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk-19
+PATH=C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Java\jdk-18.0.1.1\bin;C:\Program Files\Git\cmd;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\MinGW\bin;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\Users\LtCol(Dr)HHLKFernand\AppData\Local\Microsoft\WindowsApps;C:\Users\LtCol(Dr)HHLKFernand\AppData\Local\GitHubDesktop\bin;C:\Users\LtCol(Dr)HHLKFernand\AppData\Roaming\Composer\vendor\bin;C:\Program Files\Java\jdk-19\bin;C:\Users\LtCol(Dr)HHLKFernand\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA 2023.2\bin;;C:\flutter\flutter\bin;C:\Android\Sdk;
+USERNAME=LtCol(Dr)HHLKFernand
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 12, GenuineIntel
+TMP=C:\Users\LTCOL(~1\AppData\Local\Temp
+TEMP=C:\Users\LTCOL(~1\AppData\Local\Temp
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 22621 (10.0.22621.2215)
+OS uptime: 1 days 2:14 hours
+Hyper-V role detected
+
+CPU: total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 142 stepping 12 microcode 0xf8, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, fma, vzeroupper, clflush, clflushopt, hv, rdtscp
+
+Memory: 4k page, system-wide physical 16260M (2287M free)
+TotalPageFile size 26382M (AvailPageFile size 7M)
+current process WorkingSet (physical memory assigned to process): 11M, peak: 11M
+current process commit charge ("private bytes"): 312M, peak: 316M
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (19.0.1+10-21) for windows-amd64 JRE (19.0.1+10-21), built on 2022-09-14T12:45:06Z by "mach5one" with MS VC++ 17.1 (VS2022)
+
+END.
