@@ -16,11 +16,12 @@ public class DashboardService {
     private final SelfAssessmentRepository selfAssessmentRepository;
     private final MedicalTestRepository medicalTestRepository;
     private final AssignedRecommendationService assignedRecommendationService;
+    private final MeetingService meetingService;
 
     public Object getPatientDashboard(Integer id) {
         return new Object() {
             public final Integer selfAssessmentsCount = selfAssessmentRepository.countByPatient(id);
-            public final Integer appointmentsCount = 0;
+            public final Integer appointmentsCount = meetingService.getMeetingCountByPatientId(id);
             public final Integer lifeStyleRecommendationsCount = assignedRecommendationService
                     .getAssignedRecommendationCount(id);
             public final Integer hlcVisitsCount = 0;

@@ -215,4 +215,9 @@ public class MeetingService {
                 .message("Successfully cancelled")
                 .build();
     }
+
+    public Integer getMeetingCountByPatientId(Integer patientId) {
+        var patient = patientRepository.findPatient(patientId).orElseThrow();
+        return meetingRepository.countByPatient(patient);
+    }
 }

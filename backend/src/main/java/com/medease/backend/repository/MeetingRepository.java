@@ -15,4 +15,5 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
     @Query(value = "SELECT * FROM meetings WHERE meeting_patient_id = :patientID AND cancelled = 0", nativeQuery = true)
     List<Object[]> findPatientMeetings(Integer patientID);
 
+    Integer countByPatient(Patient patient);
 }
