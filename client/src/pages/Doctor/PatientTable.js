@@ -27,7 +27,7 @@ const Table = ({ data }) => {
                                         <div className="w-1/5 m-1">{item.email}</div>
                                         <div className="w-1/5 m-1">{item.gender}</div>
                                         <div className="w-2/5 m-1 text-center">
-                                            <Link to={`/AddLifestyle/${item.patient_id}`}>
+                                            <Link to={`/AddLifestyle/${item.user_profile_id}`}>
                                                 <button className="p-2 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white">
                                                     Lifestyle Tips
                                                 </button>

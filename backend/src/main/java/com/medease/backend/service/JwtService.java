@@ -20,7 +20,7 @@ public class JwtService {
 
     // used to sign the jwt token
     @Value("${secret-key}")
-    private String  secretKey;
+    private String secretKey;
 
     @Value("${expiration}")
     private long jwtExpiration;
@@ -40,23 +40,22 @@ public class JwtService {
 
     // if there are no extra claims we this function is called
     public String generateToken(UserDetails userDetails) {
-        return  generateToken(new HashMap<>(), userDetails);
+        return generateToken(new HashMap<>(), userDetails);
     }
-
 
     // can create a jwt token with new claims
-    public String generateToken (Map<String, Object> extraClaims, UserDetails userDetails) {
-        return  buildToken(extraClaims, userDetails, jwtExpiration);
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
-    public String generateResetToken (UserDetails userDetails, long expiration) {
-        return  buildToken(new HashMap<>(), userDetails, expiration);
+    public String generateResetToken(UserDetails userDetails, long expiration) {
+        return buildToken(new HashMap<>(), userDetails, expiration);
     }
 
-    public String generateRefreshToken (UserDetails userDetails) {
-        return  buildToken(new HashMap<>(), userDetails, refreshExpiration);
+    public String generateRefreshToken(UserDetails userDetails) {
+        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
-  
+
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts
                 .builder()
@@ -81,7 +80,6 @@ public class JwtService {
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
-
 
     private Claims extractAllClaims(String token) {
 

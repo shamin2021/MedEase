@@ -36,7 +36,7 @@ public class PatientService {
         List<Object[]> patientUsers = userRepository.retrievePatientList();
         List<PatientDTO> patientDTOList = new ArrayList<>();
 
-        for(Object[] patientUser : patientUsers) {
+        for (Object[] patientUser : patientUsers) {
             var patientUserId = (Integer) patientUser[0];
             Patient patient = patientRepository.findPatient(patientUserId).orElseThrow();
             HLC patientHLC = hlcRepository.findById(patient.getPatient_hlc().getHlc_id()).orElseThrow();
@@ -63,6 +63,7 @@ public class PatientService {
                     .highest_education_status(patient.getHighest_education_status())
                     .date_of_registration(patient.getDate_of_registration())
                     .profileImage(profileImage != null ? Base64.getEncoder().encodeToString(profileImage.getImage()) : null)
+                    .user_profile_id(patientUserId)
                     .build();
             patientDTOList.add(patientDTO);
         }
@@ -180,6 +181,9 @@ public class PatientService {
                 .message("Successfully Updated")
                 .status(200)
                 .build();
+    }
 
+    public Integer getPatientCount() {
+        return (int) patientRepository.count();
     }
 }

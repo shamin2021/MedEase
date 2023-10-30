@@ -7,6 +7,7 @@ import com.medease.backend.dto.RegisterRequestDTO;
 import com.medease.backend.entity.HLC;
 import com.medease.backend.entity.HLCChangeRequest;
 import com.medease.backend.repository.*;
+import com.medease.backend.repository.HLCRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +34,7 @@ public class HLCService {
         System.out.println(hlcList);
         List<HLCDTO> hlcdtoList = new ArrayList<>();
 
-        for(Object[] hlc : hlcList) {
+        for (Object[] hlc : hlcList) {
             HLCDTO hlcdto = HLCDTO.builder()
                     .hlc_id((Integer) hlc[0])
                     .hlc_name((String) hlc[1])
@@ -195,6 +196,9 @@ public class HLCService {
                 .message("Successfully Rejected")
                 .status(200)
                 .build();
+    }
 
+    public Integer getHlcCount() {
+        return (int) hlcRepository.count();
     }
 }

@@ -5,7 +5,7 @@ import NavItem from '../NavItem';
 import { Flex, IconButton, Avatar, Heading, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiUsers, FiSettings, FiLogOut, FiUserPlus, FiRepeat } from "react-icons/fi";
 
-const HLCSidebar = () => {
+const HLCSideBar = () => {
     const [navSize, changeNavSize] = React.useState("large");
     const { auth } = useAuth();
 
@@ -22,6 +22,8 @@ const HLCSidebar = () => {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+
 
     return (
         <Flex
@@ -52,7 +54,6 @@ const HLCSidebar = () => {
                 <NavItem navSize={navSize} icon={FiUserPlus} title="Doctor" href={"/ManageDoctor"} />
                 <NavItem navSize={navSize} icon={FiRepeat} title="Transfer Requests" href={"/TransferPatient"} />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/HLCSettings"} />
-
             </Flex>
 
             <Flex p="5%" flexDir="column" w="100%" alignItems={navSize === "small" ? "center" : "flex-start"} mb={4}>
@@ -68,8 +69,8 @@ const HLCSidebar = () => {
                 </Flex>
                 <NavItem navSize={navSize} icon={FiLogOut} title="Logout" />
             </Flex>
-        </Flex>
+        </Flex >
     );
 };
 
-export default HLCSidebar;
+export default HLCSideBar;

@@ -39,6 +39,7 @@ public class PatientDTO {
     private String lastname;
     private String email;
     private String mobileNumber;
+    private Integer user_profile_id;
 
     @JsonProperty("profile_image")
     private String profileImage;
