@@ -145,7 +145,7 @@ const Pstient = () => {
                       <div className="w-1/5 text-[17px] text-[#6b6b6b] m-1 text-center">
                         10 AM
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#ffc0c0] text-center rounded-md">
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b]  m-1 bg-[#ffc0c0] text-center rounded-md">
                         High
                       </div>
                     </Flex>
@@ -167,7 +167,7 @@ const Pstient = () => {
                       <div className="w-1/5 text-[17px] text-[#6b6b6b] m-1 text-center">
                         10 AM
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#ffc0c0] text-center rounded-md">
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#ffc0c0] text-center rounded-md">
                         High
                       </div>
                     </Flex>
@@ -189,7 +189,7 @@ const Pstient = () => {
                       <div className="w-1/5 text-[17px] text-[#6b6b6b] m-1 text-center">
                         10 AM
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#ffc0c0] text-center rounded-md">
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#ffc0c0] text-center rounded-md">
                         High
                       </div>
                     </Flex>
@@ -211,7 +211,7 @@ const Pstient = () => {
                       <div className="w-1/5 text-[17px] text-[#6b6b6b] m-1 text-center">
                         10 AM
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#ffc0c0] text-center rounded-md">
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#ffc0c0] text-center rounded-md">
                         High
                       </div>
                     </Flex>

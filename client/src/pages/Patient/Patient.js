@@ -123,7 +123,7 @@ const Pstient = () => {
                       <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
                         Lunawa HLC <br /> Dr.Asith Ama
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#e0e0e0] text-center rounded-md">
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b]  m-1 bg-[#e0e0e0] text-center rounded-md">
                         123
                       </div>
                     </Flex>
@@ -134,7 +134,7 @@ const Pstient = () => {
                       <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
                         Lunawa HLC <br /> Dr.Asith Ama
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#e0e0e0] text-center rounded-md">
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#e0e0e0] text-center rounded-md">
                         123
                       </div>
                     </Flex>
@@ -145,7 +145,7 @@ const Pstient = () => {
                       <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
                         Lunawa HLC <br /> Dr.Asith Ama
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#e0e0e0] text-center rounded-md">
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#e0e0e0] text-center rounded-md">
                         123
                       </div>
                     </Flex>
@@ -156,7 +156,7 @@ const Pstient = () => {
                       <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
                         Lunawa HLC <br /> Dr.Asith Ama
                       </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] text-center m-1 bg-[#e0e0e0] text-center rounded-md">
+                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#e0e0e0] text-center rounded-md">
                         123
                       </div>
                     </Flex>
