@@ -164,15 +164,15 @@ const Patient = () => {
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Lifestyle</div>
-                <div>4</div>
+                <div></div>
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">HLC visits</div>
-                <div>1</div>
+                <div></div>
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Treatments</div>
-                <div>None</div>
+                <div></div>
               </div>
             </div>
           </Flex>
