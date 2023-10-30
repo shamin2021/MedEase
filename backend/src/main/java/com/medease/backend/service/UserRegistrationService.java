@@ -1,19 +1,14 @@
 package com.medease.backend.service;
 
-import com.medease.backend.dto.AuthenticationResponseDTO;
 import com.medease.backend.dto.GlobalResponseDTO;
 import com.medease.backend.dto.RegisterRequestDTO;
-import com.medease.backend.entity.Doctor;
-import com.medease.backend.entity.DoctorSpeciality;
-import com.medease.backend.entity.HLC;
-import com.medease.backend.entity.User;
+import com.medease.backend.entity.*;
 import com.medease.backend.enumeration.Role;
-import com.medease.backend.repository.DoctorRepository;
-import com.medease.backend.repository.DoctorSpecialityRepository;
-import com.medease.backend.repository.HlcRepository;
-import com.medease.backend.repository.UserRepository;
+import com.medease.backend.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,7 +21,11 @@ public class UserRegistrationService {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
     private final DoctorRepository doctorRepository;
-    private final HlcRepository hlcRepository;
+    private final HLCRepository hlcRepository;
+    private final HLCMapRepository hlcMapRepository;
+    private final UploadService uploadService;
+
+    private final PasswordEncoder passwordEncoder;
 
     public List<DoctorSpeciality> getSpecialities() {
         return doctorSpecialityRepository.findAll();
@@ -41,6 +40,7 @@ public class UserRegistrationService {
                 .mobileNumber(registerRequestDTO.getMobileNumber())
                 .role(Role.DOCTOR)
                 .activated(Boolean.FALSE)
+                .enabled(Boolean.TRUE)
                 .build();
 
         var savedUser = userRepository.save(user);
@@ -65,14 +65,51 @@ public class UserRegistrationService {
                 .build();
     }
 
+    public GlobalResponseDTO addDoctorWithImage(String email, String firstname, String lastname, String licenseNumber, String mobileNumber, Integer speciality, MultipartFile image) {
+
+        var user = User.builder()
+                .firstname(firstname)
+                .lastname(lastname)
+                .email(email)
+                .mobileNumber(mobileNumber)
+                .role(Role.DOCTOR)
+                .activated(Boolean.FALSE)
+                .enabled(Boolean.TRUE)
+                .build();
+
+        var savedUser = userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        authenticationService.saveUserToken(savedUser, jwtToken);
+
+        DoctorSpeciality doctorSpeciality = DoctorSpeciality.builder()
+                .speciality_id(speciality)
+                .build();
+
+        var doctor = Doctor.builder()
+                .doctor_user(user)
+                .license_number(licenseNumber)
+                .speciality(doctorSpeciality)
+                .build();
+
+        doctorRepository.save(doctor);
+
+        // to upload image
+        uploadService.uploadImage(image,user);
+
+        return GlobalResponseDTO.builder()
+                .status(200)
+                .message("Doctor Registered Successfully")
+                .build();
+    }
+
     public GlobalResponseDTO addHlc(RegisterRequestDTO registerRequestDTO) {
 
         var user = User.builder()
                 .email(registerRequestDTO.getEmail())
                 .mobileNumber(registerRequestDTO.getMobileNumber())
-                .firstname(registerRequestDTO.getHlc_name())
                 .role(Role.HLC)
                 .activated(Boolean.FALSE)
+                .enabled(Boolean.TRUE)
                 .build();
 
         var savedUser = userRepository.save(user);
@@ -95,6 +132,14 @@ public class UserRegistrationService {
                 .build();
 
         hlcRepository.save(hlc);
+
+        var hlcMap = HLCMap.builder()
+                .hlc(hlc)
+                .longitude(registerRequestDTO.getLongitude())
+                .latitude(registerRequestDTO.getLatitude())
+                .build();
+
+        hlcMapRepository.save(hlcMap);
 
         return GlobalResponseDTO.builder()
                 .status(200)

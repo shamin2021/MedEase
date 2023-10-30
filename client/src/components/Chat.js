@@ -33,7 +33,7 @@ const DirectChatPage = () => {
 		method: 'post',
 		url: 'https://api.chatengine.io/users/',
 		headers: {
-			'PRIVATE-KEY': '1f3bf2d4-09a3-4079-9402-778a08380c74'
+			'PRIVATE-KEY': '622f63df-f884-44d8-af01-b9b779105fe8'
 		},
 		data: data
 	};
@@ -85,7 +85,7 @@ const DirectChatPage = () => {
 					width={navSize === "small" ? "calc(100% - 500px)" : "calc(100% - 300px)"}
 					userName={auth.first_name}
 					userSecret={auth.first_name}
-					projectID='d9ef1868-1085-4ef0-bd6c-36276738e453'
+					projectID='2a25bbf3-f598-4cdc-a77f-ba70e11f7609'
 					renderNewChatForm={(creds) => renderNewChatForm(creds)}
 					renderIceBreaker={renderIceBreaker}
 				/>

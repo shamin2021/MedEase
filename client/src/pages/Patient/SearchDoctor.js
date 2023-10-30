@@ -1,59 +1,62 @@
-import {
-  Box,
-  Flex,
-  Input,
-  Button,
-  Grid,
-  GridItem,
-  SimpleGrid,
-  Text,
-} from "@chakra-ui/react";
-import { FiLogOut } from "react-icons/fi";
-import { HiSearch } from "react-icons/hi";
-import logo from "../../assets/human_outline.png";
-import React from "react";
-import {
-  FaUserDoctor,
-  FaAngleRight,
-  FaVialCircleCheck,
-  FaHeartCircleCheck,
-} from "react-icons/fa6";
-import CommonCard from "../../components/CommonCard";
-import BarChart from "../../components/BarChart";
-import LineChart from "../../components/LineChart";
-import SimpleTable from "../../components/Table/SimpleTable";
-import Calendar from "react-calendar";
+import React, { useState, useEffect } from "react";
+import Table from "./DoctorTable";
+import { FaSearch } from "react-icons/fa";
+import { GridItem } from '@chakra-ui/react'
+import { useNavigate, useLocation } from "react-router-dom";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
 
-const Pstient = () => {
-  const [searchQuery, setSearchQuery] = React.useState("");
+const SearchDoc = () => {
 
-  const handleSearch = () => {
-    console.log(`Searching for: ${searchQuery}`);
+  const { get } = useAxiosMethods();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [query, setQuery] = useState("");
+  const [doctors, setDoctors] = useState([]);
+  const [searchedDoctors, setSearchedDoctors] = useState([]);
+  const [initializedSearch, setInitializedSearch] = useState(false);
+
+  const search = () => {
+
+    setSearchedDoctors(doctors.filter((item) => {
+      return (
+        item.firstname.toLowerCase().includes(query) ||
+        item.lastname.toLowerCase().includes(query) ||
+        item.email.toLowerCase().includes(query)
+      );
+    }));
   };
 
-  const columns = [
-    { header: "Employee Name", accessor: "employeeName" },
-    { header: "Position", accessor: "position" },
-    { header: "Department", accessor: "department" },
-  ];
+  useEffect(() => {
+    if (doctors.length > 0) {
+      console.log(doctors);
+      if (searchedDoctors.length === 0 && !initializedSearch) {
+        setSearchedDoctors(doctors)
+        setInitializedSearch(true)
+      }
+      console.log(searchedDoctors);
+    }
+  }, [doctors, searchedDoctors]);
 
-  const data = [
-    {
-      employeeName: "Dr. P. Jayamanna",
-      position: "Chief Medical Officer",
-      department: "Medical Department",
-    },
-    {
-      employeeName: "Mrs. V. Warnakulasooriya",
-      position: "Nurse",
-      department: "Nursing Department",
-    },
-    {
-      employeeName: "Ms. D. Jayasinghe",
-      position: "Administrative Assistant",
-      department: "Administration Department",
-    },
-  ];
+  useEffect(() => {
+    try {
+      get("/doctors/getDoctors", setDoctors)
+
+    } catch (err) {
+      console.error(err);
+      navigate('/login', { state: { from: location }, replace: true });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (query !== "") {
+      search();
+      console.log(query);
+    } else {
+      setSearchedDoctors(doctors);
+    }
+  }, [query]);
+
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
@@ -237,6 +240,7 @@ const Pstient = () => {
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
           </div>
+          <div>{<Table data={searchedDoctors} />}</div>
         </div>
       </Flex>
 

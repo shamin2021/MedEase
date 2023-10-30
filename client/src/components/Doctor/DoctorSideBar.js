@@ -190,7 +190,7 @@ const DoctorSideBar = () => {
                 <Divider display={navSize === "small" ? "none" : "flex"} />
 
                 <Flex mt={4} align="center">
-                    <Avatar size="sm" src="" name={auth.first_name} />
+                    <Avatar size="sm" name={auth.first_name} src={auth.profile_image ? `data:image/png;base64, ${auth.profile_image}` : null} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
                             {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}

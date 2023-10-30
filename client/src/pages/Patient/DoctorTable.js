@@ -1,7 +1,7 @@
 import "../../styles/Table.css";
 import Doc from "../../assets/Doc.jpg";
 import { Link } from "react-router-dom";
-const Table = ({ data }) => {
+const DoctorTable = ({ data }) => {
   return (
     <>
       <div className=" h-3/4 m-1 ml-9">
@@ -23,16 +23,17 @@ const Table = ({ data }) => {
                       <img
                         className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                         src={Doc}
+                        alt="Doctor img"
                       />
-                      <div className="w-3/4 ml-6">{item.first_name}</div>
+                      <div className="w-3/4 ml-6">{item.firstname}</div>
                     </div>
-                    <div className="w-1/5 m-1">{item.last_name}</div>
+                    <div className="w-1/5 m-1">{item.lastname}</div>
                     <div className="w-2/5 m-1">{item.email}</div>
                     <div className="w-1/5 m-1">
-                      {item.gender}
+                      {item.doctor_speciality}
                     </div>
                     <div className="w-1/5 m-1 text-center">
-                      <Link to={"/ScheduleMeeting"}>
+                      <Link to={`/ScheduleMeeting/${item.doctor_user_id}`}>
                         <button className="p-2 m-0 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white">
                           Schedule
                         </button>
@@ -50,4 +51,4 @@ const Table = ({ data }) => {
   );
 };
 
-export default Table;
+export default DoctorTable;

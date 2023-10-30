@@ -7,10 +7,13 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter,
 import useAxiosMethods from "../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
 
+import useAuth from "../hooks/useAuth";
+
 
 const Availability = () => {
 
-    const { get, post, put, del } = useAxiosMethods();
+    const { get, post, del } = useAxiosMethods();
+    const { auth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -18,18 +21,22 @@ const Availability = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [isVirtual, setIsVirtual] = useState(false);
     const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
-    const [fromTime, setFromTime] = useState('');
-    const [toTime, setToTime] = useState('');
+    const [fromTime, setFromTime] = useState(null);
+    const [toTime, setToTime] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [delRes, setDelRes] = useState('');
     const [res, setRes] = useState('');
-    const [meetingID, setMeetingID] = useState('');
-    const [meetings, setMeetings] = useState([]);
-    const [removeId, setRemoveId] = useState(null);
+    const [availableSlots, setAvailableSlots] = useState([]);
+    const [stateChanged, setStateChanged] = useState(false);
+    const [hlcList, setHlcList] = useState([]);
+    const [selectedHlc, setSelectedHlc] = useState(null);
+    const [err, SetErr] = useState("");
 
 
     const timeSlots = [];
+    const slotStarts = [];
+    const slotEnds = [];
 
+    // to add the timeslots to the modal
     for (let hour = 6; hour <= 22; hour++) {
         for (let minute = 0; minute < 60; minute += 30) {
             if (hour === 22 && minute >= 30) {
@@ -61,18 +68,27 @@ const Availability = () => {
 
     const handleToggleSwitch = () => {
         setIsVirtual(!isVirtual);
+        if (isVirtual) {
+            setSelectedHlc(null);
+            setFromTime(null);
+            setToTime(null);
+        } else {
+            setSelectedTimeSlots([]);
+        }
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedDate(null);
+        setSelectedHlc(null);
         setSelectedEvent(null);
     };
 
     const hadleEventRemove = async (removeId) => {
         console.log(removeId)
         try {
-            del(`/removeMeeting/${removeId}`, setDelRes);
+            del(`/meetings/removeScheduling/${removeId}`, setRes);
+            setStateChanged(!stateChanged)
         } catch (err) {
             console.error(err);
             navigate('/login', { state: { from: location }, replace: true });
@@ -80,34 +96,68 @@ const Availability = () => {
 
     }
 
-    // const formatDateAndTime = (selectedDate, selectedTime) => {
-    //     // Convert the selectedDate to the format YYYY-MM-DD
-    //     const formattedDate = selectedDate.toISOString().split('T')[0];
+    const covertStringDateTimeToTimeStamp = (time) => {
+        const dateObject = new Date(selectedDate);
+        const [hours, minutes] = time.split(':').map(Number);
+        dateObject.setHours(hours);
+        dateObject.setMinutes(minutes);
+        return dateObject;
+    }
 
-    //     // Split the selectedTime into hours and minutes
-    //     const [hours, minutes] = selectedTime.split(':');
+    const convertSeletedDateRangestoTimeSlotArray = () => {
+        selectedTimeSlots.forEach((timeRange) => {
+            const [startTime, endTime] = timeRange.split(' - ');
+            slotStarts.push(covertStringDateTimeToTimeStamp(startTime));
+            slotEnds.push(covertStringDateTimeToTimeStamp(endTime));
+        })
+    }
 
-    //     // Create the formatted time string
-    //     const formattedTime = `${formattedDate} ${hours}:${minutes}:00.000000`;
+    const handleAddAvailability = () => {
+        console.log(selectedTimeSlots);
 
-    //     return formattedTime;
-    // };
+        if (!isVirtual) {
+            if (selectedHlc == null || fromTime == null || toTime == null) {
+                SetErr("Please fill all fields");
+            } else {
+                try {
+                    post('/meetings/addSchedule',
+                        { meetingType: "PHYSICAL", doctor: auth.user_id, availableHLC: selectedHlc, start: covertStringDateTimeToTimeStamp(fromTime), end: covertStringDateTimeToTimeStamp(toTime) },
+                        setRes);
+                    closeModal();
+                } catch (err) {
+                    console.error(err);
+                    navigate('/login', { state: { from: location }, replace: true });
+                }
+                setStateChanged(true);
+            }
+        } else {
+            if (selectedTimeSlots.length === 0) {
+                SetErr("Please select time slots");
+            } else {
 
-    // const handleAdd = (selectedDate) => {
-    //     // console.log(formatDateAndTime(selectedDate, fromTime))
-    //     try {
-    //         post('/ScheduleMeeting', { type: "Virtual", start: formatDateAndTime(selectedDate,fromTime), end:formatDateAndTime(selectedDate,toTime)}, setRes)
-    //     } catch (err){
-    //         console.error(err);
-    //         navigate('/login', { state: { from: location }, replace: true });
-    //     }
-    // }
+                convertSeletedDateRangestoTimeSlotArray();
+
+                try {
+                    post('/meetings/addSchedule',
+                        { meetingType: "VIRTUAL", doctor: auth.user_id, slotStarts, slotEnds },
+                        setRes);
+                    closeModal();
+
+                } catch (err) {
+                    console.error(err);
+                    navigate('/login', { state: { from: location }, replace: true });
+                }
+            }
+            setStateChanged(true);
+        }
+
+    }
 
 
-
-    const fetchMeetings = async () => {
+    const fetchAvailableSlots = async () => {
         try {
-            get('/getMeetings', setMeetings);
+            get(`/meetings/getAvailableSlots/${auth.user_id}`, setAvailableSlots);
+            get(`/meetings/getHLCForSchedule`, setHlcList);
 
         } catch (err) {
             console.error(err);
@@ -115,23 +165,13 @@ const Availability = () => {
         }
     };
 
-    useEffect(() => {
+    useEffect(() => {;
         const fetchData = async () => {
-            await fetchMeetings();
+            await fetchAvailableSlots();
         };
 
         fetchData();
-    }, []);
-
-    // useEffect(() => {
-    //     console.log(meetings); // Logged the users state here
-    // }, [meetings]);
-
-    useEffect(() => {
-        console.log(fromTime); // Logged the users state here
-        console.log(toTime)
-        console.log(selectedDate)
-    }, [fromTime, toTime]);
+    }, [stateChanged]);
 
     return (
         <GridItem colSpan={6} mx={4} mt={2}>
@@ -139,9 +179,10 @@ const Availability = () => {
                 <FullCalendar
                     plugins={[interactionPlugin, dayGridPlugin]}
                     initialView="dayGridMonth"
-                    events={
-                        meetings
-                    }
+                    events={availableSlots.map(event => ({
+                        ...event,
+                        color: event.meetingType === "VIRTUAL" ? '#1e57c9' : '#bb7cd9',
+                    }))}
 
                     eventDisplay="block"
                     selectable={true}
@@ -184,7 +225,7 @@ const Availability = () => {
                                     <Text fontWeight="bold" mb={2}>Availability Details:</Text>
                                     <Box mb={2}>
                                         <span>Type:</span>
-                                        <Text>{selectedEvent.extendedProps.type}</Text>
+                                        <Text>{selectedEvent.extendedProps.meetingType}</Text>
                                     </Box>
                                     <Box mb={2}>
                                         <span>Start:</span>
@@ -199,7 +240,7 @@ const Availability = () => {
                                     <Button colorScheme="blue" mr={3} onClick={() => setSelectedEvent(null)}>
                                         Close
                                     </Button>
-                                    <Button colorScheme="red" onClick={() => hadleEventRemove(selectedEvent.extendedProps.meeting_id)}>
+                                    <Button colorScheme="red" onClick={() => hadleEventRemove(selectedEvent.extendedProps.availability_id)}>
                                         Remove
                                     </Button>
                                 </Box>
@@ -208,6 +249,8 @@ const Availability = () => {
                             <>
                                 <ModalHeader>{selectedDate && selectedDate.toDateString()}</ModalHeader>
                                 <ModalBody>
+                                    <Box mt={2}>{err ? err : ''}</Box>
+
                                     <Switch
                                         onChange={handleToggleSwitch}
                                         isChecked={isVirtual}
@@ -236,6 +279,17 @@ const Availability = () => {
                                         ) : (
                                             <Box>
                                                 <Box mb={2}>
+                                                    <span>HLC:</span>
+                                                    <select value={selectedHlc} onChange={(e) => setSelectedHlc(e.target.value)}>
+                                                        <option value="">Choose One</option>
+                                                        {hlcList.map((hlc) => (
+                                                            <option key={hlc.hlc_id} value={hlc.hlc_id}>
+                                                                {hlc.hlc_name}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </Box>
+                                                <Box mb={2}>
                                                     <span>From:</span>
                                                     <Input
                                                         type="time"
@@ -263,7 +317,7 @@ const Availability = () => {
                                     <Button colorScheme="blue" mr={3} onClick={closeModal}>
                                         Close
                                     </Button>
-                                    <Button colorScheme="teal" onClick={() => { }}>
+                                    <Button colorScheme="teal" onClick={handleAddAvailability}>
                                         Add Availability
                                     </Button>
                                 </ModalFooter>

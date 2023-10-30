@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
+public class HLCDTO {
 
-    private String email;
+    private Integer hlc_id;
+    private String hlc_name;
 
-    String password;
 }

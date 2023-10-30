@@ -1,55 +1,69 @@
 package com.medease.backend.controller;
 
+import com.medease.backend.dto.AvailabilityDTO;
 import com.medease.backend.dto.GlobalResponseDTO;
+import com.medease.backend.dto.HLCDTO;
 import com.medease.backend.dto.MeetingDTO;
-import com.medease.backend.entity.Meeting;
-import com.medease.backend.entity.SelfAssessment;
-import com.medease.backend.enumeration.Risk;
-import com.medease.backend.repository.DoctorRepository;
-import com.medease.backend.repository.MeetingRepository;
+import com.medease.backend.service.HLCService;
+import com.medease.backend.service.MeetingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/meetings")
 @RequiredArgsConstructor
 public class MeetingController {
 
-    private final MeetingRepository meetingRepository;
+    private final MeetingService meetingService;
+    private final HLCService hlcService;
 
-    @PostMapping("ScheduleMeeting")
-    public GlobalResponseDTO scheduleMeeting(@RequestBody MeetingDTO meetingDTO) {
-
-        var meeting = Meeting.builder()
-                .type(meetingDTO.getType())
-                .start(meetingDTO.getStart())
-                .end(meetingDTO.getEnd())
-                .build();
-
-        meetingRepository.save(meeting);
-
-        return GlobalResponseDTO.builder()
-                .status(200)
-                .message("Meeting Saved Successfully")
-                .build();
+    @GetMapping("/getAvailableSlots/{doctorId}")
+    public List<AvailabilityDTO> getMeetings(@PathVariable Integer doctorId) {
+        return meetingService.getMeetings(doctorId);
     }
 
-    @GetMapping("getMeetings")
-    public List<Meeting> getMeeting() {
-        return meetingRepository.findAll();
+    @PostMapping("/addSchedule")
+    public ResponseEntity<GlobalResponseDTO> addScheduling(@RequestBody AvailabilityDTO availabilityDTO){
+        return ResponseEntity.ok(meetingService.addScheduling(availabilityDTO));
     }
 
-    @DeleteMapping("removeMeeting/{id}")
-    public GlobalResponseDTO deleteMeeting(@PathVariable Integer id){
-        meetingRepository.deleteById(id);
+    @GetMapping("/getHLCForSchedule")
+    public ResponseEntity<List<HLCDTO>> getHLCListForSchedule(){
+        return ResponseEntity.ok(hlcService.getHLCListForSchedule());
+    }
 
-        return GlobalResponseDTO.builder()
-                .status(200)
-                .message("Deleted Meeting")
-                .build();
+    @DeleteMapping("/removeScheduling/{id}")
+    public ResponseEntity<GlobalResponseDTO> removeScheduling(@PathVariable Integer id){
+        return ResponseEntity.ok(meetingService.removeScheduling(id));
+    }
+
+    @PostMapping("/scheduleMeeting")
+    public ResponseEntity<GlobalResponseDTO> scheduleMeeting(@RequestBody MeetingDTO meetingDTO){
+        return ResponseEntity.ok(meetingService.scheduleMeeting(meetingDTO));
+    }
+
+    @PutMapping("/removeSlotAfterSchedule/{id}")
+    public ResponseEntity<GlobalResponseDTO> removeSlotAfterSchedule(@PathVariable Integer id){
+        return ResponseEntity.ok(meetingService.removeSlotAfterSchedule(id));
+    }
+
+    @GetMapping("/getScheduledMeetingsDoctor/{doctorId}")
+    public List<MeetingDTO> getScheduledMeetingsDoctor(@PathVariable Integer doctorId) {
+        return meetingService.getScheduledMeetingsDoctor(doctorId);
+    }
+
+    @GetMapping("/getScheduledMeetingsPatient/{patientId}")
+    public List<MeetingDTO> getScheduledMeetingsPatient(@PathVariable Integer patientId) {
+        System.out.println(meetingService.getScheduledMeetingsPatient(patientId));
+        return meetingService.getScheduledMeetingsPatient(patientId);
+    }
+
+    @PutMapping("/cancelAfterSchedule/{meetingId}")
+    public ResponseEntity<GlobalResponseDTO> cancelAfterSchedule(@PathVariable Integer meetingId){
+        return ResponseEntity.ok(meetingService.cancelAfterSchedule(meetingId));
     }
 
 }

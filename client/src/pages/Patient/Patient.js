@@ -36,7 +36,8 @@ const data = {
 };
 const percentage = 66;
 
-const Pstient = () => {
+const Patient = () => {
+
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const handleSearch = () => {
@@ -196,4 +197,4 @@ const Pstient = () => {
   );
 };
 
-export default Pstient;
+export default Patient

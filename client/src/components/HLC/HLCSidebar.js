@@ -2,8 +2,8 @@ import React from 'react';
 import useAuth from "../../hooks/useAuth";
 
 import NavItem from '../NavItem';
-import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
-import { FiUser, FiSettings } from "react-icons/fi";
+import { Flex, IconButton, Avatar, Heading, Divider } from "@chakra-ui/react";
+import { FiMenu, FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 
 import { FiMenu, FiHome, FiVideo, FiCalendar, FiLogOut } from "react-icons/fi";
 
@@ -178,6 +178,11 @@ const HLCSideBar = () => {
                         else changeNavSize("small");
                     }}
                 />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/HLC"} />
+                {/* <NavItem navSize={navSize} icon={FiHome} title="HLC" /> */}
+                <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/ManageDoctor"} />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/ManagePatient"} />
+                <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/HLCSettings"} />
 
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={  "/Doctor" } />
                 <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/ManagePatient"} />
@@ -190,10 +195,10 @@ const HLCSideBar = () => {
                 <Divider display={navSize === "small" ? "none" : "flex"} />
 
                 <Flex mt={4} align="center">
-                    <Avatar size="sm" src="" name={auth.first_name} />
+                    <Avatar size="sm" name={auth.hlc_name} src={auth.profile_image ? `data:image/png;base64, ${auth.profile_image}` : null} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            {auth.first_name.toUpperCase() + " " + auth.last_name.toUpperCase()}
+                            {auth.hlc_name.toUpperCase()}
                         </Heading>
                     </Flex>
                 </Flex>
