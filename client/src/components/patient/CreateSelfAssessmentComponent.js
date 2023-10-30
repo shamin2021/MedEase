@@ -41,9 +41,9 @@ const CreateSelfAssessmentComponent = () => {
       post(
         "/CreateSelfAssessment",
         {
-          firstName,
-          lastName,
-          emailId,
+          firstName: auth.first_name,
+          lastName: auth.last_name,
+          // emailId,
           physicalActivity,
           tobaccoSmoking,
           beetlechewing,
@@ -65,9 +65,9 @@ const CreateSelfAssessmentComponent = () => {
         setRes
       );
 
-      setFirstName("");
-      setLastName("");
-      setemailId("");
+      // setFirstName("");
+      // setLastName("");
+      // setemailId("");
       setphysicalActivity("");
       settobaccoSmoking("");
       setbeetlechewing("");
@@ -95,17 +95,17 @@ const CreateSelfAssessmentComponent = () => {
     console.log(res);
   }, [res]);
 
-  const changeFirstNameHandler = (event) => {
-    setFirstName(event.target.value);
-  };
+  // const changeFirstNameHandler = (event) => {
+  //   setFirstName(event.target.value);
+  // };
 
-  const changeLastNameHandler = (event) => {
-    setLastName(event.target.value);
-  };
+  // const changeLastNameHandler = (event) => {
+  //   setLastName(event.target.value);
+  // };
 
-  const changeEmailHandler = (event) => {
-    setemailId(event.target.value);
-  };
+  // const changeEmailHandler = (event) => {
+  //   setemailId(event.target.value);
+  // };
 
   const changephysicalActivityHandler = (event) => {
     setphysicalActivity(event.target.value)
@@ -227,7 +227,7 @@ const CreateSelfAssessmentComponent = () => {
             <hr className="w-2/3 mx-auto mt-1 mb-0" />
             <div className="w-3/4 mx-auto mt-1">
               <form>
-                <div className="general">
+                {/* <div className="general">
                   <div className="flex">
                     <div className=" flex flex-col md:w-[48%]">
                       <label className="form-label">First Name</label>
@@ -260,11 +260,11 @@ const CreateSelfAssessmentComponent = () => {
                       onChange={changeEmailHandler}
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <div className="habits mb-3">
                   <div className="flex font-light text-[#797878] mt-7 text-[18px]">
-                    Do you have the following Habits?
+                    Do you have any of the following Habits?
                   </div>
                   <hr className="mx-auto mt-1 mb-6" />
                   <InputRow
