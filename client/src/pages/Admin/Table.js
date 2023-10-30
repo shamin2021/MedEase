@@ -1,7 +1,45 @@
 import "../../styles/Table.css";
 import Doc from "../../assets/Doc.jpg";
-import { Link } from "react-router-dom";
-const Table = ({ data, status }) => {
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+const UserTable = ({ data, status, clicked }) => {
+
+  const [res, setRes] = useState('');
+
+  const { put } = useAxiosMethods();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+
+  const handleUser = (id, disable) => {
+    if (disable === true) {
+      try {
+        put(`/admin/manageUser/${id}`, { enabled:false }, setRes);
+
+      } catch (err) {
+        console.error(err);
+        navigate('/login', { state: { from: location }, replace: true });
+      }
+    }
+    else {
+      try {
+        put(`/admin/manageUser/${id}`, { enabled: true }, setRes);
+
+      } catch (err) {
+        console.error(err);
+        navigate('/login', { state: { from: location }, replace: true });
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (res.status === 200) {
+      clicked(true);
+    }
+  }, [res]);
+
   return (
     <>
       <div className="">
@@ -15,24 +53,28 @@ const Table = ({ data, status }) => {
         <div>
           <div className="h-96 overflow-y-scroll mb-2">
             {data.map((item) => (
+              
               <>
                 <div className=" flex mt-1 text-[17px] font-medium p-1 rounded-lg hover:">
                   <div className="w-1/4 m-1 flex ">
                     <img
                       className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
                       src={Doc}
+                      alt="Profile Img"
                     />
-                    <div className="w-3/4 ml-3">{item.last_name}</div>
+                    <div className="w-3/4 ml-3">
+                      {item.role === "HLC" ? item.hlc_name : item.firstname + " " + item.lastname}
+                    </div>
                   </div>
                   <div className="w-1/4 m-1">{item.email}</div>
-                  <div className="w-1/4 m-1">{item.last_name}</div>
+                  <div className="w-1/4 m-1">{item.role}</div>
                   <div className="w-1/4 m-1">
-                    {status == true ? (
-                      <button className="p-1 bg-[#eb5a5a] text-white rounded-md">
+                    {status === true ? (
+                      <button className="p-1 bg-[#eb5a5a] text-white rounded-md hover:bg-red-600" onClick={() => handleUser(item.id, true)}>
                         Disable
                       </button>
                     ) : (
-                      <button className="p-1 bg-[#5aeb7e] text-white rounded-md">
+                      <button className="p-1 bg-[#5aeb7e] text-white rounded-md hover:bg-green-600" onClick={() => handleUser(item.id, false)}>
                         Enable
                       </button>
                     )}
@@ -47,4 +89,4 @@ const Table = ({ data, status }) => {
   );
 };
 
-export default Table;
+export default UserTable;

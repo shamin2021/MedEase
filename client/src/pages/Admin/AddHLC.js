@@ -22,8 +22,6 @@ import {
   useSteps,
 } from "@chakra-ui/react";
 
-import { useToast } from "@chakra-ui/react";
-
 const steps = [
   { title: "General", description: "Contact Info" },
   { title: "PHI Area", description: "Date & Time" },
@@ -40,7 +38,7 @@ const form3Data = [];
 // better to remove the functions from this page and make components and import them here
 const Form1 = ({ formData, setFormData }) => {
 
-  const { name, mobileNumber, email, mohArea } = formData;
+  const { name, mobileNumber, email, mohArea, longitude, latitude } = formData;
 
   return (
     <>
@@ -120,6 +118,41 @@ const Form1 = ({ formData, setFormData }) => {
             required
           />
           <span></span>
+        </div>
+        <div className="container flex gap-5">
+          <div className="container w-1/2 formInput">
+            <label className="form-label" htmlFor="longitude">
+              Longitude <span className="text-[#ff2727]">*</span>
+            </label>
+
+            <input
+              type="text"
+              id="longitude"
+              className="form-input"
+              onChange={(e) =>
+                setFormData({ ...formData, longitude: e.target.value })
+              }
+              value={longitude}
+              required
+            />
+            <span></span>
+          </div>
+          <div className="container w-1/2 formInput">
+            <label className="form-label" htmlFor="latitude">
+              Latitude <span className="text-[#ff2727]">*</span>
+            </label>
+            <input
+              type="text"
+              id="latitude"
+              className="form-input"
+              onChange={(e) =>
+                setFormData({ ...formData, latitude: e.target.value })
+              }
+              value={latitude}
+              required
+            />
+            <span></span>
+          </div>
         </div>
       </form>
     </>
@@ -294,7 +327,6 @@ const Form3 = ({ formData, setFormData }) => {
 const AddHLC = (props) => {
 
 
-  const toast = useToast();
   const [step, setStep] = useState(0);
   const [progress, setProgress] = useState(33.33);
 
@@ -308,6 +340,8 @@ const AddHLC = (props) => {
     mobileNumber: "",
     email: "",
     mohArea: "",
+    latitude: "",
+    longitude: ""
   });
 
   const [form2State, setForm2State] = useState({
@@ -335,7 +369,7 @@ const AddHLC = (props) => {
 
   const handleSubmit = (formData) => {
     console.log(formData);
-    console.log(MOBILE_REGEX.test(formData.mobileNumber), EMAIL_REGEX.test(formData.email), MOBILE_REGEX.test(formData.inchargeMobile), EMAIL_REGEX.test(formData.inchargeEmail));
+    console.log(MOBILE_REGEX.test(formData.mobileNumber), EMAIL_REGEX.test(formData.email), MOBILE_REGEX.test(formData.in_charge_mobile), EMAIL_REGEX.test(formData.in_charge_email));
 
     if (!MOBILE_REGEX.test(formData.mobileNumber)) {
       setState({ message: "Invalid HLC Mobile Number" });
@@ -387,6 +421,7 @@ const AddHLC = (props) => {
 
   };
 
+
   // added form data to global arrays to ease ease of accessing
   const AddFormData = (formStep) => {
 
@@ -395,7 +430,9 @@ const AddHLC = (props) => {
         form1State.name,
         form1State.mobileNumber,
         form1State.email,
-        form1State.mohArea
+        form1State.mohArea,
+        form1Data.longitude,
+        form1Data.latitude
       );
     } else if (formStep === 1) {
       form2Data.push(
@@ -421,6 +458,8 @@ const AddHLC = (props) => {
         mobileNumber: form1Data[1],
         email: form1Data[2],
         moh_area: form1Data[3],
+        longitude: form1Data[4],
+        latitude: form1Data[5],
         phm_area: form2Data[0],
         phi_area: form2Data[1],
         gn_division: form2Data[2],
@@ -437,7 +476,6 @@ const AddHLC = (props) => {
       handleSubmit(formData);
     }
   }
-
 
 
   return (
@@ -554,6 +592,7 @@ const AddHLC = (props) => {
                       <Button
                         w="6rem"
                         h="1.5rem"
+                        id="submitBtn"
                         type="submit"
                         float={"center"}
                         mt="0%"
@@ -575,6 +614,7 @@ const AddHLC = (props) => {
                     <Button
                       w="4rem"
                       h="1.5rem"
+                      id="nextbtn"
                       type="submit"
                       borderRadius={20}
                       backgroundColor="#645bee"

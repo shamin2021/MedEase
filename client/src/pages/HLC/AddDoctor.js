@@ -32,17 +32,11 @@ const AddDoc = props => {
 
   const [licenseNumber, setLicenseNumber] = useState("");
 
+  const [image, setImage] = useState(null);
+  const [imageState, setImageState] = useState("");
+
   // to get the response from the server
   const [state, setState] = useState(null)
-
-  const handleClick = (event) => {
-    hiddenFileInput.current.click();
-  };
-  const handleChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    props.handleFile(fileUploaded);
-  };
-
 
   // to populate select field
   const fetchSpecialities = async () => {
@@ -85,21 +79,51 @@ const AddDoc = props => {
     }
     else {
 
-      try {
-        post('/register-user/register-doctor',
-          { firstname: firstName, lastname: lastName, email: email, mobileNumber: mobileNumber, speciality: speciality, licenseNumber: licenseNumber },
-          setState);
+      if (image !== null) { 
+        const formData = new FormData();
+        formData.append("email", email);
+        formData.append("firstname", firstName);
+        formData.append("lastname", lastName);
+        formData.append("licenseNumber", licenseNumber);
+        formData.append("mobileNumber", mobileNumber);
+        formData.append("speciality", speciality);
+        formData.append("image", image);
 
-        setEmail('');
-        setFirstName('');
-        setLastName('');
-        setLicenseNumber('');
-        setMobileNumber('');
-        setSpeciality('');
+        try {
+          post('/register-user/register-doctor-image',
+            formData,
+            setState, true);
 
-      } catch (err) {
-        console.error(err);
-        navigate('/login', { state: { from: location }, replace: true });
+          setEmail('');
+          setFirstName('');
+          setLastName('');
+          setLicenseNumber('');
+          setMobileNumber('');
+          setSpeciality('');
+          setImage(null);
+
+        } catch (err) {
+          console.error(err);
+          navigate('/login', { state: { from: location }, replace: true });
+        }
+      }
+      else {
+        try {
+          post('/register-user/register-doctor',
+            { firstname: firstName, lastname: lastName, email: email, mobileNumber: mobileNumber, speciality: speciality, licenseNumber: licenseNumber },
+            setState);
+
+          setEmail('');
+          setFirstName('');
+          setLastName('');
+          setLicenseNumber('');
+          setMobileNumber('');
+          setSpeciality('');
+
+        } catch (err) {
+          console.error(err);
+          navigate('/login', { state: { from: location }, replace: true });
+        }
       }
     }
   }
@@ -159,7 +183,7 @@ const AddDoc = props => {
                   </div>
                 </div>
                 <div className="container ml-3 pt-5 justify-right w-1/4">
-                  <ButtonImage name="Add Image" />
+                  <ButtonImage name="Add Image" setImage={setImage} image={image}/>
                 </div>
               </div>
               <div className="container flex">

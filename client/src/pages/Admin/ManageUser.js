@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Docs } from '../Docs'
+import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import {
   Tabs,
@@ -11,16 +10,80 @@ import {
   GridItem
 } from "@chakra-ui/react";
 import { FaSearch } from "react-icons/fa";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
 
+const ManageUser = () => {
 
-const SearchDoc = () => {
   const [query, setQuery] = useState("");
-  const keys = ["first_name", "last_name", "email"];
-  const search = (data) => {
-    return data.filter((item) =>
-      keys.some((key) => item[key].toLowerCase().includes(query))
-    );
+  const [users, setUsers] = useState([]);
+  const [enabledUsers, setEnabledUsers] = useState([]);
+  const [disabledUsers, setDisabledUsers] = useState([]);
+  const [searchedUsers, setSearchedUsers] = useState([]);
+  const [initializedSearch, setInitializedSearch] = useState(false);
+  const [stateChaged, setStateChanged] = useState(false);
+
+  const { get } = useAxiosMethods();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const search = () => {
+
+    setSearchedUsers(users.filter((item) => {
+      if (item.role === "HLC") {
+        return (
+          item.hlc_name.toLowerCase().includes(query) ||
+          item.email.toLowerCase().includes(query)
+        );
+      }
+      else {
+        return (
+          item.firstname.toLowerCase().includes(query) ||
+          item.lastname.toLowerCase().includes(query) ||
+          item.email.toLowerCase().includes(query)
+        );
+      }
+    }));
   };
+
+  useEffect(() => {
+    try {
+      get("/admin/getUserList", setUsers)
+
+    } catch (err) {
+      console.error(err);
+      navigate('/login', { state: { from: location }, replace: true });
+    }
+  }, [stateChaged]);
+
+
+  useEffect(() => {
+    if (users.length > 0) {
+      console.log(users);
+      if (searchedUsers.length === 0 && !initializedSearch) {
+        setSearchedUsers(users)
+        setInitializedSearch(true)
+      }
+      console.log(searchedUsers);
+      setEnabledUsers(searchedUsers.filter((item) => item.enabled === true))
+      setDisabledUsers(searchedUsers.filter((item) => item.enabled === false))
+    }
+  }, [users, searchedUsers]);
+
+  useEffect(() => {
+    search();
+    setStateChanged(false);
+  }, [users]);
+
+  useEffect(() => {
+    if (query !== "") {
+      search();
+      console.log(query);
+    } else {
+      setSearchedUsers(users);
+    }
+  }, [query]);
+
   return (
     <GridItem colSpan={6} >
       <div className="h-screen py-1 bg-primary">
@@ -62,11 +125,12 @@ const SearchDoc = () => {
                 w={14}
               />
               <TabPanels>
+                {/* should send either enabled or disable user arrays */}
                 <TabPanel padding={2}>
-                  <div>{<Table data={search(Docs)} status={true} />}</div>
+                  <div>{<Table data={enabledUsers} status={true} clicked={setStateChanged} />}</div>
                 </TabPanel>
                 <TabPanel padding={2}>
-                  <div>{<Table data={search(Docs)} status={false} />}</div>
+                  <div>{<Table data={disabledUsers} status={false} clicked={setStateChanged} />}</div>
                 </TabPanel>
               </TabPanels>
             </Tabs>
@@ -77,4 +141,4 @@ const SearchDoc = () => {
   );
 }
 
-export default SearchDoc
+export default ManageUser

@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import logo from "../assets/photo-camera.png";
 import "../styles/FormInput.css";
 
-const FileInput = (props) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+const FileInput = ({name, setImage, image}) => {
+
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    if (selectedImage) {
-      setImageUrl(URL.createObjectURL(selectedImage));
+    if (image) {
+      setImageUrl(URL.createObjectURL(image));
     }
-  }, [selectedImage]);
+  }, [image]);
 
   return (
     <>
@@ -19,15 +19,15 @@ const FileInput = (props) => {
         type="file"
         id="select-image"
         style={{ display: "none" }}
-        onChange={(e) => setSelectedImage(e.target.files[0])}
+        onChange={(e) => setImage(e.target.files[0])}
       />
       <label htmlFor="select-image">
-        {imageUrl && selectedImage ? (
+        {imageUrl && image ? (
           <div>
             <img
               className="rounded-[100px] mx-auto h-[80px] w-[80px] "
               src={imageUrl}
-              alt={selectedImage.name}
+              alt={image.name}
             />
             <div
               className="text-[16px] text-[#353434] text-center p-1"
@@ -49,7 +49,7 @@ const FileInput = (props) => {
               color="primary"
               component="span"
             >
-              {props.name}
+              {name}
             </div>
           </div>
         )}

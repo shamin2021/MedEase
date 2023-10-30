@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Box, ButtonGroup, VisuallyHidden, Button, Container, Divider, FormControl, FormLabel, Flex, Heading, HStack, Stack, Text, Input, Select } from '@chakra-ui/react'
-import { FcGoogle } from 'react-icons/fc'
+import { Link, Box, Button, Container, FormControl, FormLabel, Flex, Heading, Stack, Text, Input, Select } from '@chakra-ui/react'
 import lottie from 'lottie-web';
 import registerAnimation from '../assets/lottie/register.json';
 
@@ -36,6 +35,8 @@ const Register = () => {
     const [errMsg, setErrMsg] = useState(null)
     const [success, setSuccess] = useState(false);
 
+    const chosenHlcName = localStorage.getItem("HLCName")
+
     useEffect(() => {
         setvalidEmail(EMAIL_REGEX.test(email));
     }, [email])
@@ -66,10 +67,9 @@ const Register = () => {
             return;
         }
 
-        console.log(gender, dob);
         try {
             const response = await axios.post('/auth/register',
-                JSON.stringify({ email, password, firstname: firstName, lastname: lastName, dob, gender }),
+                JSON.stringify({ email, password, firstname: firstName, lastname: lastName, dob, gender, chosenHlcName }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -277,19 +277,6 @@ const Register = () => {
 
                                     <Stack spacing="4">
                                         <Button colorScheme='blue' type='submit' size="sm" isDisabled={!validEmail || !validPwd || !validMatch ? true : false}>Sign up</Button>
-                                        <HStack>
-                                            <Divider />
-                                            <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
-                                                or continue with
-                                            </Text>
-                                            <Divider />
-                                        </HStack>
-                                        <ButtonGroup variant="outline" spacing="2">
-                                            <Button key={'Google'} flexGrow={1} size="sm">
-                                                <VisuallyHidden>Sign up with {'Google'}</VisuallyHidden>
-                                                <FcGoogle />
-                                            </Button>
-                                        </ButtonGroup>
                                     </Stack>
                                 </Stack>
                             </form>

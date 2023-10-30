@@ -31,8 +31,6 @@ public class Patient {
     @JoinColumn(name = "patient_hlc_id" , referencedColumnName = "hlc_id")
     private HLC patient_hlc;
 
-    private String name;
-
     @Column(unique = true)
     private String phn;
 

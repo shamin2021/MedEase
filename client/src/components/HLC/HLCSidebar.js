@@ -2,7 +2,7 @@ import React from 'react';
 import useAuth from "../../hooks/useAuth";
 
 import NavItem from '../NavItem';
-import { Flex, IconButton, Avatar, Heading, Text, Divider } from "@chakra-ui/react";
+import { Flex, IconButton, Avatar, Heading, Divider } from "@chakra-ui/react";
 import { FiMenu, FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
 
 const HLCSidebar = () => {
@@ -50,7 +50,7 @@ const HLCSidebar = () => {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" href={"/HLC"} />
                 {/* <NavItem navSize={navSize} icon={FiHome} title="HLC" /> */}
                 <NavItem navSize={navSize} icon={FiUser} title="Doctor" href={"/ManageDoctor"} />
-                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/ManagePatientHLC"} />
+                <NavItem navSize={navSize} icon={FiHome} title="Patients" href={"/ManagePatient"} />
                 <NavItem navSize={navSize} icon={FiSettings} title="Settings" href={"/HLCSettings"} />
 
             </Flex>
@@ -59,10 +59,10 @@ const HLCSidebar = () => {
                 <Divider display={navSize === "small" ? "none" : "flex"} />
 
                 <Flex mt={4} align="center">
-                    <Avatar size="sm" src="" name={auth.first_name} />
+                    <Avatar size="sm" name={auth.hlc_name} src={auth.profile_image ? `data:image/png;base64, ${auth.profile_image}` : null} />
                     <Flex flexDir="column" ml={4} display={navSize === "small" ? "none" : "flex"}>
                         <Heading as="h3" size="sm">
-                            {auth.first_name.toUpperCase()}
+                            {auth.hlc_name.toUpperCase()}
                         </Heading>
                     </Flex>
                 </Flex>
