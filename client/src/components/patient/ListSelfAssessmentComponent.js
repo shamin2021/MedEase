@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation, } from "react-router-dom";
 import { GridItem } from "@chakra-ui/react";
+import useAuth from "../../hooks/useAuth";
 
 const ListSelfAssessmentComponent = () => {
+  const { auth, setAuth } = useAuth();
   const [res, setRes] = useState("");
 
   const { get } = useAxiosMethods();
@@ -11,6 +13,10 @@ const ListSelfAssessmentComponent = () => {
   const location = useLocation();
 
   const [selfassessments, setSelfAssessments] = useState([]);
+
+  const loggedInUser = {
+    "username": auth.first_name,
+  };
 
   useEffect(() => {
     try {
@@ -32,6 +38,8 @@ const ListSelfAssessmentComponent = () => {
   const addSelfAssessment = () => {
     navigate("/CreateSelfAssessment");
   };
+
+  const filteredSelfAssessments = selfassessments.filter(selfassessment => selfassessment.firstName === loggedInUser.username);
 
   return (
     <GridItem colSpan={6} >
@@ -66,7 +74,7 @@ const ListSelfAssessmentComponent = () => {
 
                 <table className="table-auto">
                   <tbody>
-                    {selfassessments.map((selfassessment) => (
+                    {/* {selfassessments.map((selfassessment) => (
                       <>
                         <tr key={selfassessment.id} className="flex text-[18px]  font-medium sticky p-1 text-left ml-5">
                           <div className="w-1/3 m-1"><td> {selfassessment.id} </td></div>
@@ -87,6 +95,31 @@ const ListSelfAssessmentComponent = () => {
                           </div>
                         </tr>
                         <hr className=" md:w-4/5 ml-5" />
+                      </>
+                    ))} */}
+
+
+                    {filteredSelfAssessments.map(selfassessment => (
+                      <>
+                        <tr key={selfassessment.id} className="flex text-[18px] font-medium sticky p-1 text-left ml-5">
+                          <div className="w-1/3 m-1"><td> {selfassessment.id} </td></div>
+                          <div className="w-1/3 m-1"><td> {selfassessment.date} </td></div>
+                          <div className="w-1/3 m-1">
+                            <td>
+                              <button
+                                onClick={() =>
+                                  navigate(
+                                    `/view-SelfAssessment/${selfassessment.id}`
+                                  )
+                                }
+                                className="btn w-1/3 bg-primary pl-1 pr-1 rounded-lg"
+                              >
+                                View{" "}
+                              </button>
+                            </td>
+                          </div>
+                        </tr>
+                        <hr className="md:w-4/5 ml-5" />
                       </>
                     ))}
                   </tbody>
