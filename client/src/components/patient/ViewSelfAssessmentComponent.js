@@ -174,9 +174,6 @@ const ViewSelfAssessmentComponent = () => {
                       Family History
                     </Tab>
                     <Tab fontSize={18} borderBottom={0}>
-                      Prescriptions
-                    </Tab>
-                    <Tab fontSize={18} borderBottom={0}>
                       Examination
                     </Tab>
                     <Tab fontSize={18} borderBottom={0}>
@@ -275,25 +272,6 @@ const ViewSelfAssessmentComponent = () => {
                             name="Sudden Death"
                             data={selfassessments.suddenDeath ? "true" : "false"}
                           />
-                        </div>
-                      </div>
-                    </TabPanel>
-                    <TabPanel padding={2}>
-                      <div className="flex container horizontal justify-center py-1">
-                        <div className="md:w-full parent m-3 mt-0 ml-0">
-                          <div className="mt-2">
-                            <div className="text-[18px]  mb-3">
-                              Prescriptions
-                            </div>
-
-                            <div className="text-[#797878]">
-                              <InputGeneral
-                                variant="1"
-                                name="Prescription by Dr.Saman"
-                                data="View"
-                              />
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </TabPanel>

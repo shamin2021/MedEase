@@ -39,13 +39,23 @@ const ListSelfAssessmentComponent = () => {
         <div className="parent md:w-3/4 h-3/4 mx-auto shadow-xl rounded-md bg-white m-3 mt-9 p-5 ">
           <div className="flex">
             <h2 className="text-left ml-5 w-3/4">Risk Assessments </h2>
-            <div className="w-1/4">
-              <button
-                className="btn btn-primary text-[18px] bg-primary p-2 font-semibold"
-                onClick={addSelfAssessment}
-              >
-                Add Risk Assessment
-              </button>
+            <div className="flex gap-[60px]">
+              <div className="w-1/4">
+                <button
+                  className="btn btn-primary text-[18px] bg-primary p-2 font-semibold"
+                  onClick={addSelfAssessment}
+                >
+                  Prescriptions
+                </button>
+              </div>
+              <div className="w-3/4">
+                <button
+                  className="btn btn-primary text-[18px] bg-primary p-2 font-semibold"
+                  onClick={addSelfAssessment}
+                >
+                  Add Risk Assessment
+                </button>
+              </div>
             </div>
           </div>
 

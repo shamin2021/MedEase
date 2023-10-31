@@ -43,6 +43,7 @@ import ManagePatient from "./pages/Doctor/ManagePatient";
 import ManagePatientHLC from "./pages/HLC/ManagePatient";
 import ManageDoctor from "./pages/HLC/ManageDoctor";
 import PatientProfileHLC from "./pages/HLC/PatientProfile";
+import PatientProfileDoctor from "./pages/Doctor/PatientProfile";
 import TransferPatient from './pages/HLC/TransferPatient';
 
 
@@ -166,6 +167,7 @@ function App() {
               <Route path="/doctor" element={<Doctor />} />
               <Route path="/DoctorMeetings" element={<DoctorMeetings />} />
               <Route path="/DoctorProfile" element={<DoctorProfile />} />
+              <Route path="/PatientProfileDoctor/:id" element={<PatientProfileDoctor />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[3]]} />} >
