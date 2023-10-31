@@ -28,7 +28,7 @@ import Conference from './components/Conference/Conference';
 import ManageUser from "./pages/Admin/ManageUser";
 import SearchDoctor from './pages/SearchDoctor';
 import PatientProfile from "./pages/PatientProfile";
-import DoctorProfile from "./pages/DoctorProfile";
+import DoctorProfile from "./pages/HLC/DoctorProfile";
 import FindHLC from "./pages/FindHLC";
 import AddPrescription from "./pages/AddPrescription";
 import HLCProfile from "./pages/Admin/HLCProfile";
@@ -126,9 +126,9 @@ function App() {
               <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
               <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
               <Route path="/view-SelfAssessment/:id" element={<ViewSelfAssessmentComponent />} />
-              
+
               <Route path="/PatientReport/:id" element={<PatientReport />} />
-              
+
             </Route >
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2], ROLES[3]]} />} >
@@ -147,7 +147,7 @@ function App() {
 
             <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
               {/* routes only for HLC */}
-              <Route path="/DoctorProfileHLC" element={<DoctorProfile />} />
+              <Route path="/DoctorProfileHLC/:id" element={<DoctorProfile />} />
               <Route path="/HLCSettings" element={<HLCSettings />} />
               <Route path="/PatientProfileHLC/:id" element={<PatientProfileHLC />} />
               <Route path="/AddExaminationHLC/:id" element={<AddExaminationHLC />} />

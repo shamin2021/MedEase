@@ -1,15 +1,31 @@
-import React from "react";
-import logo from "../assets/patient.jpg";
-import "react-calendar/dist/Calendar.css";
-import "../styles/Calendar.css";
-import { GridItem } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import React, { useState, useEffect } from "react";
+import "../../styles/Calendar.css";
+import { GridItem, Image } from '@chakra-ui/react';
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
 
 const DoctorProfile = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { get } = useAxiosMethods();
+  const { id } = useParams();
   const { auth } = useAuth();
+
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    try {
+      get(`/doctors/getDoctorProfile/${parseInt(id)}`, setUser);
+
+    } catch (err) {
+      console.error(err);
+      navigate('/login', { state: { from: location }, replace: true });
+    }
+  }, []);
+
+
   return (
     <GridItem colSpan={6} mx={4} mt={2}>
       <div className="h-screen bg-primary py-1">
@@ -18,18 +34,11 @@ const DoctorProfile = () => {
             <div className="parent md:w-full flex rounded-md pb-2 py-1 bg-white m-3 mt-0 h-full p-5">
               <div className="md:w-1/2 mt-4 mb-4">
                 <div className=" mx-auto">
-                  <img
-                    htmlFor="select-image"
-                    src={logo}
-                    className="mx-auto p-1 h-[300px] w-[250px]  rounded-[20px] "
-                  />
+                  <Image src={user.image ? `data:image/png;base64, ${user.image}` : null} fallbackSrc={`https://placehold.co/600x400?text=${user.firstname + " " + user.lastname}`} className="mx-auto p-1 h-[300px] w-[250px] rounded-xl" />
                 </div>
                 <div className="container horizontal justify-center py-1">
                   <div className="flex justify-center text-[18px] font-semibold mb-0">
-                    Dr.Shamin Fernando
-                  </div>
-                  <div className="flex justify-center font-light text-stone-800- text-[18px] text-[#797878]">
-                    Lunawa Hospital
+                    Dr.{user.firstname + " " + user.lastname}
                   </div>
                   {auth.role !== "HLC" ?
                     <button
@@ -45,7 +54,7 @@ const DoctorProfile = () => {
                   }
 
                   <div className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary">
-                    Schedule
+                    Meetings
                   </div>
                 </div>
               </div>
@@ -56,24 +65,24 @@ const DoctorProfile = () => {
                   <div className="parent mx-auto">
                     <div className="h-[70px]">
                       <div className="text-[18px] text-[#797878]">Speciality</div>
-                      <div className="text-[18px] font-semibold">
-                        Heart Disease
+                      <div className="text-[18px]">
+                        {user.doctor_speciality ?? "Not Provided"}
                       </div>
                       <hr className=""></hr>
                     </div>
                     <div className="mt-2 h-[70px] ">
                       <div className="text-[18px] text-[#797878]">Mobile</div>
-                      <div className="text-[18px]">0762008919</div>
+                      <div className="text-[18px]">{user.mobileNumber ?? "Not Provided"}</div>
                       <hr className=""></hr>
                     </div>
                     <div className="mt-2 h-[70px]">
                       <div className="text-[18px] text-[#797878]">Email</div>
-                      <div className="text-[18px]">hhshaminf@gmail.com</div>
+                      <div className="text-[18px]">{user.email ?? "Not Provided"}</div>
                       <hr className=""></hr>
                     </div>
                     <div className="mt-2 h-[70px]">
                       <div className="text-[18px] text-[#797878]">License</div>
-                      <div className="text-[18px]">8927891</div>
+                      <div className="text-[18px]">{user.licenseNumber ?? "Not Provided"}</div>
                       <hr className=""></hr>
                     </div>
                   </div>

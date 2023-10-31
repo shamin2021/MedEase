@@ -1,18 +1,62 @@
-import React, { useState } from "react";
-import { Docs } from '../Docs'
+import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import { GridItem } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
 
 const ManageDoctor = () => {
+  const { get } = useAxiosMethods();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [query, setQuery] = useState("");
-  const keys = ["first_name", "last_name", "email"];
-  const search = (data) => {
-    return data.filter((item) =>
-      keys.some((key) => item[key].toLowerCase().includes(query))
-    );
+  const [doctors, setDoctors] = useState([]);
+  const [searchedDoctors, setSearchedDoctors] = useState([]);
+  const [initializedSearch, setInitializedSearch] = useState(false);
+
+  const search = () => {
+
+    setSearchedDoctors(doctors.filter((item) => {
+      return (
+        item.firstname.toLowerCase().includes(query) ||
+        item.lastname.toLowerCase().includes(query) ||
+        item.email.toLowerCase().includes(query)
+      );
+    }));
   };
+
+  useEffect(() => {
+    if (doctors.length > 0) {
+      console.log(doctors);
+      if (searchedDoctors.length === 0 && !initializedSearch) {
+        setSearchedDoctors(doctors)
+        setInitializedSearch(true)
+      }
+      console.log(searchedDoctors);
+    }
+  }, [doctors, searchedDoctors]);
+
+  useEffect(() => {
+    try {
+      get("/doctors/getDoctors", setDoctors)
+
+    } catch (err) {
+      console.error(err);
+      navigate('/login', { state: { from: location }, replace: true });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (query !== "") {
+      search();
+      console.log(query);
+    } else {
+      setSearchedDoctors(doctors);
+    }
+  }, [query]);
+
   return (
     <GridItem colSpan={6}>
       <div className="h-screen py-1 bg-primary mt-[4%]">
@@ -42,7 +86,7 @@ const ManageDoctor = () => {
               </div>
             </div>
           </div>
-          <div>{<Table data={search(Docs)} />}</div>
+          <div>{<Table data={searchedDoctors} />}</div>
         </div>
       </div>
     </GridItem>

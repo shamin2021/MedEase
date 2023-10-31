@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../../styles/Calendar.css";
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { GridItem, Image } from '@chakra-ui/react';
