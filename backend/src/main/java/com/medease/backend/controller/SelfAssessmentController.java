@@ -56,7 +56,6 @@ public class SelfAssessmentController {
 		var assessment = SelfAssessment.builder()
 				.firstName(selfAssessment.getFirstName())
 				.lastName(selfAssessment.getLastName())
-				.emailId(selfAssessment.getEmailId())
 				.physicalActivity(selfAssessment.isPhysicalActivity())
 				.tobaccoSmoking(selfAssessment.isTobaccoSmoking())
 				.beetlechewing(selfAssessment.isBeetleChewing())

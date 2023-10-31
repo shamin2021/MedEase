@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useAxiosMethods from "../../hooks/useAxiosMethods";
-import logo from "../../assets/patient.jpg";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import {
-  Flex,Button,
   Tabs,
   TabList,
   TabPanels,
@@ -12,12 +10,15 @@ import {
   TabIndicator,
   GridItem,
 } from "@chakra-ui/react";
-
-// import {generatePDF} from "../../pages/Reports/PatientReport";
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import medeaseLogo from "../../assets/Medeaselogo.png";
+import useAuth from '../../hooks/useAuth';
 
 const ViewSelfAssessmentComponent = () => {
 
   const { id } = useParams();
+  const { auth } = useAuth();
   console.log(id);
 
   const { get } = useAxiosMethods();
@@ -103,13 +104,143 @@ const ViewSelfAssessmentComponent = () => {
 
   const calculateAge = (dateOfBirth) => {
     const dob = new Date(dateOfBirth);
-    const currentDate = new Date(selfassessments.date);
+    const assessmentDate = new Date(selfassessments.date);
 
-    const ageInMilliseconds = currentDate - dob;
+    const ageInMilliseconds = assessmentDate - dob;
     const ageInYears = Math.floor(ageInMilliseconds / (365 * 24 * 60 * 60 * 1000));
 
     return ageInYears;
   }
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+
+    // Define a function to add the header content
+    const addHeader = (pageNumber) => {
+      doc.addImage(medeaseLogo, 'PNG', 10, 10, 27, 10);
+
+      const currentDate = new Date().toLocaleString();
+      doc.setFontSize(10);
+      doc.text(`Page ${pageNumber} - ${currentDate}`, 150, 15);
+      doc.text(`Name: ${auth.first_name}`, 10, 25);
+      doc.text(`Role: ${auth.role}`, 80, 25);
+      doc.text(`User ID: ${auth.user_id}`, 150, 25);
+    };
+
+    const generalheaders = [['Weight', 'Height', 'BMI', 'Waist Circumference', 'Waist Height Ratio']];
+    const generaldata = [[
+      medicalTest.weight ?? "No Data",
+      medicalTest.height ?? "No Data",
+      medicalTest.bmi ?? "No Data",
+      medicalTest.waist_circumference ?? "No Data",
+      medicalTest.waistHeightRatio ?? "No Data",
+    ],];
+
+    const generalheaders2 = [['Hearing Left', 'Hearing Right', 'Vision Left', 'Vision Right', 'Oral Examination']];
+    const generaldata2 = [[
+      medicalTest.hearingLeft ?? "No Data",
+      medicalTest.hearingRight ?? "No Data",
+      medicalTest.visionRight ?? "No Data",
+      medicalTest.visionLeft ?? "No Data",
+      medicalTest.oralExamination ?? "No Data",
+    ],];
+
+    const familyheaders = [['Heart Disease', 'High Blood Pressure', 'Stroke', 'Diabetes', 'Cancer', 'COPD', 'Asthma', 'Kidney Disease']];
+    const familysdata = [[
+      selfassessments.heartDisease ? "Yes" : "No",
+      selfassessments.HighBloodPressure ? "Yes" : "No",
+      selfassessments.stroke ? "Yes" : "No",
+      selfassessments.diabetes ? "Yes" : "No",
+      selfassessments.cancer ? "Yes" : "No",
+      selfassessments.copd ? "Yes" : "No",
+      selfassessments.asthma ? "Yes" : "No",
+      selfassessments.kidneyDiseases ? "Yes" : "No",
+    ],];
+
+    const habitsheaders = [['Beetle Chewing', 'Physical Activity', 'Tobacco Smoking', 'Other Substances Consumption', 'Alcohol Consumption']];
+    const habitsdata = [[
+      selfassessments.beetlechewing ? "Yes" : "No",
+      selfassessments.physicalActivity ? "Sufficient" : "Insufficient",
+      selfassessments.tobaccoSmoking ? "Yes" : "No",
+      selfassessments.otherSubstance ? "Yes" : "No",
+      selfassessments.alcoholConsumption ? "Yes" : "No",
+    ],];
+
+    const examinationsheaders = [['Cholestorol Level', 'SBP', 'FBS', 'RBS', 'Blood Sugar', 'Serum Creatinin', 'Lipid Profile TG', 'Lipid TCHL', 'Lipid Profile TC', 'Lipid Profile LDL', 'Lipid Profile HDL']];
+    const examinationsdata = [[
+      medicalTest.cholesterolLvl ?? "No Data",
+      medicalTest.sbp ?? "No Data",
+      medicalTest.fastingbloodSugar ?? "No Data",
+      medicalTest.randombloodSugar ?? "No Data",
+      medicalTest.serumCreatinin ?? "No Data",
+      medicalTest.lipidTg ?? "No Data",
+      medicalTest.lipidLDL ?? "No Data",
+      medicalTest.lipidTCHL ?? "No Data",
+      medicalTest.lipidHDL ?? "No Data",
+      medicalTest.lipidTC ?? "No Data",
+
+    ],];
+
+    // Calculate the height of the first table (Self Assessment)
+    const table1Height = habitsheaders.length * 10 + habitsdata.length * 10;
+
+    // Check if there is enough space on page 1 for the first table
+    if (table1Height <= doc.internal.pageSize.getHeight()) {
+      // Add the header to page 1
+      addHeader(1);
+
+      doc.setFontSize(12);
+      doc.text(`Assessment ID : ${id}`, 10, 45);
+
+      doc.text(`Risk Level :  ${selfassessments.risk}`, 150, 45);
+
+      doc.setFontSize(12);
+      doc.text('General Details', 10, 55);
+      doc.autoTable({
+        head: generalheaders,
+        body: generaldata,
+        startY: 60,
+        margin: { top: 10 },
+      });
+      doc.autoTable({
+        head: generalheaders2,
+        body: generaldata2,
+        startY: 80,
+        margin: { top: 10 },
+      });
+
+      doc.setFontSize(12);
+      doc.text('Family History', 10, 110);
+      doc.autoTable({
+        head: familyheaders,
+        body: familysdata,
+        startY: 115,
+        margin: { top: 10 },
+      });
+
+      doc.setFontSize(12);
+      doc.text('Habits', 10, 145);
+      doc.autoTable({
+        head: habitsheaders,
+        body: habitsdata,
+        startY: 150,
+        margin: { top: 10 },
+      });
+
+      doc.setFontSize(12);
+      doc.text('Medical Examinations', 10, 180);
+      doc.autoTable({
+        head: examinationsheaders,
+        body: examinationsdata,
+        startY: 185,
+        margin: { top: 10 },
+      });
+
+    }
+
+    doc.save('PatientReport.pdf');
+  };
+
 
   return (
     <GridItem colSpan={6}>
@@ -125,8 +256,8 @@ const ViewSelfAssessmentComponent = () => {
                     <InputGeneral name="Date Attempted" data={selfassessments.date} />
                     <InputGeneral name="Age at Assessment" data={calculateAge(selfassessments.dob)} />
                     <InputGeneral name="Gender" data={selfassessments.gender} />
-                    <InputGeneral name="Risk" data={selfassessments.risk ? selfassessments.risk : "Not Submitted"} variant="1" />                    
-                  </div>                  
+                    <InputGeneral name="Risk" data={selfassessments.risk ? selfassessments.risk : "Not Submitted"} variant="1" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -137,22 +268,20 @@ const ViewSelfAssessmentComponent = () => {
                     Assessment Information
                   </div>
 
-                  <div className="w-1/4">
+                  <div className="w-1/4" hidden={selfassessments.risk === "PENDING" ? true : false}>
 
                     <button
-                        className="btn btn-primary text-[17px] bg-primary p-2 font-semibold"
-                        align="center"
-                        onClick={() =>
-                          navigate(
-                            `/PatientReport/${id}`
-                          )
-                        }
-                      >
-                        Download Report
+                      className="btn btn-primary text-[17px] bg-primary p-2 font-semibold"
+                      align="center"
+                      onClick={() =>
+                        generatePDF()
+                      }
+                    >
+                      Download Report
                     </button>
                   </div>
 
-                  <div className="w-1/4">
+                  <div className="w-1/4" hidden={selfassessments.risk === "PENDING" ? false : true}>
                     <button
                       className="btn btn-primary text-[17px] bg-primary p-2 font-semibold"
                       onClick={() => navigate(`/AddExamination/${id}`)}
@@ -191,7 +320,7 @@ const ViewSelfAssessmentComponent = () => {
                     <TabPanel padding={2}>
                       <div className="flex container horizontal justify-center py-1">
                         <div className="md:w-1/3 parent m-3 mt-0 ml-0">
-                          <InputGeneral name="Weight" data={medicalTest.weight? medicalTest.weight  : "No Medical Data"} />
+                          <InputGeneral name="Weight" data={medicalTest.weight ? medicalTest.weight : "No Medical Data"} />
                           <InputGeneral name="Height" data={medicalTest.height ? medicalTest.height : "No Medical Data"} />
                           <InputGeneral name="BMI" data={medicalTest.bmi ? medicalTest.bmi : "No Medical Data"} />
                         </div>

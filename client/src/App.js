@@ -35,8 +35,8 @@ import HLCProfile from "./pages/Admin/HLCProfile";
 import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
 import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
 import LifestyleDashboard from "./pages/LifestyleMonitoring/LifestyleDashboard";
-import AddExamination from "./pages/AddExamination";
-import AddExaminationHLC from "./pages/AddExamination";
+import AddExamination from "./components/Patient/AddExamination";
+// import AddExaminationHLC from "./pages/AddExamination";
 import FindHLCAdmin from "./pages/Admin/FindHLCAdmin";
 import SearchDoctorPatient from "./pages/Patient/SearchDoctor";
 import ManagePatient from "./pages/Doctor/ManagePatient";
@@ -50,6 +50,7 @@ import TransferPatient from './pages/HLC/TransferPatient';
 import ListSelfAssessmentComponent from './components/Patient/ListSelfAssessmentComponent';
 import CreateSelfAssessmentComponent from './components/Patient/CreateSelfAssessmentComponent';
 import ViewSelfAssessmentComponent from './components/Patient/ViewSelfAssessmentComponent';
+import PatientPrescriptions from './components/Patient/PatientPrescriptions'
 
 import PatientMeetings from './pages/Patient/PatientMeetings';
 import PatientSettings from './pages/Patient/PatientSettings'
@@ -127,7 +128,7 @@ function App() {
               <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
               <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
               <Route path="/view-SelfAssessment/:id" element={<ViewSelfAssessmentComponent />} />
-
+              <Route path="/PatientPrescriptions" element={<PatientPrescriptions />} />
               <Route path="/PatientReport/:id" element={<PatientReport />} />
 
             </Route >
@@ -151,7 +152,7 @@ function App() {
               <Route path="/DoctorProfileHLC/:id" element={<DoctorProfile />} />
               <Route path="/HLCSettings" element={<HLCSettings />} />
               <Route path="/PatientProfileHLC/:id" element={<PatientProfileHLC />} />
-              <Route path="/AddExaminationHLC/:id" element={<AddExaminationHLC />} />
+              {/* <Route path="/AddExaminationHLC/:id" element={<AddExaminationHLC />} /> */}
               <Route path="/HLC" element={<HLC />} />
               <Route path="/ManageDoctor" element={<ManageDoctor />} />
               <Route path="/ManagePatientHLC" element={<ManagePatientHLC />} />

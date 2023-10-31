@@ -5,7 +5,7 @@ import { GridItem } from "@chakra-ui/react";
 import useAuth from "../../hooks/useAuth";
 
 const ListSelfAssessmentComponent = () => {
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
   const [res, setRes] = useState("");
 
   const { get } = useAxiosMethods();
@@ -33,13 +33,17 @@ const ListSelfAssessmentComponent = () => {
 
   useEffect(() => {
     console.log(selfassessments);
-  }, []);
+  }, [selfassessments]);
 
   const addSelfAssessment = () => {
     navigate("/CreateSelfAssessment");
   };
 
-  const filteredSelfAssessments = selfassessments.filter(selfassessment => selfassessment.patient === loggedInUser.user_id);
+  const showPrescriptions = () => {
+    navigate("/PatientPrescriptions");
+  }
+
+  const filteredSelfAssessments = selfassessments.filter(selfassessment => selfassessment.patient === loggedInUser.user_id).sort((a, b) => b.id - a.id);
 
   return (
     <GridItem colSpan={6} >
@@ -51,7 +55,7 @@ const ListSelfAssessmentComponent = () => {
               <div className="w-1/4">
                 <button
                   className="btn btn-primary text-[18px] bg-primary p-2 font-semibold"
-                  onClick={addSelfAssessment}
+                  onClick={showPrescriptions}
                 >
                   Prescriptions
                 </button>
@@ -74,74 +78,51 @@ const ListSelfAssessmentComponent = () => {
               <div className="text-left text-[20px] pb-2  ml-5">
                 Previous Assessments
               </div>
-              <div className="w-full  ">
+              <div className="h-full">
                 <div className=" flex text-[18px] text-[#797878] font-medium sticky p-1 ml-5 text-left">
                   <div className="w-1/3 m-1 ">Assessment ID</div>
                   <div className="w-1/3 m-1 ">Assessment Created</div>
                   <div className="w-1/3 m-1 ">Actions</div>
                 </div>
                 <hr className=" md:w-4/5  ml-5" />
+                <div className="max-h-60 overflow-y-scroll">
+                  <table className="table-auto">
+                    <tbody>
+                      {filteredSelfAssessments.map(selfassessment => (
+                        <>
+                          <tr key={selfassessment.id} className="flex text-[18px] font-medium sticky p-1 text-left ml-5">
+                            <div className="w-1/3 m-1"><td> {selfassessment.id} </td></div>
+                            <div className="w-1/3 m-1"><td> {selfassessment.date} </td></div>
+                            <div className="w-1/3 m-1">
+                              <td>
+                                <button
+                                  onClick={() =>
+                                    navigate(
+                                      `/view-SelfAssessment/${selfassessment.id}`
+                                    )
+                                  }
+                                  className="btn w-1/3 bg-primary pl-1 pr-1 rounded-lg"
+                                >
+                                  View{" "}
+                                </button>
+                              </td>
+                            </div>
+                          </tr>
+                          <hr className="md:w-4/5 ml-5" />
+                        </>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
 
-                <table className="table-auto">
-                  <tbody>
-                    {/* {selfassessments.map((selfassessment) => (
-                      <>
-                        <tr key={selfassessment.id} className="flex text-[18px]  font-medium sticky p-1 text-left ml-5">
-                          <div className="w-1/3 m-1"><td> {selfassessment.id} </td></div>
-                          <div className="w-1/3 m-1"><td> {selfassessment.date} </td></div>
-                          <div className="w-1/3 m-1">
-                            <td>
-                              <button
-                                onClick={() =>
-                                  navigate(
-                                    `/view-SelfAssessment/${selfassessment.id}`
-                                  )
-                                }
-                                className="btn w-1/3 bg-primary pl-1 pr-1 rounded-lg"
-                              >
-                                View{" "}
-                              </button>
-                            </td>
-                          </div>
-                        </tr>
-                        <hr className=" md:w-4/5 ml-5" />
-                      </>
-                    ))} */}
-
-
-                    {filteredSelfAssessments.map(selfassessment => (
-                      <>
-                        <tr key={selfassessment.id} className="flex text-[18px] font-medium sticky p-1 text-left ml-5">
-                          <div className="w-1/3 m-1"><td> {selfassessment.id} </td></div>
-                          <div className="w-1/3 m-1"><td> {selfassessment.date} </td></div>
-                          <div className="w-1/3 m-1">
-                            <td>
-                              <button
-                                onClick={() =>
-                                  navigate(
-                                    `/view-SelfAssessment/${selfassessment.id}`
-                                  )
-                                }
-                                className="btn w-1/3 bg-primary pl-1 pr-1 rounded-lg"
-                              >
-                                View{" "}
-                              </button>
-                            </td>
-                          </div>
-                        </tr>
-                        <hr className="md:w-4/5 ml-5" />
-                      </>
-                    ))}
-                  </tbody>
-                </table>
               </div>
             </div>
 
             <div className="md:w-1/4 shadow-xl h-full m-3 mb-1 rounded-md">
               <div className="mt-3">
                 <div className="w-3/4 mx-auto mt-3 rounded-md text-[18px]  bg-[#fdc9c9] p-2 font-semibold">
-                  {selfassessments.length > 0 ? (
-                    selfassessments[selfassessments.length - 1].risk
+                  {filteredSelfAssessments.length > 0 ? (
+                    filteredSelfAssessments[0].risk
                   ) : (
                     <p>Not Submitted</p>
                   )}
@@ -150,7 +131,7 @@ const ListSelfAssessmentComponent = () => {
                   </div>
                 </div>
                 <div className="w-3/4 mx-auto mt-3 rounded-md text-[17px] bg-primary p-2 font-semibold">
-                  {selfassessments.length > 0 ? selfassessments.length : 0}
+                  {filteredSelfAssessments.length > 0 ? filteredSelfAssessments.length : 0}
                   <div className=" text-[#797878] text-[16px]  font-medium">
                     Assessments
                   </div>

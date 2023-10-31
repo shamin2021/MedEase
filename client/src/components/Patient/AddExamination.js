@@ -1,10 +1,12 @@
 import { useState, React, useEffect } from "react";
 import { GridItem } from "@chakra-ui/react";
-import useAuth from "../hooks/useAuth";
-import useAxiosMethods from "../hooks/useAxiosMethods";
+import useAuth from "../../hooks/useAuth";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 const AddExamination = () => {
+
+  
   const { auth } = useAuth();
   const { post } = useAxiosMethods();
   const navigate = useNavigate();
@@ -105,21 +107,6 @@ const AddExamination = () => {
     calculateWaistHeightRatio();
   }, [waist, height]);
 
-  function InputBox(props) {
-    return (
-      <div className=" flex flex-col m-2">
-        <label className="form-label mb-1">{props.name}</label>
-        <input
-          name={props.name}
-          className="form-input p-2"
-          onChange={(event) => props.handle(event.target.value)}
-          value={props.value}
-          required={props.required}
-        />
-      </div>
-    );
-  }
-
   function CalculateBox(props) {
     return (
       <div className=" flex flex-col m-2">
@@ -141,10 +128,6 @@ const AddExamination = () => {
       const bmiValue = weightInKg / (heightInM * heightInM);
       setBmi(bmiValue.toFixed(2));
     }
-  };
-
-  const handleChangeCondition = (setCondition, event) => {
-    setCondition(event.target.value);
   };
 
   const calculateWaistHeightRatio = () => {
