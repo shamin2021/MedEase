@@ -31,13 +31,13 @@ import PatientProfile from "./pages/PatientProfile";
 import DoctorProfile from "./pages/DoctorProfile";
 import FindHLC from "./pages/FindHLC";
 import AddPrescription from "./pages/AddPrescription";
-import HLCProfile from "./pages/HLCProfile";
+import HLCProfile from "./pages/Admin/HLCProfile";
 import LifestyleQuiz from "./pages/LifestyleMonitoring/LifestyleMonitorQuiz";
 import AddLifestyle from "./pages/LifestyleMonitoring/AddLifestyle";
 import LifestyleDashboard from "./pages/LifestyleMonitoring/LifestyleDashboard";
 import AddExamination from "./pages/AddExamination";
 import AddExaminationHLC from "./pages/AddExamination";
-import FindHLCAdmin from "./pages/Admin/FindHLC";
+import FindHLCAdmin from "./pages/Admin/FindHLCAdmin";
 import SearchDoctorPatient from "./pages/Patient/SearchDoctor";
 import ManagePatient from "./pages/Doctor/ManagePatient";
 import ManagePatientHLC from "./pages/HLC/ManagePatient";
@@ -61,7 +61,6 @@ import PatientReport from './pages/Reports/PatientReport';
 import AddDoctor from './pages/HLC/AddDoctor';
 import HLCPatients from './pages/HLC/HLCPatients';
 import HLCSettings from './pages/HLC/HLCSettings';
-// import HLCProfile from './pages/HLC/HLCProfile';
 
 import AddHLC from './pages/Admin/AddHLC';
 
@@ -154,9 +153,9 @@ function App() {
               <Route path="/AddExaminationHLC/:id" element={<AddExaminationHLC />} />
               <Route path="/HLC" element={<HLC />} />
               <Route path="/ManageDoctor" element={<ManageDoctor />} />
+              <Route path="/ManagePatientHLC" element={<ManagePatientHLC />} />
               <Route path="/AddDoctor" element={<AddDoctor />} />
               <Route path="/HLCPatients" element={<HLCPatients />} />
-              <Route path="/HLCProfile" element={<HLCProfile />} />
               <Route path="/TransferPatient" element={<TransferPatient />} />
             </Route>
 
@@ -180,6 +179,7 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/AddHLC" element={<AddHLC />} />
               <Route path="/ManageUser" element={<ManageUser />} />
+              <Route path="/HLCProfile/:id" element={<HLCProfile />} />
 
             </Route>
 

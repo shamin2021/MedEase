@@ -21,4 +21,5 @@ public class UserDTO {
     private Boolean activated;
     private Boolean enabled;
     private Role role;
+    private String image;
 }

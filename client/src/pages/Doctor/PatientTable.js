@@ -20,7 +20,7 @@ const Table = ({ data }) => {
                                 <Link to={`/PatientProfile/${item.patient_id}`}>
                                     <div className=" flex mt-4 text-[15px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                                         <div className="w-1/5 m-1 flex ">
-                                            <Avatar size="sm" name={item.firstname} src={item.profile_image ? `data:image/png;base64, ${item.profile_image}` : null} />
+                                            <Avatar size="sm" name={item.firstname} src={item.profile_image ? `data:image/png;base64, ${item.profile_image}` : null} bg='teal.400' />
                                             <div className="w-3/4 ml-6">{item.firstname}</div>
                                         </div>
                                         <div className="w-1/5 m-1">{item.lastname}</div>
