@@ -180,6 +180,7 @@ const AddExamination = () => {
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">Weight (Kg)</label>
                       <input
+                        placeholder="70"
                         name="weight"
                         className="form-input p-2"
                         onChange={(event) => setWeight(event.target.value)}
@@ -191,6 +192,7 @@ const AddExamination = () => {
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">Height (cm)</label>
                       <input
+                      placeholder="175"
                         name="height"
                         className="form-input p-2"
                         onChange={(event) => setHeight(event.target.value)}
@@ -204,6 +206,7 @@ const AddExamination = () => {
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">Waist (cm)</label>
                       <input
+                        placeholder="80"
                         name="waist"
                         className="form-input p-2"
                         onChange={(event) => setWaist(event.target.value)}
@@ -231,6 +234,7 @@ const AddExamination = () => {
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">SBP</label>
                       <input
+                        placeholder="120"
                         name="sbp"
                         className="form-input p-2"
                         onChange={(event) => setSbp(event.target.value)}
@@ -244,6 +248,7 @@ const AddExamination = () => {
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">Hearing Right</label>
                       <input
+                        placeholder="Normal"
                         name="hearingRight"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -256,6 +261,7 @@ const AddExamination = () => {
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">Hearing Left</label>
                       <input
+                        placeholder="Normal"
                         name="hearingLeft"
                         className="form-input p-2"
                         onChange={(event) => setHearingLeft(event.target.value)}
@@ -269,6 +275,7 @@ const AddExamination = () => {
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">Vision Right</label>
                       <input
+                        placeholder="20/20"
                         name="visionRight"
                         className="form-input p-2"
                         onChange={(event) => setVisionRight(event.target.value)}
@@ -279,6 +286,7 @@ const AddExamination = () => {
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">Vision Left</label>
                       <input
+                        placeholder="20/40"
                         name="visionLeft"
                         className="form-input p-2"
                         onChange={(event) => setVisionLeft(event.target.value)}
@@ -294,6 +302,7 @@ const AddExamination = () => {
                         Oral Examination
                       </label>
                       <input
+                        placeholder="No cavities, good oral hygiene"
                         name="oralExam"
                         className="form-input p-2"
                         onChange={(event) => setOralExam(event.target.value)}
@@ -314,6 +323,7 @@ const AddExamination = () => {
                         Fasting Blood Sugar (mg/dl)
                       </label>
                       <input
+                        placeholder="90"
                         name="bloodSugarFasting"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -330,6 +340,7 @@ const AddExamination = () => {
                         Random Blood Sugar (mg/dl)
                       </label>
                       <input
+                        placeholder="140"
                         name="bloodSugarRandom"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -347,6 +358,7 @@ const AddExamination = () => {
                         Serum Creatinin (mg/dl)
                       </label>
                       <input
+                        placeholder="0.8"
                         name="serumCreatinin"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -364,6 +376,7 @@ const AddExamination = () => {
                         Lipid Profile TG
                       </label>
                       <input
+                        placeholder="150"
                         name="lipidProfileTG"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -378,6 +391,7 @@ const AddExamination = () => {
                         Lipid Profile TC
                       </label>
                       <input
+                        placeholder="200"
                         name="lipidProfileTC"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -394,6 +408,7 @@ const AddExamination = () => {
                         Lipid Profile TCHL
                       </label>
                       <input
+                        placeholder="4.0"
                         name="lipidProfileTCHL"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -410,6 +425,7 @@ const AddExamination = () => {
                         Lipid Profile LDL
                       </label>
                       <input
+                        placeholder="120"
                         name="lipidProfileLDL"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -424,6 +440,7 @@ const AddExamination = () => {
                         Lipid Profile HDL
                       </label>
                       <input
+                        placeholder="50"
                         name="lipidProfileHDL"
                         className="form-input p-2"
                         onChange={(event) =>
