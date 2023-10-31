@@ -4,10 +4,9 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Switch, Input, Box, Text } from '@chakra-ui/react';
-import useAxiosMethods from "../hooks/useAxiosMethods";
-import { useNavigate, useLocation } from "react-router-dom";
-
-import useAuth from "../hooks/useAuth";
+import useAxiosMethods from '../../hooks/useAxiosMethods';
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import useAuth from '../../hooks/useAuth';
 
 
 const Availability = () => {
@@ -16,6 +15,8 @@ const Availability = () => {
     const { auth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const { id } = useParams();
+
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -124,7 +125,7 @@ const Availability = () => {
             } else {
                 try {
                     post('/meetings/addSchedule',
-                        { meetingType: "PHYSICAL", doctor: auth.user_id, availableHLC: selectedHlc, start: covertStringDateTimeToTimeStamp(fromTime), end: covertStringDateTimeToTimeStamp(toTime) },
+                        { meetingType: "PHYSICAL", doctor: parseInt(id), availableHLC: selectedHlc, start: covertStringDateTimeToTimeStamp(fromTime), end: covertStringDateTimeToTimeStamp(toTime) },
                         setRes);
                     closeModal();
                 } catch (err) {
@@ -142,7 +143,7 @@ const Availability = () => {
 
                 try {
                     post('/meetings/addSchedule',
-                        { meetingType: "VIRTUAL", doctor: auth.user_id, slotStarts, slotEnds },
+                        { meetingType: "VIRTUAL", doctor: parseInt(id), slotStarts, slotEnds },
                         setRes);
                     closeModal();
 
@@ -159,7 +160,7 @@ const Availability = () => {
 
     const fetchAvailableSlots = async () => {
         try {
-            get(`/meetings/getAvailableSlots/${auth.user_id}`, setAvailableSlots);
+            get(`/meetings/getAvailableSlots/${parseInt(id)}`, setAvailableSlots);
             get(`/meetings/getHLCForSchedule`, setHlcList);
 
         } catch (err) {
@@ -168,7 +169,8 @@ const Availability = () => {
         }
     };
 
-    useEffect(() => {;
+    useEffect(() => {
+        ;
         const fetchData = async () => {
             await fetchAvailableSlots();
         };
@@ -178,7 +180,7 @@ const Availability = () => {
 
     return (
         <GridItem colSpan={6} mx={4} mt={2}>
-            <div>
+            <div className="h-screen py-1 bg-primary mt-[4%]"> 
                 <FullCalendar
                     plugins={[interactionPlugin, dayGridPlugin]}
                     initialView="dayGridMonth"

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation, } from "react-router-dom";
-import { GridItem } from "@chakra-ui/react";
+import { GridItem, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Switch, Input, Box, Text } from "@chakra-ui/react";
 import useAuth from "../../hooks/useAuth";
 
 const ListSelfAssessmentComponent = () => {
   const { auth } = useAuth();
   const [res, setRes] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModelContent] = useState('');
 
   const { get } = useAxiosMethods();
   const navigate = useNavigate();
@@ -35,12 +37,31 @@ const ListSelfAssessmentComponent = () => {
     console.log(selfassessments);
   }, [selfassessments]);
 
-  const addSelfAssessment = () => {
-    navigate("/CreateSelfAssessment");
+
+  // to make sure only per 30 day risk assessment can be done
+  const handleAssessment = () => {
+    setModalOpen(true);
+
+    if (filteredSelfAssessments.length > 0 && filteredSelfAssessments[0].risk === "PENDING") {
+      setModalOpen(true);
+      setModelContent("Please Complete Assessment In Progress");
+    }
+    else if (filteredSelfAssessments.length > 0 && ((new Date() - new Date(filteredSelfAssessments[0].date)) / (1000 * 60 * 60 * 24)) <= 30) {
+      setModalOpen(true);
+      setModelContent("Please Wait A Month To Complete New Risk Assessment");
+    } else {
+      navigate("/CreateSelfAssessment");
+    }
   };
 
+  const closeModal = () => {
+    setModalOpen(false);
+    setModelContent("");
+  }
+
+
   const showPrescriptions = () => {
-    navigate("/PatientPrescriptions");
+    navigate(`/PatientPrescriptions/${auth.user_id}`);
   }
 
   const filteredSelfAssessments = selfassessments.filter(selfassessment => selfassessment.patient === loggedInUser.user_id).sort((a, b) => b.id - a.id);
@@ -63,10 +84,27 @@ const ListSelfAssessmentComponent = () => {
               <div className="w-3/4">
                 <button
                   className="btn btn-primary text-[18px] bg-primary p-2 font-semibold"
-                  onClick={addSelfAssessment}
+                  onClick={handleAssessment}
                 >
                   Add Risk Assessment
                 </button>
+                <Modal isOpen={modalOpen} onClose={closeModal}>
+                  <ModalOverlay />
+                  <ModalContent maxWidth="90vw" width="auto" mx={[4, 8, 16]} my={[4, 8, 12]} >
+                    <ModalBody>
+                      <Box>
+                        <Box mb={2}>
+                          <span>{modalContent !== '' ? modalContent : ''}</span>
+                        </Box>
+                      </Box>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button colorScheme="blue" mr={3} onClick={closeModal}>
+                        Close
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
               </div>
             </div>
           </div>

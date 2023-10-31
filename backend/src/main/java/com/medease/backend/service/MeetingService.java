@@ -8,10 +8,7 @@ import com.medease.backend.entity.Doctor;
 import com.medease.backend.entity.HLC;
 import com.medease.backend.entity.Meeting;
 import com.medease.backend.enumeration.MeetingType;
-import com.medease.backend.repository.AvailabilityRepository;
-import com.medease.backend.repository.DoctorRepository;
-import com.medease.backend.repository.MeetingRepository;
-import com.medease.backend.repository.PatientRepository;
+import com.medease.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +27,7 @@ public class MeetingService {
     private final AvailabilityRepository availabilityRepository;
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
+    private final HLCRepository hlcRepository;
 
     public List<AvailabilityDTO> getMeetings(Integer doctorId) {
         var doctorRecordId = doctorRepository.findDoctorIdByUser(doctorId);
@@ -37,12 +35,20 @@ public class MeetingService {
         List<AvailabilityDTO> availabilityDTOList = new ArrayList<>();
 
         for(Object[] availableSlot : availableSlots) {
+
+            var hlcId = (Integer) availableSlot[4];
+            String hlc = "";
+            if (hlcId != null) {
+                hlc = Objects.requireNonNull(hlcRepository.findById(hlcId).orElse(null)).getHlc_name();
+            }
+
             AvailabilityDTO availabilityDTO = AvailabilityDTO.builder()
                     .availability_id((Integer) availableSlot[0])
                     .end((Timestamp) availableSlot[1])
                     .meetingType((String) availableSlot[2])
                     .start((Timestamp) availableSlot[3])
                     .availableHLC((Integer) availableSlot[4])
+                    .hlcName(!Objects.equals(hlc, "") ? hlc : null)
                     .doctor((Integer) availableSlot[5])
                     .build();
             System.out.println(availabilityDTO);

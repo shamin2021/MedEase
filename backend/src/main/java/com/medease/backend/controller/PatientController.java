@@ -28,6 +28,12 @@ public class PatientController {
         return patientService.getPatientProfile(userId);
     }
 
+    //for patient profile
+    @GetMapping("/personalDetails/{userId}")
+    public PatientDTO getPersonalDetails (@PathVariable Integer userId){
+        return patientService.getPersonalDetails(userId);
+    }
+
     @PostMapping("/changeHLCRequest/{userId}")
     public ResponseEntity<GlobalResponseDTO> changeHLCRequest(@PathVariable Integer userId, @RequestBody ChangeRequestDTO changeRequestDTO){
         return ResponseEntity.ok(patientService.changeHLCRequest(userId, changeRequestDTO));
@@ -48,6 +54,22 @@ public class PatientController {
             @RequestParam("address") String address
     ) throws IOException {
         return ResponseEntity.ok(patientService.updateProfileWithImage(userId, image, mobileNumber, emergencyContact, emergencyName, address));
+    }
+
+
+    //to store prescriptions
+    @PostMapping("/addPrescription/{userId}")
+    public ResponseEntity<GlobalResponseDTO> addPrescription(
+            @PathVariable Integer userId,
+            @RequestParam("prescription") MultipartFile prescription,
+            @RequestParam("doctor") Integer doctor
+    ){
+        return ResponseEntity.ok(patientService.addPrescription(userId, prescription, doctor));
+    }
+
+    @GetMapping("/getPrescriptions/{userId}")
+    public List<PrescriptionDTO> getPrescriptions (@PathVariable Integer userId){
+        return patientService.getPrescriptions(userId);
     }
 
 }

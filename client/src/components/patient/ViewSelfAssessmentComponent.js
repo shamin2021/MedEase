@@ -407,8 +407,9 @@ const ViewSelfAssessmentComponent = () => {
                     <TabPanel padding={2}>
                       <div className="flex container horizontal justify-center py-1">
                         <div className="md:w-1/3 parent m-3 mt-0 ml-0">
-                          <InputGeneral name="Blood Sugar" data={medicalTest.visionLeft ? medicalTest.visionLeft : "No Medical Data"} />
-                          <InputGeneral name="Serum Creatinin" data={medicalTest.visionLeft ? medicalTest.visionLeft : "No Medical Data"} />
+                          <InputGeneral name="Random Blood Sugar" data={medicalTest.randombloodSugar ? medicalTest.randombloodSugar : "No Medical Data"} />
+                          <InputGeneral name="Fasting Blood Sugar" data={medicalTest.fastingbloodSugar ? medicalTest.fastingbloodSugar : "No Medical Data"} />
+                          <InputGeneral name="Serum Creatinin" data={medicalTest.serumCreatinin ? medicalTest.serumCreatinin : "No Medical Data"} />
                         </div>
                         <div className="md:w-1/3 parent m-3 mt-1">
                           <InputGeneral name="Lipid Profile TG" data={medicalTest.lipidTg ? medicalTest.lipidTg : "No Medical Data"} />

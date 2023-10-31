@@ -74,7 +74,7 @@ const MeetingSchedule = () => {
                     <FullCalendar
                         plugins={[interactionPlugin, dayGridPlugin]}
                         initialView="dayGridMonth"
-                        events={availableSlots.map(event => ({
+                        events={availableSlots.filter(slot => new Date(slot.start).getTime() > new Date().getTime()).map(event => ({
                             ...event,
                             color: event.meetingType === "VIRTUAL" ? '#1e57c9' : '#bb7cd9',
                         }))}
@@ -84,10 +84,10 @@ const MeetingSchedule = () => {
 
                         eventClick={(event) => {
                             console.log(event.event.extendedProps.meetingType);
-                            if (event.event.extendedProps.meetingType === 'VIRTUAL') {
+                            // if (event.event.extendedProps.meetingType === 'VIRTUAL') {
                                 setSelectedEvent(event.event);
                                 setIsModalOpen(true);
-                            }
+                            // }
                         }}
 
                         eventTimeFormat={{
@@ -123,6 +123,14 @@ const MeetingSchedule = () => {
                                         <Text fontWeight="bold" mb={2}>Schedule Meeting:</Text>
 
                                         <Box>
+                                            {selectedEvent.extendedProps.meetingType === "PHYSICAL" ? 
+                                                <Box mb={2}>
+                                                    <span>HLC:</span>
+                                                    <Text>{selectedEvent.extendedProps.hlcName}</Text>
+                                                </Box>
+                                                :
+                                                null
+                                            }
                                             <Box mb={2}>
                                                 <span>From:</span>
                                                 <Text>{selectedEvent.start.toLocaleString()}</Text>

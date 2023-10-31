@@ -45,6 +45,7 @@ import ManageDoctor from "./pages/HLC/ManageDoctor";
 import PatientProfileHLC from "./pages/HLC/PatientProfile";
 import PatientProfileDoctor from "./pages/Doctor/PatientProfile";
 import TransferPatient from './pages/HLC/TransferPatient';
+import DoctorAvailability from './pages/HLC/DoctorAvailability';
 
 
 import ListSelfAssessmentComponent from './components/Patient/ListSelfAssessmentComponent';
@@ -110,6 +111,8 @@ function App() {
             <Route element={<RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[3]]} />} >
               {/* routes only for PATIENT,HLC, DOCTOR*/}
               <Route path="/message" element={<DirectChatPage />} />
+              <Route path="/view-SelfAssessment/:id" element={<ViewSelfAssessmentComponent />} />
+              <Route path="/PatientPrescriptions/:id" element={<PatientPrescriptions />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
@@ -123,12 +126,10 @@ function App() {
               <Route path="/PatientProfile" element={<PatientProfile />} />
               <Route path="/patient" element={<Patient />} />
               <Route path="/AddExamination/:id" element={<AddExamination />} />
-              <Route path="/DoctorProfile" element={<DoctorProfile />} />
+              <Route path="/DoctorProfile/:id" element={<DoctorProfile />} />
               <Route path="/SearchDoctorPatient" element={<SearchDoctorPatient />} />
               <Route path="/SelfAssessments" element={<ListSelfAssessmentComponent />} />
               <Route path="/CreateSelfAssessment" element={<CreateSelfAssessmentComponent />} />
-              <Route path="/view-SelfAssessment/:id" element={<ViewSelfAssessmentComponent />} />
-              <Route path="/PatientPrescriptions" element={<PatientPrescriptions />} />
               <Route path="/PatientReport/:id" element={<PatientReport />} />
 
             </Route >
@@ -159,6 +160,7 @@ function App() {
               <Route path="/AddDoctor" element={<AddDoctor />} />
               <Route path="/HLCPatients" element={<HLCPatients />} />
               <Route path="/TransferPatient" element={<TransferPatient />} />
+              <Route path="/ManageDoctor/:id" element={<DoctorAvailability />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[3]]} />}>

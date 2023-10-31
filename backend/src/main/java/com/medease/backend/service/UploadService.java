@@ -1,12 +1,11 @@
 package com.medease.backend.service;
 
 import com.medease.backend.Exception.CustomException;
-import com.medease.backend.entity.Patient;
-import com.medease.backend.entity.Prescription;
-import com.medease.backend.entity.User;
-import com.medease.backend.entity.UserImage;
+import com.medease.backend.dto.PrescriptionDTO;
+import com.medease.backend.entity.*;
 import com.medease.backend.repository.PrescriptionRepository;
 import com.medease.backend.repository.UserImageRepository;
+import com.medease.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +24,7 @@ public class UploadService {
 
     private final UserImageRepository userImageRepository;
     private final PrescriptionRepository prescriptionRepository;
+    private final UserRepository userRepository;
 
     public void uploadImage(MultipartFile image, User user) {
 
@@ -118,7 +118,7 @@ public class UploadService {
     }
 
     //upload prescription
-    public void uploadPrescription(MultipartFile image, User user) {
+    public void uploadPrescription(MultipartFile image, User user, Doctor doctor) {
 
         String rootDirectory = System.getProperty("user.dir");
         // File.separator used to get the correct path for whatever unix or Windows environment
@@ -137,6 +137,7 @@ public class UploadService {
                 Prescription prescription = new Prescription();
                 prescription.setPrescription(imageBytes);
                 prescription.setUser(user);
+                prescription.setDoctor(doctor);
 
                 prescriptionRepository.save(prescription);
             }
@@ -151,14 +152,23 @@ public class UploadService {
 
     // to return the prescriptions in base64 image
     @Transactional
-    public List<String> retrievePrescriptions(Integer userID) {
+    public List<PrescriptionDTO> retrievePrescriptions(Integer userID) {
         var prescriptions = prescriptionRepository.findPrescriptionByUser(userID);
-        List<String> prescriptionList = new ArrayList<>();
+        List<PrescriptionDTO> prescriptionList = new ArrayList<>();
 
         for(Optional<Prescription> prescription : prescriptions){
             if(prescription.isPresent()){
+                var doctor = prescription.get().getDoctor();
+                var doctorUser = userRepository.findById(doctor.getDoctor_user().getId()).orElseThrow();
+                String doctorName = doctorUser.getFirstname() + " " + doctorUser.getLastname();
                 byte[] image = prescription.get().getPrescription();
-                prescriptionList.add(Base64.getEncoder().encodeToString(image));
+                var prescriptionDTO = PrescriptionDTO.builder()
+                                .prescription_id(prescription.get().getPrescription_id())
+                                .prescription(Base64.getEncoder().encodeToString(image))
+                                .doctorName(doctorName)
+                                .givenDate(prescription.get().getGivenDate())
+                                .build();
+                prescriptionList.add(prescriptionDTO);
             }
         }
 

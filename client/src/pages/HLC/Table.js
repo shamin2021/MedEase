@@ -27,7 +27,7 @@ const DoctorTable = ({ data }) => {
                                         <div className="w-1/5 m-1 p-2">{item.email}</div>
                                         <div className="w-1/5 m-1 p-2">{item.doctor_speciality}</div>
                                         <div className="w-1/5 m-1 text-center">
-                                            <Link to={`/ManageDoctor/${item.doctor_id}`}>
+                                            <Link to={`/ManageDoctor/${item.doctor_user_id}`}>
                                                 <button className="p-2 m-0 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white">
                                                     Schedule
                                                 </button>

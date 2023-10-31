@@ -1,13 +1,7 @@
 package com.medease.backend.service;
 
-import com.medease.backend.dto.ChangeRequestDTO;
-import com.medease.backend.dto.GlobalResponseDTO;
-import com.medease.backend.dto.PatientDTO;
-import com.medease.backend.dto.RegisterRequestDTO;
-import com.medease.backend.entity.HLC;
-import com.medease.backend.entity.HLCChangeRequest;
-import com.medease.backend.entity.Patient;
-import com.medease.backend.entity.User;
+import com.medease.backend.dto.*;
+import com.medease.backend.entity.*;
 import com.medease.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,8 +21,10 @@ public class PatientService {
     private final UserRepository userRepository;
     private final PatientRepository patientRepository;
     private final HLCRepository hlcRepository;
+    private final DoctorRepository doctorRepository;
     private final UserImageRepository userImageRepository;
     private final HLCChangeRequestRepository hlcChangeRequestRepository;
+    private final PrescriptionRepository prescriptionRepository;
     private final UploadService uploadService;
 
     @Transactional
@@ -185,5 +181,45 @@ public class PatientService {
 
     public Integer getPatientCount() {
         return (int) patientRepository.count();
+    }
+
+    public PatientDTO getPersonalDetails(Integer userId) {
+
+        var patientUser = userRepository.findById(userId).orElseThrow();
+        var patient = patientRepository.findPatient(userId).orElseThrow();
+        var profileImage = uploadService.retrieveProfileImage(userId);
+
+        return PatientDTO.builder()
+                .firstname(patientUser.getFirstname())
+                .lastname(patientUser.getLastname())
+                .dob(patient.getDob())
+                .gender(patient.getGender())
+                .profileImage(profileImage)
+                .build();
+
+    }
+
+    public GlobalResponseDTO addPrescription(Integer userId, MultipartFile prescription, Integer doctor) {
+
+        var doctorId = doctorRepository.findDoctorIdByUser(doctor);
+        var doctorObj = Doctor.builder()
+                .doctor_id(doctorId)
+                .build();
+
+        var user = userRepository.findById(userId).orElseThrow();
+
+        uploadService.uploadPrescription(prescription, user, doctorObj);
+
+        return  GlobalResponseDTO.builder()
+                .message("Successfully Added")
+                .status(200)
+                .build();
+
+    }
+
+    public List<PrescriptionDTO> getPrescriptions(Integer userId) {
+
+        return uploadService.retrievePrescriptions(userId);
+
     }
 }

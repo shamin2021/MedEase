@@ -18,7 +18,7 @@ const DoctorTable = ({ data }) => {
           <div className=" h-96 overflow-y-scroll mb-2">
             {data.map((item) => (
               <>
-                <Link to={`/DoctorProfile`}>
+                <Link to={`/DoctorProfile/${item.doctor_user_id}`}>
                   <div className=" flex mt-4 text-[18px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                     <div className="w-1/5 m-1 flex ">
                       <Avatar size="sm" name={item.firstname} src={item.profile_image ? `data:image/png;base64, ${item.profile_image}` : null} bg='teal.400' />
