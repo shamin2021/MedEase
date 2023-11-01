@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { Link, Box, Button, Checkbox, Flex, Container,  FormControl, FormLabel, Heading, HStack, Stack, Text, Input, InputRightElement, InputGroup } from '@chakra-ui/react'
+import { Link, Box, VStack, Button, Checkbox, useBreakpointValue, Flex, Container,  FormControl, FormLabel, Heading, HStack, Stack, Text, Input, InputRightElement, InputGroup } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import lottie from 'lottie-web';
 import loginAnimation from '../assets/lottie/login.json';
+import { Link as ReactRouterLink } from 'react-router-dom'; // Import Link from react-router-dom
+
+
 
 import useAuth from "../hooks/useAuth";
 import axios from '../constants/axios';
@@ -13,6 +16,9 @@ const Login = () => {
 
     const { setAuth, persist, setPersist } = useAuth();
     const container = useRef(null);
+    // const isMobile = window.innerWidth <= 768; // Check if the screen width is mobile-sized
+        const isMobile = useBreakpointValue({ base: true, md: false }); // Detect mobile screen
+
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,6 +32,20 @@ const Login = () => {
     useEffect(() => {
         setErrorMsg('');
     }, [email, password])
+
+    useEffect(() => {
+        if (!isMobile) {
+          // Load the animation only if not in mobile view
+          const lottie = require('lottie-web'); // Lazy load Lottie animation
+          lottie.loadAnimation({
+            container: container.current,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            animationData: loginAnimation, // Replace with your animation data
+          });
+        }
+      }, [isMobile]);
 
     useEffect(() => {
         lottie.loadAnimation({
@@ -90,69 +110,113 @@ const Login = () => {
         localStorage.setItem("persist", persist);
     }, [persist])
 
+
     return (
         <div className='login'>
-            <Flex alignItems="center" >
-                <Box w={{ base: '80%', md: '50%' }} ref={container} />
-                <Container maxW="md" py={{ base: '10', md: '14' }} px={{ base: '0', sm: '2' }}>
+          <Flex alignItems="center">
+            {!isMobile && (
+              <Box w={{ base: '80%', md: '50%' }} ref={container} />
+            )}
+            <Container maxW="md" py={{ base: '10', md: '14' }} px={{ base: '0', sm: '2' }}>
+              <Stack spacing="6">
+                <Stack spacing="6" align="center" marginTop={"40px"}>
+                  <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
+                    <Heading size={{ base: 'lg', md: 'xl' }}>Sign in to your account</Heading>
+                    <Text size={{ base: 'xs', md: 'sm' }}>
+                      Don't have an account?{' '}
+                      <Link as={ReactRouterLink} to="/register" color='blue.500' style={{ textDecoration: 'none' }}>
+                        Sign up
+                      </Link>
+                    </Text>
+                  </Stack>
+                </Stack>
+                <Box
+                  py={{ base: '0', sm: '8' }}
+                  px={{ base: '4', sm: '10' }}
+                  bg={{ base: 'blue.50', sm: 'bg.surface' }}
+                  boxShadow={{ base: 'none', sm: 'md' }}
+                  borderRadius={{ base: 'none', sm: 'xl' }}
+                >
+                  <form onSubmit={handleSubmit}>
                     <Stack spacing="6">
-                        <Stack spacing="6" align="center">
-                            <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
-                                <Heading size={{ base: 'sm', md: 'lg' }}>Sign in to your account</Heading>
-                                <Text size={{ base: 'xs', md: 'sm' }}>
-                                    Don't have an account? <Link color='blue.500' href="/register" style={{ textDecoration: 'none' }}>Sign up</Link>
-                                </Text>
-                            </Stack>
-                        </Stack>
-                        <Box
-                            py={{ base: '0', sm: '8' }}
-                            px={{ base: '4', sm: '10' }}
-                            bg={{ base: 'blue.50', sm: 'bg.surface' }}
-                            boxShadow={{ base: 'none', sm: 'md' }}
-                            borderRadius={{ base: 'none', sm: 'xl' }}
-                        >
-                            <form onSubmit={handleSubmit}>
-                                <Stack spacing="6">
-                                    {errorMsg && (
-                                        <Box bg="red.100" p="2" mb="4" borderRadius="md">
-                                            <Text color="red.600">{errorMsg}</Text>
-                                        </Box>
-                                    )}
-                                    <Stack spacing="5">
-                                        <FormControl isRequired>
-                                            <FormLabel htmlFor="email">Email</FormLabel>
-                                            <Input id="email" type="email" autoComplete='off' onChange={(e) => setEmail(e.target.value)} value={email} />
-                                        </FormControl>
-                                        <FormControl isRequired>
-                                            <FormLabel htmlFor="password">Password</FormLabel>
-                                            <InputGroup>
-                                                <Input type={showPassword ? 'text' : 'password'} onChange={(e) => setPassword(e.target.value)} value={password} />
-                                                <InputRightElement h={'full'}>
-                                                    <Button
-                                                        variant={'solid'}
-                                                        color="blue.500"
-                                                        onClick={() => setShowPassword((showPassword) => !showPassword)}>
-                                                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                                                    </Button>
-                                                </InputRightElement>
-                                            </InputGroup>
-                                        </FormControl>
-                                    </Stack>
-                                    <HStack justify="space-between">
-                                        <Checkbox onChange={togglePersist} isChecked={persist} id='persist'>Remember me</Checkbox>
-                                        <Link color='blue.500' href="/forgot-password" size='sm' style={{ textDecoration: 'none' }}>Forgot password?</Link>
-                                    </HStack>
-                                    <Stack spacing="6">
-                                        <Button colorScheme='blue' type='submit' id="login">Sign in</Button>
-                                    </Stack>
-                                </Stack>
-                            </form>
+                      {errorMsg && (
+                        <Box bg="red.100" p="2" mb="4" borderRadius="md">
+                          <Text color="red.600">{errorMsg}</Text>
                         </Box>
+                      )}
+                      <Stack spacing="5">
+                        <FormControl isRequired>
+                          <FormLabel htmlFor="email">Email</FormLabel>
+                          <Input id="email" type="email" autoComplete='off' onChange={(e) => setEmail(e.target.value)} value={email} />
+                        </FormControl>
+                        <FormControl isRequired>
+                          <FormLabel htmlFor="password">Password</FormLabel>
+                          <InputGroup>
+                            <Input type={showPassword ? 'text' : 'password'} onChange={(e) => setPassword(e.target.value)} value={password} />
+                            <InputRightElement h={'full'}>
+                              <Button
+                                variant={'solid'}
+                                color="blue.500"
+                                onClick={() => setShowPassword((showPassword) => !showPassword)}
+                              >
+                                {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                              </Button>
+                            </InputRightElement>
+                          </InputGroup>
+                        </FormControl>
+                      </Stack>
+                      {isMobile ? (
+                    <VStack spacing="2" align="center">
+                      <Checkbox
+                        onChange={togglePersist}
+                        isChecked={persist}
+                        id="persist"
+                      >
+                        Remember me
+                      </Checkbox>
+                      <Link
+                        as={ReactRouterLink}
+                        to="/forgot-password"
+                        color="blue.500"
+                        size="sm"
+                        style={{ textDecoration: 'none' }}
+                      >
+                        Forgot password?
+                      </Link>
+                    </VStack>
+                  ) : (
+                    <HStack justify="space-between">
+                      <Checkbox
+                        onChange={togglePersist}
+                        isChecked={persist}
+                        id="persist"
+                      >
+                        Remember me
+                      </Checkbox>
+                      <Link
+                        as={ReactRouterLink}
+                        to="/forgot-password"
+                        color="blue.500"
+                        size="sm"
+                        style={{ textDecoration: 'none' }}
+                      >
+                        Forgot password?
+                      </Link>
+                    </HStack>
+                    )}
+                      <Stack spacing="6">
+                        <Button colorScheme='blue' type='submit' id="login">
+                          Sign in
+                        </Button>
+                      </Stack>
                     </Stack>
-                </Container>
-            </Flex>
+                  </form>
+                </Box>
+              </Stack>
+            </Container>
+          </Flex>
         </div>
-    )
-}
-
-export default Login
+      );
+    };
+    
+    export default Login;
