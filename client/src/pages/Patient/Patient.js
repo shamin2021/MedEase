@@ -149,21 +149,14 @@ const Patient = () => {
               className=" w-1/5 shadow-md rounded-lg p-3 ml-3 "
             >
               <div className="mb-1">
-                <div className="text-[18px] font-bold">Blood Sugar</div>
+                <div className="text-[18px] font-bold">Blood Sugar fasting</div>
                 <div className="text-[18px] text-[#707070]">
                   {dashboard.medicalTest?.fastingbloodSugar}
                 </div>
                 <hr />
               </div>
               <div className="mb-1">
-                <div className="text-[18px] font-bold">Pressure</div>
-                <div className="text-[18px] text-[#707070]">
-                  {dashboard.medicalTest?.sbp}
-                </div>
-                <hr />
-              </div>
-              <div className="mb-1">
-                <div className="text-[18px] font-bold">Lipid</div>
+                <div className="text-[18px] font-bold">Lipid Tg</div>
                 <div className="text-[18px] text-[#707070]">
                   {dashboard.medicalTest?.lipidTg}
                 </div>
@@ -173,7 +166,7 @@ const Patient = () => {
           </Flex>
 
           <Flex className="parent h-auto mt-[2%] text-[20px] bg-white rounded-2xl">
-            <div className="w-full grid grid-cols-5">
+            <div className="w-full grid grid-cols-3">
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Assessments</div>
                 <div>{dashboard.selfAssessmentsCount}</div>
@@ -183,16 +176,8 @@ const Patient = () => {
                 <div>{dashboard.appointmentsCount}</div>
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
-                <div className="font-bold">Lifestyle</div>
-                <div></div>
-              </div>
-              <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
-                <div className="font-bold">HLC visits</div>
-                <div></div>
-              </div>
-              <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
-                <div className="font-bold">Treatments</div>
-                <div></div>
+                <div className="font-bold">Assigned HLC</div>
+                <div>{}</div>
               </div>
             </div>
           </Flex>
