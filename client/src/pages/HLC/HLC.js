@@ -130,85 +130,31 @@ const Pstient = () => {
             </Flex>
             <Flex className="w-[300px] m-3 mb-0 mr-0 mt-1 overflow-hidden">
               <div className="m-0">
-                <div className="text-[20px]">Patients Monitored</div>
+                <div className="text-[20px]">
+                  Patients At High Risk
+                </div>
                 <Flex className="w-[350px] p-1 m-1 rounded-lg">
                   <div className="w-3/5 text-[17px] m-1">Patient</div>
                   <div className="w-1/5 h-5 text-[17px] m-1">Risk</div>
                 </Flex>
                 <hr />
                 <div className=" h-60 overflow-y-scroll">
-                  <Flex className="w-[350px] p-1 m-1">
-                    <div className="w-1/5">
-                      <img
-                        htmlFor="select-image"
-                        src={patient}
-                        className="p-1 h-[60px] w-[60px] rounded-[100%]"
-                      />
+                  {dashboard.riskPatientList?.map((item, index) => (
+                    <div key={index}>
+                      <Flex className="w-[350px] p-1 m-1">
+                        <Flex flexDirection="row" className="w-full">
+                          <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
+                            {item[0]}
+                            {item[1]} <br /> {item[2]}
+                          </div>
+                          <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#ffc0c0] text-center rounded-md">
+                            High
+                          </div>
+                        </Flex>
+                      </Flex>
+                      <hr />
                     </div>
-                    <Flex flexDirection="row" className="w-2/3">
-                      <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Hasala Patient <br /> 32
-                      </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#ffc0c0] text-center rounded-md">
-                        High
-                      </div>
-                    </Flex>
-                  </Flex>
-                  <hr />
-                  <Flex className="w-[350px] p-1 m-1">
-                    <div className="w-1/5">
-                      <img
-                        htmlFor="select-image"
-                        src={patient}
-                        className="p-1 h-[60px] w-[60px] rounded-[100%]"
-                      />
-                    </div>
-                    <Flex flexDirection="row" className="w-2/3">
-                      <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Hasala Patient <br /> 32
-                      </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#ffc0c0] text-center rounded-md">
-                        High
-                      </div>
-                    </Flex>
-                  </Flex>
-                  <hr />
-                  <Flex className="w-[350px] p-1 m-1">
-                    <div className="w-1/5">
-                      <img
-                        htmlFor="select-image"
-                        src={patient}
-                        className="p-1 h-[60px] w-[60px] rounded-[100%]"
-                      />
-                    </div>
-                    <Flex flexDirection="row" className="w-2/3">
-                      <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Hasala Patient <br /> 32
-                      </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#ffc0c0] text-center rounded-md">
-                        High
-                      </div>
-                    </Flex>
-                  </Flex>
-                  <hr />
-                  <Flex className="w-[350px] p-1 m-1">
-                    <div className="w-1/5">
-                      <img
-                        htmlFor="select-image"
-                        src={patient}
-                        className="p-1 h-[60px] w-[60px] rounded-[100%]"
-                      />
-                    </div>
-                    <Flex flexDirection="row" className="w-2/3">
-                      <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Hasala Patient <br /> 32
-                      </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#ffc0c0] text-center rounded-md">
-                        High
-                      </div>
-                    </Flex>
-                  </Flex>
-                  <hr />
+                  ))}
                 </div>
               </div>
             </Flex>

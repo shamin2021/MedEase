@@ -45,4 +45,9 @@ public interface SelfAssessmentRepository extends JpaRepository<SelfAssessment, 
                     """, nativeQuery = true)
     Integer findHealthyPatientsByHlcId(Integer id);
 
+     @Query(value = """
+            SELECT u.firstname, u.lastname,p.gender FROM patient p, selfassessments s,_user u WHERE p.patient_id = s.patient AND u.id=p.patient_user_id AND p.patient_hlc_id = :id AND s.risk='HIGH'
+                    """, nativeQuery = true)
+    List<Object> findRiskPatientListByHlcId(Integer id);
+
 }
