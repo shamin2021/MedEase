@@ -18,6 +18,7 @@ public class AvailabilityDTO {
     private String meetingType;
     private Integer doctor;
     private Integer availableHLC;
+    private String hlcName;
     private Timestamp start;
     private Timestamp end;
     private List<Timestamp> slotStarts;

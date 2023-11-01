@@ -141,15 +141,6 @@ const DoctorMeetings = () => {
                                 >
                                     Join
                                 </Button>
-                                <Button
-                                    colorScheme="blue"
-                                    rightIcon={<PlusSquareIcon />}
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => console.log('Pescription clicked')}
-                                >
-                                    Add Prescription
-                                </Button>
                             </>
                         ) : (
                             <>
@@ -160,15 +151,6 @@ const DoctorMeetings = () => {
                                     isLoading={showMeeting}
                                     loadingText="In Progress"
                                 />
-                                <Button
-                                    colorScheme="blue"
-                                    rightIcon={<PlusSquareIcon />}
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => console.log('Pescription clicked')}
-                                >
-                                    Add Prescription
-                                </Button>
                             </>
                         )}
                     </div>

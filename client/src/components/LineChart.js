@@ -11,20 +11,14 @@ ChartJS.register(
   PointElement
 );
 
-const LineChart = () => {
+const LineChart = ({labels,riskData}) => {
 
   var data = {
-    labels: [
-      "02/02/2022",
-      "21/07/2022",
-      "13/10/2022",
-      "01/02/2023",
-      "01/08/2023",
-    ],
+    labels: labels ,
     datasets: [
       {
         label: "First Dataset",
-        data: [2, 1, 0, 2, 1],
+        data: riskData ,
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,

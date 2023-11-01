@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RegisterRequestDTO {
 
+    private Integer user_id;
     private String firstname;
     private String lastname;
     private String email;

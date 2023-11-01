@@ -30,4 +30,8 @@ public interface SelfAssessmentRepository extends JpaRepository<SelfAssessment, 
 
     @Query(value = "SELECT created_date, COUNT(*) FROM selfassessments GROUP BY created_date", nativeQuery = true)
     List<Object> findAssessmentCountByDate();
+    
+    @Query(value = "SELECT risk FROM selfassessments WHERE patient_id = :id AND id = (SELECT MAX(id) FROM selfassessments WHERE patient_id = :id)", nativeQuery = true)
+    String findRecentAssessmentById(Integer id);
+
 }

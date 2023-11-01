@@ -473,6 +473,34 @@ const PatientProfile = () => {
                                     </button>
                                 </Link>
                             </div>
+                            <div className="w-[200px]">
+                                <button className="h-[50px] float-right bg-secondary text-[17px] rounded-md p-2 m-2 text-[#ffffff] font-semibold " onClick={handlePrescriptionChange}>
+                                    <div className="flex">
+                                        <div>Add Prescription</div>
+                                    </div>
+                                </button>
+                                <Modal isOpen={modalOpen} onClose={closeModal}>
+                                    <ModalOverlay />
+                                    <ModalContent maxWidth="90vw" width="auto" mx={[4, 8, 16]} my={[4, 8, 12]} >
+                                        <ModalBody>
+                                            <Box>
+                                                <Box mb={2}>
+                                                    <PrescriptionInput name="Add Prescription" setImage={setPrescription} image={prescription} />
+
+                                                </Box>
+                                            </Box>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button colorScheme="blue" mr={3} onClick={closeModal}>
+                                                Close
+                                            </Button>
+                                            <Button colorScheme="teal" onClick={addPrescription}>
+                                                Add Prescription
+                                            </Button>
+                                        </ModalFooter>
+                                    </ModalContent>
+                                </Modal>
+                            </div>
                         </div>
                         <hr className="m-3 mt-2"></hr>
                         <div className="flex">

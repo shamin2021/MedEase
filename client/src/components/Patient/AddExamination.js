@@ -1,10 +1,12 @@
 import { useState, React, useEffect } from "react";
 import { GridItem } from "@chakra-ui/react";
-import useAuth from "../hooks/useAuth";
-import useAxiosMethods from "../hooks/useAxiosMethods";
+import useAuth from "../../hooks/useAuth";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 const AddExamination = () => {
+
+  
   const { auth } = useAuth();
   const { post } = useAxiosMethods();
   const navigate = useNavigate();
@@ -105,21 +107,6 @@ const AddExamination = () => {
     calculateWaistHeightRatio();
   }, [waist, height]);
 
-  function InputBox(props) {
-    return (
-      <div className=" flex flex-col m-2">
-        <label className="form-label mb-1">{props.name}</label>
-        <input
-          name={props.name}
-          className="form-input p-2"
-          onChange={(event) => props.handle(event.target.value)}
-          value={props.value}
-          required={props.required}
-        />
-      </div>
-    );
-  }
-
   function CalculateBox(props) {
     return (
       <div className=" flex flex-col m-2">
@@ -141,10 +128,6 @@ const AddExamination = () => {
       const bmiValue = weightInKg / (heightInM * heightInM);
       setBmi(bmiValue.toFixed(2));
     }
-  };
-
-  const handleChangeCondition = (setCondition, event) => {
-    setCondition(event.target.value);
   };
 
   const calculateWaistHeightRatio = () => {
@@ -222,6 +205,7 @@ const AddExamination = () => {
                         Cholesterol Level (4 - 8)
                       </label>
                       <input
+                        placeholder="4"
                         name="cholesterolLvl"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -246,9 +230,9 @@ const AddExamination = () => {
                   </div>
                   <div className="flex">
                     <div className=" flex flex-col m-2">
-                      <label className="form-label mb-1">Hearing Right</label>
+                      <label className="form-label mb-1">Hearing Right (1 - 6)</label>
                       <input
-                        placeholder="Normal"
+                        placeholder="1"
                         name="hearingRight"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -259,9 +243,9 @@ const AddExamination = () => {
                       />
                     </div>
                     <div className=" flex flex-col m-2">
-                      <label className="form-label mb-1">Hearing Left</label>
+                      <label className="form-label mb-1">Hearing Left (1 - 6)</label>
                       <input
-                        placeholder="Normal"
+                        placeholder="1"
                         name="hearingLeft"
                         className="form-input p-2"
                         onChange={(event) => setHearingLeft(event.target.value)}
@@ -273,9 +257,9 @@ const AddExamination = () => {
                   </div>
                   <div className="flex">
                     <div className=" flex flex-col m-2">
-                      <label className="form-label mb-1">Vision Right</label>
+                      <label className="form-label mb-1">Vision Right (1 - 10)</label>
                       <input
-                        placeholder="20/20"
+                        placeholder="10"
                         name="visionRight"
                         className="form-input p-2"
                         onChange={(event) => setVisionRight(event.target.value)}
@@ -284,9 +268,9 @@ const AddExamination = () => {
                       />
                     </div>
                     <div className=" flex flex-col m-2">
-                      <label className="form-label mb-1">Vision Left</label>
+                      <label className="form-label mb-1">Vision Left (1 - 10)</label>
                       <input
-                        placeholder="20/40"
+                        placeholder="10"
                         name="visionLeft"
                         className="form-input p-2"
                         onChange={(event) => setVisionLeft(event.target.value)}

@@ -2,6 +2,7 @@ package com.medease.backend.controller;
 
 import java.util.HashMap;
 
+import com.medease.backend.repository.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medease.backend.entity.AssignedRecommendation;
 import com.medease.backend.entity.UserRecommendationId;
-import com.medease.backend.repository.AssignedRecommendationRepository;
-import com.medease.backend.repository.RecommendationRepository;
 import com.medease.backend.service.AssignedRecommendationService;
 import com.medease.backend.service.DateHandleService;
 import com.medease.backend.service.PatientService;
@@ -30,6 +29,10 @@ public class AssignedRecommendationController {
     private final RecommendationRepository recommendationRepository;
     private final AssignedRecommendationRepository assignedRecommendationRepository;
     private final AssignedRecommendationService assignedRecommendationService;
+    private final UserRepository userRepository;
+    private final HLCRepository hlcRepository;
+    private final PatientRepository patientRepository;
+    private final SelfAssessmentRepository selfAssessmentRepository;
 
     private final PatientService patientService;
 
@@ -37,12 +40,16 @@ public class AssignedRecommendationController {
     public ResponseEntity<?> getAllAssignedRecommendations(@PathVariable("patient_id") Integer patientId) {
         System.out.println("Calling getAllAssignedRecommendations()");
         System.out.println("User id: " + patientId);
+        var patientName = userRepository.findById(patientId).orElseThrow().getFirstname() + " " + userRepository.findById(patientId).orElseThrow().getLastname();
+        var patientHlc = patientRepository.findPatient(patientId).orElseThrow().getPatient_hlc().getHlc_id();
+        var patientHlcName = hlcRepository.findById(patientHlc).orElseThrow().getHlc_name();
+        var recentAssessment = selfAssessmentRepository.findRecentAssessmentById(patientId);
 
         var userDetails = new HashMap<String, Object>();
         userDetails.put("id", patientId.toString());
-        userDetails.put("name", "Shamin Fernando");
-        userDetails.put("riskLevel", "High");
-        userDetails.put("hlcName", "Colombo");
+        userDetails.put("name", patientName);
+        userDetails.put("riskLevel", recentAssessment);
+        userDetails.put("hlcName", patientHlcName);
 
         int weekNumber = DateHandleService.getCurrentWeekNumber();
 

@@ -25,7 +25,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Patient = () => {
-
   const { get } = useAxiosMethods();
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,16 +42,32 @@ const Patient = () => {
     }
   }, []);
 
+  const lastRisk = dashboard.riskArray?.[dashboard.riskArray.length - 1];
+  const riskL = lastRisk !== undefined ? lastRisk[1] : "No risk data available";
+
 
   let bgColorClass;
 
-  if (dashboard.lastSelfAssessment?.risk === "PENDING") {
+  if (riskL === "PENDING") {
     bgColorClass = "bg-[#fbfbfb]";
-  } else if (dashboard.lastSelfAssessment?.risk === "HIGH") {
+  } else if (riskL === "HIGH") {
     bgColorClass = "bg-[#fdc2c2]";
   } else {
     bgColorClass = "bg-[#d5ffcf]";
   }
+
+  
+  const labels = dashboard.riskArray?.map((item) => item[0]) ;
+  const riskData = dashboard.riskArray?.map((item) => {
+    if (item[1] === "PENDING") {
+      return 0;
+    } else if (item[1] === "HIGH") {
+      return 2;
+    } else if (item[1] === "MINIMAL") {
+      return 1;
+    }
+    return item[1]; // If none of the conditions match, return the original value.
+  });
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
@@ -61,7 +76,8 @@ const Patient = () => {
           <Flex flexDirection="column" className="w-3/4">
             <div className="font-bold ">Hi {dashboard.user},</div>
             <div className=" text-[21px] text-[#707070]">
-              These are the statistics for today
+              This is your health Check for today{" "}
+              {dashboard.lastSelfAssessment?.risk}
             </div>
           </Flex>
 
@@ -71,33 +87,25 @@ const Patient = () => {
               className={`w-1/5 ${bgColorClass} shadow-md rounded-lg p-3`}
             >
               <div className=" m-auto">
-                <div className="font-bold text-center">
-                  {dashboard.lastSelfAssessment?.risk}
-                </div>
+                <div className="font-bold text-center">{riskL}</div>
                 <div className="text-center text-[18px] text-[#707070]">
                   Health Status
                 </div>
               </div>
             </Flex>
-          </Flex>
 
-          <Flex flexDirection="column" className="w-3/4 mt-[4%]">
-            <div className="text-[20px] font-semibold ml-3">Patient Growth</div>
-          </Flex>
-          <Flex className="mb-0">
-            <Flex className="w-1/5 items-end mb-3 justify-center">
-              <Flex
-                flexDirection="column"
-                className="w-full h-60 mx-auto p-3 ml-3"
-              >
-                {/* <DonutCh /> */}
-                <div className=" m-auto">
-                  <div className="text-[20px] text-center mt-2">
-                    Patient Risk
-                  </div>
-                  <div className="text-center text-[18px] text-[#707070]">
-                    {" "}
-                    High Risk 40%{" "}
+            <Flex
+              flexDirection="column"
+              className=" w-3/5 shadow-md rounded-lg p-3 ml-3 "
+            >
+              <div className="">
+                <Flex>
+                  <div className="w-1/5">
+                    <img
+                      htmlFor="select-image"
+                      src={logo}
+                      className="mx-auto p-1 h-[180px] "
+                    />
                   </div>
                   <div className="w-4/5 text-[20px]">
                     <div className="">Current Vitals </div>
@@ -132,10 +140,8 @@ const Patient = () => {
                       </div>
                     </Flex>
                   </div>
-                </div>
                 </Flex>
-              
-            </Flex>
+              </div>
             </Flex>
 
             <Flex
@@ -143,31 +149,24 @@ const Patient = () => {
               className=" w-1/5 shadow-md rounded-lg p-3 ml-3 "
             >
               <div className="mb-1">
-                <div className="text-[18px] font-bold">Blood Sugar</div>
+                <div className="text-[18px] font-bold">Blood Sugar fasting</div>
                 <div className="text-[18px] text-[#707070]">
                   {dashboard.medicalTest?.fastingbloodSugar}
                 </div>
                 <hr />
               </div>
               <div className="mb-1">
-                <div className="text-[18px] font-bold">Pressure</div>
-                <div className="text-[18px] text-[#707070]">
-                  {dashboard.medicalTest?.sbp}
-                </div>
-                <hr />
-              </div>
-              <div className="mb-1">
-                <div className="text-[18px] font-bold">Lipid</div>
+                <div className="text-[18px] font-bold">Lipid Tg</div>
                 <div className="text-[18px] text-[#707070]">
                   {dashboard.medicalTest?.lipidTg}
                 </div>
                 <hr />
               </div>
             </Flex>
-
+          </Flex>
 
           <Flex className="parent h-auto mt-[2%] text-[20px] bg-white rounded-2xl">
-            <div className="w-full grid grid-cols-5">
+            <div className="w-full grid grid-cols-3">
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Assessments</div>
                 <div>{dashboard.selfAssessmentsCount}</div>
@@ -177,51 +176,22 @@ const Patient = () => {
                 <div>{dashboard.appointmentsCount}</div>
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
-                <div className="font-bold">Lifestyle</div>
-                <div></div>
-              </div>
-              <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
-                <div className="font-bold">HLC visits</div>
-                <div></div>
-              </div>
-              <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
-                <div className="font-bold">Treatments</div>
-                <div></div>
+                <div className="font-bold">Assigned HLC</div>
+                <div>{}</div>
               </div>
             </div>
           </Flex>
-
-          {/* <Flex className="parent h-auto mt-[3%] bg-white border border-1 rounded-2xl">
-            <div className="w-full grid grid-cols-5 divide-x m-3">
-              <div className="text-center  p-1 rounded-md">
-                <div>Assessments</div>
-                <div>2</div>
-              </div>
-              <div className=" text-center">
-                <div>Appointments</div>
-                <div>3</div>
-              </div>
-              <div className="text-center">
-                <div>Lifestyle</div>
-                <div>4</div>
-              </div>
-              <div className="text-center">
-                <div>Treatments</div>
-                <div>None</div>
-              </div>
-              <div className="text-center">
-                <div>HLC visits</div>
-                <div>1</div>
-              </div>
-            </div>
-          </Flex> */}
 
           <Flex className="m-3">
             <div className="">
               <Text fontSize={20} fontWeight={"Bold"}>
                 Risk Assessed
               </Text>
-              <LineChart className=" h-80 w-20" />
+              <LineChart
+                labels={labels}
+                riskData={riskData}
+                className=" h-80 w-20"
+              />
             </div>
           </Flex>
         </div>
@@ -229,29 +199,65 @@ const Patient = () => {
         <div className="w-1/4 pb-3 m-3 mt-0 bg-white shadow-xl rounded-2xl">
           <Calendar className="m-3 pb-4 p-1" />
           <div className="m-3">
-            <div className="text-[20px] m-3">Doctor Consultations Today</div>
+            <div className="m-3">Upcoming Reminders</div>
 
-            <Flex className="m-3 p-3 bg-[#fafafa] rounded-lg">
+            <Flex className="m-3 p-3 bg-[#efefef] rounded-lg">
+              <FaUserDoctor className="text-2xl w-1/5 align-middle m-auto" />
               <Flex flexDirection="column" className="w-3/4 ml-1">
-                <div className="text-[17px] text-[#6b6b6b]">
-                  Online Consultations
-                </div>
-                <div className="text-[17px] text-[#6b6b6b]">321</div>
+                <div className="text-[18px]">Doctors Appointment</div>
+                <div className="text-[17px] text-[#6b6b6b]">27th June</div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
-            <Flex className="m-3 p-3 bg-[#fafafa] rounded-lg">
+
+            <Flex className="m-3 p-3 bg-[#efefef] rounded-lg">
+              <FaHeartCircleCheck className="text-2xl w-1/5 align-middle m-auto" />
               <Flex flexDirection="column" className="w-3/4 ml-1">
-                <div className="text-[17px] text-[#6b6b6b]">Physical Consultations</div>
-                <div className="text-[17px] text-[#6b6b6b]">221</div>
+                <div className="text-[18px]">Lifestyle Track</div>
+                <div className="text-[17px] text-[#6b6b6b] ">27th June</div>
+              </Flex>
+              <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
+            </Flex>
+
+            <Flex className="m-3 p-3 bg-[#efefef] rounded-lg">
+              <FaVialCircleCheck className="text-2xl w-1/5 align-middle m-auto" />
+              <Flex flexDirection="column" className="w-3/4 ml-1">
+                <div className="text-[18px]">Medical Exam</div>
+                <div className="text-[17px] text-[#6b6b6b]">27th June</div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
           </div>
         </div>
-      </Flex >
-    </GridItem >
-  );
-}
+      </Flex>
 
-export default Patient
+      <Flex
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={10}
+        pb="4"
+      >
+        {/* <SimpleTable columns={columns} data={data} /> */}
+        {/* <SimpleTable columns={columns1} data={data1} />  */}
+      </Flex>
+
+      <Flex justifyContent="space-around">
+        {/* <Flex
+                    flexDirection="column"
+                    alignItems="center"
+                    pb="4"
+                >
+                    <Text>
+                        Chart Title
+                    </Text>
+
+                    <BarChart />
+                </Flex> */}
+      </Flex>
+    </GridItem>
+  );
+};
+
+export default Patient;

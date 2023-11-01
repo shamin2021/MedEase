@@ -17,10 +17,10 @@ const Table = ({ data }) => {
                     <div className=" h-96 overflow-y-scroll mb-2">
                         {data.map((item) => (
                             <>
-                                <Link to={`/PatientProfile/${item.patient_id}`}>
+                                <Link to={`/PatientProfileDoctor/${item.user_profile_id}`}>
                                     <div className=" flex mt-4 text-[15px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                                         <div className="w-1/5 m-1 flex ">
-                                            <Avatar size="sm" name={item.firstname} src={item.profile_image ? `data:image/png;base64, ${item.profile_image}` : null} />
+                                            <Avatar size="sm" name={item.firstname} src={item.profile_image ? `data:image/png;base64, ${item.profile_image}` : null} bg='teal.400' />
                                             <div className="w-3/4 ml-6">{item.firstname}</div>
                                         </div>
                                         <div className="w-1/5 m-1">{item.lastname}</div>
@@ -30,14 +30,6 @@ const Table = ({ data }) => {
                                             <Link to={`/AddLifestyle/${item.user_profile_id}`}>
                                                 <button className="p-2 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white">
                                                     Lifestyle Tips
-                                                </button>
-                                            </Link>
-                                            <Link to={`/AddPrescription/${item.patient_id}`}>
-                                                <button
-                                                    href={"/patient"}
-                                                    className="p-2 ml-3 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white"
-                                                >
-                                                    Medical instruction
                                                 </button>
                                             </Link>
                                         </div>

@@ -26,6 +26,9 @@ public class SelfAssessment {
 	@Enumerated(EnumType.STRING)
 	private Risk risk = Risk.PENDING;
 
+	@Enumerated(EnumType.STRING)
+	private Risk diabetes_risk = Risk.PENDING;
+
 	@Column(name = "created_date")
     private LocalDate date;
 

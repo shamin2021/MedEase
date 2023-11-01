@@ -1,8 +1,8 @@
 import "../../styles/Table.css";
-import Doc from "../../assets/Doc.jpg";
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Avatar } from '@chakra-ui/react';
 
 const UserTable = ({ data, status, clicked }) => {
 
@@ -57,11 +57,7 @@ const UserTable = ({ data, status, clicked }) => {
               <>
                 <div className=" flex mt-1 text-[17px] font-medium p-1 rounded-lg hover:">
                   <div className="w-1/4 m-1 flex ">
-                    <img
-                      className="rounded-[100px] mx-auto h-[40px] w-[40px] bg-black"
-                      src={Doc}
-                      alt="Profile Img"
-                    />
+                    <Avatar size="sm" name={item.firstname ?? item.hlc_name} src={item.image ? `data:image/png;base64, ${item.image}` : null} bg='teal.400' />
                     <div className="w-3/4 ml-3">
                       {item.role === "HLC" ? item.hlc_name : item.firstname + " " + item.lastname}
                     </div>

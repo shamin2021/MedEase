@@ -1,8 +1,6 @@
 package com.medease.backend.controller;
 
-import com.medease.backend.dto.ChangeRequestDTO;
-import com.medease.backend.dto.GlobalResponseDTO;
-import com.medease.backend.dto.RegisterRequestDTO;
+import com.medease.backend.dto.*;
 import com.medease.backend.service.HLCService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +16,11 @@ import java.util.List;
 public class HLCController {
 
     private final HLCService hlcService;
+
+    @GetMapping("/getHLCList")
+    public ResponseEntity<List<RegisterRequestDTO>> getHLCList (){
+        return ResponseEntity.ok(hlcService.getHLCList());
+    }
 
     @GetMapping("/getHlcProfile/{userId}")
     public RegisterRequestDTO getHlcProfile(@PathVariable Integer userId) {

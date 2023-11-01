@@ -172,7 +172,7 @@ const AddLifestyle = () => {
                   <div className=" flex flex-col md:w-1/4">
                     <div className="text-[#797878]">Recent Risk</div>
                     <div className="p-1 pl-0 text-[#f85353] font-semibold">
-                      {patient?.riskLevel}
+                      {patient?.riskLevel ?? "Not Submitted"}
                     </div>
                   </div>
                   <div className=" flex flex-col md:w-1/4">

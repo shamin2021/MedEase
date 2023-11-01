@@ -6,11 +6,14 @@ import com.medease.backend.dto.UserDTO;
 import com.medease.backend.entity.User;
 import com.medease.backend.enumeration.Role;
 import com.medease.backend.repository.HLCRepository;
+import com.medease.backend.repository.UserImageRepository;
 import com.medease.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -19,7 +22,9 @@ public class UserManagementService {
 
     private final UserRepository userRepository;
     private final HLCRepository hlcRepository;
+    private final UserImageRepository userImageRepository;
 
+    @Transactional
     public List<UserDTO> getAllUsers() {
         System.out.println(userRepository.retrieveUserList());
         List<Object[]> users = userRepository.retrieveUserList();

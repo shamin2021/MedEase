@@ -1,20 +1,67 @@
-import React, { useState } from "react";
-import { Docs } from '../Docs'
+import React, { useState, useEffect } from "react";
 import Table from "./TableHLC";
 import {
   GridItem
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaSearch, FaPlus } from "react-icons/fa";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAxiosMethods from "../../hooks/useAxiosMethods";
 
-const SearchDoc = () => {
+const SearchHLC = () => {
+
+  const { get } = useAxiosMethods();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [query, setQuery] = useState("");
-  const keys = ["first_name", "last_name", "email"];
-  const search = (data) => {
-    return data.filter((item) =>
-      keys.some((key) => item[key].toLowerCase().includes(query))
-    );
+  const [hlc, setHlC] = useState([]);
+  const [searchedHlc, setSearchedHlc] = useState([]);
+  const [initializedSearch, setInitializedSearch] = useState(false);
+
+  const search = () => {
+
+    setSearchedHlc(hlc.filter((item) => {
+      return (
+        item.hlc_name.toLowerCase().includes(query) ||
+        item.in_charge.toLowerCase().includes(query) ||
+        item.email.toLowerCase().includes(query)
+      );
+    }));
   };
+
+  useEffect(() => {
+    if (hlc.length > 0) {
+      console.log(hlc);
+      if (searchedHlc.length === 0 && !initializedSearch) {
+        setSearchedHlc(hlc)
+        setInitializedSearch(true)
+      }
+      console.log(searchedHlc);
+    }
+  }, [hlc, searchedHlc]);
+
+  useEffect(() => {
+    try {
+      get("/hlc/getHLCList", setHlC)
+
+    } catch (err) {
+      console.error(err);
+      navigate('/login', { state: { from: location }, replace: true });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (query !== "") {
+      search();
+      console.log(query);
+    } else {
+      setSearchedHlc(hlc);
+    }
+  }, [query]);
+
+
+
   return (
     <GridItem colSpan={6} >
       <div className="h-screen py-1 bg-primary mt-[5%]">
@@ -44,11 +91,11 @@ const SearchDoc = () => {
               </div>
             </div>
           </div>
-          <div>{<Table data={search(Docs)} />}</div>
+          <div>{<Table data={searchedHlc} />}</div>
         </div>
       </div>
     </GridItem>
   );
 }
 
-export default SearchDoc
+export default SearchHLC

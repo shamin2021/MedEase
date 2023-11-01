@@ -201,4 +201,36 @@ public class HLCService {
     public Integer getHlcCount() {
         return (int) hlcRepository.count();
     }
+
+    public List<RegisterRequestDTO> getHLCList() {
+
+        var hlcList = hlcRepository.findAll();
+        List<RegisterRequestDTO> hlcdtoList = new ArrayList<>();
+
+        for(HLC hlc : hlcList) {
+            var hlcUser = hlc.getHlc_user().getId();
+            var user = userRepository.findById(hlcUser).orElseThrow();
+
+            var hlcDto = RegisterRequestDTO.builder()
+                    .user_id(hlcUser)
+                    .hlc_name(hlc.getHlc_name())
+                    .mobileNumber(user.getMobileNumber())
+                    .email(user.getEmail())
+                    .moh_area(hlc.getMoh_area())
+                    .gn_number(hlc.getGn_number())
+                    .gn_division(hlc.getGn_division())
+                    .ds_division(hlc.getDs_division())
+                    .phi_area(hlc.getPhi_area())
+                    .phm_area(hlc.getPhm_area())
+                    .in_charge(hlc.getIn_charge())
+                    .in_charge_designation(hlc.getIn_charge_designation())
+                    .in_charge_email(hlc.getIn_charge_email())
+                    .in_charge_mobile(hlc.getIn_charge_mobile())
+                    .build();
+            hlcdtoList.add(hlcDto);
+        }
+
+        return hlcdtoList;
+
+    }
 }
