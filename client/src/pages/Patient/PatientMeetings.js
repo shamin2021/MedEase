@@ -200,6 +200,14 @@ const PatientMeetings = () => {
                                 <Tab>Ongoing</Tab>
                                 <Tab>Upcoming</Tab>
                                 <Tab>History</Tab>
+                                <button
+                                    onClick={() =>
+                                        navigate(`/SearchDoctorPatient/`)
+                                    }
+                                    className="flex mx-auto justify-right px-4 py-2 mb-2 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary ml-[600px]"
+                                >
+                                    Schedule
+                                </button>
                             </TabList>
 
                             <TabPanels className='h-[22rem] overflow-y-scroll'>

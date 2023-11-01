@@ -49,7 +49,7 @@ const DirectChatPage = () => {
 	function createDirectChat(creds) {
 		getOrCreateChat(
 			creds,
-			{ is_direct_chat: true, usernames: [username.toLowerCase()] },
+			{ is_direct_chat: true, usernames: [username] },
 			() => setUsername('')
 		)
 	}
