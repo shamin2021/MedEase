@@ -47,9 +47,6 @@ const Pstient = () => {
     }
   }, []);
 
-  {
-    ;
-  }
   const labels = dashboard.meetCount?.map((item) => item[0]);
   const meetCounts = dashboard.meetCount?.map((item) => item[1]);
 

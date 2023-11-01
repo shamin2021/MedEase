@@ -59,8 +59,20 @@ public class DashboardService {
             public final Integer physicalMeet = availabilityRepository.findMeetingCountByType("PHYSICAL").size();
             public final List<Object> hlcPatient = hlcRepository.findHLCpatient();
             public final List<Object> meetCount = availabilityRepository.findMeetingCountByDate();
-            
-            
+        };
+    }
+
+    public Object getDoctorDashboard(Integer id) {
+        return new Object() {
+            public final Integer patientsCount = patientService.getPatientCount();
+            public final Integer doctorsCount = doctorService.getDoctorCount();
+            public final Integer hlcCount = hlcService.getHlcCount();
+            public final Integer healthyCount = selfAssessmentRepository.findPatientCountByRisk("MINIMAL").size();
+            public final Integer highRiskCount = selfAssessmentRepository.findPatientCountByRisk("HIGH").size();
+            public final Integer virtualMeet = availabilityRepository.findMeetingCountByType("VIRTUAL").size();
+            public final Integer physicalMeet = availabilityRepository.findMeetingCountByType("PHYSICAL").size();
+            public final List<Object> hlcPatient = hlcRepository.findHLCpatient();
+            public final List<Object> meetCount = availabilityRepository.findMeetingCountByDate();
         };
     }
 }

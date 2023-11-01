@@ -32,4 +32,11 @@ public class DashboardController {
         System.out.println("Getting admin dashboard");
         return ResponseEntity.ok(res);
     }
+
+    @GetMapping("/doctor/{id}")
+    public ResponseEntity<?> doctorDashboard(@PathVariable Integer id) {
+        Object res = dashboardService.getDoctorDashboard(id);
+        System.out.println("Getting doctor dashboard");
+        return ResponseEntity.ok(res);
+    }
 }
