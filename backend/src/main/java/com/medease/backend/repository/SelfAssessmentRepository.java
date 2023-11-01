@@ -13,7 +13,7 @@ public interface SelfAssessmentRepository extends JpaRepository<SelfAssessment, 
 
     SelfAssessment findTopByPatientOrderByIdDesc(Integer patientId);
 
-    @Query(value = "SELECT created_date, risk FROM selfassessments WHERE patient = :patientId ORDER BY created_date", nativeQuery = true)
+    @Query(value = "SELECT created_date, risk FROM selfassessments ORDER BY created_date", nativeQuery = true)
     List<Object> findDateRiskByPatientOrderByDate(Integer patientId);
 
     @Query(value = """

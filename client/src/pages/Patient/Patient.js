@@ -37,6 +37,8 @@ const Patient = () => {
     useEffect(() => {
       try {
         get(`/dashboard/patient/${userId}`, setDashboardData);
+        console.log("rsi");
+        console.log(dashboard);
       } catch (err) {
         console.error(err);
         navigate("/login", { state: { from: location }, replace: true });
@@ -54,6 +56,21 @@ const Patient = () => {
       bgColorClass = "bg-[#d5ffcf]";
     }
 
+
+    const labels = dashboard.riskArray?.map((item) => item[0]);
+    const riskData = dashboard.riskArray?.map((item) => {
+      if (item[1] === "PENDING") {
+        return 0;
+      } else if (item[1] === "HIGH") {
+        return 2;
+      } else if (item[1] === "MINIMAL") {
+        return 1;
+      }
+      return item[1]; // If none of the conditions match, return the original value.
+    });
+
+    console.log(labels,riskData);
+
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
       <Flex className=" mt-[4%]">
@@ -61,7 +78,8 @@ const Patient = () => {
           <Flex flexDirection="column" className="w-3/4">
             <div className="font-bold ">Hi {dashboard.user},</div>
             <div className=" text-[21px] text-[#707070]">
-              This is your health Check for today
+              This is your health Check for today {labels}
+              {riskData}
             </div>
           </Flex>
 
@@ -178,6 +196,7 @@ const Patient = () => {
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Treatments</div>
+
                 <div></div>
               </div>
             </div>
@@ -213,7 +232,11 @@ const Patient = () => {
               <Text fontSize={20} fontWeight={"Bold"}>
                 Risk Assessed
               </Text>
-              <LineChart className=" h-80 w-20" />
+              <LineChart
+                labels={labels}
+                riskData={riskData}
+                className=" h-80 w-20"
+              />
             </div>
           </Flex>
         </div>
@@ -227,7 +250,9 @@ const Patient = () => {
               <FaUserDoctor className="text-2xl w-1/5 align-middle m-auto" />
               <Flex flexDirection="column" className="w-3/4 ml-1">
                 <div className="text-[18px]">Doctors Appointment</div>
-                <div className="text-[17px] text-[#6b6b6b]">27th June</div>
+                <div className="text-[17px] text-[#6b6b6b]">
+                  {dashboard.medicalTest?.medicalTestDate}
+                </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>

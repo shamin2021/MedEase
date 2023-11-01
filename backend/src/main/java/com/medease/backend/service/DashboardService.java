@@ -26,7 +26,7 @@ public class DashboardService {
     private final HLCService hlcService;
 
     public Object getPatientDashboard(Integer id) {
-        SelfAssessment lastSelfAssessment = selfAssessmentRepository.findTopByPatientOrderByIdDesc(id);
+        
         return new Object() {
             public final Integer selfAssessmentsCount = selfAssessmentRepository.countByPatient(id);
             public final Integer appointmentsCount = meetingService.getMeetingCountByPatientId(id);
@@ -34,9 +34,11 @@ public class DashboardService {
                     .getAssignedRecommendationCount(id);
             public final Integer hlcVisitsCount = 0;
             public final Integer treatmentsCount = 0;
+            SelfAssessment lastSelfAssessment = selfAssessmentRepository.findTopByPatientOrderByIdDesc(id);
             public final MedicalTest medicalTest = medicalTestRepository.findBySelfAssessment(lastSelfAssessment);
             public final List<Object> riskArray = selfAssessmentRepository.findDateRiskByPatientOrderByDate(id);
             public final String user = userRepository.retrieveFirstName(id);
+            
         };
 
     }

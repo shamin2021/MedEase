@@ -11,29 +11,23 @@ ChartJS.register(
   PointElement
 );
 
-const LineChart = () => {
+const LineChart = ({labels,riskData}) => {
 
-  var data = {
-    labels: [
-      "02/02/2022",
-      "21/07/2022",
-      "13/10/2022",
-      "01/02/2023",
-      "01/08/2023",
-    ],
-    datasets: [
-      {
-        label: "First Dataset",
-        data: [2, 1, 0, 2, 1],
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgba(255, 99, 132, 1)",
-        borderWidth: 1,
-        shadowBlur: 10,
-        shadowColor: "rgba(0, 0, 0, 0.3)",
-        borderRadius: 10,
-      },
-    ],
-  };
+      var data = {
+        labels: labels,
+        datasets: [
+          {
+            label: "First Dataset",
+            data: riskData,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgba(255, 99, 132, 1)",
+            borderWidth: 1,
+            shadowBlur: 10,
+            shadowColor: "rgba(0, 0, 0, 0.3)",
+            borderRadius: 10,
+          },
+        ],
+      };
 
   var options = {
     maintainAspectRatio: false,
@@ -71,9 +65,9 @@ const LineChart = () => {
         ticks: {
           callback: (value) => {
             // Define custom labels for the y-axis based on your data
-            if (value === 0) return "Low";
-            if (value === 1) return "Medium";
-            if (value === 2) return "High";
+            if (value === 0) return "PENDING";
+            if (value === 1) return "MINIMAL";
+            if (value === 2) return "HIGH";
             return ""; // Return an empty string for other values
           },
         },
@@ -85,8 +79,9 @@ const LineChart = () => {
   };
 
   return (
-    <Flex height="300px" className='mt-4'>
-      <Line data={data} options={options}  />
+    <Flex height="300px" className="mt-4">
+      {console.log(riskData)}
+      <Line data={data} options={options} />
     </Flex>
   );
 }
