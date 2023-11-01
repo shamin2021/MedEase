@@ -70,6 +70,8 @@ import AddHLC from './pages/Admin/AddHLC';
 
 import DoctorMeetings from './pages/Doctor/DoctorMeetings';
 import DoctorSetting from './pages/Doctor/DoctorSetting';
+import ViewProgressByDoctor from './pages/LifestyleMonitoring/ViewProgressByDoctor';
+import ViewQuizByDoctor from './pages/LifestyleMonitoring/ViewQuizByDoctor';
 // import DoctorProfile from './pages/Doctor/DoctorProfile';
 
 function App() {
@@ -140,6 +142,8 @@ function App() {
               <Route path="/DoctorAvailability" element={<Availability />} />
               <Route path="/ManagePatient" element={<ManagePatient />} />
               <Route path="/AddLifestyle/:userId" element={<AddLifestyle />} />
+              <Route path="/LifestyleProgress/:userId" element={<ViewProgressByDoctor />} />
+              <Route path="/ViewQuizProgress" element={<ViewQuizByDoctor />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES[4], ROLES[3]]} />} >
