@@ -72,7 +72,7 @@ public class EmailService {
         }
     }
 
-    @Scheduled(fixedRate = 1000 * 60 * 5)
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 24)
     public void sendLifestyleRecommendationsDaily() {
 
         List<AssignedRecommendation> assignedRecommendations = assignedRecommendationRepository.findAll();
@@ -94,7 +94,7 @@ public class EmailService {
         }
     }
 
-    @Scheduled(fixedRate = 1000 * 60 * 5)
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 24 * 7)
     public void sendLifestyleRecommendationsWeekly() {
 
         List<AssignedRecommendation> assignedRecommendations = assignedRecommendationRepository.findAll();
