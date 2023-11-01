@@ -44,6 +44,7 @@ public class SelfAssessmentDTO {
 
     //medical test related
     private Risk risk;
+    private Risk diabetes_risk;
 
     public boolean isPhysicalActivity() {
         return physicalActivity;

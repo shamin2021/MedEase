@@ -205,6 +205,7 @@ const AddExamination = () => {
                         Cholesterol Level (4 - 8)
                       </label>
                       <input
+                        placeholder="4"
                         name="cholesterolLvl"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -229,9 +230,9 @@ const AddExamination = () => {
                   </div>
                   <div className="flex">
                     <div className=" flex flex-col m-2">
-                      <label className="form-label mb-1">Hearing Right</label>
+                      <label className="form-label mb-1">Hearing Right (1 - 6)</label>
                       <input
-                        placeholder="Normal"
+                        placeholder="1"
                         name="hearingRight"
                         className="form-input p-2"
                         onChange={(event) =>
@@ -242,9 +243,9 @@ const AddExamination = () => {
                       />
                     </div>
                     <div className=" flex flex-col m-2">
-                      <label className="form-label mb-1">Hearing Left</label>
+                      <label className="form-label mb-1">Hearing Left (1 - 6)</label>
                       <input
-                        placeholder="Normal"
+                        placeholder="1"
                         name="hearingLeft"
                         className="form-input p-2"
                         onChange={(event) => setHearingLeft(event.target.value)}
@@ -256,9 +257,9 @@ const AddExamination = () => {
                   </div>
                   <div className="flex">
                     <div className=" flex flex-col m-2">
-                      <label className="form-label mb-1">Vision Right</label>
+                      <label className="form-label mb-1">Vision Right (1 - 10)</label>
                       <input
-                        placeholder="20/20"
+                        placeholder="10"
                         name="visionRight"
                         className="form-input p-2"
                         onChange={(event) => setVisionRight(event.target.value)}
@@ -267,9 +268,9 @@ const AddExamination = () => {
                       />
                     </div>
                     <div className=" flex flex-col m-2">
-                      <label className="form-label mb-1">Vision Left</label>
+                      <label className="form-label mb-1">Vision Left (1 - 10)</label>
                       <input
-                        placeholder="20/40"
+                        placeholder="10"
                         name="visionLeft"
                         className="form-input p-2"
                         onChange={(event) => setVisionLeft(event.target.value)}
