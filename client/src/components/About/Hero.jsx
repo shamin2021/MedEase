@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import lottie from 'lottie-web';
 import aboutAnimation from '../../assets/lottie/Aboutanimation.json';
-import { Box, Container, Stack, Heading, Text, } from '@chakra-ui/react';
+import { Box, Container, Stack, Heading, Text, Flex} from '@chakra-ui/react';
 
 const AboutUs = () => {
 
@@ -18,24 +18,33 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <Container maxW={'3xl'}>
-      <Stack
-        as={Box}
-        textAlign={'center'}
-        spacing={{ base: 8, md: 14 }}
-        py={{ base: 20, md: 36 }}>
-        <Heading
-          fontWeight={600}
-          fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
-          lineHeight={'110%'}>
-          About Us <br />
-        </Heading>
-        <Text color={'gray.500'}>
-          MedEase is more than an app; it's a caring companion on your journey towards wellness. Dedicated to supporting individuals living with non-communicable diseases (NCDs), MedEase offers a range of essential features designed to simplify and enrich your daily health experience. From seamless communication with doctors and curated healthy living tips to locating specialized Health Lifestyle Centers (HLCs) and managing appointments effortlessly, MedEase is your trusted partner in navigating the world of health with confidence and ease. Our commitment is to empower you with the tools you need to live your best life, every day. Welcome to MedEase - where health meets heart.
-        </Text>
-        <Box w="100%" h="auto" ref={container} mt="4" mx="auto"/>
-      </Stack>
-    </Container>
+    <Container maxW={'5xl'}>
+  <Flex
+    justifyContent="flex-start"
+    flexDirection={{ base: 'column', md: 'row' }}
+    alignItems="center"
+    spacing={4}
+    py={16}
+    h="80vh" // Set the vertical height to 100%
+  >
+    <Stack as={Box} maxW="100%" textAlign="left">
+      <Heading
+        as="h2"
+        size="lg"
+        mb="2"
+        fontSize={{ base: '2xl', md: '3xl', lg: '6xl' }}
+        color="#023276"
+      >
+        About Us <br />
+      </Heading>
+      <Text mb="4" fontSize={{ sm: 'lg', lg: 'xl' }}>
+        MedEase is more than an app; it's a caring companion on your journey towards wellness. Dedicated to supporting individuals living with non-communicable diseases (NCDs), MedEase offers a range of essential features designed to simplify and enrich your daily health experience. Our commitment is to empower you with the tools you need to live your best life, every day. Welcome to MedEase - where health meets heart.
+      </Text>
+    </Stack>
+    <Box w="100%" ref={container} mx="auto" />
+  </Flex>
+</Container>
+
   );
 };
 
