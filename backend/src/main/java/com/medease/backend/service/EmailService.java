@@ -1,20 +1,35 @@
 package com.medease.backend.service;
 
+import com.medease.backend.Exception.CustomException;
+import com.medease.backend.assets.NotificationTemplate;
+import com.medease.backend.assets.ResetPasswordEmailTemplate;
+import com.medease.backend.entity.Meeting;
+import com.medease.backend.repository.DoctorRepository;
+import com.medease.backend.repository.MeetingRepository;
+import com.medease.backend.repository.PatientRepository;
+import com.medease.backend.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
     public final JavaMailSender mailSender;
-
+    private final MeetingRepository meetingRepository;
+    private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
+    private final UserRepository userRepository;
     public void sendEmail(String recipientEmail, String subject, String content) throws MessagingException, UnsupportedEncodingException {
 
         MimeMessage message = mailSender.createMimeMessage();
@@ -27,4 +42,34 @@ public class EmailService {
         mailSender.send(message);
 
     }
+
+    @Scheduled(fixedRate = 1000 * 60 * 5)
+    public void sendMeetingReminders() {
+
+        List<Meeting> meetings = meetingRepository.findAll();
+        for(Meeting meeting: meetings) {
+
+            var patient = patientRepository.findById(meeting.getPatient().getPatient_id()).orElseThrow();
+            var patientMail = userRepository.findById(patient.getPatient_user().getId()).orElseThrow().getEmail();
+            var doctor = doctorRepository.findById(meeting.getDoctor().getDoctor_id()).orElseThrow();
+            var doctorMail = userRepository.findById(doctor.getDoctor_user().getId()).orElseThrow().getEmail();
+
+            Duration timeUntilMeeting = Duration.between(meeting.getStart(), LocalDateTime.now());
+
+            System.out.println(meeting.getStart());
+            System.out.println(LocalDateTime.now());
+
+            if(timeUntilMeeting.toMinutes() == 15 || timeUntilMeeting.toMinutes() == 14){
+                try{
+                    sendEmail(patientMail, "Meeting Reminder", NotificationTemplate.NotificationTemplate());
+                    sendEmail(doctorMail, "Meeting Reminder", NotificationTemplate.NotificationTemplate());
+//            smsService.sendSMS("+94767256838",ResetPasswordSmsTemplate.PasswordResetSMSTemplate(resetURL));
+                } catch (UnsupportedEncodingException | MessagingException e) {
+                    throw new CustomException("Error while sending notification.");
+                }
+            }
+        }
+
+    }
+
 }
