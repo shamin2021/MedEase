@@ -22,7 +22,7 @@ const Table = ({ data }) => {
                     <div className=" h-96 overflow-y-scroll mb-2">
                         {data.map((item) => (
                             <>
-                                <Link to={`/PatientProfileHLC/${item.patient_id}`}>
+                                <Link to={`/PatientProfileHLC/${item.user_profile_id}`}>
                                     <div className=" flex mt-4 text-[15px] font-medium hover:bg-primary p-1 rounded-lg hover:">
                                         <div className="w-1/5 m-1 flex ">
                                             <Avatar size="sm" name={item.firstname} src={item.profile_image ? `data:image/png;base64, ${item.profile_image}` : null} bg='teal.400' />
@@ -32,20 +32,19 @@ const Table = ({ data }) => {
                                         <div className="w-1/5 m-1">{item.email}</div>
                                         <div className="w-1/5 m-1">{item.gender}</div>
                                         <div className="w-2/5 m-1 text-center">
-                                            {item.patient_hlc_name === auth.hlc_name ?
-                                                <Link to={"/AddLifestyleHLC"}>
-                                                    <button className="p-2 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white">
-                                                        Lifestyle Tips
-                                                    </button>
-                                                </Link> : null}
-                                            <Link to={`/AddExaminationHLC/2`}>
+                                            <Link to={`/AddLifestyle/${item.user_profile_id}`}>
+                                                <button className={`p-2 ${item.patient_hlc_name === auth.hlc_name ? "bg-primary hover:bg-[#7ebcef] hover:text-white" : "bg-slate-300"} rounded-md border-4 border-white`} disabled={item.patient_hlc_name === auth.hlc_name ? false : true}>
+                                                    Lifestyle Tips
+                                                </button>
+                                            </Link>
+                                            {/* <Link to={`/AddExaminationHLC/2`}>
                                                 <button
                                                     href={"/patient"}
                                                     className="p-2 ml-3 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white"
                                                 >
                                                     Risk Assessment
                                                 </button>
-                                            </Link>
+                                            </Link> */}
                                         </div>
                                     </div>
                                 </Link>

@@ -252,7 +252,6 @@ const ViewSelfAssessmentComponent = () => {
               <div className="md:w-full mt-4 ml-2">
                 <div className="container horizontal justify-center py-1">
                   <div className="parent m-3 mt-1">
-                    <InputGeneral name="Name" data={selfassessments.firstName + " " + selfassessments.lastName} />
                     <InputGeneral name="Date Attempted" data={selfassessments.date} />
                     <InputGeneral name="Age at Assessment" data={calculateAge(selfassessments.dob)} />
                     <InputGeneral name="Gender" data={selfassessments.gender} />

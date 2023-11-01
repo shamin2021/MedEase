@@ -2,12 +2,9 @@ package com.medease.backend.service;
 
 import com.medease.backend.Exception.CustomException;
 import com.medease.backend.assets.NotificationTemplate;
-import com.medease.backend.assets.ResetPasswordEmailTemplate;
+import com.medease.backend.entity.AssignedRecommendation;
 import com.medease.backend.entity.Meeting;
-import com.medease.backend.repository.DoctorRepository;
-import com.medease.backend.repository.MeetingRepository;
-import com.medease.backend.repository.PatientRepository;
-import com.medease.backend.repository.UserRepository;
+import com.medease.backend.repository.*;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +28,8 @@ public class EmailService {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
     private final UserRepository userRepository;
+    private final RecommendationRepository recommendationRepository;
+    private final AssignedRecommendationRepository assignedRecommendationRepository;
     public void sendEmail(String recipientEmail, String subject, String content) throws MessagingException, UnsupportedEncodingException {
 
         MimeMessage message = mailSender.createMimeMessage();
@@ -63,13 +63,27 @@ public class EmailService {
                 try{
                     sendEmail(patientMail, "Meeting Reminder", NotificationTemplate.NotificationTemplate());
                     sendEmail(doctorMail, "Meeting Reminder", NotificationTemplate.NotificationTemplate());
-//            smsService.sendSMS("+94767256838",ResetPasswordSmsTemplate.PasswordResetSMSTemplate(resetURL));
                 } catch (UnsupportedEncodingException | MessagingException e) {
                     throw new CustomException("Error while sending notification.");
                 }
             }
         }
+    }
 
+    @Scheduled(fixedRate = 1000 * 60 * 5)
+    public void sendLifestyleRecommendationsDaily() {
+
+        List<AssignedRecommendation> assignedRecommendations = assignedRecommendationRepository.findAll();
+        for(AssignedRecommendation assignedRecommendation: assignedRecommendations) {
+            var assignedRecommendationID = assignedRecommendation.getAssignedRecommendationId();
+            var checkDaily = recommendationRepository.findById(assignedRecommendationID).orElseThrow().getFrequency();
+
+            if(Objects.equals(checkDaily, "Daily")){
+//                sendEmail(patientMail, "LifeStyle Recommendation", NotificationTemplate.NotificationTemplate());
+            }
+
+
+        }
     }
 
 }
