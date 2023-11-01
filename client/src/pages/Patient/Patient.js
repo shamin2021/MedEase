@@ -43,13 +43,14 @@ const Patient = () => {
   }, []);
 
   const lastRisk = dashboard.riskArray?.[dashboard.riskArray.length - 1];
+  const riskL = lastRisk !== undefined ? lastRisk[1] : "No risk data available";
 
 
   let bgColorClass;
 
-  if (lastRisk[1] === "PENDING") {
+  if (riskL === "PENDING") {
     bgColorClass = "bg-[#fbfbfb]";
-  } else if (lastRisk[1] === "HIGH") {
+  } else if (riskL === "HIGH") {
     bgColorClass = "bg-[#fdc2c2]";
   } else {
     bgColorClass = "bg-[#d5ffcf]";
@@ -86,7 +87,7 @@ const Patient = () => {
               className={`w-1/5 ${bgColorClass} shadow-md rounded-lg p-3`}
             >
               <div className=" m-auto">
-                <div className="font-bold text-center">{lastRisk[1]}</div>
+                <div className="font-bold text-center">{riskL}</div>
                 <div className="text-center text-[18px] text-[#707070]">
                   Health Status
                 </div>
