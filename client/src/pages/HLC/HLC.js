@@ -1,167 +1,3 @@
-// import { Box, Flex, Input, Button, GridItem, Text, Heading } from '@chakra-ui/react'
-// import { HiSearch } from 'react-icons/hi';
-// import React from 'react'
-
-// import CommonCard from '../../components/CommonCard'
-// import BarChart from '../../components/BarChart'
-// import DoughnutChart from '../../components/DoughnutChart'
-// import SimpleTable from '../../components/Table/SimpleTable'
-
-
-// const HLC = () => {
-//   const [searchQuery, setSearchQuery] = React.useState("");
-
-//   const handleSearch = () => {
-//     console.log(`Searching for: ${searchQuery}`);
-//   };
-
-//   const columns1 = [
-//     { header: 'HLC Name', accessor: 'employeeName' },
-//     { header: 'Address', accessor: 'position' },
-//     { header: 'Contact Number', accessor: 'department' },
-//     // { header: 'Department 1', accessor: 'department1' },
-//     // { header: 'Department 1', accessor: 'department1' },
-//   ];
-
-//   const data1 = [
-//     { employeeName: 'Divlapitiya HLC', position: 'Dunagaha, Divlapitiya', department: '031 2246262' },
-//     { employeeName: 'Piliyandala HLC', position: '50 Old Road Maharagama, Boralesgamuwa', department: '011 3648862' },
-//     { employeeName: 'Nugegoda HLC', position: 'Madiwela Rd, Nugegoda', department: '022 7846562' },
-
-//     // Add more data as needed
-//   ];
-
-//   const columns = [
-//     { header: 'Employee Name', accessor: 'employeeName' },
-//     { header: 'Position', accessor: 'position' },
-//     { header: 'Department', accessor: 'department' },
-//     // { header: 'Department 1', accessor: 'department1' },
-//     // { header: 'Department 1', accessor: 'department1' },
-//   ];
-
-//   const data = [
-//     { employeeName: 'Dr. Emily Johnson', position: 'Chief Medical Officer', department: 'Medical Department' },
-//     { employeeName: 'John Smith', position: 'Nurse', department: 'Nursing Department' },
-//     { employeeName: 'Sarah Williams', position: 'Administrative Assistant', department: 'Administration Department' },
-
-//     // Add more data as needed
-//   ];
-
-//   const doctors = [
-//     { name: "Dr. Kamal Perera", online: true },
-//     { name: "Dr. Nimal Smith", online: false },
-//     { name: "Dr. Hasala Disanayaka", online: true },
-//     { name: "Dr. Samitha De Silva", online: false },
-//   ];
-
-//   return (
-//     <GridItem
-//       colSpan={6}
-//       rowSpan={1}
-//       borderRadius="lg"
-//       p="4"
-
-//     // background="blue.300"
-//     >
-//       <Flex
-//         display="flex"
-//         flexDirection="row"
-//         alignItems="center"
-//         justifyContent="space-between"
-//         spacing={10}
-//         pb="4"
-//       // bg="blue.200"
-//       >
-//         <CommonCard title="Today's Appointments" description={10} />
-//         <CommonCard title="Last Week Patiants" description={140} />
-//         <CommonCard title="Last Week Patiants" description={140} />
-//         <CommonCard title="Last Week Patiants" description={140} />
-
-//       </Flex>
-
-//       <Flex
-//         justifyContent="space-around"
-//       >
-
-
-//         <Flex direction="column" w="10rem">
-//           <Text alignContent={""} fontSize="2xl" fontWeight="bold" mb={4}>
-//             List of Doctors
-//           </Text>
-//           {doctors.map((doctor, index) => (
-//             <Flex key={index} alignItems="center" mb={2}>
-//               <Box
-//                 w={2}
-//                 h={2}
-//                 borderRadius="50%"
-//                 bg={doctor.online ? "green.500" : "red.500"}
-//                 mr={2}
-//               // position="absolute"
-//               // left={'0'}
-//               // top={'30'}
-//               />
-//               <Text>{doctor.name}</Text>
-//             </Flex>
-//           ))}
-//         </Flex>
-
-
-//         <Flex
-//           flexDirection="column"
-//           alignItems="center"
-//           pb="4"
-//         >
-//           <Heading>
-//             HLC Details
-//           </Heading>
-
-
-//           <SimpleTable columns={columns1} data={data1} />
-//         </Flex>
-
-
-//       </Flex>
-
-
-
-//       <Flex
-//         justifyContent="space-around"
-//       >
-//         <Flex
-//           flexDirection="column"
-//           alignItems="center"
-//           pb="4"
-//         >
-//           <Text>
-//             Chart Title
-//           </Text>
-
-//           <DoughnutChart />
-//         </Flex>
-//         <Flex
-//           flexDirection="column"
-//           alignItems="center"
-//           pb="4"
-//         >
-//           <Text>
-//             Chart Title
-//           </Text>
-
-//           <BarChart />
-//         </Flex>
-
-
-//       </Flex>
-
-
-
-//     </GridItem>
-
-//   )
-// }
-
-// export default HLC
-
 import {
   Box,
   Flex,
@@ -172,11 +8,8 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import { FiLogOut } from "react-icons/fi";
-import { HiSearch } from "react-icons/hi";
-import logo from "../../assets/human_outline.png";
 import patient from "../../assets/patient.jpg";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaUserDoctor,
   FaAngleRight,
@@ -184,28 +17,38 @@ import {
   FaHeartCircleCheck,
 } from "react-icons/fa6";
 import CurveLine from "../../components/CurveLine";
+import PieChart from "../../components/PieChart";
 import Calendar from "react-calendar";
 import "react-circular-progressbar/dist/styles.css";
 import DonutCh from "../../components/Donut";
 
-const data = {
-  labels: ["Red", "Blue", "Yellow"],
-  datasets: [
-    {
-      data: [300, 50, 100],
-      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-      hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-    },
-  ],
-};
-const percentage = 66;
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+
+
 
 const Pstient = () => {
-  const [searchQuery, setSearchQuery] = React.useState("");
+  
+      const { get } = useAxiosMethods();
+      const navigate = useNavigate();
+      const location = useLocation();
+      const { auth } = useAuth();
 
-  const handleSearch = () => {
-    console.log(`Searching for: ${searchQuery}`);
-  };
+      const [userId, setUserId] = useState(auth.user_id);
+      const [dashboard, setDashboardData] = useState([]);
+
+      useEffect(() => {
+        try {
+          get(`/dashboard/hlc/${userId}`, setDashboardData);
+        } catch (err) {
+          console.error(err);
+          navigate("/login", { state: { from: location }, replace: true });
+        }
+      }, []);
+      
+      const labels = dashboard.physicalVisits?.map((item) => item[0]);
+      const meetCounts = dashboard.physicalVisits?.map((item) => item[1]);
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
@@ -215,32 +58,33 @@ const Pstient = () => {
             <div className="font-bold ">Lunawa HLC,</div>
             <div className=" text-[21px] text-[#707070]">
               These are the statistics for today
+              {dashboard.hlcId}
             </div>
           </Flex>
 
           <Flex className="mb-0 mt-[1%]">
             <Flex className="w-full mt-[1%] bg-white rounded-2xl">
-              <div className="w-full grid grid-cols-4">
+              <div className="w-full grid grid-cols-3">
                 <div className="bg-[#c5ff8c] text-center shadow-md rounded-lg p-3 m-1">
-                  <div className="font-bold text-center">20 </div>
+                  <div className="font-bold text-center">
+                    {dashboard.patientCount}
+                  </div>
                   <div className="text-center text-[20px] text-[#707070]">
                     Patients Registered
                   </div>
                 </div>
                 <div className="bg-[#e4ebf5] text-center shadow-md rounded-lg p-3 m-1">
-                  <div className="font-bold text-center">20 </div>
+                  <div className="font-bold text-center">
+                    {dashboard.riskCount}
+                  </div>
                   <div className="text-center text-[18px] text-[#707070]">
                     High Risk Patients
                   </div>
                 </div>
-                <div className=" text-center bg-[#e4ebf5] rounded-lg p-3 m-1">
-                  <div className="font-bold text-center">20 </div>
-                  <div className="text-center text-[18px] text-[#707070]">
-                    Consultations
-                  </div>
-                </div>
                 <div className="text-center bg-[#e4ebf5] rounded-lg p-3 m-1">
-                  <div className="font-bold text-center">20 </div>
+                  <div className="font-bold text-center">
+                    {dashboard.doctorVisits}
+                  </div>
                   <div className="text-center text-[18px] text-[#707070]">
                     Doctor Visitations
                   </div>
@@ -260,25 +104,28 @@ const Pstient = () => {
                 flexDirection="column"
                 className="w-full h-60 mx-auto p-3 ml-3"
               >
-                {/* <DonutCh /> */}
+                <PieChart
+                  data1={dashboard.healthCount}
+                  data2={dashboard.riskCount}
+                />
                 <div className=" m-auto">
                   <div className="text-[20px] text-center mt-2">
                     Patient Risk
                   </div>
                   <div className="text-center text-[18px] text-[#707070]">
                     {" "}
-                    High Risk 40%{" "}
+                    High Risk {dashboard.riskCount}
                   </div>
                   <div className="text-center text-[18px] text-[#707070]">
                     {" "}
-                    Healthy 60%{" "}
+                    Healthy {dashboard.healthCount}
                   </div>
                 </div>
               </Flex>
             </Flex>
             <Flex className="w-auto m-3 mb-0">
               <div className="">
-                <CurveLine />
+                <CurveLine labels={labels} dataset={meetCounts} />
               </div>
             </Flex>
             <Flex className="w-[300px] m-3 mb-0 mr-0 mt-1 overflow-hidden">

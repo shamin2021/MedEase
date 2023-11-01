@@ -1,12 +1,11 @@
 package com.medease.backend.repository;
 
-import com.medease.backend.entity.Doctor;
-import com.medease.backend.entity.Patient;
-import com.medease.backend.entity.User;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Optional;
+import com.medease.backend.entity.Patient;
 
 public interface PatientRepository  extends JpaRepository<Patient, Integer> {
 
@@ -14,4 +13,9 @@ public interface PatientRepository  extends JpaRepository<Patient, Integer> {
         select p from Patient p where p.patient_user.id = :id
 """)
     Optional<Patient> findPatient(Integer id);
+    
+    @Query(value = "SELECT COUNT(*) FROM patient WHERE patient_hlc_id = :hlcId", nativeQuery = true)
+    Integer findPatientbyHlcId(Integer hlcId);
+
+    
 }

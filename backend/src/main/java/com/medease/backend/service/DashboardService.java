@@ -13,6 +13,7 @@ import com.medease.backend.repository.SelfAssessmentRepository;
 import com.medease.backend.repository.AvailabilityRepository;
 import com.medease.backend.repository.HLCRepository;
 import com.medease.backend.repository.DoctorRepository;
+import com.medease.backend.repository.PatientRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +28,7 @@ public class DashboardService {
     private final MeetingRepository meetingRepository;
     private final DoctorRepository doctorRepository;
     private final HLCRepository hlcRepository;
+    private final PatientRepository patientRepository;
     private final AssignedRecommendationService assignedRecommendationService;
     private final MeetingService meetingService;
     private final PatientService patientService;
@@ -78,6 +80,20 @@ public class DashboardService {
             public final List<Object> meetCounts = meetingRepository.findMeetingCountByDate(doctorId);
             public final List<Object> todayMeetings = meetingRepository.getRecentMeetingList(doctorId); 
             public final List<Object> todaysPhysicalVisits = availabilityRepository.getPhysicalVisists(doctorId); 
+            
+        };
+    }
+
+    public Object getHlcDashboard(Integer id) {
+        return new Object() {
+            public final Integer hlcId = hlcRepository.findHlcIdByUser(id);
+            public final Integer patientCount = patientRepository.findPatientbyHlcId(hlcId);
+            public final Integer riskCount = selfAssessmentRepository.findRiskPatientsByHlcId(hlcId);
+            public final Integer healthCount = selfAssessmentRepository.findHealthyPatientsByHlcId(hlcId);
+            public final Integer doctorVisits = availabilityRepository.findAvailableSlotsByHlcId(hlcId).size();
+            public final List<Object> physicalVisits = availabilityRepository.findMeetingCountByDateHlc(hlcId);
+            
+            
             
         };
     }

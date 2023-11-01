@@ -39,4 +39,11 @@ public class DashboardController {
         System.out.println("Getting doctor dashboard");
         return ResponseEntity.ok(res);
     }
+
+    @GetMapping("/hlc/{id}")
+    public ResponseEntity<?> hlcDashboard(@PathVariable Integer id) {
+        Object res = dashboardService.getHlcDashboard(id);
+        System.out.println("Getting HLC dashboard");
+        return ResponseEntity.ok(res);
+    }
 }
