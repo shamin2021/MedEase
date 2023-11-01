@@ -3,6 +3,7 @@ import useAxiosMethods from "../../hooks/useAxiosMethods";
 import logo from "../../assets/patient.jpg";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import {
+  Flex,Button,
   Tabs,
   TabList,
   TabPanels,
@@ -11,6 +12,8 @@ import {
   TabIndicator,
   GridItem,
 } from "@chakra-ui/react";
+
+// import {generatePDF} from "../../pages/Reports/PatientReport";
 
 const ViewSelfAssessmentComponent = () => {
 
@@ -23,7 +26,6 @@ const ViewSelfAssessmentComponent = () => {
 
   const [selfassessments, setSelfAssessments] = useState([]);
   const [medicalTest, setMedicalTest] = useState([])
-
 
   useEffect(() => {
     try {
@@ -123,8 +125,8 @@ const ViewSelfAssessmentComponent = () => {
                     <InputGeneral name="Date Attempted" data={selfassessments.date} />
                     <InputGeneral name="Age at Assessment" data={calculateAge(selfassessments.dob)} />
                     <InputGeneral name="Gender" data={selfassessments.gender} />
-                    <InputGeneral name="Risk" data={selfassessments.risk ? selfassessments.risk : "Not Submitted"} variant="1" />
-                  </div>
+                    <InputGeneral name="Risk" data={selfassessments.risk ? selfassessments.risk : "Not Submitted"} variant="1" />                    
+                  </div>                  
                 </div>
               </div>
             </div>
@@ -134,6 +136,22 @@ const ViewSelfAssessmentComponent = () => {
                   <div className="text-[20px] font-semibold mb-0">
                     Assessment Information
                   </div>
+
+                  <div className="w-1/4">
+
+                    <button
+                        className="btn btn-primary text-[17px] bg-primary p-2 font-semibold"
+                        align="center"
+                        onClick={() =>
+                          navigate(
+                            `/PatientReport/${id}`
+                          )
+                        }
+                      >
+                        Download Report
+                    </button>
+                  </div>
+
                   <div className="w-1/4">
                     <button
                       className="btn btn-primary text-[17px] bg-primary p-2 font-semibold"
