@@ -192,7 +192,8 @@ const Pstient = () => {
                 <div className="text-[17px] text-[#6b6b6b]">
                   Online Consultations
                 </div>
-                <div className="text-[17px] text-[#6b6b6b]">0
+                <div className="text-[17px] text-[#6b6b6b]">
+                  {dashboard.physicalMeet}
                 </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
@@ -202,7 +203,9 @@ const Pstient = () => {
                 <div className="text-[17px] text-[#6b6b6b]">
                   Physical Consultations
                 </div>
-                <div className="text-[17px] text-[#6b6b6b]">221</div>
+                <div className="text-[17px] text-[#6b6b6b]">
+                  {dashboard.virtualMeet}
+                </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
