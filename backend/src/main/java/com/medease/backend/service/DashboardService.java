@@ -49,6 +49,9 @@ public class DashboardService {
             public final MedicalTest medicalTest = medicalTestRepository.findBySelfAssessment(lastSelfAssessment);
             public final List<Object> riskArray = selfAssessmentRepository.findDateRiskByPatientOrderByDate(id);
             public final String user = userRepository.retrieveFirstName(id);
+            public final String patientMeeting = meetingRepository.findPatientLatestMeetings(id);
+            public final String patientHlc = patientRepository.findPatientbyHlc(id);
+            
         };
 
     }

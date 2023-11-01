@@ -17,5 +17,7 @@ public interface PatientRepository  extends JpaRepository<Patient, Integer> {
     @Query(value = "SELECT COUNT(*) FROM patient WHERE patient_hlc_id = :hlcId", nativeQuery = true)
     Integer findPatientbyHlcId(Integer hlcId);
 
+    @Query(value = "SELECT h.hlc_name FROM patient p, hlc h WHERE p.patient_hlc_id = h.hlc_id AND p.patient_user_id = :id", nativeQuery = true)
+    String findPatientbyHlc(Integer id);
     
 }
