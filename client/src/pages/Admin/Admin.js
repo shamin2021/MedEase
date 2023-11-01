@@ -30,7 +30,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Pstient = () => {
-
   const { get } = useAxiosMethods();
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,6 +47,9 @@ const Pstient = () => {
     }
   }, []);
 
+  const labels = dashboard.meetCount?.map((item) => item[0]);
+  const meetCounts = dashboard.meetCount?.map((item) => item[1]);
+
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
       <Flex className=" mt-[4%]">
@@ -55,7 +57,7 @@ const Pstient = () => {
           <Flex flexDirection="column" className="w-3/4 mt-[2%]">
             <div className="font-bold ">Admin,</div>
             <div className=" text-[21px] text-[#707070]">
-              These are the statistics for today
+              These are the statistics for today {dashboard.hlcPatient}{" "}
             </div>
           </Flex>
 
@@ -120,7 +122,7 @@ const Pstient = () => {
             </Flex>
             <Flex className="w-auto m-3 mb-0">
               <div className="">
-                <CurveLine />
+                <CurveLine labels={labels} dataset ={meetCounts}/>
               </div>
             </Flex>
             <Flex className="w-[300px] m-3 mb-0 mr-0 mt-1">
@@ -132,50 +134,21 @@ const Pstient = () => {
                 </Flex>
                 <hr />
                 <div className=" w-[300px] h-60 overflow-y-scroll overflow-x-hidden">
-                  <Flex className="w-[300px] p-1 m-1">
-                    <Flex flexDirection="row" className="w-full">
-                      <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Lunawa HLC <br /> Dr.Asith Ama
-                      </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b]  m-1 bg-[#e0e0e0] text-center rounded-md">
-                        123
-                      </div>
-                    </Flex>
-                  </Flex>
-                  <hr />
-                  <Flex className="w-[300px] p-1 m-1">
-                    <Flex flexDirection="row" className="w-full">
-                      <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Lunawa HLC <br /> Dr.Asith Ama
-                      </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#e0e0e0] text-center rounded-md">
-                        123
-                      </div>
-                    </Flex>
-                  </Flex>
-                  <hr />
-                  <Flex className="w-[300px] p-1 m-1">
-                    <Flex flexDirection="row" className="w-full">
-                      <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Lunawa HLC <br /> Dr.Asith Ama
-                      </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#e0e0e0] text-center rounded-md">
-                        123
-                      </div>
-                    </Flex>
-                  </Flex>
-                  <hr />
-                  <Flex className="w-[300px] p-1 m-1">
-                    <Flex flexDirection="row" className="w-full">
-                      <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
-                        Lunawa HLC <br /> Dr.Asith Ama
-                      </div>
-                      <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#e0e0e0] text-center rounded-md">
-                        123
-                      </div>
-                    </Flex>
-                  </Flex>
-                  <hr />
+                  {dashboard.hlcPatient?.map((item, index) => (
+                    <div key={index}>
+                      <Flex className="w-[300px] p-1 m-1">
+                        <Flex flexDirection="row" className="w-full">
+                          <div className="w-3/5 text-[17px] text-[#6b6b6b] m-1">
+                            {item[0]} <br /> {item[1]}
+                          </div>
+                          <div className="w-1/5 h-5 text-[17px] text-[#6b6b6b] m-1 bg-[#e0e0e0] text-center rounded-md">
+                            {item[2]}
+                          </div>
+                        </Flex>
+                      </Flex>
+                      <hr />
+                    </div>
+                  ))}
                 </div>
               </div>
             </Flex>

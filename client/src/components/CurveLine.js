@@ -106,13 +106,13 @@ import { Flex } from "@chakra-ui/react";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
-const BarChart = () => {
+const BarChart = ({ labels, dataset }) => {
   const data = {
-    labels: ["21st", "22nd", "22nd", "22nd", "22nd", "22nd", "22nd"],
+    labels: labels,
     datasets: [
       {
         label: "My First Dataset",
-        data: [12, 19, 3, 5, 2, 3],
+        data: dataset,
         backgroundColor: ["#d0d8ff"],
         borderColor: ["#d0d8ff"],
         borderWidth: 1,
@@ -174,10 +174,7 @@ const BarChart = () => {
 
   return (
     <Flex h="20rem" width="500px">
-      <Bar
-        data={data}
-        options={options}
-      />
+      <Bar data={data} options={options} />
     </Flex>
   );
 };
