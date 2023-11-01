@@ -53,9 +53,14 @@ const DoctorProfile = () => {
                     null
                   }
 
-                  <div className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary">
+                  <button
+                    onClick={() =>
+                      navigate(`/ViewMeetings/${id}`)
+                    }
+                    className="md:w-1/2 flex mx-auto justify-center p-1 rounded-md mt-3 text-stone-800- text-[18px] font-semibold bg-primary"
+                  >
                     Meetings
-                  </div>
+                  </button>
                 </div>
               </div>
               <div className="child h-full mt-3 mb-3 md:w-[1px] bg-[#bebebe]"></div>

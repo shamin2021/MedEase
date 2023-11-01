@@ -20,6 +20,7 @@ public class SelfAssessmentDTO {
 
     private LocalDate date;
     private User patient;
+    private Integer patientId;
     private String firstName;
     private String lastName;
     private String emailId;

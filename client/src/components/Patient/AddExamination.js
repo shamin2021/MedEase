@@ -8,7 +8,7 @@ const AddExamination = () => {
 
   
   const { auth } = useAuth();
-  const { post } = useAxiosMethods();
+  const { post,get } = useAxiosMethods();
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
@@ -33,6 +33,7 @@ const AddExamination = () => {
   const [sbp, setSbp] = useState("");
   const [bmi, setBmi] = useState(0);
   const [waistHeightRatio, setWaistHeightRatio] = useState(0);
+  const [selfassessments, setSelfAssessments] = useState([]);
 
   const [res, setRes] = useState("");
 
@@ -63,7 +64,7 @@ const AddExamination = () => {
           lipidHDL: lipidProfileHDL,
           sbp,
           cholesterolLvl,
-          patient: auth.user_id,
+          patient: auth.role === "PATIENT" ? auth.user_id : selfassessments.patientId,
         },
         setRes
       );
@@ -94,6 +95,16 @@ const AddExamination = () => {
       navigate("/login", { state: { from: location }, replace: true });
     }
   };
+
+  useEffect(() => {
+    try {
+      get(`/SelfAssessments/${id}`, setSelfAssessments);
+
+    } catch (err) {
+      console.error(err);
+      navigate('/login', { state: { from: location }, replace: true });
+    }
+  }, []);
 
   useEffect(() => {
     console.log(res);

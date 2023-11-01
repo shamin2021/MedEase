@@ -45,6 +45,10 @@ const LifestyleDashboard = () => {
     return percentage;
   };
 
+  useEffect(() => {
+    console.log(quizzes);
+  }, [quizzes])
+
   const handleNext = () => {
     console.log("next");
     setPage(page + 1);

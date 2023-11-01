@@ -96,6 +96,7 @@ public class SelfAssessmentController {
 
 		return SelfAssessmentDTO.builder()
 				.date(assessment.getDate())
+				.patientId(patient)
 				.firstName(assessment.getFirstName())
 				.lastName(assessment.getLastName())
 				.emailId(assessment.getEmailId())
