@@ -42,15 +42,31 @@ const Patient = () => {
     }
   }, []);
 
+  const lastRisk = dashboard.riskArray?.[dashboard.riskArray.length - 1];
+
+
   let bgColorClass;
 
-  if (dashboard.lastSelfAssessment?.risk === "PENDING") {
+  if (lastRisk[1] === "PENDING") {
     bgColorClass = "bg-[#fbfbfb]";
-  } else if (dashboard.lastSelfAssessment?.risk === "HIGH") {
+  } else if (lastRisk[1] === "HIGH") {
     bgColorClass = "bg-[#fdc2c2]";
   } else {
     bgColorClass = "bg-[#d5ffcf]";
   }
+
+  
+  const labels = dashboard.riskArray?.map((item) => item[0]) ;
+  const riskData = dashboard.riskArray?.map((item) => {
+    if (item[1] === "PENDING") {
+      return 0;
+    } else if (item[1] === "HIGH") {
+      return 2;
+    } else if (item[1] === "MINIMAL") {
+      return 1;
+    }
+    return item[1]; // If none of the conditions match, return the original value.
+  });
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
@@ -59,7 +75,8 @@ const Patient = () => {
           <Flex flexDirection="column" className="w-3/4">
             <div className="font-bold ">Hi {dashboard.user},</div>
             <div className=" text-[21px] text-[#707070]">
-              This is your health Check for today
+              This is your health Check for today{" "}
+              {dashboard.lastSelfAssessment?.risk}
             </div>
           </Flex>
 
@@ -69,9 +86,7 @@ const Patient = () => {
               className={`w-1/5 ${bgColorClass} shadow-md rounded-lg p-3`}
             >
               <div className=" m-auto">
-                <div className="font-bold text-center">
-                  {dashboard.lastSelfAssessment?.risk}
-                </div>
+                <div className="font-bold text-center">{lastRisk[1]}</div>
                 <div className="text-center text-[18px] text-[#707070]">
                   Health Status
                 </div>
@@ -181,37 +196,16 @@ const Patient = () => {
             </div>
           </Flex>
 
-          {/* <Flex className="parent h-auto mt-[3%] bg-white border border-1 rounded-2xl">
-            <div className="w-full grid grid-cols-5 divide-x m-3">
-              <div className="text-center  p-1 rounded-md">
-                <div>Assessments</div>
-                <div>2</div>
-              </div>
-              <div className=" text-center">
-                <div>Appointments</div>
-                <div>3</div>
-              </div>
-              <div className="text-center">
-                <div>Lifestyle</div>
-                <div>4</div>
-              </div>
-              <div className="text-center">
-                <div>Treatments</div>
-                <div>None</div>
-              </div>
-              <div className="text-center">
-                <div>HLC visits</div>
-                <div>1</div>
-              </div>
-            </div>
-          </Flex> */}
-
           <Flex className="m-3">
             <div className="">
               <Text fontSize={20} fontWeight={"Bold"}>
                 Risk Assessed
               </Text>
-              <LineChart className=" h-80 w-20" />
+              <LineChart
+                labels={labels}
+                riskData={riskData}
+                className=" h-80 w-20"
+              />
             </div>
           </Flex>
         </div>
