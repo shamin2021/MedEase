@@ -192,47 +192,48 @@ const ViewSelfAssessmentComponent = () => {
       doc.setFontSize(12);
       doc.text(`Assessment ID : ${id}`, 10, 45);
 
-      doc.text(`Risk Level :  ${selfassessments.risk}`, 150, 45);
+      doc.text(`Cardiovascular Risk Level :  ${selfassessments.risk}`, 130, 45);
+      doc.text(`Diabetes Risk Level :  ${selfassessments.diabetes_risk}`, 130, 50);
 
       doc.setFontSize(12);
-      doc.text('General Details', 10, 55);
+      doc.text('General Details', 10, 60);
       doc.autoTable({
         head: generalheaders,
         body: generaldata,
-        startY: 60,
+        startY: 65,
         margin: { top: 10 },
       });
       doc.autoTable({
         head: generalheaders2,
         body: generaldata2,
-        startY: 80,
+        startY: 85,
         margin: { top: 10 },
       });
 
       doc.setFontSize(12);
-      doc.text('Family History', 10, 110);
+      doc.text('Family History', 10, 115);
       doc.autoTable({
         head: familyheaders,
         body: familysdata,
-        startY: 115,
+        startY: 120,
         margin: { top: 10 },
       });
 
       doc.setFontSize(12);
-      doc.text('Habits', 10, 145);
+      doc.text('Habits', 10, 150);
       doc.autoTable({
         head: habitsheaders,
         body: habitsdata,
-        startY: 150,
+        startY: 155,
         margin: { top: 10 },
       });
 
       doc.setFontSize(12);
-      doc.text('Medical Examinations', 10, 180);
+      doc.text('Medical Examinations', 10, 185);
       doc.autoTable({
         head: examinationsheaders,
         body: examinationsdata,
-        startY: 185,
+        startY: 190,
         margin: { top: 10 },
       });
 
@@ -255,7 +256,8 @@ const ViewSelfAssessmentComponent = () => {
                     <InputGeneral name="Date Attempted" data={selfassessments.date} />
                     <InputGeneral name="Age at Assessment" data={calculateAge(selfassessments.dob)} />
                     <InputGeneral name="Gender" data={selfassessments.gender} />
-                    <InputGeneral name="Risk" data={selfassessments.risk ? selfassessments.risk : "Not Submitted"} variant="1" />
+                    <InputGeneral name="Cardiovascular Risk" data={selfassessments.risk ? selfassessments.risk : "Not Submitted"} variant="1" />
+                    <InputGeneral name="Diabetes Risk" data={selfassessments.diabetes_risk ? selfassessments.diabetes_risk : "Not Submitted"} variant="1" />
                   </div>
                 </div>
               </div>
@@ -268,6 +270,7 @@ const ViewSelfAssessmentComponent = () => {
                   </div>
 
                   <div className="w-1/4" hidden={selfassessments.risk === "PENDING" ? true : false}>
+                    
 
                     <button
                       className="btn btn-primary text-[17px] bg-primary p-2 font-semibold"

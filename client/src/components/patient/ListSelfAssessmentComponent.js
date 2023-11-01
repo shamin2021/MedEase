@@ -42,14 +42,15 @@ const ListSelfAssessmentComponent = () => {
   const handleAssessment = () => {
     setModalOpen(true);
 
-    if (filteredSelfAssessments.length > 0 && filteredSelfAssessments[0].risk === "PENDING") {
+    if (filteredSelfAssessments.length > 0 && filteredSelfAssessments[0].risk === "PENDING" && filteredSelfAssessments[0].diabetes_risk=== "PENDING") {
       setModalOpen(true);
       setModelContent("Please Complete Assessment In Progress");
     }
-    else if (filteredSelfAssessments.length > 0 && ((new Date() - new Date(filteredSelfAssessments[0].date)) / (1000 * 60 * 60 * 24)) <= 30) {
-      setModalOpen(true);
-      setModelContent("Please Wait A Month To Complete New Risk Assessment");
-    } else {
+    // else if (filteredSelfAssessments.length > 0 && ((new Date() - new Date(filteredSelfAssessments[0].date)) / (1000 * 60 * 60 * 24)) <= 30) {
+    //   setModalOpen(true);
+    //   setModelContent("Please Wait A Month To Complete New Risk Assessment");
+    // } 
+    else {
       navigate("/CreateSelfAssessment");
     }
   };
@@ -165,9 +166,21 @@ const ListSelfAssessmentComponent = () => {
                     <p>Not Submitted</p>
                   )}
                   <div className=" text-[#797878] text-[16px]  font-medium">
-                    Recent Risk
+                    Recent Cardiovascular Risk
                   </div>
                 </div>
+
+                <div className="w-3/4 mx-auto mt-3 rounded-md text-[18px]  bg-[#fdc9c9] p-2 font-semibold">
+                  {filteredSelfAssessments.length > 0 ? (
+                    filteredSelfAssessments[0].diabetes_risk
+                  ) : (
+                    <p>Not Submitted</p>
+                  )}
+                  <div className=" text-[#797878] text-[16px]  font-medium">
+                    Recent Diabetes Risk
+                  </div>
+                </div>
+
                 <div className="w-3/4 mx-auto mt-3 rounded-md text-[17px] bg-primary p-2 font-semibold">
                   {filteredSelfAssessments.length > 0 ? filteredSelfAssessments.length : 0}
                   <div className=" text-[#797878] text-[16px]  font-medium">
