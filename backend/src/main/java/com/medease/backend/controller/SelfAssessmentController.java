@@ -74,6 +74,7 @@ public class SelfAssessmentController {
 				.otherDiseases(selfAssessment.getOtherDiseases())
 				.patient(selfAssessment.getPatient())
 				.risk(Risk.PENDING)
+				.diabetes_risk(Risk.PENDING)
 				.build();
 
 		selfAssessmentRepository.save(assessment);
@@ -117,6 +118,7 @@ public class SelfAssessmentController {
 				.suddenDeath(assessment.isSuddenDeath())
 				.otherDiseases(assessment.getOtherDiseases())
 				.risk(assessment.getRisk())
+				.diabetes_risk(assessment.getDiabetes_risk())
 				.gender(patientUser.getGender())
 				.dob(patientUser.getDob())
 				.build();
@@ -174,6 +176,9 @@ public class SelfAssessmentController {
 		var age = CalculateAge(patientUser.getDob());
 
 		calculateRisk(gender,isSmoke,cholesterolLvl,sbp,fbs,rbs,age, selfAssessment);
+		selfAssessmentRepository.save(selfAssessment);
+
+		DiabetesRisk(fbs,rbs,selfAssessment);
 		selfAssessmentRepository.save(selfAssessment);
 
 //		MedicalTestDTO.
@@ -1430,4 +1435,19 @@ public class SelfAssessmentController {
 			}
 		}
 	}
+
+		private void DiabetesRisk(Double fbs, Double rbs,SelfAssessment selfAssessment) {
+
+		if(fbs<100 || rbs<140) {
+			selfAssessment.setDiabetes_risk(Risk.MINIMAL);
+		}
+		else if ((fbs>100 && fbs<126) || (rbs>140 && rbs<200)) {
+			selfAssessment.setDiabetes_risk(Risk.HIGH);
+		}
+		else if (fbs>126 || rbs<200) {
+			selfAssessment.setDiabetes_risk(Risk.MINIMAL);
+		}
+			
+	}
 }
+

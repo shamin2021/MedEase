@@ -12,7 +12,7 @@ import { FiLogOut } from "react-icons/fi";
 import { HiSearch } from "react-icons/hi";
 import logo from "../../assets/human_outline.png";
 import patient from "../../assets/patient.jpg";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaUserDoctor,
   FaAngleRight,
@@ -21,34 +21,39 @@ import {
 } from "react-icons/fa6";
 import CurveLine from "../../components/CurveLine";
 import Calendar from "react-calendar";
+import PieChart from "../../components/PieChart";
 import "react-circular-progressbar/dist/styles.css";
 import DonutCh from "../../components/Donut";
 
-const data = {
-  labels: ["Red", "Blue", "Yellow"],
-  datasets: [
-    {
-      data: [300, 50, 100],
-      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-      hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-    },
-  ],
-};
-const percentage = 66;
+import useAxiosMethods from "../../hooks/useAxiosMethods";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Pstient = () => {
-  const [searchQuery, setSearchQuery] = React.useState("");
 
-  const handleSearch = () => {
-    console.log(`Searching for: ${searchQuery}`);
-  };
+  const { get } = useAxiosMethods();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { auth } = useAuth();
+
+  const [userId, setUserId] = useState(auth.user_id);
+  const [dashboard, setDashboardData] = useState([]);
+
+  useEffect(() => {
+    try {
+      get(`/dashboard/admin/${userId}`, setDashboardData);
+    } catch (err) {
+      console.error(err);
+      navigate("/login", { state: { from: location }, replace: true });
+    }
+  }, []);
 
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
       <Flex className=" mt-[4%]">
         <div className="w-3/4 h-auto m-3 mt-0  bg-white shadow-xl rounded-2xl p-[4%] pt-[2%] ">
           <Flex flexDirection="column" className="w-3/4 mt-[2%]">
-            <div className="font-bold ">Lunawa HLC,</div>
+            <div className="font-bold ">Admin,</div>
             <div className=" text-[21px] text-[#707070]">
               These are the statistics for today
             </div>
@@ -58,19 +63,25 @@ const Pstient = () => {
             <Flex className="w-full mt-[1%] bg-white rounded-2xl">
               <div className="w-full grid grid-cols-3">
                 <div className=" bg-[#e4ebf5] text-center shadow-md rounded-lg p-3 m-1">
-                  <div className="font-bold text-center">20 </div>
+                  <div className="font-bold text-center">
+                    {dashboard.patientsCount}
+                  </div>
                   <div className="text-center text-[20px] text-[#707070]">
                     Patients Registered
                   </div>
                 </div>
                 <div className=" text-center bg-[#e4ebf5] rounded-lg p-3 m-1">
-                  <div className="font-bold text-center">20 </div>
+                  <div className="font-bold text-center">
+                    {dashboard.doctorsCount}
+                  </div>
                   <div className="text-center text-[18px] text-[#707070]">
                     Doctors
                   </div>
                 </div>
                 <div className="text-center bg-[#e4ebf5] rounded-lg p-3 m-1">
-                  <div className="font-bold text-center">20 </div>
+                  <div className="font-bold text-center">
+                    {dashboard.hlcCount}
+                  </div>
                   <div className="text-center text-[18px] text-[#707070]">
                     HLC regsitered
                   </div>
@@ -88,18 +99,21 @@ const Pstient = () => {
                 flexDirection="column"
                 className="w-full h-60 mx-auto p-3 ml-3"
               >
-                {/* <DonutCh /> */}
+                <PieChart
+                  data1={dashboard.healthyCount}
+                  data2={dashboard.highRiskCount}
+                />
                 <div className=" m-auto">
                   <div className="text-[20px] text-center mt-2">
                     Patient Risk
                   </div>
                   <div className="text-center text-[18px] text-[#707070]">
                     {" "}
-                    High Risk 40%{" "}
+                    High Risk {dashboard.highRiskCount}
                   </div>
                   <div className="text-center text-[18px] text-[#707070]">
                     {" "}
-                    Healthy 60%{" "}
+                    Healthy {dashboard.healthyCount}
                   </div>
                 </div>
               </Flex>
@@ -178,7 +192,9 @@ const Pstient = () => {
                 <div className="text-[17px] text-[#6b6b6b]">
                   Online Consultations
                 </div>
-                <div className="text-[17px] text-[#6b6b6b]">321</div>
+                <div className="text-[17px] text-[#6b6b6b]">
+                  {dashboard.physicalMeet}
+                </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
@@ -187,7 +203,9 @@ const Pstient = () => {
                 <div className="text-[17px] text-[#6b6b6b]">
                   Physical Consultations
                 </div>
-                <div className="text-[17px] text-[#6b6b6b]">221</div>
+                <div className="text-[17px] text-[#6b6b6b]">
+                  {dashboard.virtualMeet}
+                </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
