@@ -1,7 +1,6 @@
 package com.medease.backend.repository;
 
 import com.medease.backend.entity.SelfAssessment;
-import com.medease.backend.enumeration.Risk;
 
 import java.util.List;
 
@@ -28,4 +27,7 @@ public interface SelfAssessmentRepository extends JpaRepository<SelfAssessment, 
             WHERE risk=:riskLevel
             """, nativeQuery = true)
     List<Object> findPatientCountByRisk(String riskLevel);
+
+    @Query(value = "SELECT created_date, COUNT(*) FROM selfassessments GROUP BY created_date", nativeQuery = true)
+    List<Object> findAssessmentCountByDate();
 }

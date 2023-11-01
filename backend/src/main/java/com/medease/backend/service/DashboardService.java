@@ -42,13 +42,15 @@ public class DashboardService {
     }
 
     public Object getAdminDashboard(Integer id) {
-        // - assessments taken per day 
+        // - assessments taken per day
         return new Object() {
             public final Integer patientsCount = patientService.getPatientCount();
             public final Integer doctorsCount = doctorService.getDoctorCount();
             public final Integer hlcCount = hlcService.getHlcCount();
             public final Integer healthyCount = selfAssessmentRepository.findPatientCountByRisk("MINIMAL").size();
             public final Integer highRiskCount = selfAssessmentRepository.findPatientCountByRisk("HIGH").size();
+            public final List<Object> assessmentCountByDate = selfAssessmentRepository.findAssessmentCountByDate();
+
         };
     }
 }
