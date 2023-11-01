@@ -94,22 +94,31 @@ const LifestyleMonitorQuiz = () => {
                   return (
                     <TabPanel padding={2} key={recommendationType.id}>
                       <Box>
-                        {assignedRecommendations
-                          .filter(
-                            (recommendation) =>
-                              recommendation.type === recommendationType.name
-                          )
-                          .map((recommendation) => {
-                            return (
-                              <QuizInputField
-                                key={recommendation.recommendation_id}
-                                recommendation={recommendation}
-                                completedQuizzes={completedQuizzes}
-                                handleCheck={handleMarkComplete}
-                                isCheckDisabled={isCheckDisabled}
-                              ></QuizInputField>
-                            );
-                          })}
+                        {assignedRecommendations.filter(
+                          (recommendation) =>
+                            recommendation.type === recommendationType.name
+                        ).length > 0 ? (
+                          assignedRecommendations
+                            .filter(
+                              (recommendation) =>
+                                recommendation.type === recommendationType.name
+                            )
+                            .map((recommendation) => {
+                              return (
+                                <QuizInputField
+                                  key={recommendation.recommendation_id}
+                                  recommendation={recommendation}
+                                  completedQuizzes={completedQuizzes}
+                                  handleCheck={handleMarkComplete}
+                                  isCheckDisabled={isCheckDisabled}
+                                ></QuizInputField>
+                              );
+                            })
+                        ) : (
+                          <Box className="text-center text-[20px] text-[#797878] font-medium font-poppins">
+                            No {recommendationType.name.toLowerCase()} recommendations for this week
+                          </Box>
+                        )}
                         {/* <Box className=" text-right">
                             <button className="bg-secondary text-[15px] w-1/5 rounded-2xl p-1 text-[#ffffff] font-semibold mt-3 ">
                               Next

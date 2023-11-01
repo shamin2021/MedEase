@@ -47,7 +47,7 @@ const LifestyleDashboard = () => {
 
   useEffect(() => {
     console.log(quizzes);
-  }, [quizzes])
+  }, [quizzes]);
 
   const handleNext = () => {
     console.log("next");
@@ -101,8 +101,9 @@ const LifestyleDashboard = () => {
                   size="xs"
                   color={"#797878"}
                   marginRight={2}
-                  variant='ghost'
+                  variant="ghost"
                   onClick={handlePrevious}
+                  isDisabled={page === 1}
                 >
                   Previous
                 </Button>
@@ -111,7 +112,7 @@ const LifestyleDashboard = () => {
                   size="xs"
                   color={"#797878"}
                   marginLeft={2}
-                  variant='ghost'
+                  variant="ghost"
                   onClick={handleNext}
                   isDisabled={isLastPage}
                 >
@@ -137,51 +138,59 @@ const LifestyleDashboard = () => {
             </Box>
             <hr className="my-1" />
             <Box className="overflow-y-auto">
-              {quizzes.map((quiz) => {
-                if (quiz === null || quiz.weekNumber === undefined) {
-                  return <></>;
-                }
+              {quizzes.length > 0 ? (
+                quizzes.map((quiz) => {
+                  if (quiz === null || quiz.weekNumber === undefined) {
+                    return <></>;
+                  }
 
-                const { startDate, endDate } = getQuizWeekDates(
-                  quiz?.weekNumber
-                );
+                  const { startDate, endDate } = getQuizWeekDates(
+                    quiz?.weekNumber
+                  );
 
-                const startDateF = moment(startDate).format("MMM DD");
-                const endDateF = moment(endDate).format("MMM DD");
+                  const startDateF = moment(startDate).format("MMM DD");
+                  const endDateF = moment(endDate).format("MMM DD");
 
-                const weekPercentage = showProgress(quiz);
+                  const weekPercentage = showProgress(quiz);
 
-                return (
-                  <>
-                    <Flex
-                      key={quiz?.weekNumber}
-                      className="text-[18px] text-[#797878] font-medium text-center justify-between"
-                    >
-                      <Box flex={3} className="w-1/4 p-2">
-                        {quiz?.weekNumber}
-                      </Box>
-                      <Box
-                        flex={4}
-                        className="w-1/4 p-2"
-                      >{`${startDateF} - ${endDateF}`}</Box>
-                      <Box flex={3} className="w-1/4 p-2">
-                        {weekPercentage}%
-                      </Box>
-                      <Box flex={3} className="w-1/4 p-2">
-                        <Link to={"/LifestyleQuiz"} state={quiz}>
-                          <button
-                            className="btn w-1/2 bg-primary rounded-lg px-3 py-1"
-                            href=""
-                          >
-                            View
-                          </button>
-                        </Link>
-                      </Box>
-                    </Flex>
-                    <hr className="my-1" />
-                  </>
-                );
-              })}
+                  return (
+                    <>
+                      <Flex
+                        key={quiz?.weekNumber}
+                        className="text-[18px] text-[#797878] font-medium text-center justify-between"
+                      >
+                        <Box flex={3} className="w-1/4 p-2">
+                          {quiz?.weekNumber}
+                        </Box>
+                        <Box
+                          flex={4}
+                          className="w-1/4 p-2"
+                        >{`${startDateF} - ${endDateF}`}</Box>
+                        <Box flex={3} className="w-1/4 p-2">
+                          {weekPercentage}%
+                        </Box>
+                        <Box flex={3} className="w-1/4 p-2">
+                          <Link to={"/LifestyleQuiz"} state={quiz}>
+                            <button
+                              className="btn w-1/2 bg-primary rounded-lg px-3 py-1"
+                              href=""
+                            >
+                              View
+                            </button>
+                          </Link>
+                        </Box>
+                      </Flex>
+                      <hr className="my-1" />
+                    </>
+                  );
+                })
+              ) : (
+                <Flex className="text-[20px] text-[#797878] font-medium text-center justify-between">
+                  <Box flex={3} className="w-1/4 p-2">
+                    No quizzes found
+                  </Box>
+                </Flex>
+              )}
             </Box>
           </Box>
         </Box>
