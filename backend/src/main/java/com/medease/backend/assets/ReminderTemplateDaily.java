@@ -1,8 +1,8 @@
 package com.medease.backend.assets;
 
-public class NotificationTemplate {
+public class ReminderTemplateDaily {
 
-    public static String NotificationTemplate() {
+    public static String ReminderTemplateDaily() {
 
         return "<html>"
                 + "<head>"
@@ -16,15 +16,13 @@ public class NotificationTemplate {
                 + "</head>"
                 + "<body>"
                 + "<div class=\"container\">"
-                + "<div class=\"header\"><h1>Meeting Reminder</h1></div>"
+                + "<div class=\"header\"><h1>LifeStyle Recommendation</h1></div>"
                 + "<div class=\"content\">"
                 + "<p>Hello,</p>"
-                + "<p>You Have a Meeting scheduled in 15 minutes.</p>"
-                + "<p>Please Join.</p>"
+                + "<p>Please Complete Your Daily tasks.</p>"
                 + "</div>"
                 + "</div>"
                 + "</body>"
                 + "</html>";
     }
-
 }

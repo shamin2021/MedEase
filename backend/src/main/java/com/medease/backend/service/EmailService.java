@@ -2,6 +2,8 @@ package com.medease.backend.service;
 
 import com.medease.backend.Exception.CustomException;
 import com.medease.backend.assets.NotificationTemplate;
+import com.medease.backend.assets.ReminderTemplateDaily;
+import com.medease.backend.assets.ReminderTemplateWeekly;
 import com.medease.backend.entity.AssignedRecommendation;
 import com.medease.backend.entity.Meeting;
 import com.medease.backend.repository.*;
@@ -76,10 +78,38 @@ public class EmailService {
         List<AssignedRecommendation> assignedRecommendations = assignedRecommendationRepository.findAll();
         for(AssignedRecommendation assignedRecommendation: assignedRecommendations) {
             var assignedRecommendationID = assignedRecommendation.getAssignedRecommendationId();
+            var assignedPatient = assignedRecommendation.getAssigenedUserId();
+            var assignedEmail = userRepository.findById(assignedPatient).orElseThrow().getEmail();
             var checkDaily = recommendationRepository.findById(assignedRecommendationID).orElseThrow().getFrequency();
 
             if(Objects.equals(checkDaily, "Daily")){
-//                sendEmail(patientMail, "LifeStyle Recommendation", NotificationTemplate.NotificationTemplate());
+                try{
+                    sendEmail(assignedEmail, "LifeStyle Recommendation", ReminderTemplateDaily.ReminderTemplateDaily());
+                } catch (UnsupportedEncodingException | MessagingException e) {
+                    throw new CustomException("Error while sending reminder.");
+                }
+            }
+
+
+        }
+    }
+
+    @Scheduled(fixedRate = 1000 * 60 * 5)
+    public void sendLifestyleRecommendationsWeekly() {
+
+        List<AssignedRecommendation> assignedRecommendations = assignedRecommendationRepository.findAll();
+        for(AssignedRecommendation assignedRecommendation: assignedRecommendations) {
+            var assignedRecommendationID = assignedRecommendation.getAssignedRecommendationId();
+            var assignedPatient = assignedRecommendation.getAssigenedUserId();
+            var assignedEmail = userRepository.findById(assignedPatient).orElseThrow().getEmail();
+            var checkDaily = recommendationRepository.findById(assignedRecommendationID).orElseThrow().getFrequency();
+
+            if(Objects.equals(checkDaily, "Weekly")){
+                try{
+                    sendEmail(assignedEmail, "LifeStyle Recommendation", ReminderTemplateWeekly.ReminderTemplateWeekly());
+                } catch (UnsupportedEncodingException | MessagingException e) {
+                    throw new CustomException("Error while sending reminder.");
+                }
             }
 
 
