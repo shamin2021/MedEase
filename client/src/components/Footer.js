@@ -5,7 +5,7 @@ import logo from '../assets/logo.svg';
 const Footer = () => {
 
     return (
-        <Box className="bg-indigo-100 dark:bg-indigo-200 text-gray-700 dark:text-gray-500">
+        <Box className=" bg-indigo-100 dark:bg-indigo-200 text-gray-700 dark:text-gray-500">
             <Box py={10}>
                 <Flex
                     align={'center'}
