@@ -45,6 +45,13 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Inte
             ORDER BY DATE(start_time);""", nativeQuery = true)
     List<Object> findMeetingCountByDateHlc(Integer hlcId);
 
+     @Query(value = """
+        SELECT a.start_time,a.end_time,u.firstname, u.lastname FROM
+        availability a, doctor d , _user u 
+        WHERE a.availability_doctor_id=d.doctor_id AND u.id=d.doctor_user_id 
+        AND a.availability_hlc_id = :hlcId""", nativeQuery = true)
+    List<Object> getPhysicalDoctorNames(Integer hlcId);
+
     
     
 }

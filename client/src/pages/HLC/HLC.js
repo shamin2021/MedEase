@@ -20,7 +20,7 @@ import CurveLine from "../../components/CurveLine";
 import PieChart from "../../components/PieChart";
 import Calendar from "react-calendar";
 import "react-circular-progressbar/dist/styles.css";
-import DonutCh from "../../components/Donut";
+import { format } from "date-fns";
 
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -46,6 +46,12 @@ const Pstient = () => {
           navigate("/login", { state: { from: location }, replace: true });
         }
       }, []);
+
+       function formatDate(datetimeString) {
+         const date = new Date(datetimeString);
+         const formattedTime = format(date, "haaaa");
+         return formattedTime;
+       }
       
       const labels = dashboard.physicalVisits?.map((item) => item[0]);
       const meetCounts = dashboard.physicalVisits?.map((item) => item[1]);
@@ -130,9 +136,7 @@ const Pstient = () => {
             </Flex>
             <Flex className="w-[300px] m-3 mb-0 mr-0 mt-1 overflow-hidden">
               <div className="m-0">
-                <div className="text-[20px]">
-                  Patients At High Risk
-                </div>
+                <div className="text-[20px]">Patients At High Risk</div>
                 <Flex className="w-[350px] p-1 m-1 rounded-lg">
                   <div className="w-3/5 text-[17px] m-1">Patient</div>
                   <div className="w-1/5 h-5 text-[17px] m-1">Risk</div>
@@ -164,24 +168,23 @@ const Pstient = () => {
         <div className="w-1/4 pb-3 m-3 mt-0 bg-white shadow-xl rounded-2xl">
           <Calendar className="m-3 pb-4 p-1" />
           <div className="m-3">
-            <div className="text-[20px] m-3">Doctor Consultations Today</div>
+            <div className="text-[20px] m-3">
+              Doctor Consultations Today
+            </div>
 
-            <Flex className="m-3 p-3 bg-[#fafafa] rounded-lg">
-              <Flex flexDirection="column" className="w-3/4 ml-1">
-                <div className="text-[17px] text-[#6b6b6b]">
-                  Dr.Nayana Fernando
-                </div>
-                <div className="text-[17px] text-[#6b6b6b]">10 AM - 12 AM </div>
-              </Flex>
-              <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
-            </Flex>
-            <Flex className="m-3 p-3 bg-[#fafafa] rounded-lg">
-              <Flex flexDirection="column" className="w-3/4 ml-1">
-                <div className="text-[17px] text-[#6b6b6b]">Dr.Asith Ama</div>
-                <div className="text-[17px] text-[#6b6b6b]">10 AM - 12 AM </div>
-              </Flex>
-              <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
-            </Flex>
+            {dashboard.physicalVisitsDoctors?.map((item, index) => (
+              <div key={index}>
+                <Flex className="m-3 p-3 bg-[#fafafa] rounded-lg">
+                  <Flex flexDirection="column" className="w-3/4 ml-1">
+                    <div className="text-[17px] text-[#6b6b6b]">Dr.{item[2]}{item[3]}</div>
+                    <div className="text-[17px] text-[#6b6b6b]">
+                      {formatDate(item[0])} - {formatDate(item[1])}
+                    </div>
+                  </Flex>
+                  <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
+                </Flex>
+              </div>
+            ))}
           </div>
         </div>
       </Flex>

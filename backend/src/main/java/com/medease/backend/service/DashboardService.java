@@ -93,6 +93,8 @@ public class DashboardService {
             public final Integer doctorVisits = availabilityRepository.findAvailableSlotsByHlcId(hlcId).size();
             public final List<Object> physicalVisits = availabilityRepository.findMeetingCountByDateHlc(hlcId);
             public final List<Object> riskPatientList = selfAssessmentRepository.findRiskPatientListByHlcId(hlcId);
+            public final List<Object> physicalVisitsDoctors = availabilityRepository.getPhysicalDoctorNames(hlcId);
+            
             
         };
     }
