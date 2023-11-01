@@ -46,10 +46,10 @@ const ListSelfAssessmentComponent = () => {
       setModalOpen(true);
       setModelContent("Please Complete Assessment In Progress");
     }
-    // else if (filteredSelfAssessments.length > 0 && ((new Date() - new Date(filteredSelfAssessments[0].date)) / (1000 * 60 * 60 * 24)) <= 30) {
-    //   setModalOpen(true);
-    //   setModelContent("Please Wait A Month To Complete New Risk Assessment");
-    // } 
+    else if (filteredSelfAssessments.length > 0 && ((new Date() - new Date(filteredSelfAssessments[0].date)) / (1000 * 60 * 60 * 24)) <= 30) {
+      setModalOpen(true);
+      setModelContent("Please Wait A Month To Complete New Risk Assessment");
+    } 
     else {
       navigate("/CreateSelfAssessment");
     }
