@@ -42,7 +42,7 @@ const AddExamination = () => {
 
     try {
       post(
-        `/CreateMedicalTest/${id}`,
+        /CreateMedicalTest/${id},
         {
           weight,
           height,
@@ -89,7 +89,7 @@ const AddExamination = () => {
       setSbp("");
       setBmi("");
       setWaistHeightRatio("");
-      navigate(`/view-SelfAssessment/${id}`);
+      navigate(/view-SelfAssessment/${id});
     } catch (err) {
       console.error(err);
       navigate("/login", { state: { from: location }, replace: true });
@@ -98,7 +98,7 @@ const AddExamination = () => {
 
   useEffect(() => {
     try {
-      get(`/SelfAssessments/${id}`, setSelfAssessments);
+      get(/SelfAssessments/${id}, setSelfAssessments);
 
     } catch (err) {
       console.error(err);
@@ -150,7 +150,7 @@ const AddExamination = () => {
     }
   };
 
-  const backPage = () => navigate(`/view-SelfAssessment/${id}`);
+  const backPage = () => navigate(/view-SelfAssessment/${id});
 
   return (
     <GridItem colSpan={6} mx={4} mt={2}>
