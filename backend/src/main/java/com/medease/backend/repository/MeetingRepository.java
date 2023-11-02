@@ -1,12 +1,13 @@
 package com.medease.backend.repository;
 
-import com.medease.backend.entity.Meeting;
-import com.medease.backend.entity.Patient;
+import java.util.List;
 
+import org.antlr.v4.runtime.atn.SemanticContext.AND;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
+import com.medease.backend.entity.Meeting;
+import com.medease.backend.entity.Patient;
 
 public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
     @Query(value = "SELECT * FROM meetings WHERE meeting_doctor_id = :doctorId AND cancelled = 0", nativeQuery = true)
@@ -14,6 +15,9 @@ public interface MeetingRepository extends JpaRepository<Meeting, Integer> {
 
     @Query(value = "SELECT * FROM meetings WHERE meeting_patient_id = :patientID AND cancelled = 0", nativeQuery = true)
     List<Object[]> findPatientMeetings(Integer patientID);
+
+    @Query(value = "SELECT start FROM meetings WHERE meeting_patient_id = :patientID AND cancelled = 0 ORDER BY start DESC LIMIT 1 ;", nativeQuery = true)
+    String findPatientLatestMeetings(Integer patientID);
 
     Integer countByPatient(Patient patient);
 

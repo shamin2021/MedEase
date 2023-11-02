@@ -51,4 +51,7 @@ public interface HLCRepository extends JpaRepository<HLC, Integer> {
             GROUP BY hlc.hlc_name,hlc.in_charge;  
             """, nativeQuery = true)
     List<Object> findHLCpatient();
+
+    @Query(value = "SELECT hlc_id FROM hlc WHERE hlc_user_id = :hlcId", nativeQuery = true)
+    Integer findHlcIdByUser(Integer hlcId);
 }

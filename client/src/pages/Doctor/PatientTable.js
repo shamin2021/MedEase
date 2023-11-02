@@ -32,6 +32,11 @@ const Table = ({ data }) => {
                                                     Lifestyle Tips
                                                 </button>
                                             </Link>
+                                            <Link to={`/LifestyleProgress/${item.user_profile_id}`}>
+                                                <button className="p-2 bg-primary hover:bg-[#7ebcef] hover:text-white rounded-md border-4 border-white">
+                                                    Progress
+                                                </button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </Link>

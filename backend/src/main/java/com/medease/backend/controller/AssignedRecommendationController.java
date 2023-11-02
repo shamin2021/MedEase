@@ -40,7 +40,8 @@ public class AssignedRecommendationController {
     public ResponseEntity<?> getAllAssignedRecommendations(@PathVariable("patient_id") Integer patientId) {
         System.out.println("Calling getAllAssignedRecommendations()");
         System.out.println("User id: " + patientId);
-        var patientName = userRepository.findById(patientId).orElseThrow().getFirstname() + " " + userRepository.findById(patientId).orElseThrow().getLastname();
+        var patientName = userRepository.findById(patientId).orElseThrow().getFirstname() + " "
+                + userRepository.findById(patientId).orElseThrow().getLastname();
         var patientHlc = patientRepository.findPatient(patientId).orElseThrow().getPatient_hlc().getHlc_id();
         var patientHlcName = hlcRepository.findById(patientHlc).orElseThrow().getHlc_name();
         var recentAssessment = selfAssessmentRepository.findRecentAssessmentById(patientId);
@@ -54,10 +55,12 @@ public class AssignedRecommendationController {
         userDetails.put("diabetesRisk",recentDiabetesAssessment);
         userDetails.put("hlcName", patientHlcName);
 
-        int weekNumber = DateHandleService.getCurrentWeekNumber();
+        int weekNumber = DateHandleService.getNextWeekNumber();
 
         var assignedRecommendations = this.assignedRecommendationService.getAssignedRecommendations(patientId,
                 weekNumber);
+
+        System.out.println("Assigned recommendations: " + assignedRecommendations);
 
         var response = new HashMap<String, Object>();
         response.put("userDetails", userDetails);
@@ -91,7 +94,8 @@ public class AssignedRecommendationController {
         System.out.println("Calling assignRecommendation()");
         System.out.println(recommendation);
 
-        int weekNumber = DateHandleService.getCurrentWeekNumber();
+        int weekNumber = DateHandleService.getNextWeekNumber();
+        System.out.println("Week number: " + weekNumber);
 
         if (weekNumber == -1) {
             return ResponseEntity.badRequest().body("Invalid date");
@@ -103,12 +107,20 @@ public class AssignedRecommendationController {
                     recommendation.getAssignedRecommendationId(),
                     weekNumber);
 
+
+            AssignedRecommendation existsAssignedRecommendation = this.assignedRecommendationRepository
+                    .findByAssignedRecommendationIdAndAssigenedUserIdAndAssignedWeek(
+                            recommendation.getAssignedRecommendationId(), recommendation.getAssigenedUserId(),
+                            weekNumber);
+
             // if recommendation already exists, remove it. else add it
-            if (this.assignedRecommendationRepository.existsById(userRecommendationId)) {
-                this.assignedRecommendationRepository.deleteById(userRecommendationId);
+            if (existsAssignedRecommendation != null) {
+                this.assignedRecommendationRepository.delete(existsAssignedRecommendation);
+                System.out.println("Deleted recommendation");
             } else {
                 recommendation.setAssignedWeek(weekNumber);
                 this.assignedRecommendationRepository.save(recommendation);
+                System.out.println("Added recommendation");
             }
             return ResponseEntity.ok("success");
         } catch (Exception e) {

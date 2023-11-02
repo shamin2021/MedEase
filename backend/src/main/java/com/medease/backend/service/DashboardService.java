@@ -7,6 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.medease.backend.entity.MedicalTest;
 import com.medease.backend.entity.SelfAssessment;
+import com.medease.backend.repository.MedicalTestRepository;
+import com.medease.backend.repository.MeetingRepository;
+import com.medease.backend.repository.UserRepository;
+import com.medease.backend.repository.SelfAssessmentRepository;
+import com.medease.backend.repository.AvailabilityRepository;
+import com.medease.backend.repository.HLCRepository;
+import com.medease.backend.repository.DoctorRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +29,7 @@ public class DashboardService {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
     private final HLCRepository hlcRepository;
+    private final PatientRepository patientRepository;
     private final AssignedRecommendationService assignedRecommendationService;
     private final MeetingService meetingService;
     private final PatientService patientService;
@@ -44,8 +52,11 @@ public class DashboardService {
             public final MedicalTest medicalTest = medicalTestRepository.findBySelfAssessment(lastSelfAssessment);
             public final List<Object> riskArray = selfAssessmentRepository.findDateRiskByPatientOrderByDate(id);
             public final String user = userRepository.retrieveFirstName(id);
-
-            public final String hlcName = enabledHLc ? hlcRepository.findById(patient.getPatient_hlc().getHlc_id()).orElseThrow().getHlc_name() : "Disabled";
+            public final String patientMeeting = meetingRepository.findPatientLatestMeetings(id);
+            public final String patientHlc = patientRepository.findPatientbyHlc(id);
+            public final String hlcName = enabledHLc
+                    ? hlcRepository.findById(patient.getPatient_hlc().getHlc_id()).orElseThrow().getHlc_name()
+                    : "Disabled";
         };
 
     }
@@ -77,6 +88,21 @@ public class DashboardService {
             public final List<Object> meetCounts = meetingRepository.findMeetingCountByDate(doctorId);
             public final List<Object> todayMeetings = meetingRepository.getRecentMeetingList(doctorId); 
             public final List<Object> todaysPhysicalVisits = availabilityRepository.getPhysicalVisists(doctorId); 
+            
+        };
+    }
+
+    public Object getHlcDashboard(Integer id) {
+        return new Object() {
+            public final Integer hlcId = hlcRepository.findHlcIdByUser(id);
+            public final Integer patientCount = patientRepository.findPatientbyHlcId(hlcId);
+            public final Integer riskCount = selfAssessmentRepository.findRiskPatientsByHlcId(hlcId);
+            public final Integer healthCount = selfAssessmentRepository.findHealthyPatientsByHlcId(hlcId);
+            public final Integer doctorVisits = availabilityRepository.findAvailableSlotsByHlcId(hlcId).size();
+            public final List<Object> physicalVisits = availabilityRepository.findMeetingCountByDateHlc(hlcId);
+            public final List<Object> riskPatientList = selfAssessmentRepository.findRiskPatientListByHlcId(hlcId);
+            public final List<Object> physicalVisitsDoctors = availabilityRepository.getPhysicalDoctorNames(hlcId);
+            
             
         };
     }

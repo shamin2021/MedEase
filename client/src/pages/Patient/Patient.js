@@ -19,6 +19,7 @@ import {
 
 import LineChart from "../../components/LineChart";
 import Calendar from "react-calendar";
+import { format } from "date-fns";
 
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -69,6 +70,12 @@ const Patient = () => {
     return item[1]; // If none of the conditions match, return the original value.
   });
 
+  function formatDate(datetimeString) {
+    const inputDate = new Date(datetimeString);
+    const formattedDate = format(inputDate, "do MMMM");
+    return formattedDate;
+  }
+
   return (
     <GridItem colSpan={6} rowSpan={1} borderRadius="lg" p="4">
       <Flex className=" mt-[4%]">
@@ -76,7 +83,7 @@ const Patient = () => {
           <Flex flexDirection="column" className="w-3/4">
             <div className="font-bold ">Hi {dashboard.user},</div>
             <div className=" text-[21px] text-[#707070]">
-              This is your health Check for today{" "}
+              This is your health Check for today
               {dashboard.lastSelfAssessment?.risk}
             </div>
           </Flex>
@@ -177,7 +184,7 @@ const Patient = () => {
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Assigned HLC</div>
-                <div>{dashboard?.hlcName}</div>
+                <div>{dashboard.patientHlc}</div>
               </div>
             </div>
           </Flex>
@@ -205,7 +212,9 @@ const Patient = () => {
               <FaUserDoctor className="text-2xl w-1/5 align-middle m-auto" />
               <Flex flexDirection="column" className="w-3/4 ml-1">
                 <div className="text-[18px]">Doctors Appointment</div>
-                <div className="text-[17px] text-[#6b6b6b]">27th June</div>
+                <div className="text-[17px] text-[#6b6b6b]">
+                  {dashboard.patientMeeting?formatDate(dashboard.patientMeeting):"No upcoming"}
+                </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
@@ -214,7 +223,9 @@ const Patient = () => {
               <FaHeartCircleCheck className="text-2xl w-1/5 align-middle m-auto" />
               <Flex flexDirection="column" className="w-3/4 ml-1">
                 <div className="text-[18px]">Lifestyle Track</div>
-                <div className="text-[17px] text-[#6b6b6b] ">27th June</div>
+                <div className="text-[17px] text-[#6b6b6b] ">
+                  This week progress
+                </div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
@@ -223,7 +234,7 @@ const Patient = () => {
               <FaVialCircleCheck className="text-2xl w-1/5 align-middle m-auto" />
               <Flex flexDirection="column" className="w-3/4 ml-1">
                 <div className="text-[18px]">Medical Exam</div>
-                <div className="text-[17px] text-[#6b6b6b]">27th June</div>
+                <div className="text-[17px] text-[#6b6b6b]">Add Test</div>
               </Flex>
               <FaAngleRight className="text-2xl w-1/5 m-auto align-middle " />
             </Flex>
@@ -243,19 +254,6 @@ const Patient = () => {
         {/* <SimpleTable columns={columns1} data={data1} />  */}
       </Flex>
 
-      <Flex justifyContent="space-around">
-        {/* <Flex
-                    flexDirection="column"
-                    alignItems="center"
-                    pb="4"
-                >
-                    <Text>
-                        Chart Title
-                    </Text>
-
-                    <BarChart />
-                </Flex> */}
-      </Flex>
     </GridItem>
   );
 };

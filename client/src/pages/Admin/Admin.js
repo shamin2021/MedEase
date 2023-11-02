@@ -57,7 +57,7 @@ const Pstient = () => {
           <Flex flexDirection="column" className="w-3/4 mt-[2%]">
             <div className="font-bold ">Admin,</div>
             <div className=" text-[21px] text-[#707070]">
-              These are the statistics for today {dashboard.hlcPatient}{" "}
+              These are the statistics for today
             </div>
           </Flex>
 

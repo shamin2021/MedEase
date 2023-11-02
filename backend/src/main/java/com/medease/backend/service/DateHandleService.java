@@ -62,7 +62,7 @@ public class DateHandleService {
         return weekNumber;
     }
 
-    /**
+     /**
      * Get the previous week number of a date
      * 
      * @param date String format: yyyy-MM-dd
@@ -88,5 +88,28 @@ public class DateHandleService {
         int weekNumber = getWeekNumber(date);
 
         return weekNumber;
+    }
+
+    /**
+     * Get the next week number
+     * 
+     * @return next week number in integer
+     */
+    public static int getNextWeekNumber() {
+        int weekNumber = getCurrentWeekNumber();
+
+        int year = weekNumber / 100;
+        int week = weekNumber % 100;
+
+        // If the current week is 52, then the next week should be the first week of the
+        // next year
+        if (week == 52) {
+            year += 1;
+            week = 1;
+        } else {
+            week += 1;
+        }
+
+        return year * 100 + week;
     }
 }
