@@ -26,13 +26,19 @@ const Reminders = () => {
         >
             <Box w={{ base: '100%', md: '50%' }} ref={container} />
             <Box w={{ base: '100%', md: '50%' }} pl={{ base: '0', md: '8' }}>
-                <Heading as="h2" size="lg" mb="2" fontSize={{ base: '2xl', md: '3xl', lg: '6xl' }} color="#023276">
-                    Reminders
+                <Heading
+                    as="h2"
+                    size="lg"
+                    mb="2"
+                    fontSize={{ base: '2xl', md: '3xl', lg: '6xl' }}
+                    color="#023276"
+                >                    Reminders
                 </Heading>
-                <Text mb="4" fontSize={{ base: '2xl', md: '4xl' }}>
+                <Text mb="4" fontSize={{ sm: '2xl', lg: '4xl' }}>
                     Our reminders tool helps you stay on top of your health goals and appointments.
                 </Text>
-                <Button rightIcon={<ArrowForwardIcon />} colorScheme='blue' variant='outline' mt="4">
+                <Button rightIcon={<ArrowForwardIcon />} colorScheme='blue' variant='outline' mt="4" size={{ base: 'md', md: 'lg' }} // Set the button size based on the screen width
+                >
                     Learn More
                 </Button>
             </Box>

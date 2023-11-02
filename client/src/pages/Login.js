@@ -17,7 +17,7 @@ const Login = () => {
     const { setAuth, persist, setPersist } = useAuth();
     const container = useRef(null);
     // const isMobile = window.innerWidth <= 768; // Check if the screen width is mobile-sized
-        const isMobile = useBreakpointValue({ base: true, md: false }); // Detect mobile screen
+    const isMobile = useBreakpointValue({ base: true, md: false }); // Detect mobile screen
 
 
     const navigate = useNavigate();
@@ -131,11 +131,13 @@ const Login = () => {
                   </Stack>
                 </Stack>
                 <Box
-                  py={{ base: '0', sm: '8' }}
-                  px={{ base: '4', sm: '10' }}
+                  py={{ base: '4', sm: '8' }}
+                  px={{ base: '8', sm: '10' }}
                   bg={{ base: 'blue.50', sm: 'bg.surface' }}
                   boxShadow={{ base: 'none', sm: 'md' }}
-                  borderRadius={{ base: 'none', sm: 'xl' }}
+                  borderRadius={{ base: '24', sm: 'xl' }}
+                  marginBottom={{ base:'5', sm: 'xl'}}
+
                 >
                   <form onSubmit={handleSubmit}>
                     <Stack spacing="6">
@@ -146,11 +148,11 @@ const Login = () => {
                       )}
                       <Stack spacing="5">
                         <FormControl isRequired>
-                          <FormLabel htmlFor="email">Email</FormLabel>
+                          <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="email">Email</FormLabel>
                           <Input id="email" type="email" autoComplete='off' onChange={(e) => setEmail(e.target.value)} value={email} />
                         </FormControl>
                         <FormControl isRequired>
-                          <FormLabel htmlFor="password">Password</FormLabel>
+                          <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="password">Password</FormLabel>
                           <InputGroup>
                             <Input type={showPassword ? 'text' : 'password'} onChange={(e) => setPassword(e.target.value)} value={password} />
                             <InputRightElement h={'full'}>

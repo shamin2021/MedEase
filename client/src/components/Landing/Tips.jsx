@@ -19,8 +19,8 @@ const Tips = () => {
 
   return (
     <Flex
-      flexDirection={{ base: 'column', md: 'row' }}
       alignItems={{ base: 'flex-start', md: 'center' }}
+      flexDirection={{ base: 'column', md: 'row' }}
       justifyContent="space-between"
       p="8"
     >
@@ -42,10 +42,7 @@ const Tips = () => {
         >
           Health Lifestyle Tips
         </Heading>
-        <Text
-          mb={{ base: '4', md: '0' }}
-          fontSize={{ base: '2xl', md: '4xl' }}
-        >
+        <Text mb="4" fontSize={{ sm: '2xl', lg: '4xl' }}>
           Discover practical guidance on nutrition, exercise, stress management, sleep hygiene, and more.
         </Text>
         <Button
@@ -53,6 +50,7 @@ const Tips = () => {
           colorScheme='blue'
           variant='outline'
           mt={{ base: '4', md: '0' }}
+          size={{ base: 'md', md: 'lg' }} // Set the button size based on the screen width
         >
           Learn More
         </Button>

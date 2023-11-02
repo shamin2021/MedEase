@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Box, Button, Container, FormControl, FormLabel, Flex, Heading, Stack, Text, Input, Select } from '@chakra-ui/react'
+import { Link, Box, Button, Container, FormControl, useBreakpointValue, FormLabel, Flex, Heading, Stack, Text, Input, Select } from '@chakra-ui/react'
 import lottie from 'lottie-web';
 import registerAnimation from '../assets/lottie/register.json';
 
@@ -36,6 +36,8 @@ const Register = () => {
     const [success, setSuccess] = useState(false);
 
     const chosenHlcName = localStorage.getItem("HLCName")
+    const isMobile = useBreakpointValue({ base: true, md: false }); // Detect mobile screen
+
 
     useEffect(() => {
         setvalidEmail(EMAIL_REGEX.test(email));
@@ -96,6 +98,20 @@ const Register = () => {
     }
 
     useEffect(() => {
+        if (!isMobile) {
+            // Load the animation only if not in mobile view
+            const lottie = require('lottie-web'); // Lazy load Lottie animation
+            lottie.loadAnimation({
+                container: container.current,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                animationData: registerAnimation, // Replace with your animation data
+            });
+        }
+    }, [isMobile]);
+
+    useEffect(() => {
         lottie.loadAnimation({
             container: container.current,
             renderer: 'svg',
@@ -108,23 +124,26 @@ const Register = () => {
     return (
         <div className='Register mt-[3%]' >
             <Flex alignItems="center"  >
-                <Box w={{ base: '80%', md: '40%' }} ref={container} />
+                {!isMobile && (
+                    <Box w={{ base: '80%', md: '50%' }} ref={container} />
+                )}
                 <Container maxW="xl" py={{ base: '2', md: '4' }} px={{ base: '0', sm: '8' }} >
                     <Stack spacing="2">
-                        <Stack spacing="2" align="center">
+                        <Stack spacing="2" align="center" marginTop={{ base: "60px", lg: "10px" }}>
                             <Stack spacing={{ base: '2', md: '2' }} textAlign="center">
-                                <Heading size={{ base: 'sm', md: 'lg' }}>Register an account</Heading>
-                                <Text size={{ base: 'xs', md: 'sm' }}>
+                                <Heading size={{ base: 'lg', md: 'xl' }}>Register an account</Heading>
+                                <Text size={{ base: 'xs', md: 'sm' }} marginBottom={"10px"}>
                                     Already have an account? <Link color='blue.500' href="/login" style={{ textDecoration: 'none' }}>Sign in</Link>
                                 </Text>
                             </Stack>
                         </Stack>
                         <Box
-                            py={{ base: '0', sm: '8' }}
+                            py={{ base: '4', sm: '8' }}
                             px={{ base: '4', sm: '10' }}
                             bg={{ base: 'blue.50', sm: 'bg.surface' }}
                             boxShadow={{ base: 'none', sm: 'md' }}
-                            borderRadius={{ base: 'none', sm: 'xl' }}
+                            borderRadius={{ base: '24', sm: 'xl' }}
+                            marginBottom={{ base:'10', sm: 'xl'}}
                         >
                             <form onSubmit={handleSubmit}>
                                 <Stack spacing="4">
@@ -140,8 +159,8 @@ const Register = () => {
                                     )}
                                     <Stack spacing="3">
                                         <Flex direction="row" justifyContent="space-between" gap={3}>
-                                            <FormControl isRequired>
-                                                <FormLabel htmlFor="firstname">Firstname</FormLabel>
+                                            <FormControl isRequired >
+                                                <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="firstname">Firstname</FormLabel>
                                                 <Input
                                                     id="firstname"
                                                     type="text"
@@ -154,7 +173,7 @@ const Register = () => {
 
                                             <FormControl isRequired>
 
-                                                <FormLabel htmlFor="lastname">Lastname</FormLabel>
+                                                <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="lastname">Lastname</FormLabel>
                                                 <Input
                                                     id="lastname"
                                                     type="text"
@@ -168,7 +187,7 @@ const Register = () => {
 
                                         <Flex direction="row" justifyContent="space-between" gap={3}>
                                             <FormControl isRequired>
-                                                <FormLabel htmlFor="gender">Gender</FormLabel>
+                                                <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="gender">Gender</FormLabel>
                                                 <Select
                                                     id="gender"
                                                     autoComplete='off'
@@ -183,7 +202,7 @@ const Register = () => {
                                             </FormControl>
 
                                             <FormControl isRequired>
-                                                <FormLabel htmlFor="dob">Date of Birth</FormLabel>
+                                                <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="dob">Date of Birth</FormLabel>
                                                 <Input
                                                     id="dob"
                                                     type="date"
@@ -197,7 +216,7 @@ const Register = () => {
                                         </Flex>
 
                                         <FormControl isRequired>
-                                            <FormLabel htmlFor="email">Email</FormLabel>
+                                            <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="email">Email</FormLabel>
                                             <Input
                                                 id="email"
                                                 type="email"
@@ -222,7 +241,7 @@ const Register = () => {
                                         )}
 
                                         <FormControl isRequired>
-                                            <FormLabel htmlFor="password">Password</FormLabel>
+                                            <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="password">Password</FormLabel>
                                             <Input
                                                 id="password"
                                                 type="password"
@@ -250,7 +269,7 @@ const Register = () => {
                                         )}
 
                                         <FormControl isRequired>
-                                            <FormLabel htmlFor="confirm_password">Confirm Password</FormLabel>
+                                            <FormLabel fontSize={{ base: 'sm', md: 'lg' }} htmlFor="confirm_password">Confirm Password</FormLabel>
                                             <Input
                                                 id="confirm_password"
                                                 type="password"
