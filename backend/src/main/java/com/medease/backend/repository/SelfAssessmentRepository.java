@@ -32,6 +32,9 @@ public interface SelfAssessmentRepository extends JpaRepository<SelfAssessment, 
     @Query(value = "SELECT risk FROM selfassessments WHERE patient = :id AND id = (SELECT MAX(id) FROM selfassessments WHERE patient = :id)", nativeQuery = true)
     String findRecentAssessmentById(Integer id);
 
+    @Query(value = "SELECT diabetes_risk FROM selfassessments WHERE patient = :id AND id = (SELECT MAX(id) FROM selfassessments WHERE patient = :id)", nativeQuery = true)
+    String findRecentDiabetesAssessmentById(Integer id);
+
     @Query(value = "SELECT id FROM selfassessments WHERE patient = :id AND id = (SELECT MAX(id) FROM selfassessments WHERE patient = :id)", nativeQuery = true)
     Integer findRecentAssessmentByIdInt(Integer id);
 

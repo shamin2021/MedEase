@@ -2,17 +2,11 @@ package com.medease.backend.service;
 
 import java.util.List;
 
+import com.medease.backend.repository.*;
 import org.springframework.stereotype.Service;
 
 import com.medease.backend.entity.MedicalTest;
 import com.medease.backend.entity.SelfAssessment;
-import com.medease.backend.repository.MedicalTestRepository;
-import com.medease.backend.repository.MeetingRepository;
-import com.medease.backend.repository.UserRepository;
-import com.medease.backend.repository.SelfAssessmentRepository;
-import com.medease.backend.repository.AvailabilityRepository;
-import com.medease.backend.repository.HLCRepository;
-import com.medease.backend.repository.DoctorRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +20,7 @@ public class DashboardService {
     private final AvailabilityRepository availabilityRepository;
     private final MeetingRepository meetingRepository;
     private final DoctorRepository doctorRepository;
+    private final PatientRepository patientRepository;
     private final HLCRepository hlcRepository;
     private final AssignedRecommendationService assignedRecommendationService;
     private final MeetingService meetingService;
@@ -37,6 +32,8 @@ public class DashboardService {
 
     public Object getPatientDashboard(Integer id) {
         SelfAssessment lastSelfAssessment = selfAssessmentRepository.findTopByPatientOrderByIdDesc(id);
+        var patient = patientRepository.findPatient(id).orElseThrow();
+        var enabledHLc = userRepository.findById(id).orElseThrow().getEnabled();
         return new Object() {
             public final Integer selfAssessmentsCount = selfAssessmentRepository.countByPatient(id);
             public final Integer appointmentsCount = meetingService.getMeetingCountByPatientId(id);
@@ -47,6 +44,8 @@ public class DashboardService {
             public final MedicalTest medicalTest = medicalTestRepository.findBySelfAssessment(lastSelfAssessment);
             public final List<Object> riskArray = selfAssessmentRepository.findDateRiskByPatientOrderByDate(id);
             public final String user = userRepository.retrieveFirstName(id);
+
+            public final String hlcName = enabledHLc ? hlcRepository.findById(patient.getPatient_hlc().getHlc_id()).orElseThrow().getHlc_name() : "Disabled";
         };
 
     }

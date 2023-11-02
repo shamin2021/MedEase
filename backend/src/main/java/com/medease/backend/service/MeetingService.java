@@ -1,5 +1,8 @@
 package com.medease.backend.service;
 
+import com.medease.backend.Exception.CustomException;
+import com.medease.backend.assets.MeetingCancelTemplate;
+import com.medease.backend.assets.ReminderTemplateWeekly;
 import com.medease.backend.dto.AvailabilityDTO;
 import com.medease.backend.dto.GlobalResponseDTO;
 import com.medease.backend.dto.MeetingDTO;
@@ -9,9 +12,11 @@ import com.medease.backend.entity.HLC;
 import com.medease.backend.entity.Meeting;
 import com.medease.backend.enumeration.MeetingType;
 import com.medease.backend.repository.*;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,6 +33,7 @@ public class MeetingService {
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
     private final HLCRepository hlcRepository;
+    private final EmailService emailService;
 
     public List<AvailabilityDTO> getMeetings(Integer doctorId) {
         var doctorRecordId = doctorRepository.findDoctorIdByUser(doctorId);
@@ -214,7 +220,16 @@ public class MeetingService {
 
         var meeting = meetingRepository.findById(meetingId).orElseThrow();
         meeting.setCancelled(1);
+        var patientMail = meeting.getPatient().getPatient_user().getEmail();
+        var doctorMail = meeting.getDoctor().getDoctor_user().getEmail();
         meetingRepository.save(meeting);
+
+        try{
+            emailService.sendEmail(patientMail, "Meeting Cancelled", MeetingCancelTemplate.MeetingCancelTemplate());
+            emailService.sendEmail(doctorMail, "Meeting Cancelled", MeetingCancelTemplate.MeetingCancelTemplate());
+        } catch (UnsupportedEncodingException | MessagingException e) {
+            throw new CustomException("Error while sending cancel email.");
+        }
 
         return GlobalResponseDTO.builder()
                 .status(200)

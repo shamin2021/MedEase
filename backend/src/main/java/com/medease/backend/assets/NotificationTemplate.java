@@ -20,7 +20,6 @@ public class NotificationTemplate {
                 + "<div class=\"content\">"
                 + "<p>Hello,</p>"
                 + "<p>You Have a Meeting scheduled in 15 minutes.</p>"
-                + "<p>Please Join.</p>"
                 + "</div>"
                 + "</div>"
                 + "</body>"

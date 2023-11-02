@@ -44,12 +44,14 @@ public class AssignedRecommendationController {
         var patientHlc = patientRepository.findPatient(patientId).orElseThrow().getPatient_hlc().getHlc_id();
         var patientHlcName = hlcRepository.findById(patientHlc).orElseThrow().getHlc_name();
         var recentAssessment = selfAssessmentRepository.findRecentAssessmentById(patientId);
+        var recentDiabetesAssessment = selfAssessmentRepository.findRecentDiabetesAssessmentById(patientId);
         System.out.println(selfAssessmentRepository.findRecentAssessmentByIdInt(patientId));
 
         var userDetails = new HashMap<String, Object>();
         userDetails.put("id", patientId.toString());
         userDetails.put("name", patientName);
         userDetails.put("riskLevel", recentAssessment);
+        userDetails.put("diabetesRisk",recentDiabetesAssessment);
         userDetails.put("hlcName", patientHlcName);
 
         int weekNumber = DateHandleService.getCurrentWeekNumber();

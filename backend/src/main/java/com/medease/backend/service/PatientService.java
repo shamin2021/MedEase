@@ -74,6 +74,8 @@ public class PatientService {
         var patientInfo = patientUser.split(",");
         var hlcName = hlcRepository.findHLCNameByHLCId(patient.getPatient_hlc().getHlc_id());
         var requested = hlcChangeRequestRepository.findRequestedByID(userId).orElse(null);
+        var enabledHLc = userRepository.findById(userId).orElseThrow().getEnabled();
+        System.out.println(enabledHLc);
 
         //to get profile image
         String profileImage = uploadService.retrieveProfileImage(userId);
@@ -88,7 +90,7 @@ public class PatientService {
                 .emergencyName(patient.getEmergency_name())
                 .gender(patient.getGender())
                 .dob(patient.getDob())
-                .hlc_name(hlcName)
+                .hlc_name(enabledHLc ? hlcName : "Disabled")
                 .requested(requested != null ? requested.getRequested() : null)
                 .image(profileImage)
                 .build();
