@@ -19,26 +19,18 @@ import useLifeStyleQuiz from "../../hooks/useLifestyleQuiz";
 import QuizInputField from "../../components/LifestyleQuiz/QuizInputField";
 import { useLocation } from "react-router-dom";
 
-const LifestyleMonitorQuiz = () => {
+const ViewQuizByDoctor = () => {
   const { state } = useLocation();
-  const [isCheckDisabled, setIsCheckDisabled] = useState(false);
+  const isCheckDisabled = true;
 
   const {
     assignedRecommendations,
     completedQuizzes,
-    handleMarkComplete,
     percentage,
     dietProgress,
     exerciseProgress,
     weekStartEnd,
   } = useLifeStyleQuiz(state);
-
-  useEffect(() => {
-    // if state is not null, then the quiz is a previous quiz
-    if (state !== null && state !== undefined) {
-      setIsCheckDisabled(true);
-    }
-  }, [state]);
 
   return (
     <GridItem colSpan={6}>
@@ -109,14 +101,14 @@ const LifestyleMonitorQuiz = () => {
                                   key={recommendation.recommendation_id}
                                   recommendation={recommendation}
                                   completedQuizzes={completedQuizzes}
-                                  handleCheck={handleMarkComplete}
                                   isCheckDisabled={isCheckDisabled}
                                 ></QuizInputField>
                               );
                             })
                         ) : (
                           <Box className="text-center text-[20px] text-[#797878] font-medium font-poppins">
-                            No {recommendationType.name.toLowerCase()} recommendations for this week
+                            No {recommendationType.name.toLowerCase()}{" "}
+                            recommendations for this week
                           </Box>
                         )}
                         {/* <Box className=" text-right">
@@ -167,4 +159,4 @@ const LifestyleMonitorQuiz = () => {
   );
 };
 
-export default LifestyleMonitorQuiz;
+export default ViewQuizByDoctor;

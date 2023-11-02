@@ -3,7 +3,7 @@ import { Box, Flex, GridItem, Button, Spacer, Text } from "@chakra-ui/react";
 import { Progress } from "@chakra-ui/react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { NAVBARHEIGHT } from "../../components/NavBar";
 import useAxiosMethods from "../../hooks/useAxiosMethods";
 import moment from "moment";
@@ -14,7 +14,8 @@ import calculateTotalRecommendations from "../../utils/calculateTotalRecommendat
 import useLifeStyleQuiz from "../../hooks/useLifestyleQuiz";
 
 // const percentage = 66;
-const LifestyleDashboard = () => {
+const ViewProgressByDoctor = () => {
+  const { userId } = useParams();
   // completeQuiz
   // /dashboard/{patient_id}/{page}
   const { get } = useAxiosMethods();
@@ -23,7 +24,6 @@ const LifestyleDashboard = () => {
   const [page, setPage] = useState(1);
   const [quizzes, setQuizzes] = useState([]);
   const [isLastPage, setIsLastPage] = useState(false);
-  const [userId, setUserId] = useState(auth.user_id);
 
   const { percentage, dietProgress, exerciseProgress, weekStartEnd } =
     useLifeStyleQuiz();
@@ -83,11 +83,6 @@ const LifestyleDashboard = () => {
             <h2 className="text-[1rem] font-bold font-poppins">
               Lifestyle Tracker
             </h2>
-            <Link to={"/LifestyleQuiz"}>
-              <button className="text-[0.8rem] font-poppins font-semibold rounded-md bg-primary px-10 py-2">
-                Attempt Quiz
-              </button>
-            </Link>
           </Box>
           <hr className="my-3" />
           <Box className="m-4 mt-1 mb-1">
@@ -170,7 +165,7 @@ const LifestyleDashboard = () => {
                           {weekPercentage}%
                         </Box>
                         <Box flex={3} className="w-1/4 p-2">
-                          <Link to={"/LifestyleQuiz"} state={quiz}>
+                          <Link to={"/ViewQuizProgress"} state={quiz}>
                             <button
                               className="btn w-1/2 bg-primary rounded-lg px-3 py-1"
                               href=""
@@ -193,19 +188,10 @@ const LifestyleDashboard = () => {
               )}
             </Box>
           </Box>
-        </Box>
-
-        <hr className="m-3 mt-2"></hr>
-        <WeekProgress
-          percentage={percentage}
-          dietProgress={dietProgress}
-          exerciseProgress={exerciseProgress}
-          weekDates={weekStartEnd}
-          isCurrentWeek={true}
-        />
+        </Box> 
       </Flex>
     </GridItem>
   );
 };
 
-export default LifestyleDashboard;
+export default ViewProgressByDoctor;

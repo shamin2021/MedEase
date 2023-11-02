@@ -45,10 +45,16 @@ public class CompleteQuizController {
         var response = new HashMap<String, Object>();
         List<HashMap<String, Object>> weeklyQuizzes = new ArrayList<>();
 
+        response.put("isLastPage", false);
+
+        if(lastRecordWeekNumber == 0) {
+            response.put("weeklyQuizzes", weeklyQuizzes);
+            return ResponseEntity.ok(response);
+        }
+        
         int startFrom = (page - 1) * 10;
         int endFrom = page * 10;
 
-        response.put("isLastPage", false);
         for (int i = startFrom + 1; i <= endFrom; i++) {
 
             int weekNumber = DateHandleService.getNPreviousWeek(i);
