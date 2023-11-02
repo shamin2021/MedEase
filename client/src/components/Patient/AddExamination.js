@@ -42,7 +42,7 @@ const AddExamination = () => {
 
     try {
       post(
-        /CreateMedicalTest/${id},
+        `/CreateMedicalTest/${id}`,
         {
           weight,
           height,
@@ -89,7 +89,7 @@ const AddExamination = () => {
       setSbp("");
       setBmi("");
       setWaistHeightRatio("");
-      navigate(/view-SelfAssessment/${id});
+      navigate(`/view-SelfAssessment/${id}`);
     } catch (err) {
       console.error(err);
       navigate("/login", { state: { from: location }, replace: true });
@@ -98,7 +98,7 @@ const AddExamination = () => {
 
   useEffect(() => {
     try {
-      get(/SelfAssessments/${id}, setSelfAssessments);
+      get(`/SelfAssessments/${id}`, setSelfAssessments);
 
     } catch (err) {
       console.error(err);
@@ -150,7 +150,7 @@ const AddExamination = () => {
     }
   };
 
-  const backPage = () => navigate(/view-SelfAssessment/${id});
+  const backPage = () => navigate(`/view-SelfAssessment/${id}`);
 
   return (
     <GridItem colSpan={6} mx={4} mt={2}>
@@ -225,7 +225,10 @@ const AddExamination = () => {
                         value={cholesterolLvl}
                         required={true}
                       />
+                     <a href="https://www.mayoclinic.org/tests-procedures/cholesterol-test/about/pac-20384601">How to test?</a>
+
                     </div>
+
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">SBP</label>
                       <input
@@ -347,6 +350,8 @@ const AddExamination = () => {
                     </div>
                     {/* <CalculateBox name="Range" /> */}
                   </div>
+                  <a href="https://www.mayoclinic.org/tests-procedures/glucose-tolerance-test/about/pac-20394296">How to test?</a>
+
                   <div className="flex">
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">
@@ -365,6 +370,8 @@ const AddExamination = () => {
                     </div>
                     {/* <CalculateBox name="Range" /> */}
                   </div>
+                  <a href="https://www.mayoclinic.org/tests-procedures/creatinine-test/about/pac-20384646">How to test?</a>
+
                   <div className="flex">
                     <div className=" flex flex-col m-2">
                       <label className="form-label mb-1">
@@ -446,6 +453,8 @@ const AddExamination = () => {
                       />
                     </div>
                   </div>
+                  <a href="https://www.mayoclinic.org/tests-procedures/cholesterol-test/about/pac-20384601">How to test?</a>
+
                 </div>
                 <div className="flex text-[22px] m-9">
                   <button
