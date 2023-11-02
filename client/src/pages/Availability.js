@@ -53,8 +53,14 @@ const Availability = () => {
     }
 
     const handleDayClick = (arg) => {
-        console.log(arg.date);
-        if (new Date(arg.date).getTime() > new Date().getTime()) {
+        const selectedDate = new Date(arg.date);
+        const currentDate = new Date();
+
+
+        selectedDate.setHours(0, 0, 0, 0);
+        currentDate.setHours(0, 0, 0, 0);
+
+        if (selectedDate >= currentDate) {
             setSelectedDate(arg.date);
             setIsModalOpen(true);
         }
@@ -168,7 +174,8 @@ const Availability = () => {
         }
     };
 
-    useEffect(() => {;
+    useEffect(() => {
+        ;
         const fetchData = async () => {
             await fetchAvailableSlots();
         };

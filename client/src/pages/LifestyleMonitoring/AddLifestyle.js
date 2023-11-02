@@ -86,7 +86,7 @@ const AddLifestyle = () => {
 
   const getAssignedRecommendations = async () => {
     try {
-      get(`/assignedRecommendation/${userId}`, (response)=>{
+      get(`/assignedRecommendation/${userId}`, (response) => {
         setAssignedRecommendations(response.assignedRecommendation)
         setPatient(response.userDetails)
       });
@@ -169,10 +169,16 @@ const AddLifestyle = () => {
                       </div>
                     </div>
                   </div>
-                  <div className=" flex flex-col md:w-1/4">
-                    <div className="text-[#797878]">Recent Risk</div>
+                  <div className=" flex flex-col mr-8">
+                    <div className="text-[#797878]">Recent Cardiovascular Risk</div>
                     <div className="p-1 pl-0 text-[#f85353] font-semibold">
                       {patient?.riskLevel ?? "Not Submitted"}
+                    </div>
+                  </div>
+                  <div className=" flex flex-col ml-5 mr-8">
+                    <div className="text-[#797878]">Recent Diabetes Risk</div>
+                    <div className="p-1 pl-0 text-[#f85353] font-semibold">
+                      {patient?.diabetesRisk ?? "Not Submitted"}
                     </div>
                   </div>
                   <div className=" flex flex-col md:w-1/4">

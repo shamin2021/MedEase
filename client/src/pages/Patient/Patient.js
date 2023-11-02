@@ -177,7 +177,7 @@ const Patient = () => {
               </div>
               <div className="text-center bg-[#e4ebf5] rounded-lg p-1 m-1">
                 <div className="font-bold">Assigned HLC</div>
-                <div>{}</div>
+                <div>{dashboard?.hlcName}</div>
               </div>
             </div>
           </Flex>

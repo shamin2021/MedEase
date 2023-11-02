@@ -533,7 +533,17 @@ const PatientProfile = () => {
                                             <p>Not Submitted</p>
                                         )}
                                         <div className=" text-[#797878] text-[13px] font-medium">
-                                            Recent Risk
+                                            Recent Cardiovascular Risk
+                                        </div>
+                                    </div>
+                                    <div className="w-3/4 mx-auto mt-3 rounded-md text-[15px] bg-[#fdc9c9] p-2 font-semibold">
+                                        {filteredSelfAssessments.length > 0 ? (
+                                            filteredSelfAssessments[0].diabetes_risk
+                                        ) : (
+                                            <p>Not Submitted</p>
+                                        )}
+                                        <div className=" text-[#797878] text-[13px] font-medium">
+                                            Recent Diabetes Risk
                                         </div>
                                     </div>
                                     <div className="w-3/4 mx-auto mt-3 rounded-md text-[15px] bg-primary p-2 font-semibold">
